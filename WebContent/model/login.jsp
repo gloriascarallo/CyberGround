@@ -16,6 +16,8 @@
 <label for="password">Inserisci password: </label>
 <input type="text" name="password" onchange="validateFormElement(this, passwordPattern, document.getElementById('errorUsername'), errorPasswordMessage)"><span id="errorPassword"></span>
 
+<span> Non sei ancora registrato? Clicca qui per registrarti: <a href="registration.jsp">Registrati!</a></span>
+
 <input type="submit" value="Submit" onclick="return validate()">
 <input type="reset" value="Reset">
 </form>
