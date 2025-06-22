@@ -14,7 +14,7 @@ if(error!=null) {%> <div id="error"><%=error %></div>
 
 <% } %>
 
-<form name="loginForm" action="Login" method="post">
+<form name="registrationForm" action="Registration" method="post">
 
 <div>
 <label for="name">Inserisci nome: </label>
