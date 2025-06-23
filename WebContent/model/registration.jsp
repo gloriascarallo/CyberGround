@@ -68,7 +68,7 @@ if(error!=null) {%> <div id="error"><%=error %></div>
 <input type="password" name="password" id="password" onchange="validateFormElement(this, passwordPattern, document.getElementById('errorPassword'), errorPasswordMessage)" placeholder="Inserisci la tua password"><span id="errorPassword"></span>
 </div>
 
-<input type="submit" value="Submit" onclick="return validate(registrationForm)">
+<input type="submit" value="Submit" onclick="return validateRegistrationForm()">
 <input type="reset" value="Reset">
 
 </form>
