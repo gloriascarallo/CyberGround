@@ -2,12 +2,17 @@ const namePattern=/^[A-z]+$/g;
 const telephonePattern=/^([0-9]{3}-[0-9]{7})$/g;
 const emailPattern=/^\S+@\S+.\S+$/g;
 const addressPattern=/^\w+(\s\w+)+$/g;
-const methodPaymentPattern=/^[0-9]{4}-[0-9]{4}-{0-9}{4}$/g;
+const PANPattern=/^[0-9]{4}-[0-9]{4}-{0-9}{4}$/g;
+const ScadenzaPattern=/^[0-9]{2}\/\[0-9]{2}$/g;
+const CVCPattern=/^[0-9]{3-4}$/g;
 const errorNameMessage="Devi inserire almeno una lettera";
 const errorTelephoneMessage="Un numero di telefono valido deve avere formato ###-#######";
 const errorEmailMessage="Un'email valida deve avere formato username@domain.ext";
 const errorAddressMessage="Un indirizzo valido deve essere formato da sequenze di lettere o numeri separati da spazi"
-const errorMethodPaymentMessage="Un metodo di pagamento valido deve avere formato ####-####-####-####";
+const errorPANMessage="Un metodo di pagamento valido deve avere formato ####-####-####-####";
+const errorScadenzaMessage="Una data di scadenza valida deve avere formato ##/##";
+const errorCVCMessage="Un CVC valido deve avere formato ### o ####";
+
 
 function validateFormElement(formElement, pattern, error, span) {
 	
@@ -77,29 +82,54 @@ function addMethodPayment() {
 	div.id="methodPaymentNum" + countMethodPayment;
 	
 	let label=document.createElement("label");
-	label.htmlFor="methodPayment" + countMethodPayment;
+	label.htmlFor="methodPaymentPAN" + countMethodPayment;
 	label.appendChild(document.createTextNode("Inserisci un indirizzo: "));
 	div.appendChild(label);
 	
-	let input=document.createElement("input");
-	input.type="text";
-	input.name="methodPayment" + countMethodPayment;
-	input.id="methodPayment" + countMethodPayment;
-	input.placeholder="Inserisci il tuo indirizzo";
-	div.appendChild(input);
+	let inputPAN=document.createElement("input");
+	inputPAN.type="text";
+	inputPAN.name="methodPaymentPAN" + countMethodPayment;
+	inputPAN.id="methodPaymentPAN" + countMethodPayment;
+	inputPAN.placeholder="####-####-####-####";
+	div.appendChild(inputPAN);
 	
+	let spanPAN=document.createElement("span");
+	span.id="errorPAN" + countMethodPayment;
+	div.appendChild(spanPAN);
+		
+	let inputScadenza=document.createElement("input");
+    inputScadenza.type="text";
+	inputScadenza.name="methodPaymentScadenza" + countMethodPayment;
+	inputScadenza.id="methodPaymentScadenza" + countMethodPayment;
+	inputScadenza.placeholder="##/##";
+	div.appendChild(inputScadenza);
+		
+	let spanScadenza=document.createElement("span");
+	span.id="errorScadenza" + countMethodPayment;
+	div.appendChild(spanScadenza);
+		
+	let inputCVC=document.createElement("input");
+	inputCVC.type="text";
+	inputCVC.name="methodPaymentCVC" + countMethodPayment;
+	inputCVC.id="methodPaymentCVC" + countMethodPayment;
+	inputCVC.placeholder="### or ####";
+	div.appendChild(inputCVC);
+	
+	let spanCVC=document.createElement("span");
+	span.id="errorCVC" + countMethodPayment;
+	div.appendChild(spanCVC);
+				
 	let button=document.createElement("input");
 	button.type="button";
 	button.value="-";
 	button.addEventListener("click", function() {div.parentNode.removeChild(div); countMethodPayment--;});
 	div.appendChild(button);
 	
-	let span=document.createElement("span");
-	span.id="errorMethodPayment" + countMethodPayment;
-	div.appendChild(span);
 	
 	
-input.addEventListener("change", validateFormElement(input, methodPaymentPattern, span, errorMethodPaymentMessage));
+inputPAN.addEventListener("change", validateFormElement(inputPAN, PANPattern, spanPAN, errorPANMessage));
+inputScadenza.addEventListener("change", validateFormElement(inputScadenza, ScadenzaPattern, spanScadenza, errorScadenzaMessage));
+inputCVC.addEventListener("change", validateFormElement(inputCVC, CVCPattern, spanCVC, errorCVCMessage));
 count++;
 container.appendChild(div);
 	
@@ -107,7 +137,7 @@ container.appendChild(div);
 	
 }
 
-function validate() {
+function validateRegistrationForm() {
 	
 	
 	
