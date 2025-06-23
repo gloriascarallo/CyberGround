@@ -4,22 +4,18 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Product_Refund Page</title>
+<title>Add Payment Method Page</title>
 </head>
 <body>
 
-<h2 align="center">Rimborso Prodotto</h2>
+<h2 align="center">Aggiunta Metodo di Pagamento</h2>
 
-<form action="Product_refund" method="post">
+<form action="Add_payment_method" method="post">
 <fieldset>
 <legend>Compilare i campi</legend>
 <div align="center">
 
-	<label for="ritiro">Inserisci l'indirizzo dove verremo a ritirare il pacco:</label> <br>
-	<input type="text" name="ritiro" id="ritiro" onchange="validateFormElement(this, addressPattern, document.getElementById('errorAddress'), errorAddressMessage" required>
-	<span id="errorAddress"></span> <br>
-	
-	<label for="PAN">Inserisci i dati della carta sulla quale verrà addebitato il rimborso:</label> <br>
+<label for="PAN">Inserisci nuovo metodo di pagamento:</label> <br>
 	<input type="text" name="PAN" id="PAN" placeholder="####-####-####-####" onchange="validateFormElement(this, PANPattern, document.getElementById('errorPAN'), errorPANMessage" required> 
 	<span id="errorPAN"></span> <br>
 	<input type="text" name="Scadenza" placeholder="##/##" onchange="validateFormElement(this, ScadenzaPattern, document.getElementById('errorScadenza'), errorScadenzaMessage" required>
@@ -28,7 +24,7 @@
 	<span id="errorCVC"></span> <br>
 	<input type="submit" value="Invia" onclick="return validate()">
 	<input type="reset" value="Annulla">
-	
+
 </div>
 </fieldset>
 </form>
