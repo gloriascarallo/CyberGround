@@ -15,7 +15,7 @@ if(error!=null) {%> <div id="error"><%=error %></div>
 
 <% } %>
 
-<form name="registrationForm" action="Registration" method="post">
+<form name="registrationForm" id="registrationForm" action="Registration" method="post">
 
 <div>
 <label for="name">Inserisci nome: </label>
@@ -47,9 +47,14 @@ if(error!=null) {%> <div id="error"><%=error %></div>
 
 <div id="methodsPayment">
 <div id="methodPaymentNum1">
-<label for="methodPayment1"> Inserisci un metodo di pagamento (o più metodi di pagamento): </label>
-<input type="text" name="methodPayment1" id="methodPayment1" onchange="validateFormElement(this, methodPaymentPattern, document.getElementById('errorMethodPayment1'), errorMethodPaymentMessage" placeholder="####-####-####-####"><input type="button" value="+" onclick="addMethodPayment()"></input>
-<span id="errorMethodPayment1"></span>
+<label for="methodPaymentPAN1"> Inserisci un metodo di pagamento (o più metodi di pagamento): </label>
+<input type="text" name="methodPaymentPAN1" id="methodPaymentPAN1" onchange="validateFormElement(this, PANPattern, document.getElementById('errorPAN1'), errorPANMessage" placeholder="####-####-####-####">
+<span id="errorPAN1"></span>
+<input type="text" name="methodPaymentScadenza1" id="methodPaymentScadenza1" onchange="validateFormElement(this, ScadenzaPattern, document.getElementById('errorScadenza1'), errorScadenzaMessage" placeholder="##/##">
+<span id="errorScadenza1"></span>
+<input type="text" name="methodPaymentCVC1" id="methodPaymentCVC1" onchange="validateFormElement(this, CVCPattern, document.getElementById('errorCVC1'), errorCVCMessage" placeholder="### or ####"><input type="button" value="+" onclick="addMethodPayment()"></input>
+<span id="errorCVC1"></span>
+
 </div>
 </div>
 
