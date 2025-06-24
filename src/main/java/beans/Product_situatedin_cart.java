@@ -1,12 +1,23 @@
 package beans;
-import java.util.Date;
+import java.sql.Date;
 
 public class Product_situatedin_cart {
 
+	private int id_SituatedIn;
 	private int idCart;
 	private int idProduct;
 	private Date dateAdded;
 	
+	
+	public int getId_SituatedIn() {
+		return id_SituatedIn;
+	}
+
+
+
+	public void setId_SituatedIn(int id_SituatedIn) {
+		this.id_SituatedIn = id_SituatedIn;
+	}
 	
 	
 	public int getIdCart() {
@@ -54,7 +65,7 @@ public class Product_situatedin_cart {
 	public Product_situatedin_cart() {
 		idCart=-1;
 		idProduct=-1;
-		dateAdded=new Date();
+		dateAdded=new Date(0);
 	}
 
 }

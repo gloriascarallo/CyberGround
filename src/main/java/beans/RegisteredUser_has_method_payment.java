@@ -2,11 +2,21 @@ package beans;
 
 public class RegisteredUser_has_method_payment {
 
+	private int id_has_method_payment;
 	private int idUser;
 	private String pan;
 	private String expirationDate;
 	private String cvc;
 	
+	
+	public int getId_has_method_payment() {
+		return id_has_method_payment;
+	}
+
+	public void setId_has_method_payment(int id_has_method_payment) {
+		this.id_has_method_payment = id_has_method_payment;
+	}
+
 	public int getIdUser() {
 		return idUser;
 	}
