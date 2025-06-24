@@ -2,18 +2,18 @@ package beans;
 
 public class Cart {
 
-	private int idUser;
+	private int idCart;
 	
 	public Cart() {
-		idUser=-1;
+		idCart=-1;
 	}
 
-	public int getIdUser() {
-		return idUser;
+	public int getIdCart() {
+		return idCart;
 	}
 
-	public void setIdUser(int idUser) {
-		this.idUser = idUser;
+	public void setIdUser(int idCart) {
+		this.idCart = idCart;
 	}
 
 }
