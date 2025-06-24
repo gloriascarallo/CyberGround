@@ -1,12 +1,12 @@
 const namePattern=/^[A-z]+$/g;
-const telephonePattern=/^([0-9]{3}-[0-9]{7})$/g;
+const telephonePattern=/^([0-9]{10})$/g;
 const emailPattern=/^\S+@\S+.\S+$/g;
 const addressPattern=/^\w+(\s\w+)+$/g;
 const PANPattern=/^[0-9]{4}-[0-9]{4}-{0-9}{4}$/g;
 const ScadenzaPattern=/^[0-9]{2}\/\[0-9]{2}$/g;
 const CVCPattern=/^[0-9]{3-4}$/g;
 const errorNameMessage="Devi inserire almeno una lettera";
-const errorTelephoneMessage="Un numero di telefono valido deve avere formato ###-#######";
+const errorTelephoneMessage="Un numero di telefono valido deve avere formato ##########";
 const errorEmailMessage="Un'email valida deve avere formato username@domain.ext";
 const errorAddressMessage="Un indirizzo valido deve essere formato da sequenze di lettere o numeri separati da spazi"
 const errorPANMessage="Un metodo di pagamento valido deve avere formato ####-####-####-####";
