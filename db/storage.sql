@@ -19,7 +19,7 @@ CREATE TABLE `registereduser` (
   `name` varchar(20) DEFAULT NULL,
   `lastName` varchar(20) DEFAULT NULL,
   `email` varchar(45) DEFAULT NULL,
-  `telephoneNumber` int DEFAULT NULL,
+  `telephoneNumber` int(10) DEFAULT NULL,
   `idUser` int NOT NULL,
   PRIMARY KEY (`username`,`idUser`),
   KEY `idUser_idx` (`idUser`),
