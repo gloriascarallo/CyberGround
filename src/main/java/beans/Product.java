@@ -1,4 +1,5 @@
 package beans;
+import java.sql.Date;
 
 public class Product {
 
@@ -6,6 +7,7 @@ public class Product {
 	private String name;
 	private double price;
 	private String description;
+	private Date dateUpload;
 	private String supplier;
 	private String categoryName;
 	
@@ -47,6 +49,17 @@ public class Product {
 
 	public void setDescription(String description) {
 		this.description = description;
+		
+		
+	}
+	
+	public Date getDateUpload() {
+		return dateUpload;
+	}
+
+
+	public void setDateUpload(Date dateUpload) {
+		this.dateUpload = dateUpload;
 	}
 
 
@@ -75,6 +88,7 @@ public class Product {
 		name="";
 		price=-1;
 		description="";
+		dateUpload=new Date(0);
 		supplier="";
 		categoryName="";
 	}
