@@ -1,8 +1,11 @@
 package beans;
-import java.util.Date;
+import java.sql.Date;
 
 public class Order {
 
+
+
+    private int id_Order;
 	private int id;
     private Date datePurchase;
     private Date dateDelivery;
@@ -10,6 +13,15 @@ public class Order {
     private int idCart;
 	
 	
+    public int getId_Order() {
+		return id_Order;
+	}
+
+
+
+	public void setId_Order(int id_Order) {
+		this.id_Order = id_Order;
+	}
 	
 	public int getId() {
 		return id;
@@ -59,13 +71,13 @@ public class Order {
 
 
 
-	public int getidCart() {
+	public int getIdCart() {
 		return idCart;
 	}
 
 
 
-	public void setidCart(int idCart) {
+	public void setIdCart(int idCart) {
 		this.idCart = idCart;
 	}
 
@@ -73,9 +85,9 @@ public class Order {
 
 	public Order() {
 		id=-1;
-		datePurchase=new Date();
-		dateDelivery=new Date();
-		dateShipping=new Date();
+		datePurchase=new Date(0);
+		dateDelivery=new Date(0);
+		dateShipping=new Date(0);
 		idCart=-1;
 	}
 
