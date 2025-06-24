@@ -29,7 +29,7 @@ if(error!=null) {%> <div id="error"><%=error %></div>
 
 <div>
 <label for="telephone">Inserisci numero di telefono: </label>
-<input type="text" name="telephone" id="telephone" placeholder="###-#######" onchange="validateFormElement(this, telephonePattern, document.getElementById('errorTelephone'), errorTelephoneMessage"><span id="errorTelephone"></span>
+<input type="text" name="telephone" id="telephone" placeholder="##########" onchange="validateFormElement(this, telephonePattern, document.getElementById('errorTelephone'), errorTelephoneMessage"><span id="errorTelephone"></span>
 </div>
 
 <div>s
