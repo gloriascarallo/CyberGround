@@ -37,7 +37,7 @@ package beans;
 			PreparedStatement preparedStatement = null;
 
 			String insertSQL = "INSERT INTO " + Product_situatedin_cartDaoDataSource.TABLE_NAME
-					+ " (ID_SITUATEDIN, IDCART, IDPRODUCT, DATEADDED) VALUES (?, ?, ?, ?)";
+					+ " (ID_SITUATEDIN, IDCART, IDPRODUCT, DATEADDED, QUANTITY) VALUES (?, ?, ?, ?, ?)";
 
 			try {
 				connection = ds.getConnection();
@@ -46,7 +46,7 @@ package beans;
 				preparedStatement.setInt(2, product_situatedin_cart.getIdCart());
 				preparedStatement.setInt(3, product_situatedin_cart.getIdProduct());
 				preparedStatement.setDate(4, product_situatedin_cart.getDateAdded());
-				
+				preparedStatement.setInt(5, product_situatedin_cart.getQuantity());
 				
 
 				preparedStatement.executeUpdate();
@@ -70,7 +70,7 @@ package beans;
 	        
 			Product_situatedin_cart bean = new Product_situatedin_cart();
 
-			String selectSQL = "SELECT * FROM " + Product_situatedin_cartDaoDataSource.TABLE_NAME + " WHERE ID_SITUATEDIN = ?";
+			String selectSQL = "SELECT * FROM " + Product_situatedin_cartDaoDataSource.TABLE_NAME + " WHERE ID_CART = ?";
 
 			try {
 				connection = ds.getConnection();
@@ -84,6 +84,7 @@ package beans;
 					bean.setIdCart(rs.getInt("IDCART"));
 					bean.setIdProduct(rs.getInt("IDPRODUCT"));
 					bean.setDateAdded(rs.getDate("DATEADDED"));
+					bean.setQuantity(rs.getInt("QUANTITY"));
 			}
 
 			} finally {
@@ -153,6 +154,7 @@ package beans;
 					bean.setIdCart(rs.getInt("IDCART"));
 					bean.setIdProduct(rs.getInt("IDPRODUCT"));
 					bean.setDateAdded(rs.getDate("DATEADDED"));
+					bean.setQuantity(rs.getInt("QUANTITY"));
 					products_situatedin_carts.add(bean);
 				}
 
