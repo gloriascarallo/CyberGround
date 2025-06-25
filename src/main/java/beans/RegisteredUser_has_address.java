@@ -2,7 +2,7 @@ package beans;
 
 public class RegisteredUser_has_address {
     private int id_has_address;
-	private int idUser;
+	private String usernameRegisteredUser;
 	private String nameAddress;
 	
 	
@@ -14,12 +14,12 @@ public class RegisteredUser_has_address {
 		this.id_has_address = id_has_address;
 	}
 
-	public int getIdUser() {
-		return idUser;
+	public String getUsernameRegisteredUser() {
+		return usernameRegisteredUser;
 	}
 
-	public void setIdUser(int idUser) {
-		this.idUser = idUser;
+	public void setUsernameRegisteredUser(String usernameRegisteredUser) {
+		this.usernameRegisteredUser = usernameRegisteredUser;
 	}
 
 	public String getNameAddress() {
@@ -31,7 +31,8 @@ public class RegisteredUser_has_address {
 	}
 
 	public RegisteredUser_has_address() {
-		idUser=-1;
+		id_has_address=-1;
+		usernameRegisteredUser="";
 		nameAddress="";
 	}
 

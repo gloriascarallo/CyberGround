@@ -3,7 +3,7 @@ package beans;
 public class RegisteredUser_has_method_payment {
 
 	private int id_has_method_payment;
-	private int idUser;
+	private String usernameRegisteredUser;
 	private String pan;
 	private String expirationDate;
 	private String cvc;
@@ -17,14 +17,14 @@ public class RegisteredUser_has_method_payment {
 		this.id_has_method_payment = id_has_method_payment;
 	}
 
-	public int getIdUser() {
-		return idUser;
+	public String getUsernameRegisteredUser() {
+		return usernameRegisteredUser;
 	}
 
-	public void setIdUser(int idUser) {
-		this.idUser = idUser;
+	public void setUsernameRegisteredUser(String usernameRegisteredUser) {
+		this.usernameRegisteredUser = usernameRegisteredUser;
 	}
-
+	
 	public String getPan() {
 		return pan;
 	}
@@ -50,7 +50,8 @@ public class RegisteredUser_has_method_payment {
 	}
 
 	public RegisteredUser_has_method_payment() {
-		idUser=-1;
+		id_has_method_payment=-1;
+		usernameRegisteredUser="";
 		pan="";
 		expirationDate="";
 		cvc="";
