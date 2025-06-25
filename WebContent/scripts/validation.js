@@ -1,12 +1,16 @@
-const namePattern=/^[A-z]+$/g;
-const telephonePattern=/^([0-9]{3}-[0-9]{7})$/g;
-const emailPattern=/^\S+@\S+.\S+$/g;
+const namePattern=/^[A-z]{1, 20}+$/g;
+const usernamePattern=/^\w{1, 45}+$/g;
+const passwordPattern=/^\w{5, 20}+$/g;
+const telephonePattern=/^([0-9]{10})$/g;
+const emailPattern=/^\S+@\S+\.\S+$/g;
 const addressPattern=/^\w+(\s\w+)+$/g;
 const PANPattern=/^[0-9]{4}-[0-9]{4}-{0-9}{4}$/g;
 const ScadenzaPattern=/^[0-9]{2}\/\[0-9]{2}$/g;
 const CVCPattern=/^[0-9]{3-4}$/g;
-const errorNameMessage="Devi inserire almeno una lettera";
-const errorTelephoneMessage="Un numero di telefono valido deve avere formato ###-#######";
+const errorNameMessage="Devi inserire almeno una lettera e non devi superare 20 lettere";
+const errorUsernameMessage="Un username valido deve contenere almeno un carattere e non deve superarne 45";
+const errorPasswordMessage="Una password valida deve contenere minimo 5 caratteri e al massimo 20";
+const errorTelephoneMessage="Un numero di telefono valido deve avere formato ##########";
 const errorEmailMessage="Un'email valida deve avere formato username@domain.ext";
 const errorAddressMessage="Un indirizzo valido deve essere formato da sequenze di lettere o numeri separati da spazi"
 const errorPANMessage="Un metodo di pagamento valido deve avere formato ####-####-####-####";
@@ -47,7 +51,7 @@ function addAddress() {
 	
 	let input=document.createElement("input");
 	input.type="text";
-	input.name="address" + countAddress;
+	input.name="address";
 	input.id="address" + countAddress;
 	input.placeholder="Inserisci il tuo indirizzo";
 	div.appendChild(input);
@@ -88,7 +92,7 @@ function addMethodPayment() {
 	
 	let inputPAN=document.createElement("input");
 	inputPAN.type="text";
-	inputPAN.name="methodPaymentPAN" + countMethodPayment;
+	inputPAN.name="methodPaymentPAN";
 	inputPAN.id="methodPaymentPAN" + countMethodPayment;
 	inputPAN.placeholder="####-####-####-####";
 	div.appendChild(inputPAN);
@@ -99,7 +103,7 @@ function addMethodPayment() {
 		
 	let inputScadenza=document.createElement("input");
     inputScadenza.type="text";
-	inputScadenza.name="methodPaymentScadenza" + countMethodPayment;
+	inputScadenza.name="methodPaymentScadenza";
 	inputScadenza.id="methodPaymentScadenza" + countMethodPayment;
 	inputScadenza.placeholder="##/##";
 	div.appendChild(inputScadenza);
@@ -110,7 +114,7 @@ function addMethodPayment() {
 		
 	let inputCVC=document.createElement("input");
 	inputCVC.type="text";
-	inputCVC.name="methodPaymentCVC" + countMethodPayment;
+	inputCVC.name="methodPaymentCVC";
 	inputCVC.id="methodPaymentCVC" + countMethodPayment;
 	inputCVC.placeholder="### or ####";
 	div.appendChild(inputCVC);

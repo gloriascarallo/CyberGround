@@ -8,10 +8,18 @@
 </head>
 <body>
 
+<%
+String errors=(String)request.getAttribute("errors");
+if(!errors.equals("")) { %>
+
+<div class="error"><%=errors%></div>
+
+<% } %>
+
 <form action="Login" method="post">
 
 <label for="username">Inserisci username: </label>
-<input type="text" name="username" onchange="validateFormElement(this, namePattern, document.getElementById('errorUsername'), errorNameMessage)"><span id="errorUsername"></span>
+<input type="text" name="username" onchange="validateFormElement(this, usernamePattern, document.getElementById('errorUsername'), errorUsernameMessage)"><span id="errorUsername"></span>
 
 <label for="password">Inserisci password: </label>
 <input type="text" name="password" onchange="validateFormElement(this, passwordPattern, document.getElementById('errorUsername'), errorPasswordMessage)"><span id="errorPassword"></span>
