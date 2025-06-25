@@ -10,7 +10,7 @@
 
 <h2>Qui puoi trovare link utili alla tua assistenza</h2>
 
-<a>FAQ</a> <a>Consultaci</a>
+<a href="FAQ.html">FAQ</a> <a href="consult_us.html">Consultaci</a>
 
 </body>
 </html>
