@@ -51,7 +51,7 @@ function addAddress() {
 	
 	let input=document.createElement("input");
 	input.type="text";
-	input.name="address" + countAddress;
+	input.name="address";
 	input.id="address" + countAddress;
 	input.placeholder="Inserisci il tuo indirizzo";
 	div.appendChild(input);
@@ -92,7 +92,7 @@ function addMethodPayment() {
 	
 	let inputPAN=document.createElement("input");
 	inputPAN.type="text";
-	inputPAN.name="methodPaymentPAN" + countMethodPayment;
+	inputPAN.name="methodPaymentPAN";
 	inputPAN.id="methodPaymentPAN" + countMethodPayment;
 	inputPAN.placeholder="####-####-####-####";
 	div.appendChild(inputPAN);
@@ -103,7 +103,7 @@ function addMethodPayment() {
 		
 	let inputScadenza=document.createElement("input");
     inputScadenza.type="text";
-	inputScadenza.name="methodPaymentScadenza" + countMethodPayment;
+	inputScadenza.name="methodPaymentScadenza";
 	inputScadenza.id="methodPaymentScadenza" + countMethodPayment;
 	inputScadenza.placeholder="##/##";
 	div.appendChild(inputScadenza);
@@ -114,7 +114,7 @@ function addMethodPayment() {
 		
 	let inputCVC=document.createElement("input");
 	inputCVC.type="text";
-	inputCVC.name="methodPaymentCVC" + countMethodPayment;
+	inputCVC.name="methodPaymentCVC";
 	inputCVC.id="methodPaymentCVC" + countMethodPayment;
 	inputCVC.placeholder="### or ####";
 	div.appendChild(inputCVC);

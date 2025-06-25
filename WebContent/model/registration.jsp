@@ -10,8 +10,8 @@
 <body>
 
 <%
-String error=(String)request.getAttribute("error");
-if(error!=null) {%> <div id="error"><%=error %></div>
+String errors=(String)request.getAttribute("errors");
+if(!errors.equals("")) {%> <div id="error"><%=errors %></div>
 
 <% } %>
 
@@ -40,7 +40,7 @@ if(error!=null) {%> <div id="error"><%=error %></div>
 <div id="addresses">
 <div id="addressNum1">
 <label for="address1"> Inserisci un indirizzo (o più indirizzi): </label>
-<input type="text" name="address1" id="address1" onchange="validateFormElement(this, addressPattern, document.getElementById('errorAddress1'), errorAddressMessage" placeholder="Inserisci il tuo indirizzo"><input type="button" value="+" onclick="addAddress()"></input>
+<input type="text" name="address" id="address1" onchange="validateFormElement(this, addressPattern, document.getElementById('errorAddress1'), errorAddressMessage" placeholder="Inserisci il tuo indirizzo"><input type="button" value="+" onclick="addAddress()"></input>
 <span id="errorAddress1"></span>
 </div>
 </div>
@@ -48,11 +48,11 @@ if(error!=null) {%> <div id="error"><%=error %></div>
 <div id="methodsPayment">
 <div id="methodPaymentNum1">
 <label for="methodPaymentPAN1"> Inserisci un metodo di pagamento (o più metodi di pagamento): </label>
-<input type="text" name="methodPaymentPAN1" id="methodPaymentPAN1" onchange="validateFormElement(this, PANPattern, document.getElementById('errorPAN1'), errorPANMessage" placeholder="####-####-####-####">
+<input type="text" name="methodPaymentPAN" id="methodPaymentPAN1" onchange="validateFormElement(this, PANPattern, document.getElementById('errorPAN1'), errorPANMessage" placeholder="####-####-####-####">
 <span id="errorPAN1"></span>
-<input type="text" name="methodPaymentScadenza1" id="methodPaymentScadenza1" onchange="validateFormElement(this, ScadenzaPattern, document.getElementById('errorScadenza1'), errorScadenzaMessage" placeholder="##/##">
+<input type="text" name="methodPaymentScadenza" id="methodPaymentScadenza1" onchange="validateFormElement(this, ScadenzaPattern, document.getElementById('errorScadenza1'), errorScadenzaMessage" placeholder="##/##">
 <span id="errorScadenza1"></span>
-<input type="text" name="methodPaymentCVC1" id="methodPaymentCVC1" onchange="validateFormElement(this, CVCPattern, document.getElementById('errorCVC1'), errorCVCMessage" placeholder="### or ####"><input type="button" value="+" onclick="addMethodPayment()"></input>
+<input type="text" name="methodPaymentCVC" id="methodPaymentCVC1" onchange="validateFormElement(this, CVCPattern, document.getElementById('errorCVC1'), errorCVCMessage" placeholder="### or ####"><input type="button" value="+" onclick="addMethodPayment()"></input>
 <span id="errorCVC1"></span>
 
 </div>
