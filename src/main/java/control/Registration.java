@@ -35,11 +35,31 @@ public class Registration extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		RequestDispatcher dispatcherToRegistrationPage=request.getRequestDispatcher("registration.jsp");
+		String errors="";
+		String username=(String)request.getAttribute("username");
+		
+		RegisteredUserDaoDataSource ds1=new RegisteredUserDaoDataSource();
+		
+		
+		try {
+			if(ds1.doRetrieveByKey(username).getUsername().equals(username)) {
+		
+			errors+="Esiste già un utente con tale username.<br>";
+			request.setAttribute("errors", errors);
+			dispatcherToRegistrationPage.forward(request, response);
+			}
+		}
+			catch(SQLException e) {
+				
+				e.printStackTrace();
+				dispatcherToRegistrationPage.forward(request, response);
+			}
+		
+		
 		String name=(String)request.getAttribute("name");
 		String lastName=(String)request.getAttribute("lastName");
 		String telephone=(String)request.getAttribute("telephone");
 		String email=(String)request.getAttribute("email");
-		String username=(String)request.getAttribute("username");
 		String password=(String)request.getAttribute("password");
 		String[] addresses=(String[])request.getParameterValues("address");
 		String[] pans=(String[])request.getParameterValues("methodPaymentPAN");
@@ -56,7 +76,7 @@ public class Registration extends HttpServlet {
 		user.setTelephone(telephone);
 		user.setEmail(email);
 		
-		RegisteredUserDaoDataSource ds1=new RegisteredUserDaoDataSource();
+		ds1=new RegisteredUserDaoDataSource();
 		
 		try {ds1.doSave(user);
 		}
