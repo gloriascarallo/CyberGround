@@ -45,6 +45,8 @@ public class Login extends HttpServlet {
 		if(ds.doRetrieveByKey(username).getUsername().equals(username) && ds.doRetrieveByKey(username).getPassword().equals(password)) {
 		request.getSession().setAttribute("isAdmin", Boolean.FALSE);
 		request.getSession().setAttribute("isRegisteredUser", Boolean.TRUE);
+		//request.getSession().setAttribute("id", ds.doRetrieveByKey(username).getId()); perche l'id nella sessione c'è dall'inizio
+		request.getSession().setAttribute("username", username);
 		response.sendRedirect("index.jsp");
 		
 	}
