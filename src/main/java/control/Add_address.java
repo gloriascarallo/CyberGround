@@ -33,6 +33,7 @@ public class Add_address extends HttpServlet {
 		
 		String username=(String)request.getSession().getAttribute("username");
 		String nameAddress=request.getParameter("indirizzo");
+		String url=request.getRequestURI();
 		
 		RequestDispatcher dispatcherToAdd_addressPage=request.getRequestDispatcher("add_address.jsp");
 		RegisteredUser_has_address registereduser_has_address=new RegisteredUser_has_address();
@@ -52,7 +53,7 @@ public class Add_address extends HttpServlet {
 			dispatcherToAdd_addressPage.forward(request, response);
 		}
 		
-		response.sendRedirect("payment_page.jsp");
+		response.sendRedirect(url);
 		
 	}
 
