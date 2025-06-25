@@ -13,7 +13,7 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 
-	public class RegisteredUserDaoDataSouce implements IBeanDao<RegisteredUser> {
+	public class RegisteredUserDaoDataSource implements IBeanDao<RegisteredUser> {
 
 		private static DataSource ds;
 
@@ -37,7 +37,7 @@ import javax.sql.DataSource;
 			Connection connection = null;
 			PreparedStatement preparedStatement = null;
 
-			String insertSQL = "INSERT INTO " + RegisteredUserDaoDataSouce.TABLE_NAME
+			String insertSQL = "INSERT INTO " + RegisteredUserDaoDataSource.TABLE_NAME
 					+ " (USERNAME, PASSWORD, NAME, LASTNAME, EMAIL, TELEPHONENUMBER, IDUSER) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
 			try {
@@ -73,7 +73,7 @@ import javax.sql.DataSource;
 
 			RegisteredUser bean = new RegisteredUser();
 
-			String selectSQL = "SELECT * FROM " + RegisteredUserDaoDataSouce.TABLE_NAME + " WHERE USERNAME = ?";
+			String selectSQL = "SELECT * FROM " + RegisteredUserDaoDataSource.TABLE_NAME + " WHERE USERNAME = ?";
 
 			try {
 				connection = ds.getConnection();
@@ -113,7 +113,7 @@ import javax.sql.DataSource;
 
 			int result = 0;
 
-			String deleteSQL = "DELETE FROM " + RegisteredUserDaoDataSouce.TABLE_NAME + " WHERE USERNAME = ?";
+			String deleteSQL = "DELETE FROM " + RegisteredUserDaoDataSource.TABLE_NAME + " WHERE USERNAME = ?";
 
 			try {
 				connection = ds.getConnection();
@@ -141,7 +141,7 @@ import javax.sql.DataSource;
 
 			Collection<RegisteredUser> users = new LinkedList<RegisteredUser>();
 
-			String selectSQL = "SELECT * FROM " + RegisteredUserDaoDataSouce.TABLE_NAME;
+			String selectSQL = "SELECT * FROM " + RegisteredUserDaoDataSource.TABLE_NAME;
 
 			if (order != null && !order.equals("")) {
 				selectSQL += " ORDER BY " + order;
