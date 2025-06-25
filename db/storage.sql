@@ -14,7 +14,7 @@ DROP TABLE IF EXISTS registereduser;
 
 
 CREATE TABLE `registereduser` (
-  `username` varchar(20) NOT NULL,
+  `username` varchar(45) NOT NULL,
   `password` varchar(20) DEFAULT NULL,
   `name` varchar(20) DEFAULT NULL,
   `lastName` varchar(20) DEFAULT NULL,
@@ -31,7 +31,7 @@ DROP TABLE IF EXISTS admin;
 
 CREATE TABLE `admin` (
   `id` int NOT NULL,
-  `username` varchar(20) NOT NULL,
+  `username` varchar(45) NOT NULL,
   PRIMARY KEY (`username`),
   UNIQUE(`username`, `id`),
   KEY `id_Admin_idx` (`id`),
@@ -117,17 +117,17 @@ DROP TABLE IF EXISTS registereduser_has_method_payment;
 CREATE TABLE `registereduser_has_method_payment` (
 
   `id_has_method_payment` int AUTO_INCREMENT PRIMARY KEY,
-  `idUser` int NOT NULL,
+  `usernameRegisteredUser` varchar(45) NOT NULL,
   `panMethodPayment` char(19) NOT NULL,
   `expirationDateMethodPayment` char(5) NOT NULL,
   `cvcMethodPayment` varchar(4) NOT NULL,
-  UNIQUE (`idUser`,`panMethodPayment`,`expirationDateMethodPayment`,`cvcMethodPayment`),
+  UNIQUE (`usernameRegisteredUser`,`panMethodPayment`,`expirationDateMethodPayment`,`cvcMethodPayment`),
   KEY `expirationDate_HasMethodPayment_idx` (`expirationDateMethodPayment`),
   KEY `pan_HasMethodPayment_idx` (`panMethodPayment`),
   KEY `cvc_methodPayment_idx` (`cvcMethodPayment`),
   CONSTRAINT `cvc_methodPayment` FOREIGN KEY (`cvcMethodPayment`) REFERENCES `method_payment` (`cvc`) ON DELETE RESTRICT ON UPDATE CASCADE,
   CONSTRAINT `expirationDate_HasMethodPayment` FOREIGN KEY (`expirationDateMethodPayment`) REFERENCES `method_payment` (`expirationDate`) ON UPDATE CASCADE,
-  CONSTRAINT `idUser_HasMethodPayment` FOREIGN KEY (`idUser`) REFERENCES `registereduser` (`idUser`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  CONSTRAINT `usernameRegisteredUser_HasMethodPayment` FOREIGN KEY (`usernameRegisteredUser`) REFERENCES `registereduser` (`username`) ON DELETE RESTRICT ON UPDATE CASCADE,
   CONSTRAINT `pan_HasMethodPayment` FOREIGN KEY (`panMethodPayment`) REFERENCES `method_payment` (`pan`) ON UPDATE CASCADE
 )
 
@@ -143,12 +143,12 @@ DROP TABLE IF EXISTS registereduser_has_address;
 
 CREATE TABLE `registereduser_has_address` (
   `id_has_address` int AUTO_INCREMENT PRIMARY KEY,
-  `idUser` int NOT NULL,
+  `usernameRegisteredUser` varchar(45) NOT NULL,
   `nameAddress` varchar(45) NOT NULL,
-  UNIQUE (`idUser`,`nameAddress`),
-  KEY `idUser_HasAddress_idx` (`idUser`),
+  UNIQUE (`usernameRegisteredUser`,`nameAddress`),
+  KEY `usernameRegisteredUser_HasAddress_idx` (`usernameRegisteredUser`),
   KEY `nameAddress_HasAddress_idx` (`nameAddress`),
-  CONSTRAINT `idUser_HasAddress` FOREIGN KEY (`idUser`) REFERENCES `registereduser` (`idUser`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  CONSTRAINT `usernameRegisteredUser_HasAddress` FOREIGN KEY (`usernameRegisteredUser`) REFERENCES `registereduser` (`username`) ON DELETE RESTRICT ON UPDATE CASCADE,
   CONSTRAINT `nameAddress_HasAddress` FOREIGN KEY (`nameAddress`) REFERENCES `address` (`name`) ON DELETE RESTRICT ON UPDATE CASCADE
 ) 
 
