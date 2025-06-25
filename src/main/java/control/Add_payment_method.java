@@ -35,7 +35,7 @@ public class Add_payment_method extends HttpServlet {
 		String pan=request.getParameter("PAN");
 		String expirationDate=request.getParameter("Scadenza");
 		String cvc=request.getParameter("CVC");
-		
+		String url=request.getRequestURI();
 		
 		RequestDispatcher dispatcherToAdd_payment_methodPage=request.getRequestDispatcher("add_payment_method.jsp");
 		RegisteredUser_has_method_payment registereduser_has_method_payment=new RegisteredUser_has_method_payment();
@@ -58,7 +58,7 @@ public class Add_payment_method extends HttpServlet {
 			dispatcherToAdd_payment_methodPage.forward(request, response);
 		}
 		
-		response.sendRedirect("payment_page.jsp");
+		response.sendRedirect(url);
 		
 	}
 
