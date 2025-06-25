@@ -56,6 +56,7 @@ CREATE TABLE `product_situatedin_cart` (
   `idCart` int NOT NULL,
   `idProduct` int NOT NULL,
   `dateAdded` date NOT NULL,
+  `quantity` int NOT NULL,
   UNIQUE (`idProduct`,`idCart`),
   KEY `idCart_idx` (`idCart`),
   KEY `idProduct_idx` (`idProduct`),

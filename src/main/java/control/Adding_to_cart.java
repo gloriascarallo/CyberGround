@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.Date;
 import java.sql.SQLException;
 
 import beans.Product_situatedin_cart;
@@ -30,13 +31,17 @@ public class Adding_to_cart extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	
+	    
 		int idCart=(Integer)request.getSession().getAttribute("id");
 		int idProdotto=Integer.parseInt(request.getParameter("idProdotto"));
+		int quantity=Integer.parseInt(request.getParameter("quantity"));
 		RequestDispatcher dispatcherToProduct=request.getRequestDispatcher("product.jsp");
 		Product_situatedin_cart product_situatedin_cart=new Product_situatedin_cart();
 		product_situatedin_cart.setIdCart(idCart);
 		product_situatedin_cart.setIdProduct(idProdotto);
+		product_situatedin_cart.setQuantity(quantity);
+		product_situatedin_cart.setDateAdded(new Date(System.currentTimeMillis()));
+		
 		
 		Product_situatedin_cartDaoDataSource ds=new Product_situatedin_cartDaoDataSource();
 		

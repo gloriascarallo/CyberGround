@@ -7,8 +7,21 @@ public class Product_situatedin_cart {
 	private int idCart;
 	private int idProduct;
 	private Date dateAdded;
+	private int quantity;
 	
 	
+	public int getQuantity() {
+		return quantity;
+	}
+
+
+
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	}
+
+
+
 	public int getId_SituatedIn() {
 		return id_SituatedIn;
 	}
