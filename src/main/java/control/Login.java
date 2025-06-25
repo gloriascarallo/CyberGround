@@ -58,7 +58,11 @@ public class Login extends HttpServlet {
 		
 	}
 	
-	catch(SQLException e) {return;}
+	catch(SQLException e) {
+		e.printStackTrace();
+	    dispatcherToLoginPage.forward(request, response);
+	
+	}
 	
 	
 	}
