@@ -1,4 +1,4 @@
-package beans;
+package bean;
 
 public class RegisteredUser_has_address {
     private int id_has_address;

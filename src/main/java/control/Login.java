@@ -9,7 +9,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 
-import beans.RegisteredUserDaoDataSource;
+import dao.RegisteredUserDaoDataSource;
 
 /**
  * Servlet implementation class Login

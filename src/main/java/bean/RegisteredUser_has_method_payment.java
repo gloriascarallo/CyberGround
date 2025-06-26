@@ -1,4 +1,4 @@
-package beans;
+package bean;
 
 public class RegisteredUser_has_method_payment {
 

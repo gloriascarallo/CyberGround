@@ -1,4 +1,4 @@
-package beans;
+package dao;
 
 
 	import java.sql.Connection;
@@ -11,6 +11,8 @@ package beans;
 	import javax.naming.InitialContext;
 	import javax.naming.NamingException;
 	import javax.sql.DataSource;
+
+import bean.Category;
 
 
 		public class CategoryDaoDataSource implements IBeanDao<Category> {

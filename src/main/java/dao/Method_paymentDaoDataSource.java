@@ -1,4 +1,4 @@
-package beans;
+package dao;
 
 
 	import java.sql.Connection;
@@ -11,6 +11,8 @@ package beans;
 	import javax.naming.InitialContext;
 	import javax.naming.NamingException;
 	import javax.sql.DataSource;
+
+import bean.Method_payment;
 
 
 		public class Method_paymentDaoDataSource implements IBeanDao<Method_payment> {

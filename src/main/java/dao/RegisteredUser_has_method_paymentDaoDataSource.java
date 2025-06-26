@@ -1,5 +1,4 @@
-package beans;
-
+package dao;
 
 	import java.sql.Connection;
 	import java.sql.PreparedStatement;
@@ -12,7 +11,9 @@ package beans;
 	import javax.naming.NamingException;
 	import javax.sql.DataSource;
 
-	public class Product_situatedin_cartDaoDataSource implements IBeanDao<Product_situatedin_cart> {
+import bean.RegisteredUser_has_method_payment;
+
+	public class RegisteredUser_has_method_paymentDaoDataSource implements IBeanDao<RegisteredUser_has_method_payment> {
 
 		private static DataSource ds;
 
@@ -28,25 +29,25 @@ package beans;
 			}
 		}
 
-		private static final String TABLE_NAME = "product_situatedin_cart";
+		private static final String TABLE_NAME = "registereduser_has_method_payment";
 
 		@Override
-		public synchronized void doSave(Product_situatedin_cart product_situatedin_cart) throws SQLException {
+		public synchronized void doSave(RegisteredUser_has_method_payment registereduser_has_method_payment) throws SQLException {
 
 			Connection connection = null;
 			PreparedStatement preparedStatement = null;
 
-			String insertSQL = "INSERT INTO " + Product_situatedin_cartDaoDataSource.TABLE_NAME
-					+ " (ID_SITUATEDIN, IDCART, IDPRODUCT, DATEADDED, QUANTITY) VALUES (?, ?, ?, ?, ?)";
+			String insertSQL = "INSERT INTO " + RegisteredUser_has_method_paymentDaoDataSource.TABLE_NAME
+					+ " (ID_HAS_METHOD_PAYMENT, USERNAMEREGISTEREDUSER, PANMETHODPAYMENT, EXPIRATIONDATEMETHODPAYMENT, CVCMETHODPAYMENT) VALUES (?, ?, ?, ?, ?)";
 
 			try {
 				connection = ds.getConnection();
 				preparedStatement = connection.prepareStatement(insertSQL);
-				preparedStatement.setInt(1, product_situatedin_cart.getId_SituatedIn());
-				preparedStatement.setInt(2, product_situatedin_cart.getIdCart());
-				preparedStatement.setInt(3, product_situatedin_cart.getIdProduct());
-				preparedStatement.setDate(4, product_situatedin_cart.getDateAdded());
-				preparedStatement.setInt(5, product_situatedin_cart.getQuantity());
+				preparedStatement.setInt(1, registereduser_has_method_payment.getId_has_method_payment());
+				preparedStatement.setString(2, registereduser_has_method_payment.getUsernameRegisteredUser());
+				preparedStatement.setString(3, registereduser_has_method_payment.getPan());
+				preparedStatement.setString(4, registereduser_has_method_payment.getExpirationDate());
+				preparedStatement.setString(5, registereduser_has_method_payment.getCvc());
 				
 
 				preparedStatement.executeUpdate();
@@ -63,14 +64,14 @@ package beans;
 		}
 
 		@Override
-		public synchronized Product_situatedin_cart doRetrieveByKey(Object o_id) throws SQLException {
+		public synchronized RegisteredUser_has_method_payment doRetrieveByKey(Object o_id) throws SQLException {
 			Connection connection = null;
 			PreparedStatement preparedStatement = null;
 	        int id=(Integer)o_id;
 	        
-			Product_situatedin_cart bean = new Product_situatedin_cart();
+			RegisteredUser_has_method_payment bean = new RegisteredUser_has_method_payment();
 
-			String selectSQL = "SELECT * FROM " + Product_situatedin_cartDaoDataSource.TABLE_NAME + " WHERE ID_CART = ?";
+			String selectSQL = "SELECT * FROM " + RegisteredUser_has_method_paymentDaoDataSource.TABLE_NAME + " WHERE ID_HAS_METHOD_PAYMENT = ?";
 
 			try {
 				connection = ds.getConnection();
@@ -80,11 +81,11 @@ package beans;
 				ResultSet rs = preparedStatement.executeQuery();
 
 				while (rs.next()) {
-					bean.setId_SituatedIn(rs.getInt("ID_SITUATEDIN"));
-					bean.setIdCart(rs.getInt("IDCART"));
-					bean.setIdProduct(rs.getInt("IDPRODUCT"));
-					bean.setDateAdded(rs.getDate("DATEADDED"));
-					bean.setQuantity(rs.getInt("QUANTITY"));
+					bean.setId_has_method_payment(rs.getInt("ID_HAS_METHOD_PAYMENT"));
+					bean.setUsernameRegisteredUser(rs.getString("USERNAMEREGISTEREDUSER"));
+					bean.setPan(rs.getString("PANMETHODPAYMENT"));
+					bean.setExpirationDate(rs.getString("EXPIRATIONDATEMETHODPAYMENT"));
+					bean.setCvc(rs.getString("CVCMETHODPAYMENT"));
 			}
 
 			} finally {
@@ -107,7 +108,7 @@ package beans;
 	        
 			int result = 0;
 
-			String deleteSQL = "DELETE FROM " + Product_situatedin_cartDaoDataSource.TABLE_NAME + " WHERE ID_SITUATEDIN = ?";
+			String deleteSQL = "DELETE FROM " + RegisteredUser_has_method_paymentDaoDataSource.TABLE_NAME + " WHERE ID_HAS_METHOD_PAYMENT = ?";
 
 			try {
 				connection = ds.getConnection();
@@ -129,13 +130,13 @@ package beans;
 		}
 
 		@Override
-		public synchronized Collection<Product_situatedin_cart> doRetrieveAll(String order) throws SQLException {
+		public synchronized Collection<RegisteredUser_has_method_payment> doRetrieveAll(String order) throws SQLException {
 			Connection connection = null;
 			PreparedStatement preparedStatement = null;
 
-			Collection<Product_situatedin_cart> products_situatedin_carts = new LinkedList<Product_situatedin_cart>();
+			Collection<RegisteredUser_has_method_payment> registeredusers_have_methods_payment = new LinkedList<RegisteredUser_has_method_payment>();
 
-			String selectSQL = "SELECT * FROM " + Product_situatedin_cartDaoDataSource.TABLE_NAME;
+			String selectSQL = "SELECT * FROM " + RegisteredUser_has_method_paymentDaoDataSource.TABLE_NAME;
 
 			if (order != null && !order.equals("")) {
 				selectSQL += " ORDER BY " + order;
@@ -148,14 +149,14 @@ package beans;
 				ResultSet rs = preparedStatement.executeQuery();
 
 				while (rs.next()) {
-					Product_situatedin_cart bean = new Product_situatedin_cart();
+					RegisteredUser_has_method_payment bean = new RegisteredUser_has_method_payment();
 
-					bean.setId_SituatedIn(rs.getInt("ID_SITUATEDIN"));
-					bean.setIdCart(rs.getInt("IDCART"));
-					bean.setIdProduct(rs.getInt("IDPRODUCT"));
-					bean.setDateAdded(rs.getDate("DATEADDED"));
-					bean.setQuantity(rs.getInt("QUANTITY"));
-					products_situatedin_carts.add(bean);
+					bean.setId_has_method_payment(rs.getInt("ID_HAS_METHOD_PAYMENT"));
+					bean.setUsernameRegisteredUser(rs.getString("USERNAMEREGISTEREDUSER"));
+					bean.setPan(rs.getString("PANMETHODPAYMENT"));
+					bean.setExpirationDate(rs.getString("EXPIRATIONDATEMETHODPAYMENT"));
+					bean.setCvc(rs.getString("CVCMETHODPAYMENT"));
+					registeredusers_have_methods_payment.add(bean);
 				}
 
 			} finally {
@@ -167,7 +168,7 @@ package beans;
 						connection.close();
 				}
 			}
-			return products_situatedin_carts;
+			return registeredusers_have_methods_payment;
 		}
 
 

@@ -7,13 +7,14 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
+
+import bean.RegisteredUser;
+import bean.RegisteredUser_has_address;
+import bean.RegisteredUser_has_method_payment;
+import dao.RegisteredUserDaoDataSource;
+import dao.RegisteredUser_has_addressDaoDataSource;
+import dao.RegisteredUser_has_method_paymentDaoDataSource;
 import jakarta.servlet.RequestDispatcher;
-import beans.RegisteredUser;
-import beans.RegisteredUserDaoDataSource;
-import beans.RegisteredUser_has_address;
-import beans.RegisteredUser_has_addressDaoDataSource;
-import beans.RegisteredUser_has_method_payment;
-import beans.RegisteredUser_has_method_paymentDaoDataSource;
 /**
  * Servlet implementation class Registration
  */

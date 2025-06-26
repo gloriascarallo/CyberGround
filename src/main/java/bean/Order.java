@@ -1,4 +1,4 @@
-package beans;
+package bean;
 import java.sql.Date;
 
 public class Order {

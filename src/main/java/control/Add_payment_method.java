@@ -8,8 +8,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
-import beans.RegisteredUser_has_method_payment;
-import beans.RegisteredUser_has_method_paymentDaoDataSource;
+
+import bean.RegisteredUser_has_method_payment;
+import dao.RegisteredUser_has_method_paymentDaoDataSource;
 
 /**
  * Servlet implementation class Add_payment_method

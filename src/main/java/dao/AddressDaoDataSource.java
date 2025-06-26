@@ -1,5 +1,4 @@
-package beans;
-
+package dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,8 +11,10 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import bean.Address;
 
-	public class RegisteredUserDaoDataSource implements IBeanDao<RegisteredUser> {
+
+	public class AddressDaoDataSource implements IBeanDao<Address> {
 
 		private static DataSource ds;
 
@@ -29,28 +30,22 @@ import javax.sql.DataSource;
 			}
 		}
 
-		private static final String TABLE_NAME = "registereduser";
+		private static final String TABLE_NAME = "address";
 
 		@Override
-		public synchronized void doSave(RegisteredUser user) throws SQLException {
+		public synchronized void doSave(Address address) throws SQLException {
 
 			Connection connection = null;
 			PreparedStatement preparedStatement = null;
 
-			String insertSQL = "INSERT INTO " + RegisteredUserDaoDataSource.TABLE_NAME
-					+ " (USERNAME, PASSWORD, NAME, LASTNAME, EMAIL, TELEPHONENUMBER, IDUSER) VALUES (?, ?, ?, ?, ?, ?, ?)";
+			String insertSQL = "INSERT INTO " + AddressDaoDataSource.TABLE_NAME
+					+ " (NAME) VALUES (?)";
 
 			try {
 				connection = ds.getConnection();
 				preparedStatement = connection.prepareStatement(insertSQL);
-	            preparedStatement.setString(1, user.getUsername());
-				preparedStatement.setString(2, user.getPassword());
-				preparedStatement.setString(3, user.getName());
-				preparedStatement.setString(4, user.getLastName());
-				preparedStatement.setString(5, user.getEmail());
-				preparedStatement.setString(6, user.getTelephone());
-				preparedStatement.setInt(7, user.getId());
-			
+	            preparedStatement.setString(1, address.getName());
+				
 
 				preparedStatement.executeUpdate();
 
@@ -66,30 +61,25 @@ import javax.sql.DataSource;
 		}
 
 		@Override
-		public synchronized RegisteredUser doRetrieveByKey(Object o_username) throws SQLException {
+		public synchronized Address doRetrieveByKey(Object o_name) throws SQLException {
 			Connection connection = null;
 			PreparedStatement preparedStatement = null;
-			String username=(String)o_username;
+			String name=(String)o_name;
 
-			RegisteredUser bean = new RegisteredUser();
+			Address bean = new Address();
 
-			String selectSQL = "SELECT * FROM " + RegisteredUserDaoDataSource.TABLE_NAME + " WHERE USERNAME = ?";
+			String selectSQL = "SELECT * FROM " + AddressDaoDataSource.TABLE_NAME + " WHERE NAME = ?";
 
 			try {
 				connection = ds.getConnection();
 				preparedStatement = connection.prepareStatement(selectSQL);
-				preparedStatement.setString(1, username);
+				preparedStatement.setString(1, name);
 
 				ResultSet rs = preparedStatement.executeQuery();
 
 				while (rs.next()) {
-					bean.setUsername(rs.getString("USERNAME"));
-					bean.setPassword(rs.getString("PASSWORD"));
 					bean.setName(rs.getString("NAME"));
-					bean.setLastName(rs.getString("LASTNAME"));
-					bean.setEmail(rs.getString("EMAIL"));
-					bean.setTelephone(rs.getString("TELEPHONE"));
-					bean.setId(rs.getInt("IDUSER"));
+					
 			
 				}
 
@@ -106,19 +96,19 @@ import javax.sql.DataSource;
 		}
 
 		@Override
-		public synchronized boolean doDelete(Object o_username) throws SQLException {
+		public synchronized boolean doDelete(Object o_name) throws SQLException {
 			Connection connection = null;
 			PreparedStatement preparedStatement = null;
-			String username=(String)o_username;
+			String name=(String)o_name;
 
 			int result = 0;
 
-			String deleteSQL = "DELETE FROM " + RegisteredUserDaoDataSource.TABLE_NAME + " WHERE USERNAME = ?";
+			String deleteSQL = "DELETE FROM " + AddressDaoDataSource.TABLE_NAME + " WHERE NAME = ?";
 
 			try {
 				connection = ds.getConnection();
 				preparedStatement = connection.prepareStatement(deleteSQL);
-				preparedStatement.setString(1, username);
+				preparedStatement.setString(1, name);
 
 				result = preparedStatement.executeUpdate();
 
@@ -135,13 +125,13 @@ import javax.sql.DataSource;
 		}
 
 		@Override
-		public synchronized Collection<RegisteredUser> doRetrieveAll(String order) throws SQLException {
+		public synchronized Collection<Address> doRetrieveAll(String order) throws SQLException {
 			Connection connection = null;
 			PreparedStatement preparedStatement = null;
 
-			Collection<RegisteredUser> users = new LinkedList<RegisteredUser>();
+			Collection<Address> addresses = new LinkedList<Address>();
 
-			String selectSQL = "SELECT * FROM " + RegisteredUserDaoDataSource.TABLE_NAME;
+			String selectSQL = "SELECT * FROM " + AddressDaoDataSource.TABLE_NAME;
 
 			if (order != null && !order.equals("")) {
 				selectSQL += " ORDER BY " + order;
@@ -154,16 +144,11 @@ import javax.sql.DataSource;
 				ResultSet rs = preparedStatement.executeQuery();
 
 				while (rs.next()) {
-					RegisteredUser bean = new RegisteredUser();
+					Address bean = new Address();
 
-					bean.setUsername(rs.getString("USERNAME"));
-					bean.setPassword(rs.getString("PASSWORD"));
 					bean.setName(rs.getString("NAME"));
-					bean.setLastName(rs.getString("LASTNAME"));
-					bean.setEmail(rs.getString("EMAIL"));
-					bean.setTelephone(rs.getString("TELEPHONE"));
-					bean.setId(rs.getInt("IDUSER"));
-					users.add(bean);
+					addresses.add(bean);
+					
 				}
 
 			} finally {
@@ -175,7 +160,7 @@ import javax.sql.DataSource;
 						connection.close();
 				}
 			}
-			return users;
+			return addresses;
 		}
 
 

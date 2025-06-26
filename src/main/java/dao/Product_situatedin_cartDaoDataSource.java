@@ -1,4 +1,5 @@
-package beans;
+package dao;
+
 
 	import java.sql.Connection;
 	import java.sql.PreparedStatement;
@@ -11,7 +12,9 @@ package beans;
 	import javax.naming.NamingException;
 	import javax.sql.DataSource;
 
-	public class RegisteredUser_has_addressDaoDataSource implements IBeanDao<RegisteredUser_has_address> {
+import bean.Product_situatedin_cart;
+
+	public class Product_situatedin_cartDaoDataSource implements IBeanDao<Product_situatedin_cart> {
 
 		private static DataSource ds;
 
@@ -27,24 +30,25 @@ package beans;
 			}
 		}
 
-		private static final String TABLE_NAME = "registereduser_has_address";
+		private static final String TABLE_NAME = "product_situatedin_cart";
 
 		@Override
-		public synchronized void doSave(RegisteredUser_has_address registereduser_has_address) throws SQLException {
+		public synchronized void doSave(Product_situatedin_cart product_situatedin_cart) throws SQLException {
 
 			Connection connection = null;
 			PreparedStatement preparedStatement = null;
 
-			String insertSQL = "INSERT INTO " + RegisteredUser_has_addressDaoDataSource.TABLE_NAME
-					+ " (ID_HAS_ADDRESS, USERNAMEREGISTEREDUSER, NAMEADDRESS) VALUES (?, ?, ?)";
+			String insertSQL = "INSERT INTO " + Product_situatedin_cartDaoDataSource.TABLE_NAME
+					+ " (ID_SITUATEDIN, IDCART, IDPRODUCT, DATEADDED, QUANTITY) VALUES (?, ?, ?, ?, ?)";
 
 			try {
 				connection = ds.getConnection();
 				preparedStatement = connection.prepareStatement(insertSQL);
-				preparedStatement.setInt(1, registereduser_has_address.getId_has_address());
-				preparedStatement.setString(2, registereduser_has_address.getUsernameRegisteredUser());
-				preparedStatement.setString(3, registereduser_has_address.getNameAddress());
-				
+				preparedStatement.setInt(1, product_situatedin_cart.getId_SituatedIn());
+				preparedStatement.setInt(2, product_situatedin_cart.getIdCart());
+				preparedStatement.setInt(3, product_situatedin_cart.getIdProduct());
+				preparedStatement.setDate(4, product_situatedin_cart.getDateAdded());
+				preparedStatement.setInt(5, product_situatedin_cart.getQuantity());
 				
 
 				preparedStatement.executeUpdate();
@@ -61,14 +65,14 @@ package beans;
 		}
 
 		@Override
-		public synchronized RegisteredUser_has_address doRetrieveByKey(Object o_id) throws SQLException {
+		public synchronized Product_situatedin_cart doRetrieveByKey(Object o_id) throws SQLException {
 			Connection connection = null;
 			PreparedStatement preparedStatement = null;
 	        int id=(Integer)o_id;
 	        
-			RegisteredUser_has_address bean = new RegisteredUser_has_address();
+			Product_situatedin_cart bean = new Product_situatedin_cart();
 
-			String selectSQL = "SELECT * FROM " + RegisteredUser_has_addressDaoDataSource.TABLE_NAME + " WHERE ID_HAS_ADDRESS = ?";
+			String selectSQL = "SELECT * FROM " + Product_situatedin_cartDaoDataSource.TABLE_NAME + " WHERE ID_CART = ?";
 
 			try {
 				connection = ds.getConnection();
@@ -78,9 +82,11 @@ package beans;
 				ResultSet rs = preparedStatement.executeQuery();
 
 				while (rs.next()) {
-					bean.setId_has_address(rs.getInt("ID_HAS_ADDRESS"));
-					bean.setUsernameRegisteredUser(rs.getString("USERNAMEREGISTEREDUSER"));
-					bean.setNameAddress(rs.getString("NAMEADDRESS"));
+					bean.setId_SituatedIn(rs.getInt("ID_SITUATEDIN"));
+					bean.setIdCart(rs.getInt("IDCART"));
+					bean.setIdProduct(rs.getInt("IDPRODUCT"));
+					bean.setDateAdded(rs.getDate("DATEADDED"));
+					bean.setQuantity(rs.getInt("QUANTITY"));
 			}
 
 			} finally {
@@ -103,7 +109,7 @@ package beans;
 	        
 			int result = 0;
 
-			String deleteSQL = "DELETE FROM " + RegisteredUser_has_addressDaoDataSource.TABLE_NAME + " WHERE ID_HAS_ADDRESS = ?";
+			String deleteSQL = "DELETE FROM " + Product_situatedin_cartDaoDataSource.TABLE_NAME + " WHERE ID_SITUATEDIN = ?";
 
 			try {
 				connection = ds.getConnection();
@@ -125,13 +131,13 @@ package beans;
 		}
 
 		@Override
-		public synchronized Collection<RegisteredUser_has_address> doRetrieveAll(String order) throws SQLException {
+		public synchronized Collection<Product_situatedin_cart> doRetrieveAll(String order) throws SQLException {
 			Connection connection = null;
 			PreparedStatement preparedStatement = null;
 
-			Collection<RegisteredUser_has_address> registeredusers_have_addresses = new LinkedList<RegisteredUser_has_address>();
+			Collection<Product_situatedin_cart> products_situatedin_carts = new LinkedList<Product_situatedin_cart>();
 
-			String selectSQL = "SELECT * FROM " + RegisteredUser_has_addressDaoDataSource.TABLE_NAME;
+			String selectSQL = "SELECT * FROM " + Product_situatedin_cartDaoDataSource.TABLE_NAME;
 
 			if (order != null && !order.equals("")) {
 				selectSQL += " ORDER BY " + order;
@@ -144,12 +150,14 @@ package beans;
 				ResultSet rs = preparedStatement.executeQuery();
 
 				while (rs.next()) {
-					RegisteredUser_has_address bean = new RegisteredUser_has_address();
+					Product_situatedin_cart bean = new Product_situatedin_cart();
 
-					bean.setId_has_address(rs.getInt("ID_HAS_ADDRESS"));
-					bean.setUsernameRegisteredUser(rs.getString("USERNAMEREGISTEREDUSER"));
-					bean.setNameAddress(rs.getString("NAMEADDRESS"));
-					registeredusers_have_addresses.add(bean);
+					bean.setId_SituatedIn(rs.getInt("ID_SITUATEDIN"));
+					bean.setIdCart(rs.getInt("IDCART"));
+					bean.setIdProduct(rs.getInt("IDPRODUCT"));
+					bean.setDateAdded(rs.getDate("DATEADDED"));
+					bean.setQuantity(rs.getInt("QUANTITY"));
+					products_situatedin_carts.add(bean);
 				}
 
 			} finally {
@@ -161,9 +169,8 @@ package beans;
 						connection.close();
 				}
 			}
-			return registeredusers_have_addresses;
+			return products_situatedin_carts;
 		}
-
 
 
 }

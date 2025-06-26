@@ -9,8 +9,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 
-import beans.RegisteredUser_has_address;
-import beans.RegisteredUser_has_addressDaoDataSource;
+import bean.RegisteredUser_has_address;
+import dao.RegisteredUser_has_addressDaoDataSource;
 /**
  * Servlet implementation class Add_address
  */

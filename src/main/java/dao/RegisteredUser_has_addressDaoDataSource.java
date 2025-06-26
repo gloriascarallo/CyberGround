@@ -1,4 +1,4 @@
-package beans;
+package dao;
 
 	import java.sql.Connection;
 	import java.sql.PreparedStatement;
@@ -11,7 +11,9 @@ package beans;
 	import javax.naming.NamingException;
 	import javax.sql.DataSource;
 
-	public class RegisteredUser_has_method_paymentDaoDataSource implements IBeanDao<RegisteredUser_has_method_payment> {
+import bean.RegisteredUser_has_address;
+
+	public class RegisteredUser_has_addressDaoDataSource implements IBeanDao<RegisteredUser_has_address> {
 
 		private static DataSource ds;
 
@@ -27,25 +29,24 @@ package beans;
 			}
 		}
 
-		private static final String TABLE_NAME = "registereduser_has_method_payment";
+		private static final String TABLE_NAME = "registereduser_has_address";
 
 		@Override
-		public synchronized void doSave(RegisteredUser_has_method_payment registereduser_has_method_payment) throws SQLException {
+		public synchronized void doSave(RegisteredUser_has_address registereduser_has_address) throws SQLException {
 
 			Connection connection = null;
 			PreparedStatement preparedStatement = null;
 
-			String insertSQL = "INSERT INTO " + RegisteredUser_has_method_paymentDaoDataSource.TABLE_NAME
-					+ " (ID_HAS_METHOD_PAYMENT, USERNAMEREGISTEREDUSER, PANMETHODPAYMENT, EXPIRATIONDATEMETHODPAYMENT, CVCMETHODPAYMENT) VALUES (?, ?, ?, ?, ?)";
+			String insertSQL = "INSERT INTO " + RegisteredUser_has_addressDaoDataSource.TABLE_NAME
+					+ " (ID_HAS_ADDRESS, USERNAMEREGISTEREDUSER, NAMEADDRESS) VALUES (?, ?, ?)";
 
 			try {
 				connection = ds.getConnection();
 				preparedStatement = connection.prepareStatement(insertSQL);
-				preparedStatement.setInt(1, registereduser_has_method_payment.getId_has_method_payment());
-				preparedStatement.setString(2, registereduser_has_method_payment.getUsernameRegisteredUser());
-				preparedStatement.setString(3, registereduser_has_method_payment.getPan());
-				preparedStatement.setString(4, registereduser_has_method_payment.getExpirationDate());
-				preparedStatement.setString(5, registereduser_has_method_payment.getCvc());
+				preparedStatement.setInt(1, registereduser_has_address.getId_has_address());
+				preparedStatement.setString(2, registereduser_has_address.getUsernameRegisteredUser());
+				preparedStatement.setString(3, registereduser_has_address.getNameAddress());
+				
 				
 
 				preparedStatement.executeUpdate();
@@ -62,14 +63,14 @@ package beans;
 		}
 
 		@Override
-		public synchronized RegisteredUser_has_method_payment doRetrieveByKey(Object o_id) throws SQLException {
+		public synchronized RegisteredUser_has_address doRetrieveByKey(Object o_id) throws SQLException {
 			Connection connection = null;
 			PreparedStatement preparedStatement = null;
 	        int id=(Integer)o_id;
 	        
-			RegisteredUser_has_method_payment bean = new RegisteredUser_has_method_payment();
+			RegisteredUser_has_address bean = new RegisteredUser_has_address();
 
-			String selectSQL = "SELECT * FROM " + RegisteredUser_has_method_paymentDaoDataSource.TABLE_NAME + " WHERE ID_HAS_METHOD_PAYMENT = ?";
+			String selectSQL = "SELECT * FROM " + RegisteredUser_has_addressDaoDataSource.TABLE_NAME + " WHERE ID_HAS_ADDRESS = ?";
 
 			try {
 				connection = ds.getConnection();
@@ -79,11 +80,9 @@ package beans;
 				ResultSet rs = preparedStatement.executeQuery();
 
 				while (rs.next()) {
-					bean.setId_has_method_payment(rs.getInt("ID_HAS_METHOD_PAYMENT"));
+					bean.setId_has_address(rs.getInt("ID_HAS_ADDRESS"));
 					bean.setUsernameRegisteredUser(rs.getString("USERNAMEREGISTEREDUSER"));
-					bean.setPan(rs.getString("PANMETHODPAYMENT"));
-					bean.setExpirationDate(rs.getString("EXPIRATIONDATEMETHODPAYMENT"));
-					bean.setCvc(rs.getString("CVCMETHODPAYMENT"));
+					bean.setNameAddress(rs.getString("NAMEADDRESS"));
 			}
 
 			} finally {
@@ -106,7 +105,7 @@ package beans;
 	        
 			int result = 0;
 
-			String deleteSQL = "DELETE FROM " + RegisteredUser_has_method_paymentDaoDataSource.TABLE_NAME + " WHERE ID_HAS_METHOD_PAYMENT = ?";
+			String deleteSQL = "DELETE FROM " + RegisteredUser_has_addressDaoDataSource.TABLE_NAME + " WHERE ID_HAS_ADDRESS = ?";
 
 			try {
 				connection = ds.getConnection();
@@ -128,13 +127,13 @@ package beans;
 		}
 
 		@Override
-		public synchronized Collection<RegisteredUser_has_method_payment> doRetrieveAll(String order) throws SQLException {
+		public synchronized Collection<RegisteredUser_has_address> doRetrieveAll(String order) throws SQLException {
 			Connection connection = null;
 			PreparedStatement preparedStatement = null;
 
-			Collection<RegisteredUser_has_method_payment> registeredusers_have_methods_payment = new LinkedList<RegisteredUser_has_method_payment>();
+			Collection<RegisteredUser_has_address> registeredusers_have_addresses = new LinkedList<RegisteredUser_has_address>();
 
-			String selectSQL = "SELECT * FROM " + RegisteredUser_has_method_paymentDaoDataSource.TABLE_NAME;
+			String selectSQL = "SELECT * FROM " + RegisteredUser_has_addressDaoDataSource.TABLE_NAME;
 
 			if (order != null && !order.equals("")) {
 				selectSQL += " ORDER BY " + order;
@@ -147,14 +146,12 @@ package beans;
 				ResultSet rs = preparedStatement.executeQuery();
 
 				while (rs.next()) {
-					RegisteredUser_has_method_payment bean = new RegisteredUser_has_method_payment();
+					RegisteredUser_has_address bean = new RegisteredUser_has_address();
 
-					bean.setId_has_method_payment(rs.getInt("ID_HAS_METHOD_PAYMENT"));
+					bean.setId_has_address(rs.getInt("ID_HAS_ADDRESS"));
 					bean.setUsernameRegisteredUser(rs.getString("USERNAMEREGISTEREDUSER"));
-					bean.setPan(rs.getString("PANMETHODPAYMENT"));
-					bean.setExpirationDate(rs.getString("EXPIRATIONDATEMETHODPAYMENT"));
-					bean.setCvc(rs.getString("CVCMETHODPAYMENT"));
-					registeredusers_have_methods_payment.add(bean);
+					bean.setNameAddress(rs.getString("NAMEADDRESS"));
+					registeredusers_have_addresses.add(bean);
 				}
 
 			} finally {
@@ -166,8 +163,9 @@ package beans;
 						connection.close();
 				}
 			}
-			return registeredusers_have_methods_payment;
+			return registeredusers_have_addresses;
 		}
+
 
 
 }

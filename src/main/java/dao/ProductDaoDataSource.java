@@ -1,17 +1,19 @@
-package beans;
+package dao;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collection;
 import java.util.LinkedList;
-
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-public class UserDaoDataSouce implements IBeanDao<User> {
+import bean.Product;
+
+public class ProductDaoDataSource implements IBeanDao<Product> {
 
 	private static DataSource ds;
 
@@ -27,22 +29,28 @@ public class UserDaoDataSouce implements IBeanDao<User> {
 		}
 	}
 
-	private static final String TABLE_NAME = "user";
+	private static final String TABLE_NAME = "product";
 
 	@Override
-	public synchronized void doSave(User user) throws SQLException {
+	public synchronized void doSave(Product product) throws SQLException {
 
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 
-		String insertSQL = "INSERT INTO " + UserDaoDataSouce.TABLE_NAME
-				+ " (ID) VALUES (?)";
+		String insertSQL = "INSERT INTO " + ProductDaoDataSource.TABLE_NAME
+				+ " (ID, NAME, PRICE, DESCRIPTION, DATEUPLOAD, SUPPLIER, CATEGORYNAME) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
 		try {
 			connection = ds.getConnection();
 			preparedStatement = connection.prepareStatement(insertSQL);
-			preparedStatement.setInt(1, user.getId());
-		
+			preparedStatement.setInt(1, product.getId());
+			preparedStatement.setString(2, product.getName());
+			preparedStatement.setDouble(3, product.getPrice());
+			preparedStatement.setString(4, product.getDescription());
+			preparedStatement.setDate(5, product.getDateUpload());
+			preparedStatement.setString(6, product.getSupplier());
+			preparedStatement.setString(7, product.getCategoryName());
+			
 			
 
 			preparedStatement.executeUpdate();
@@ -59,14 +67,14 @@ public class UserDaoDataSouce implements IBeanDao<User> {
 	}
 
 	@Override
-	public synchronized User doRetrieveByKey(Object o_id) throws SQLException {
+	public synchronized Product doRetrieveByKey(Object o_id) throws SQLException {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
-		int id=(Integer)o_id;
+        int id=(Integer)o_id;
+        
+		Product bean = new Product();
 
-		User bean = new User();
-
-		String selectSQL = "SELECT * FROM " + UserDaoDataSouce.TABLE_NAME + " WHERE ID = ?";
+		String selectSQL = "SELECT * FROM " + ProductDaoDataSource.TABLE_NAME + " WHERE ID = ?";
 
 		try {
 			connection = ds.getConnection();
@@ -77,7 +85,12 @@ public class UserDaoDataSouce implements IBeanDao<User> {
 
 			while (rs.next()) {
 				bean.setId(rs.getInt("ID"));
-		
+				bean.setName(rs.getString("NAME"));
+				bean.setDescription(rs.getString("DESCRIPTION"));
+				bean.setPrice(rs.getInt("PRICE"));
+				bean.setCategoryName(rs.getString("CATEGORYNAME"));
+				bean.setSupplier(rs.getString("SUPPLIER"));
+				bean.setDateUpload(rs.getDate("DATEUPLOAD"));
 			}
 
 		} finally {
@@ -100,7 +113,7 @@ public class UserDaoDataSouce implements IBeanDao<User> {
         
 		int result = 0;
 
-		String deleteSQL = "DELETE FROM " + UserDaoDataSouce.TABLE_NAME + " WHERE ID = ?";
+		String deleteSQL = "DELETE FROM " + ProductDaoDataSource.TABLE_NAME + " WHERE ID = ?";
 
 		try {
 			connection = ds.getConnection();
@@ -122,13 +135,13 @@ public class UserDaoDataSouce implements IBeanDao<User> {
 	}
 
 	@Override
-	public synchronized Collection<User> doRetrieveAll(String order) throws SQLException {
+	public synchronized Collection<Product> doRetrieveAll(String order) throws SQLException {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 
-		Collection<User> users = new LinkedList<User>();
+		Collection<Product> products = new LinkedList<Product>();
 
-		String selectSQL = "SELECT * FROM " + UserDaoDataSouce.TABLE_NAME;
+		String selectSQL = "SELECT * FROM " + ProductDaoDataSource.TABLE_NAME;
 
 		if (order != null && !order.equals("")) {
 			selectSQL += " ORDER BY " + order;
@@ -141,11 +154,16 @@ public class UserDaoDataSouce implements IBeanDao<User> {
 			ResultSet rs = preparedStatement.executeQuery();
 
 			while (rs.next()) {
-				User bean = new User();
+				Product bean = new Product();
 
 				bean.setId(rs.getInt("ID"));
-				users.add(bean);
-				
+				bean.setName(rs.getString("NAME"));
+				bean.setDescription(rs.getString("DESCRIPTION"));
+				bean.setPrice(rs.getInt("PRICE"));
+				bean.setCategoryName(rs.getString("CATEGORYNAME"));
+				bean.setSupplier(rs.getString("SUPPLIER"));
+				bean.setDateUpload(rs.getDate("DATEUPLOAD"));
+				products.add(bean);
 			}
 
 		} finally {
@@ -157,8 +175,7 @@ public class UserDaoDataSouce implements IBeanDao<User> {
 					connection.close();
 			}
 		}
-		return users;
+		return products;
 	}
-
 
 }
