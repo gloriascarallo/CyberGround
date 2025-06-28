@@ -6,7 +6,7 @@ USE storage;
 
 
 CREATE TABLE `user` (
-  `id` int NOT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`id`)
 );
 
@@ -14,7 +14,7 @@ CREATE TABLE `user` (
 
 CREATE TABLE `registereduser` (
   `username` varchar(45) NOT NULL,
-  `password` varchar(20) DEFAULT NULL,
+  `password` varchar(100) DEFAULT NULL,
   `name` varchar(20) DEFAULT NULL,
   `lastName` varchar(20) DEFAULT NULL,
   `email` varchar(45) DEFAULT NULL,
@@ -52,13 +52,15 @@ CREATE TABLE `cart` (
 
 
 CREATE TABLE `product` (
-  `id` int NOT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(45) DEFAULT NULL,
   `price` double DEFAULT NULL,
   `description` varchar(500) DEFAULT NULL,
   `dateUpload` date DEFAULT NULL,
   `supplier` varchar(45) DEFAULT NULL,
   `categoryName` varchar(45) DEFAULT NULL,
+  `imagePath` varchar(100) DEFAULT NULL;
+  `quantityAvailable` int DEFAULT 1;
   PRIMARY KEY (`id`),
   KEY `categoryName_idx` (`categoryName`),
   CONSTRAINT `categoryName` FOREIGN KEY (`categoryName`) REFERENCES `category` (`name`) ON DELETE RESTRICT ON UPDATE CASCADE
@@ -69,7 +71,7 @@ CREATE TABLE `product_situatedin_cart` (
   `idCart` int NOT NULL,
   `idProduct` int NOT NULL,
   `dateAdded` date NOT NULL,
-  `quantity` int NOT NULL,
+  `quantity` int NOT NULL DEFAULT 1,
   UNIQUE (`idProduct`,`idCart`),
   KEY `idCart_idx` (`idCart`),
   KEY `idProduct_idx` (`idProduct`),
