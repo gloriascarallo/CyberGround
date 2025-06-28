@@ -11,10 +11,10 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-import bean.Address;
+import bean.AddressBean;
 
 
-	public class AddressDaoDataSource implements IBeanDao<Address> {
+	public class AddressDaoDataSource implements IBeanDao<AddressBean> {
 
 		private static DataSource ds;
 
@@ -33,7 +33,7 @@ import bean.Address;
 		private static final String TABLE_NAME = "address";
 
 		@Override
-		public synchronized void doSave(Address address) throws SQLException {
+		public synchronized void doSave(AddressBean address) throws SQLException {
 
 			Connection connection = null;
 			PreparedStatement preparedStatement = null;
@@ -61,12 +61,12 @@ import bean.Address;
 		}
 
 		@Override
-		public synchronized Address doRetrieveByKey(Object o_name) throws SQLException {
+		public synchronized AddressBean doRetrieveByKey(Object o_name) throws SQLException {
 			Connection connection = null;
 			PreparedStatement preparedStatement = null;
 			String name=(String)o_name;
 
-			Address bean = new Address();
+			AddressBean bean = new AddressBean();
 
 			String selectSQL = "SELECT * FROM " + AddressDaoDataSource.TABLE_NAME + " WHERE NAME = ?";
 
@@ -125,11 +125,11 @@ import bean.Address;
 		}
 
 		@Override
-		public synchronized Collection<Address> doRetrieveAll(String order) throws SQLException {
+		public synchronized Collection<AddressBean> doRetrieveAll(String order) throws SQLException {
 			Connection connection = null;
 			PreparedStatement preparedStatement = null;
 
-			Collection<Address> addresses = new LinkedList<Address>();
+			Collection<AddressBean> addresses = new LinkedList<AddressBean>();
 
 			String selectSQL = "SELECT * FROM " + AddressDaoDataSource.TABLE_NAME;
 
@@ -144,7 +144,7 @@ import bean.Address;
 				ResultSet rs = preparedStatement.executeQuery();
 
 				while (rs.next()) {
-					Address bean = new Address();
+					AddressBean bean = new AddressBean();
 
 					bean.setName(rs.getString("NAME"));
 					addresses.add(bean);

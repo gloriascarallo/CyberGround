@@ -11,9 +11,9 @@ package dao;
 	import javax.naming.NamingException;
 	import javax.sql.DataSource;
 
-import bean.RegisteredUser_has_address;
+import bean.RegisteredUser_has_addressBean;
 
-	public class RegisteredUser_has_addressDaoDataSource implements IBeanDao<RegisteredUser_has_address> {
+	public class RegisteredUser_has_addressDaoDataSource implements IBeanDao<RegisteredUser_has_addressBean> {
 
 		private static DataSource ds;
 
@@ -32,7 +32,7 @@ import bean.RegisteredUser_has_address;
 		private static final String TABLE_NAME = "registereduser_has_address";
 
 		@Override
-		public synchronized void doSave(RegisteredUser_has_address registereduser_has_address) throws SQLException {
+		public synchronized void doSave(RegisteredUser_has_addressBean registereduser_has_address) throws SQLException {
 
 			Connection connection = null;
 			PreparedStatement preparedStatement = null;
@@ -63,12 +63,12 @@ import bean.RegisteredUser_has_address;
 		}
 
 		@Override
-		public synchronized RegisteredUser_has_address doRetrieveByKey(Object o_id) throws SQLException {
+		public synchronized RegisteredUser_has_addressBean doRetrieveByKey(Object o_id) throws SQLException {
 			Connection connection = null;
 			PreparedStatement preparedStatement = null;
 	        int id=(Integer)o_id;
 	        
-			RegisteredUser_has_address bean = new RegisteredUser_has_address();
+			RegisteredUser_has_addressBean bean = new RegisteredUser_has_addressBean();
 
 			String selectSQL = "SELECT * FROM " + RegisteredUser_has_addressDaoDataSource.TABLE_NAME + " WHERE ID_HAS_ADDRESS = ?";
 
@@ -127,11 +127,11 @@ import bean.RegisteredUser_has_address;
 		}
 
 		@Override
-		public synchronized Collection<RegisteredUser_has_address> doRetrieveAll(String order) throws SQLException {
+		public synchronized Collection<RegisteredUser_has_addressBean> doRetrieveAll(String order) throws SQLException {
 			Connection connection = null;
 			PreparedStatement preparedStatement = null;
 
-			Collection<RegisteredUser_has_address> registeredusers_have_addresses = new LinkedList<RegisteredUser_has_address>();
+			Collection<RegisteredUser_has_addressBean> registeredusers_have_addresses = new LinkedList<RegisteredUser_has_addressBean>();
 
 			String selectSQL = "SELECT * FROM " + RegisteredUser_has_addressDaoDataSource.TABLE_NAME;
 
@@ -146,7 +146,7 @@ import bean.RegisteredUser_has_address;
 				ResultSet rs = preparedStatement.executeQuery();
 
 				while (rs.next()) {
-					RegisteredUser_has_address bean = new RegisteredUser_has_address();
+					RegisteredUser_has_addressBean bean = new RegisteredUser_has_addressBean();
 
 					bean.setId_has_address(rs.getInt("ID_HAS_ADDRESS"));
 					bean.setUsernameRegisteredUser(rs.getString("USERNAMEREGISTEREDUSER"));

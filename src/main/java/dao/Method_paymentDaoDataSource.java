@@ -12,10 +12,10 @@ package dao;
 	import javax.naming.NamingException;
 	import javax.sql.DataSource;
 
-import bean.Method_payment;
+import bean.Method_paymentBean;
 
 
-		public class Method_paymentDaoDataSource implements IBeanDao<Method_payment> {
+		public class Method_paymentDaoDataSource implements IBeanDao<Method_paymentBean> {
 
 			private static DataSource ds;
 
@@ -34,7 +34,7 @@ import bean.Method_payment;
 			private static final String TABLE_NAME = "method_payment";
 
 			@Override
-			public synchronized void doSave(Method_payment method_payment) throws SQLException {
+			public synchronized void doSave(Method_paymentBean method_payment) throws SQLException {
 
 				Connection connection = null;
 				PreparedStatement preparedStatement = null;
@@ -62,12 +62,12 @@ import bean.Method_payment;
 			}
 
 			@Override
-			public synchronized Method_payment doRetrieveByKey(Object o_pan) throws SQLException {
+			public synchronized Method_paymentBean doRetrieveByKey(Object o_pan) throws SQLException {
 				Connection connection = null;
 				PreparedStatement preparedStatement = null;
 				String pan=(String)o_pan;
 
-				Method_payment bean = new Method_payment();
+				Method_paymentBean bean = new Method_paymentBean();
 
 				String selectSQL = "SELECT * FROM " + Method_paymentDaoDataSource.TABLE_NAME + " WHERE PAN = ?";
 
@@ -125,11 +125,11 @@ import bean.Method_payment;
 			}
 
 			@Override
-			public synchronized Collection<Method_payment> doRetrieveAll(String order) throws SQLException {
+			public synchronized Collection<Method_paymentBean> doRetrieveAll(String order) throws SQLException {
 				Connection connection = null;
 				PreparedStatement preparedStatement = null;
 
-				Collection<Method_payment> methods_payment = new LinkedList<Method_payment>();
+				Collection<Method_paymentBean> methods_payment = new LinkedList<Method_paymentBean>();
 
 				String selectSQL = "SELECT * FROM " + Method_paymentDaoDataSource.TABLE_NAME;
 
@@ -144,7 +144,7 @@ import bean.Method_payment;
 					ResultSet rs = preparedStatement.executeQuery();
 
 					while (rs.next()) {
-						Method_payment bean = new Method_payment();
+						Method_paymentBean bean = new Method_paymentBean();
 
 						bean.setPan(rs.getString("PAN"));
 						bean.setExpirationDate(rs.getString("EXPIRATIONDATE"));

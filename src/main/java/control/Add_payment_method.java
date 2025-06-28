@@ -9,7 +9,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 
-import bean.RegisteredUser_has_method_payment;
+import bean.RegisteredUser_has_method_paymentBean;
 import dao.RegisteredUser_has_method_paymentDaoDataSource;
 
 /**
@@ -39,7 +39,7 @@ public class Add_payment_method extends HttpServlet {
 		String url=request.getRequestURI();
 		
 		RequestDispatcher dispatcherToAdd_payment_methodPage=request.getRequestDispatcher("add_payment_method.jsp");
-		RegisteredUser_has_method_payment registereduser_has_method_payment=new RegisteredUser_has_method_payment();
+		RegisteredUser_has_method_paymentBean registereduser_has_method_payment=new RegisteredUser_has_method_paymentBean();
 		RegisteredUser_has_method_paymentDaoDataSource ds=new RegisteredUser_has_method_paymentDaoDataSource();
 		
 		

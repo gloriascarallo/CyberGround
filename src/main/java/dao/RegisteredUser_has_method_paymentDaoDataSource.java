@@ -11,9 +11,9 @@ package dao;
 	import javax.naming.NamingException;
 	import javax.sql.DataSource;
 
-import bean.RegisteredUser_has_method_payment;
+import bean.RegisteredUser_has_method_paymentBean;
 
-	public class RegisteredUser_has_method_paymentDaoDataSource implements IBeanDao<RegisteredUser_has_method_payment> {
+	public class RegisteredUser_has_method_paymentDaoDataSource implements IBeanDao<RegisteredUser_has_method_paymentBean> {
 
 		private static DataSource ds;
 
@@ -32,7 +32,7 @@ import bean.RegisteredUser_has_method_payment;
 		private static final String TABLE_NAME = "registereduser_has_method_payment";
 
 		@Override
-		public synchronized void doSave(RegisteredUser_has_method_payment registereduser_has_method_payment) throws SQLException {
+		public synchronized void doSave(RegisteredUser_has_method_paymentBean registereduser_has_method_payment) throws SQLException {
 
 			Connection connection = null;
 			PreparedStatement preparedStatement = null;
@@ -64,12 +64,12 @@ import bean.RegisteredUser_has_method_payment;
 		}
 
 		@Override
-		public synchronized RegisteredUser_has_method_payment doRetrieveByKey(Object o_id) throws SQLException {
+		public synchronized RegisteredUser_has_method_paymentBean doRetrieveByKey(Object o_id) throws SQLException {
 			Connection connection = null;
 			PreparedStatement preparedStatement = null;
 	        int id=(Integer)o_id;
 	        
-			RegisteredUser_has_method_payment bean = new RegisteredUser_has_method_payment();
+			RegisteredUser_has_method_paymentBean bean = new RegisteredUser_has_method_paymentBean();
 
 			String selectSQL = "SELECT * FROM " + RegisteredUser_has_method_paymentDaoDataSource.TABLE_NAME + " WHERE ID_HAS_METHOD_PAYMENT = ?";
 
@@ -130,11 +130,11 @@ import bean.RegisteredUser_has_method_payment;
 		}
 
 		@Override
-		public synchronized Collection<RegisteredUser_has_method_payment> doRetrieveAll(String order) throws SQLException {
+		public synchronized Collection<RegisteredUser_has_method_paymentBean> doRetrieveAll(String order) throws SQLException {
 			Connection connection = null;
 			PreparedStatement preparedStatement = null;
 
-			Collection<RegisteredUser_has_method_payment> registeredusers_have_methods_payment = new LinkedList<RegisteredUser_has_method_payment>();
+			Collection<RegisteredUser_has_method_paymentBean> registeredusers_have_methods_payment = new LinkedList<RegisteredUser_has_method_paymentBean>();
 
 			String selectSQL = "SELECT * FROM " + RegisteredUser_has_method_paymentDaoDataSource.TABLE_NAME;
 
@@ -149,7 +149,7 @@ import bean.RegisteredUser_has_method_payment;
 				ResultSet rs = preparedStatement.executeQuery();
 
 				while (rs.next()) {
-					RegisteredUser_has_method_payment bean = new RegisteredUser_has_method_payment();
+					RegisteredUser_has_method_paymentBean bean = new RegisteredUser_has_method_paymentBean();
 
 					bean.setId_has_method_payment(rs.getInt("ID_HAS_METHOD_PAYMENT"));
 					bean.setUsernameRegisteredUser(rs.getString("USERNAMEREGISTEREDUSER"));

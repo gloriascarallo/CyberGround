@@ -6,7 +6,7 @@ package dao;
 	import javax.naming.NamingException;
 	import javax.sql.DataSource;
 
-import bean.Order;
+import bean.OrderBean;
 
 import java.sql.Connection;
 	import java.sql.PreparedStatement;
@@ -14,7 +14,7 @@ import java.sql.Connection;
 	import java.util.Collection;
 	import java.util.LinkedList;
 
-	public class OrderDaoDataSource implements IBeanDao<Order> {
+	public class OrderDaoDataSource implements IBeanDao<OrderBean> {
 
 		private static DataSource ds;
 
@@ -33,7 +33,7 @@ import java.sql.Connection;
 		private static final String TABLE_NAME = "order";
 
 		@Override
-		public synchronized void doSave(Order order) throws SQLException {
+		public synchronized void doSave(OrderBean order) throws SQLException {
 
 			Connection connection = null;
 			PreparedStatement preparedStatement = null;
@@ -67,12 +67,12 @@ import java.sql.Connection;
 		}
 
 		@Override
-		public synchronized Order doRetrieveByKey(Object o_id) throws SQLException {
+		public synchronized OrderBean doRetrieveByKey(Object o_id) throws SQLException {
 			Connection connection = null;
 			PreparedStatement preparedStatement = null;
 	        int id=(Integer)o_id;
 	        
-			Order bean = new Order();
+			OrderBean bean = new OrderBean();
 
 			String selectSQL = "SELECT * FROM " + OrderDaoDataSource.TABLE_NAME + " WHERE ID_ORDER = ?";
 
@@ -135,11 +135,11 @@ import java.sql.Connection;
 		}
 
 		@Override
-		public synchronized Collection<Order> doRetrieveAll(String order) throws SQLException {
+		public synchronized Collection<OrderBean> doRetrieveAll(String order) throws SQLException {
 			Connection connection = null;
 			PreparedStatement preparedStatement = null;
 
-			Collection<Order> orders = new LinkedList<Order>();
+			Collection<OrderBean> orders = new LinkedList<OrderBean>();
 
 			String selectSQL = "SELECT * FROM " + OrderDaoDataSource.TABLE_NAME;
 
@@ -154,7 +154,7 @@ import java.sql.Connection;
 				ResultSet rs = preparedStatement.executeQuery();
 
 				while (rs.next()) {
-					Order bean = new Order();
+					OrderBean bean = new OrderBean();
 					bean.setId_Order(rs.getInt("ID_ORDER"));
 					bean.setId(rs.getInt("ID"));
 					bean.setDatePurchase(rs.getDate("DATEPURCHASE"));

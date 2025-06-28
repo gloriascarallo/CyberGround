@@ -9,7 +9,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 
-import bean.RegisteredUser_has_address;
+import bean.RegisteredUser_has_addressBean;
 import dao.RegisteredUser_has_addressDaoDataSource;
 /**
  * Servlet implementation class Add_address
@@ -36,7 +36,7 @@ public class Add_address extends HttpServlet {
 		String url=request.getRequestURI();
 		
 		RequestDispatcher dispatcherToAdd_addressPage=request.getRequestDispatcher("add_address.jsp");
-		RegisteredUser_has_address registereduser_has_address=new RegisteredUser_has_address();
+		RegisteredUser_has_addressBean registereduser_has_address=new RegisteredUser_has_addressBean();
 		RegisteredUser_has_addressDaoDataSource ds=new RegisteredUser_has_addressDaoDataSource();
 		
 		registereduser_has_address.setNameAddress(nameAddress);

@@ -12,10 +12,10 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-import bean.RegisteredUser;
+import bean.RegisteredUserBean;
 
 
-	public class RegisteredUserDaoDataSource implements IBeanDao<RegisteredUser> {
+	public class RegisteredUserDaoDataSource implements IBeanDao<RegisteredUserBean> {
 
 		private static DataSource ds;
 
@@ -34,7 +34,7 @@ import bean.RegisteredUser;
 		private static final String TABLE_NAME = "registereduser";
 
 		@Override
-		public synchronized void doSave(RegisteredUser user) throws SQLException {
+		public synchronized void doSave(RegisteredUserBean user) throws SQLException {
 
 			Connection connection = null;
 			PreparedStatement preparedStatement = null;
@@ -68,12 +68,12 @@ import bean.RegisteredUser;
 		}
 
 		@Override
-		public synchronized RegisteredUser doRetrieveByKey(Object o_username) throws SQLException {
+		public synchronized RegisteredUserBean doRetrieveByKey(Object o_username) throws SQLException {
 			Connection connection = null;
 			PreparedStatement preparedStatement = null;
 			String username=(String)o_username;
 
-			RegisteredUser bean = new RegisteredUser();
+			RegisteredUserBean bean = new RegisteredUserBean();
 
 			String selectSQL = "SELECT * FROM " + RegisteredUserDaoDataSource.TABLE_NAME + " WHERE USERNAME = ?";
 
@@ -137,11 +137,11 @@ import bean.RegisteredUser;
 		}
 
 		@Override
-		public synchronized Collection<RegisteredUser> doRetrieveAll(String order) throws SQLException {
+		public synchronized Collection<RegisteredUserBean> doRetrieveAll(String order) throws SQLException {
 			Connection connection = null;
 			PreparedStatement preparedStatement = null;
 
-			Collection<RegisteredUser> users = new LinkedList<RegisteredUser>();
+			Collection<RegisteredUserBean> users = new LinkedList<RegisteredUserBean>();
 
 			String selectSQL = "SELECT * FROM " + RegisteredUserDaoDataSource.TABLE_NAME;
 
@@ -156,7 +156,7 @@ import bean.RegisteredUser;
 				ResultSet rs = preparedStatement.executeQuery();
 
 				while (rs.next()) {
-					RegisteredUser bean = new RegisteredUser();
+					RegisteredUserBean bean = new RegisteredUserBean();
 
 					bean.setUsername(rs.getString("USERNAME"));
 					bean.setPassword(rs.getString("PASSWORD"));

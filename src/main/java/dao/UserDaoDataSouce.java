@@ -11,9 +11,9 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-import bean.User;
+import bean.UserBean;
 
-public class UserDaoDataSouce implements IBeanDao<User> {
+public class UserDaoDataSouce implements IBeanDao<UserBean> {
 
 	private static DataSource ds;
 
@@ -32,7 +32,7 @@ public class UserDaoDataSouce implements IBeanDao<User> {
 	private static final String TABLE_NAME = "user";
 
 	@Override
-	public synchronized void doSave(User user) throws SQLException {
+	public synchronized void doSave(UserBean user) throws SQLException {
 
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
@@ -61,12 +61,12 @@ public class UserDaoDataSouce implements IBeanDao<User> {
 	}
 
 	@Override
-	public synchronized User doRetrieveByKey(Object o_id) throws SQLException {
+	public synchronized UserBean doRetrieveByKey(Object o_id) throws SQLException {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		int id=(Integer)o_id;
 
-		User bean = new User();
+		UserBean bean = new UserBean();
 
 		String selectSQL = "SELECT * FROM " + UserDaoDataSouce.TABLE_NAME + " WHERE ID = ?";
 
@@ -124,11 +124,11 @@ public class UserDaoDataSouce implements IBeanDao<User> {
 	}
 
 	@Override
-	public synchronized Collection<User> doRetrieveAll(String order) throws SQLException {
+	public synchronized Collection<UserBean> doRetrieveAll(String order) throws SQLException {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 
-		Collection<User> users = new LinkedList<User>();
+		Collection<UserBean> users = new LinkedList<UserBean>();
 
 		String selectSQL = "SELECT * FROM " + UserDaoDataSouce.TABLE_NAME;
 
@@ -143,7 +143,7 @@ public class UserDaoDataSouce implements IBeanDao<User> {
 			ResultSet rs = preparedStatement.executeQuery();
 
 			while (rs.next()) {
-				User bean = new User();
+				UserBean bean = new UserBean();
 
 				bean.setId(rs.getInt("ID"));
 				users.add(bean);

@@ -12,10 +12,10 @@ package dao;
 	import javax.naming.NamingException;
 	import javax.sql.DataSource;
 
-import bean.Category;
+import bean.CategoryBean;
 
 
-		public class CategoryDaoDataSource implements IBeanDao<Category> {
+		public class CategoryDaoDataSource implements IBeanDao<CategoryBean> {
 
 			private static DataSource ds;
 
@@ -34,7 +34,7 @@ import bean.Category;
 			private static final String TABLE_NAME = "category";
 
 			@Override
-			public synchronized void doSave(Category category) throws SQLException {
+			public synchronized void doSave(CategoryBean category) throws SQLException {
 
 				Connection connection = null;
 				PreparedStatement preparedStatement = null;
@@ -62,12 +62,12 @@ import bean.Category;
 			}
 
 			@Override
-			public synchronized Category doRetrieveByKey(Object o_name) throws SQLException {
+			public synchronized CategoryBean doRetrieveByKey(Object o_name) throws SQLException {
 				Connection connection = null;
 				PreparedStatement preparedStatement = null;
 				String name=(String)o_name;
 
-				Category bean = new Category();
+				CategoryBean bean = new CategoryBean();
 
 				String selectSQL = "SELECT * FROM " + CategoryDaoDataSource.TABLE_NAME + " WHERE NAME = ?";
 
@@ -126,11 +126,11 @@ import bean.Category;
 			}
 
 			@Override
-			public synchronized Collection<Category> doRetrieveAll(String order) throws SQLException {
+			public synchronized Collection<CategoryBean> doRetrieveAll(String order) throws SQLException {
 				Connection connection = null;
 				PreparedStatement preparedStatement = null;
 
-				Collection<Category> addresses = new LinkedList<Category>();
+				Collection<CategoryBean> addresses = new LinkedList<CategoryBean>();
 
 				String selectSQL = "SELECT * FROM " + CategoryDaoDataSource.TABLE_NAME;
 
@@ -145,7 +145,7 @@ import bean.Category;
 					ResultSet rs = preparedStatement.executeQuery();
 
 					while (rs.next()) {
-						Category bean = new Category();
+						CategoryBean bean = new CategoryBean();
 
 						bean.setName(rs.getString("NAME"));
 						addresses.add(bean);
