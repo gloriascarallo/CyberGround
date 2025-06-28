@@ -1,0 +1,25 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<%@page import="bean.RegisteredUserBean"%>
+
+<%
+RegisteredUserBean user=(RegisteredUserBean)request.getAttribute("user");
+%>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Hello, <%=user.getName() %></title>
+</head>
+<body>
+
+<img src="${user.imagePath}" alt="User image"></img>
+<p>Username: ${user.username}</p>
+<p>Name: ${user.name} </p>
+<p>Last Name: ${user.lastName}</p>
+<p>Telephone number: ${user.telephone}</p>
+<p>Email: ${user.email}</p>
+
+
+</body>
+</html>
