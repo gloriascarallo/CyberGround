@@ -1,12 +1,12 @@
-const namePattern=/^[A-z]{1, 20}+$/g;
-const usernamePattern=/^\w{1, 45}+$/g;
-const passwordPattern=/^\w{5, 20}+$/g;
-const telephonePattern=/^([0-9]{10})$/g;
-const emailPattern=/^\S+@\S+\.\S+$/g;
-const addressPattern=/^\w+(\s\w+)+$/g;
-const PANPattern=/^[0-9]{4}-[0-9]{4}-{0-9}{4}$/g;
-const ScadenzaPattern=/^[0-9]{2}\/\[0-9]{2}$/g;
-const CVCPattern=/^[0-9]{3-4}$/g;
+const namePattern=/^[A-z]{1,20}$/;
+const usernamePattern=/^\w{1,45}$/;
+const passwordPattern=/^\w{5,20}$/;
+const telephonePattern=/^[0-9]{10}$/;
+const emailPattern=/^\S+@\S+\.\S+$/;
+const addressPattern=/^\w+(\s\w+)*$/g;
+const PANPattern=/^[0-9]{4}-[0-9]{4}-[0-9]{4}$/;
+const ScadenzaPattern=/^(0[1-9]|1[0-2])\/\d{2}$/;
+const CVCPattern=/^[0-9]{3,4}$/;
 const errorNameMessage="Devi inserire almeno una lettera e non devi superare 20 lettere";
 const errorUsernameMessage="Un username valido deve contenere almeno un carattere e non deve superarne 45";
 const errorPasswordMessage="Una password valida deve contenere minimo 5 caratteri e al massimo 20";
@@ -18,7 +18,7 @@ const errorScadenzaMessage="Una data di scadenza valida deve avere formato ##/##
 const errorCVCMessage="Un CVC valido deve avere formato ### o ####";
 
 
-function validateFormElement(formElement, pattern, error, span) {
+function validateFormElement(formElement, pattern, span, error) {
 	
 	
 	if(formElement.value.match(pattern)) {
@@ -67,8 +67,8 @@ function addAddress() {
 	div.appendChild(span);
 	
 	
-input.addEventListener("change", validateFormElement(input, addressPattern, span, errorAddressMessage));
-count++;
+input.addEventListener("change", function() {validateFormElement(input, addressPattern, span, errorAddressMessage);});
+countAddress++;
 container.appendChild(div);
 	
 	
@@ -87,8 +87,10 @@ function addMethodPayment() {
 	
 	let label=document.createElement("label");
 	label.htmlFor="methodPaymentPAN" + countMethodPayment;
-	label.appendChild(document.createTextNode("Inserisci un indirizzo: "));
+	label.appendChild(document.createTextNode("Inserisci un metodo di pagamento: "));
 	div.appendChild(label);
+	div.appendChild(document.createElement("br"));
+	
 	
 	let inputPAN=document.createElement("input");
 	inputPAN.type="text";
@@ -98,8 +100,9 @@ function addMethodPayment() {
 	div.appendChild(inputPAN);
 	
 	let spanPAN=document.createElement("span");
-	span.id="errorPAN" + countMethodPayment;
+	spanPAN.id="errorPAN" + countMethodPayment;
 	div.appendChild(spanPAN);
+	div.appendChild(document.createElement("br"));
 		
 	let inputScadenza=document.createElement("input");
     inputScadenza.type="text";
@@ -109,8 +112,9 @@ function addMethodPayment() {
 	div.appendChild(inputScadenza);
 		
 	let spanScadenza=document.createElement("span");
-	span.id="errorScadenza" + countMethodPayment;
+	spanScadenza.id="errorScadenza" + countMethodPayment;
 	div.appendChild(spanScadenza);
+	div.appendChild(document.createElement("br"));
 		
 	let inputCVC=document.createElement("input");
 	inputCVC.type="text";
@@ -120,8 +124,9 @@ function addMethodPayment() {
 	div.appendChild(inputCVC);
 	
 	let spanCVC=document.createElement("span");
-	span.id="errorCVC" + countMethodPayment;
+	spanCVC.id="errorCVC" + countMethodPayment;
 	div.appendChild(spanCVC);
+	
 				
 	let button=document.createElement("input");
 	button.type="button";
@@ -131,23 +136,81 @@ function addMethodPayment() {
 	
 	
 	
-inputPAN.addEventListener("change", validateFormElement(inputPAN, PANPattern, spanPAN, errorPANMessage));
-inputScadenza.addEventListener("change", validateFormElement(inputScadenza, ScadenzaPattern, spanScadenza, errorScadenzaMessage));
-inputCVC.addEventListener("change", validateFormElement(inputCVC, CVCPattern, spanCVC, errorCVCMessage));
-count++;
+inputPAN.addEventListener("change", function() {validateFormElement(inputPAN, PANPattern, spanPAN, errorPANMessage);});
+inputScadenza.addEventListener("change", function() {validateFormElement(inputScadenza, ScadenzaPattern, spanScadenza, errorScadenzaMessage);});
+inputCVC.addEventListener("change", function() {validateFormElement(inputCVC, CVCPattern, spanCVC, errorCVCMessage);});
+countMethodPayment++;
 container.appendChild(div);
 	
 
 	
 }
 
-function validateRegistrationForm() {
+function validateLoginForm(){
 	
 	
-	
-	
+	const usernameEl = document.getElementsByName("username")[0];
+	  const passwordEl = document.getElementsByName("password")[0];
+	  const validUsername = validateFormElement(usernameEl, usernamePattern, document.getElementById('errorUsername'), errorUsernameMessage);
+	  const validPassword = validateFormElement(passwordEl, passwordPattern, document.getElementById('errorPassword'), errorPasswordMessage);
+	  return validUsername && validPassword;
 	
 }
+	
+function validateRegistrationForm() {
+	
+	const usernameEl=document.getElementsByName("username")[0];
+	const nameEl=document.getElementsByName("name")[0];
+	const lastNameEl=document.getElementsByName("lastName")[0];
+	const telephoneEl=document.getElementsByName("username")[0];
+	const emailEl=document.getElementsByName("email")[0];
+	const passwordEl=document.getElementsByName("password")[0];
+	let addressesEl=document.getElementsByName("address");
+	let panEl=document.getElementsByName("methodPaymentPAN");
+	let expirationDateEl=document.getElementById("methodPaymentScadenza");
+	let cvcEl=document.getElementById("methodPaymentCVC");
+	
+	for(i=0; i<addressesEl.lenght; i++) {
+	
+		if(!validateFormElement(addressesEl[i], addressPattern, document.getElementById("errorAddress" + (i+1)), errorAddressMessage));
+		return false;
+		
+	}
+	
+	for(i=0; i<panEl.lenght; i++) {
+		
+			if(!validateFormElement(panEl[i], PANPattern, document.getElementById("errorPAN" + (i+1)), errorPANMessage));
+			return false;
+			
+		}
+		
+		for(i=0; i<expirationDateEl.lenght; i++) {
+				
+					if(!validateFormElement(expirationDateEl[i], ScadenzaPattern, document.getElementById("errorScadenza" + (i+1)), errorScadenzaMessage));
+					return false;
+					
+				}
+				
+				for(i=0; i<cvcEl.lenght; i++) {
+						
+							if(!validateFormElement(cvcEl[i], CVCPattern, document.getElementById("errorCVC" + (i+1)), errorCVCMessage));
+							return false;
+							
+						}	
+						
+				return (validateFormElement(nameEl, namePattern, document.getElementById('errorName'), errorNameMessage) 
+				&& validateFormElement(lastNameEl, namePattern, document.getElementById('errorLastName'))
+				&& validateFormElement(telephoneEl, telephonePattern, document.getElementById('errorTelephone'), errorTelephoneMessage)
+				&& validateFormElement(emailEl, emailPattern, document.getElementById('errorEmail'), errorEmailMessage)
+				&& validateFormElement(usernameEl, usernamePattern, document.getElementById('errorUsername'), errorUsernameMessage)
+				&& validateFormElement(passwordEl, passwordPattern, document.getElementById('errorPassword'), errorPasswordMessage))
+				
+	
+}
+	
+	
+	
+
 
 
 
