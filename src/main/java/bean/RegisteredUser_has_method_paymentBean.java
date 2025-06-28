@@ -1,6 +1,6 @@
 package bean;
 
-public class RegisteredUser_has_method_payment {
+public class RegisteredUser_has_method_paymentBean {
 
 	private int id_has_method_payment;
 	private String usernameRegisteredUser;
@@ -49,7 +49,7 @@ public class RegisteredUser_has_method_payment {
 		this.cvc = cvc;
 	}
 
-	public RegisteredUser_has_method_payment() {
+	public RegisteredUser_has_method_paymentBean() {
 		id_has_method_payment=-1;
 		usernameRegisteredUser="";
 		pan="";

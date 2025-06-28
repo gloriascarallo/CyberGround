@@ -1,8 +1,12 @@
 package bean;
 
-public class Address {
+public class CategoryBean {
 
 	private String name;
+	
+	public CategoryBean() {
+		name="";
+	}
 	
 	public String getName() {
 		return name;
@@ -12,8 +16,5 @@ public class Address {
 		this.name = name;
 	}
 
-	public Address() {
-		name="";
-	}
 
 }

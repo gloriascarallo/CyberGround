@@ -1,10 +1,10 @@
 package bean;
 
-public class Cart {
+public class CartBean {
 
 	private int idCart;
 	
-	public Cart() {
+	public CartBean() {
 		idCart=-1;
 	}
 

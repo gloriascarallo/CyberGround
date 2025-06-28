@@ -1,11 +1,11 @@
 package bean;
 import java.sql.Date;
 
-public class Product_situatedin_cart {
+public class Product_situatedin_cartBean {
 
 	private int id_SituatedIn;
 	private int idCart;
-	private int idProduct;
+	private ProductBean product;
 	private Date dateAdded;
 	private int quantity;
 	
@@ -20,6 +20,16 @@ public class Product_situatedin_cart {
 		this.quantity = quantity;
 	}
 
+	public void increaseQuantity() {
+		
+		quantity++;
+		
+	}
+	
+	public void decreaseQuantity() {
+		
+		quantity--;
+	}
 
 
 	public int getId_SituatedIn() {
@@ -47,16 +57,23 @@ public class Product_situatedin_cart {
 
 
 
+	public ProductBean getProduct() {
+		return product;
+	}
+	
 	public int getIdProduct() {
-		return idProduct;
+		
+		return product.getId();
+		
 	}
 
 
 
 
-	public void setIdProduct(int idProduct) {
-		this.idProduct = idProduct;
+	public void setProduct(ProductBean product) {
+		this.product=product;
 	}
+	
 
 
 
@@ -73,11 +90,16 @@ public class Product_situatedin_cart {
 	}
 
 
+	public double getTotalPrice() {
+		
+		return product.getPrice()*quantity;
+		
+	}
 
 
-	public Product_situatedin_cart() {
+	public Product_situatedin_cartBean() {
 		idCart=-1;
-		idProduct=-1;
+		product=new ProductBean();
 		dateAdded=new Date(0);
 	}
 

@@ -1,6 +1,6 @@
 package bean;
 
-public class Method_payment {
+public class Method_paymentBean {
 
 	private String pan;
 	private String expirationDate;
@@ -30,7 +30,7 @@ public class Method_payment {
 		this.cvc = cvc;
 	}
 
-	public Method_payment() {
+	public Method_paymentBean() {
 		pan="";
 		expirationDate="";
 		cvc="";

@@ -2,10 +2,10 @@ package bean;
 
 
 
-public class RegisteredUser extends User{
+public class RegisteredUserBean extends UserBean{
 
 	
-	public RegisteredUser() {
+	public RegisteredUserBean() {
 		super();
 		username="";
 		password="";

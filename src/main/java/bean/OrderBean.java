@@ -1,7 +1,7 @@
 package bean;
 import java.sql.Date;
 
-public class Order {
+public class OrderBean {
 
 
 
@@ -83,7 +83,7 @@ public class Order {
 
 
 
-	public Order() {
+	public OrderBean() {
 		id=-1;
 		datePurchase=new Date(0);
 		dateDelivery=new Date(0);

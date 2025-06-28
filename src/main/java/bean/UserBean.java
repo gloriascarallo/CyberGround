@@ -1,10 +1,10 @@
 package bean;
 
-public class User {
+public class UserBean {
 
 	private int id;
 	
-	public User() {
+	public UserBean() {
 		id=-1;
 	}
 

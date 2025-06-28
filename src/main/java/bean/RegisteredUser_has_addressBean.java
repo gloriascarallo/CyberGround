@@ -1,6 +1,6 @@
 package bean;
 
-public class RegisteredUser_has_address {
+public class RegisteredUser_has_addressBean {
     private int id_has_address;
 	private String usernameRegisteredUser;
 	private String nameAddress;
@@ -30,7 +30,7 @@ public class RegisteredUser_has_address {
 		this.nameAddress = nameAddress;
 	}
 
-	public RegisteredUser_has_address() {
+	public RegisteredUser_has_addressBean() {
 		id_has_address=-1;
 		usernameRegisteredUser="";
 		nameAddress="";
