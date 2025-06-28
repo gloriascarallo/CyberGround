@@ -8,7 +8,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
-
 import dao.RegisteredUserDaoDataSource;
 
 /**
@@ -26,28 +25,56 @@ public class Login extends HttpServlet {
         
     }
 
+  
+
+    
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		String username=(String)request.getAttribute("username");
-		String password=(String)request.getAttribute("password");
+		String username=request.getParameter("username");
+		String password=request.getParameter("password");
+		String hasPassword=Security.toHash(password);
 		String errors="";
-		RequestDispatcher dispatcherToLoginPage=request.getRequestDispatcher("login.jsp");
-		username=username.trim();
-		password=password.trim();
+		RequestDispatcher dispatcherToLoginPage=request.getRequestDispatcher("/view/login.jsp");
 		
+		if(username==null || username.trim().equals("")) {
+			
+			errors+="Inserisci l'username<br>";
+		} 
+		
+		else {
+			username=username.trim();
+			
+		}
+		
+if(password==null || password.trim().equals("")) {
+			
+			errors+="Inserisci la password<br>";
+		} 
+		
+		else {
+			password=password.trim();
+			
+		}
+
+if(!errors.equals("")) {
+	
+	request.setAttribute("errors", errors);
+	dispatcherToLoginPage.forward(request, response);
+}
+
 	RegisteredUserDaoDataSource ds=new RegisteredUserDaoDataSource();
 	
 	try {
 		// da aggiungere confronto con tabella admin
-		if(ds.doRetrieveByKey(username).getUsername().equals(username) && ds.doRetrieveByKey(username).getPassword().equals(password)) {
+		if(ds.doRetrieveByKey(username).getUsername().equals(username) && ds.doRetrieveByKey(username).getPassword().equals(hasPassword)) {
 		request.getSession().setAttribute("isAdmin", Boolean.FALSE);
 		request.getSession().setAttribute("isRegisteredUser", Boolean.TRUE);
 		//request.getSession().setAttribute("id", ds.doRetrieveByKey(username).getId()); perche l'id nella sessione c'è dall'inizio
 		request.getSession().setAttribute("username", username);
-		response.sendRedirect("index.jsp");
+		response.sendRedirect("/view/index.jsp");
 		
 	}
 		else {
@@ -66,6 +93,8 @@ public class Login extends HttpServlet {
 	
 	}
 	
+	response.sendRedirect("/view/index.jsp");
+	return;
 	
 	}
 

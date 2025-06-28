@@ -8,9 +8,9 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 
-import bean.RegisteredUser;
-import bean.RegisteredUser_has_address;
-import bean.RegisteredUser_has_method_payment;
+import bean.RegisteredUserBean;
+import bean.RegisteredUser_has_addressBean;
+import bean.RegisteredUser_has_method_paymentBean;
 import dao.RegisteredUserDaoDataSource;
 import dao.RegisteredUser_has_addressDaoDataSource;
 import dao.RegisteredUser_has_method_paymentDaoDataSource;
@@ -35,9 +35,151 @@ public class Registration extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		RequestDispatcher dispatcherToRegistrationPage=request.getRequestDispatcher("registration.jsp");
+		RequestDispatcher dispatcherToRegistrationPage=request.getRequestDispatcher("/view/registration.jsp");
 		String errors="";
-		String username=(String)request.getAttribute("username");
+		String username=request.getParameter("username");
+		String name=request.getParameter("name");
+		String lastName=request.getParameter("lastName");
+		String telephone=request.getParameter("telephone");
+		String email=request.getParameter("email");
+		String password=request.getParameter("password");
+		String[] addresses=(String[])request.getParameterValues("address");
+		String[] pans=(String[])request.getParameterValues("methodPaymentPAN");
+		String[] expirationDates=(String[])request.getParameterValues("methodPaymentScadenza");
+		String[] cvcs=(String[])request.getParameterValues("methodPaymentCVC");
+		
+if(username==null || username.trim().equals("")) {
+			
+			errors+="Inserisci l'username<br>";
+			
+		} 
+		
+		else {
+			username=username.trim();
+			
+		}
+
+if(name==null || name.trim().equals("")) {
+	
+	errors+="Inserisci il nome<br>";
+	
+} 
+
+else {
+	name=name.trim();
+	
+}
+
+if(lastName==null || lastName.trim().equals("")) {
+	
+	errors+="Inserisci il cognome<br>";
+	
+} 
+
+else {
+	lastName=lastName.trim();
+	
+}
+
+if(telephone==null || telephone.trim().equals("")) {
+	
+	errors+="Inserisci il numero di telefono<br>";
+	
+} 
+
+else {
+	telephone=telephone.trim();
+	
+}
+
+if(email==null || email.trim().equals("")) {
+	
+	errors+="Inserisci l'email<br>";
+	
+} 
+
+else {
+	email=email.trim();
+	
+}
+
+if(password==null || password.trim().equals("")) {
+	
+	errors+="Inserisci la password<br>";
+	
+} 
+
+else {
+	password=password.trim();
+	password=Security.toHash(password);
+	
+}
+
+for(String address: addresses) {
+	
+	if(address==null || address.trim().equals("")) {
+		
+		errors+="Inserisci indirizzi<br>";
+		break;
+	} 
+
+	else {
+		address=address.trim();
+		
+	}
+	
+}
+
+for(String pan: pans) {
+	
+	if(pan==null || pan.trim().equals("")) {
+		
+		errors+="Inserisci pan<br>";
+		break;
+	} 
+
+	else {
+		pan=pan.trim();
+		
+	}
+	
+}
+
+for(String expirationDate: expirationDates) {
+	
+	if(expirationDate==null || expirationDate.trim().equals("")) {
+		
+		errors+="Inserisci scadenza<br>";
+		break;
+	} 
+
+	else {
+		expirationDate=expirationDate.trim();
+		
+	}
+	
+}
+
+for(String cvc: cvcs) {
+	
+	if(cvc==null || cvc.trim().equals("")) {
+		
+		errors+="Inserisci cvc<br>";
+		break;
+	} 
+
+	else {
+		cvc=cvc.trim();
+		
+	}
+	
+}
+
+if(!errors.equals("")) {
+	
+	request.setAttribute("errors", errors);
+	dispatcherToRegistrationPage.forward(request, response);
+}
 		
 		RegisteredUserDaoDataSource ds1=new RegisteredUserDaoDataSource();
 		
@@ -45,7 +187,7 @@ public class Registration extends HttpServlet {
 		try {
 			if(ds1.doRetrieveByKey(username).getUsername().equals(username)) {
 		
-			errors+="Esiste già un utente con tale username.<br>";
+			errors+="Esiste già un utente con tale username<br>";
 			request.setAttribute("errors", errors);
 			dispatcherToRegistrationPage.forward(request, response);
 			}
@@ -56,20 +198,12 @@ public class Registration extends HttpServlet {
 				dispatcherToRegistrationPage.forward(request, response);
 			}
 		
+
 		
-		String name=(String)request.getAttribute("name");
-		String lastName=(String)request.getAttribute("lastName");
-		String telephone=(String)request.getAttribute("telephone");
-		String email=(String)request.getAttribute("email");
-		String password=(String)request.getAttribute("password");
-		String[] addresses=(String[])request.getParameterValues("address");
-		String[] pans=(String[])request.getParameterValues("methodPaymentPAN");
-		String[] expirationDates=(String[])request.getParameterValues("methodPaymentScadenza");
-		String[] cvcs=(String[])request.getParameterValues("methodPaymentCVC");
-		
-		RegisteredUser user=new RegisteredUser();
+		RegisteredUserBean user=new RegisteredUserBean();
 		
 		user.setId((Integer)request.getSession().getAttribute("id"));
+		user.setUsername(username);
 		user.setName(name);
 		user.setLastName(lastName);
 		user.setUsername(username);
@@ -89,7 +223,7 @@ public class Registration extends HttpServlet {
 		}
 		
 		RegisteredUser_has_addressDaoDataSource ds2=new RegisteredUser_has_addressDaoDataSource();
-		RegisteredUser_has_address has_address=new RegisteredUser_has_address();
+		RegisteredUser_has_addressBean has_address=new RegisteredUser_has_addressBean();
 		
 		for(String address: addresses) {
 			
@@ -108,7 +242,7 @@ public class Registration extends HttpServlet {
 		}
 		
 		RegisteredUser_has_method_paymentDaoDataSource ds3=new RegisteredUser_has_method_paymentDaoDataSource();
-		RegisteredUser_has_method_payment has_method_payment=new RegisteredUser_has_method_payment();
+		RegisteredUser_has_method_paymentBean has_method_payment=new RegisteredUser_has_method_paymentBean();
 		
 		for(String pan: pans) {
 			for(String expirationDate: expirationDates) {
@@ -134,7 +268,8 @@ public class Registration extends HttpServlet {
 			
 		}
 		
-		response.sendRedirect("login.jsp");
+		response.sendRedirect("/view/login.jsp");
+		return;
 		
 		
 	}
