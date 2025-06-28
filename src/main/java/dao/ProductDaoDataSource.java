@@ -11,9 +11,9 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-import bean.Product;
+import bean.ProductBean;
 
-public class ProductDaoDataSource implements IBeanDao<Product> {
+public class ProductDaoDataSource implements IBeanDao<ProductBean> {
 
 	private static DataSource ds;
 
@@ -32,13 +32,13 @@ public class ProductDaoDataSource implements IBeanDao<Product> {
 	private static final String TABLE_NAME = "product";
 
 	@Override
-	public synchronized void doSave(Product product) throws SQLException {
+	public synchronized void doSave(ProductBean product) throws SQLException {
 
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 
 		String insertSQL = "INSERT INTO " + ProductDaoDataSource.TABLE_NAME
-				+ " (ID, NAME, PRICE, DESCRIPTION, DATEUPLOAD, SUPPLIER, CATEGORYNAME) VALUES (?, ?, ?, ?, ?, ?, ?)";
+				+ " (ID, NAME, PRICE, DESCRIPTION, DATEUPLOAD, SUPPLIER, CATEGORYNAME, IMAGEPATH, QUANTITYAVAILABLE) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 		try {
 			connection = ds.getConnection();
@@ -50,8 +50,8 @@ public class ProductDaoDataSource implements IBeanDao<Product> {
 			preparedStatement.setDate(5, product.getDateUpload());
 			preparedStatement.setString(6, product.getSupplier());
 			preparedStatement.setString(7, product.getCategoryName());
-			
-			
+			preparedStatement.setString(8, product.getImagePath());
+			preparedStatement.setInt(9, product.getQuantityAvailable());
 
 			preparedStatement.executeUpdate();
 
@@ -67,12 +67,12 @@ public class ProductDaoDataSource implements IBeanDao<Product> {
 	}
 
 	@Override
-	public synchronized Product doRetrieveByKey(Object o_id) throws SQLException {
+	public synchronized ProductBean doRetrieveByKey(Object o_id) throws SQLException {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
         int id=(Integer)o_id;
         
-		Product bean = new Product();
+		ProductBean bean = new ProductBean();
 
 		String selectSQL = "SELECT * FROM " + ProductDaoDataSource.TABLE_NAME + " WHERE ID = ?";
 
@@ -91,6 +91,8 @@ public class ProductDaoDataSource implements IBeanDao<Product> {
 				bean.setCategoryName(rs.getString("CATEGORYNAME"));
 				bean.setSupplier(rs.getString("SUPPLIER"));
 				bean.setDateUpload(rs.getDate("DATEUPLOAD"));
+				bean.setImagePath(rs.getString("IMAGEPATH"));
+				bean.setQuantityAvailable(rs.getInt("QUANTITYAVAILABLE"));
 			}
 
 		} finally {
@@ -135,11 +137,11 @@ public class ProductDaoDataSource implements IBeanDao<Product> {
 	}
 
 	@Override
-	public synchronized Collection<Product> doRetrieveAll(String order) throws SQLException {
+	public synchronized Collection<ProductBean> doRetrieveAll(String order) throws SQLException {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 
-		Collection<Product> products = new LinkedList<Product>();
+		Collection<ProductBean> products = new LinkedList<ProductBean>();
 
 		String selectSQL = "SELECT * FROM " + ProductDaoDataSource.TABLE_NAME;
 
@@ -154,7 +156,7 @@ public class ProductDaoDataSource implements IBeanDao<Product> {
 			ResultSet rs = preparedStatement.executeQuery();
 
 			while (rs.next()) {
-				Product bean = new Product();
+				ProductBean bean = new ProductBean();
 
 				bean.setId(rs.getInt("ID"));
 				bean.setName(rs.getString("NAME"));
@@ -163,6 +165,8 @@ public class ProductDaoDataSource implements IBeanDao<Product> {
 				bean.setCategoryName(rs.getString("CATEGORYNAME"));
 				bean.setSupplier(rs.getString("SUPPLIER"));
 				bean.setDateUpload(rs.getDate("DATEUPLOAD"));
+				bean.setImagePath(rs.getString("IMAGEPATH"));
+				bean.setQuantityAvailable(rs.getInt("QUANTITYAVAILABLE"));
 				products.add(bean);
 			}
 
