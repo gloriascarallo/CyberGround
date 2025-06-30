@@ -6,7 +6,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
-
+import bean.CartBean;
+import bean.Product_situatedin_cartBean;
 /**
  * Servlet implementation class Payment
  */
@@ -26,8 +27,15 @@ public class Payment extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		CartBean cart=(CartBean)request.getSession().getAttribute("cart");
+		for(Product_situatedin_cartBean product_incart: cart.getProducts()) {
+			
+			cart.removeProduct(product_incart);
+			
+		}
+		
+		response.sendRedirect(request.getContextPath()+"/view/success_payment");
+		return;
 	}
 
 	/**

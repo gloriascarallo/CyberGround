@@ -6,12 +6,12 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
+import dao.ProductDaoDataSource;
 import java.io.IOException;
 import java.sql.Date;
 import java.sql.SQLException;
-
-import bean.Product_situatedin_cart;
+import bean.CartBean;
+import bean.Product_situatedin_cartBean;
 import dao.Product_situatedin_cartDaoDataSource;
 /**
  * Servlet implementation class Adding_to_cart
@@ -33,22 +33,26 @@ public class Adding_to_cart extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	    
-		int idCart=(Integer)request.getSession().getAttribute("id");
+		CartBean cart=(CartBean)request.getSession().getAttribute("cart");
 		int idProdotto=Integer.parseInt(request.getParameter("idProdotto"));
 		int quantity=Integer.parseInt(request.getParameter("quantity"));
-		RequestDispatcher dispatcherToProduct=request.getRequestDispatcher("product.jsp");
-		Product_situatedin_cart product_situatedin_cart=new Product_situatedin_cart();
-		product_situatedin_cart.setIdCart(idCart);
-		product_situatedin_cart.setIdProduct(idProdotto);
+		
+		RequestDispatcher dispatcherToProduct=request.getRequestDispatcher("/view/product.jsp");
+		
+		Product_situatedin_cartBean product_situatedin_cart=new Product_situatedin_cartBean();
+		
+		product_situatedin_cart.setIdCart(cart.getIdCart());
 		product_situatedin_cart.setQuantity(quantity);
 		product_situatedin_cart.setDateAdded(new Date(System.currentTimeMillis()));
 		
+		ProductDaoDataSource ds_product=new ProductDaoDataSource();
+		Product_situatedin_cartDaoDataSource ds_cart=new Product_situatedin_cartDaoDataSource();
 		
-		Product_situatedin_cartDaoDataSource ds=new Product_situatedin_cartDaoDataSource();
 		
 		try {
-			
-			ds.doSave(product_situatedin_cart);
+			product_situatedin_cart.setProduct(ds_product.doRetrieveByKey(idProdotto));
+			cart.addProduct(product_situatedin_cart);
+			ds_cart.doSave(product_situatedin_cart); // non so se è necessario
 		}
         
 		catch(SQLException e) {
@@ -57,8 +61,8 @@ public class Adding_to_cart extends HttpServlet {
 			dispatcherToProduct.forward(request, response);
 		}
 		
-		response.sendRedirect("after_adding_to_cart.jsp");
-		
+		response.sendRedirect(request.getContextPath()+"/view/after_adding_to_cart.jsp");
+		return;
 	}
 
 	/**
