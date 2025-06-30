@@ -208,7 +208,26 @@ function validateRegistrationForm() {
 	
 }
 	
+	function validateAdd_addressForm() {
+		
+		const addressEl=document.getElementsByName("address")[0];
+		
+		return (validateFormElement(addressEl, addressPattern, document.getElementById('errorAddress'), errorAddressMessage));
+		
+	}
 	
+	function validateAdd_method_paymentForm() {
+		
+		const panEl=document.getElementsByName("PAN")[0];
+		const ScadenzaEl=document.getElementsByName("Scadenza")[0];
+		const cvcEl=document.getElementsByName("CVC")[0];
+		
+		return(validateFormElement(panEl, PANPattern, document.getElementById("errorPAN"), errorPANMessage) 
+		&& validateFormElement(ScadenzaEl, ScadenzaPattern, document.getElementById("errorScadenza"), errorScadenzaMessage)
+		&& validateFormElement(cvcEl, CVCPattern, document.getElementById("errorCVC"), errorCVCMessage));
+		
+		
+	}
 	
 
 
