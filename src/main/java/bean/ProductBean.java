@@ -103,6 +103,11 @@ public class ProductBean {
 		this.quantityAvailable = quantityAvailable;
 	}
 	
+	public void decreaseQuantityAvailable() {
+		
+		quantityAvailable--;
+	}
+	
 
 	public ProductBean() {
 		id=-1;

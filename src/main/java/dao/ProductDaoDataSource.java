@@ -181,5 +181,50 @@ public class ProductDaoDataSource implements IBeanDao<ProductBean> {
 		}
 		return products;
 	}
+	
+	
+	public synchronized boolean decreaseQuantityAvailable(int o_id) throws SQLException {
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+        int id=(Integer)o_id;
+        
+		int result = 0;
+
+		String deleteSQL = "UPDATE" + ProductDaoDataSource.TABLE_NAME + "SET QUANTITYAVAILABLE= QUANTITYAVAILABLE-1 WHERE ID = ?";
+
+		try {
+			connection = ds.getConnection();
+			preparedStatement = connection.prepareStatement(deleteSQL);
+			preparedStatement.setInt(1, id);
+
+			result = preparedStatement.executeUpdate();
+
+		} finally {
+			try {
+				if (preparedStatement != null)
+					preparedStatement.close();
+			} finally {
+				if (connection != null)
+					connection.close();
+			}
+		}
+		return (result != 0);
+	}
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 }
