@@ -13,7 +13,7 @@ import javax.sql.DataSource;
 
 import bean.UserBean;
 
-public class UserDaoDataSouce implements IBeanDao<UserBean> {
+public class UserDaoDataSource implements IBeanDao<UserBean> {
 
 	private static DataSource ds;
 
@@ -37,7 +37,7 @@ public class UserDaoDataSouce implements IBeanDao<UserBean> {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 
-		String insertSQL = "INSERT INTO " + UserDaoDataSouce.TABLE_NAME
+		String insertSQL = "INSERT INTO " + UserDaoDataSource.TABLE_NAME
 				+ " (ID) VALUES (?)";
 
 		try {
@@ -68,7 +68,7 @@ public class UserDaoDataSouce implements IBeanDao<UserBean> {
 
 		UserBean bean = new UserBean();
 
-		String selectSQL = "SELECT * FROM " + UserDaoDataSouce.TABLE_NAME + " WHERE ID = ?";
+		String selectSQL = "SELECT * FROM " + UserDaoDataSource.TABLE_NAME + " WHERE ID = ?";
 
 		try {
 			connection = ds.getConnection();
@@ -102,7 +102,7 @@ public class UserDaoDataSouce implements IBeanDao<UserBean> {
         
 		int result = 0;
 
-		String deleteSQL = "DELETE FROM " + UserDaoDataSouce.TABLE_NAME + " WHERE ID = ?";
+		String deleteSQL = "DELETE FROM " + UserDaoDataSource.TABLE_NAME + " WHERE ID = ?";
 
 		try {
 			connection = ds.getConnection();
@@ -130,7 +130,7 @@ public class UserDaoDataSouce implements IBeanDao<UserBean> {
 
 		Collection<UserBean> users = new LinkedList<UserBean>();
 
-		String selectSQL = "SELECT * FROM " + UserDaoDataSouce.TABLE_NAME;
+		String selectSQL = "SELECT * FROM " + UserDaoDataSource.TABLE_NAME;
 
 		if (order != null && !order.equals("")) {
 			selectSQL += " ORDER BY " + order;
