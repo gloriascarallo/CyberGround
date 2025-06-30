@@ -10,19 +10,20 @@
 
 <h2 align="center">Aggiunta Indirizzo</h2>
 
-<form action="Add_address" method="post">
+<form name="Add_addressForm" action="<%=request.getContextPath() %>/Add_address" method="post">
 <fieldset>
 <legend>Compilare il campo</legend>
 <div align="center">
 
-<label for="indirizzo">Inserisci nuovo indirizzo:</label> <br>
-	<input type="text" name="indirizzo" id="indirizzo" onchange="validateFormElement(this, addressPattern, document.getElementById('errorAddress'), errorAddressMessage" required > 
+<label for="address">Inserisci nuovo indirizzo:</label> <br>
+	<input type="text" name="address" id="address" onchange="validateFormElement(this, addressPattern, document.getElementById('errorAddress'), errorAddressMessage" required > 
 	<span id="errorAddress"></span> <br>
-	<input type="submit" value="Invia" onclick="return validate()">
+	<input type="submit" value="Invia" onclick="return validateAdd_addressForm()">
 	<input type="reset" value="Annulla">
 
 </div>
 </fieldset>
 </form>
 </body>
+<script src="<%=request.getContextPath()%>/scripts/validation.js" type="text/javascript"></script>
 </html>

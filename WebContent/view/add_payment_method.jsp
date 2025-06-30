@@ -10,7 +10,7 @@
 
 <h2 align="center">Aggiunta Metodo di Pagamento</h2>
 
-<form action="Add_payment_method" method="post">
+<form name="Add_method_paymentForm"action="<%=request.getContextPath() %>/Add_payment_method" method="post">
 <fieldset>
 <legend>Compilare i campi</legend>
 <div align="center">
@@ -22,11 +22,12 @@
 	<span id="errorScadenza"></span>
 	<input type="text" name="CVC" placeholder="### or ####" onchange="validateFormElement(this, CVCPattern, document.getElementById('errorCVC'), errorCVCMessage" required>
 	<span id="errorCVC"></span> <br>
-	<input type="submit" value="Invia" onclick="return validate()">
+	<input type="submit" value="Invia" onclick="return validateAdd_method_paymentForm()">
 	<input type="reset" value="Annulla">
 
 </div>
 </fieldset>
 </form>
 </body>
+<script src="<%=request.getContextPath()%>/scripts/validation.js" type="text/javascript"></script>
 </html>
