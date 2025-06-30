@@ -35,7 +35,7 @@ public class Add_address extends HttpServlet {
 		String nameAddress=request.getParameter("indirizzo");
 		String url=request.getRequestURI();
 		
-		RequestDispatcher dispatcherToAdd_addressPage=request.getRequestDispatcher("add_address.jsp");
+		RequestDispatcher dispatcherToAdd_addressPage=request.getRequestDispatcher("/view/add_address.jsp");
 		RegisteredUser_has_addressBean registereduser_has_address=new RegisteredUser_has_addressBean();
 		RegisteredUser_has_addressDaoDataSource ds=new RegisteredUser_has_addressDaoDataSource();
 		

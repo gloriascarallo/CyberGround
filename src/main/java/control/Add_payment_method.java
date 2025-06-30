@@ -38,7 +38,7 @@ public class Add_payment_method extends HttpServlet {
 		String cvc=request.getParameter("CVC");
 		String url=request.getRequestURI();
 		
-		RequestDispatcher dispatcherToAdd_payment_methodPage=request.getRequestDispatcher("add_payment_method.jsp");
+		RequestDispatcher dispatcherToAdd_payment_methodPage=request.getRequestDispatcher("/view/add_payment_method.jsp");
 		RegisteredUser_has_method_paymentBean registereduser_has_method_payment=new RegisteredUser_has_method_paymentBean();
 		RegisteredUser_has_method_paymentDaoDataSource ds=new RegisteredUser_has_method_paymentDaoDataSource();
 		
@@ -60,7 +60,7 @@ public class Add_payment_method extends HttpServlet {
 		}
 		
 		response.sendRedirect(url);
-		
+		return;
 	}
 
 	

@@ -10,7 +10,7 @@
 
 <h2 align="center">Rimborso Prodotto</h2>
 
-<form action="Product_refund" method="post">
+<form action="<%=request.getContextPath()%>/Product_refund" method="post">
 <fieldset>
 <legend>Compilare i campi</legend>
 <div align="center">
