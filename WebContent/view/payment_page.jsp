@@ -1,6 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+<%@page import="bean.CartBean" %>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+
+<% 
+CartBean cart=(CartBean)request.getSession().getAttribute("cart");
+%>
 <html>
 <head>
 <meta charset="UTF-8">
@@ -8,6 +14,14 @@
 </head>
 <body>
 
+<c:forEach var="product_incart" items="${cart}">
+<a href="${pageContext.request.contextPath}/Product">
+    <img src="${product_incart.product.imagePath}" alt="Product image" />
+    </a>
+    Nome: ${product_incart.product.name}<br>
+    Prezzo: ${product_incart.totalPrice}<br>
+</c:forEach>
+    
 <h2>Seleziona indirizzo e metodo di pagamento</h2>
 
 <div>
@@ -17,7 +31,7 @@ Indirizzo <br>
 </select>
 </div>
 
-Vuoi aggiungere un nuovo indirizzo? <a href="add_address.jsp">Clicca qui!</a>
+Vuoi aggiungere un nuovo indirizzo? <a href="./add_address.jsp">Clicca qui!</a>
 
 <div>
 Metodo di pagamento <br>
@@ -26,10 +40,12 @@ Metodo di pagamento <br>
 </select>
 </div>
 
-Vuoi aggiungere un nuovo metodo di pagamento? <a href="add_payment_method.jsp">Clicca qui!</a>
+Vuoi aggiungere un nuovo metodo di pagamento? <a href="./add_payment_method.jsp">Clicca qui!</a>
 
 <div align="right">
-<input type="button" value="Conferma pagamento" onclick="">
+<form action="${pageContext.request.contextPath}/Payment">
+<input type="submit" value="Conferma pagamento">
+</form>
 </div>
 
 </body>
