@@ -8,5 +8,17 @@
 </head>
 <body>
 
+<%
+String errors=(String)request.getAttribute("errors");  
+if(errors!=null && !errors.equals("")) {%>
+	
+	<div class="error"><%=errors%></div> <% 
+}
+%>
+
+<a href="<%=request.getContextPath()%>/User">
+  <img src="<%=request.getContextPath()%>/images/user_profile.jpg" alt="Profilo">
+</a>
+
 </body>
 </html>
