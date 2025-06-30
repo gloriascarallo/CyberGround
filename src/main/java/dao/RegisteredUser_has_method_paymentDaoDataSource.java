@@ -4,13 +4,13 @@ package dao;
 	import java.sql.PreparedStatement;
 	import java.sql.ResultSet;
 	import java.sql.SQLException;
-	import java.util.Collection;
+import java.util.ArrayList;
+import java.util.Collection;
 	import java.util.LinkedList;
 	import javax.naming.Context;
 	import javax.naming.InitialContext;
 	import javax.naming.NamingException;
 	import javax.sql.DataSource;
-
 import bean.RegisteredUser_has_method_paymentBean;
 
 	public class RegisteredUser_has_method_paymentDaoDataSource implements IBeanDao<RegisteredUser_has_method_paymentBean> {
@@ -100,6 +100,44 @@ import bean.RegisteredUser_has_method_paymentBean;
 			return bean;
 		}
 
+		public synchronized ArrayList<RegisteredUser_has_method_paymentBean> doRetrieveByUsername(String username) throws SQLException {
+			Connection connection = null;
+			PreparedStatement preparedStatement = null;
+	        
+	        
+			ArrayList<RegisteredUser_has_method_paymentBean> user_methods_payment = new ArrayList<RegisteredUser_has_method_paymentBean>();
+
+			String selectSQL = "SELECT * FROM " + RegisteredUser_has_method_paymentDaoDataSource.TABLE_NAME + " WHERE USERNAME = ?";
+
+			try {
+				connection = ds.getConnection();
+				preparedStatement = connection.prepareStatement(selectSQL);
+				preparedStatement.setString(1, username);
+
+				ResultSet rs = preparedStatement.executeQuery();
+
+				while (rs.next()) {
+					RegisteredUser_has_method_paymentBean bean=new RegisteredUser_has_method_paymentBean();
+					bean.setId_has_method_payment(rs.getInt("ID_HAS_METHOD_PAYMENT"));
+					bean.setUsernameRegisteredUser(rs.getString("USERNAMEREGISTEREDUSER"));
+					bean.setPan(rs.getString("PANMETHODPAYMENT"));
+					bean.setExpirationDate(rs.getString("EXPIRATIONDATEMETHODPAYMENT"));
+					bean.setCvc(rs.getString("CVCMETHODPAYMENT"));
+					user_methods_payment.add(bean);
+			}
+
+			} finally {
+				try {
+					if (preparedStatement != null)
+						preparedStatement.close();
+				} finally {
+					if (connection != null)
+						connection.close();
+				}
+			}
+			return user_methods_payment;
+		}
+		
 		@Override
 		public synchronized boolean doDelete(Object o_id) throws SQLException {
 			Connection connection = null;
