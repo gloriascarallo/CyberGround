@@ -6,7 +6,9 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.Date;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import bean.CartBean;
@@ -38,6 +40,10 @@ public class Payment extends HttpServlet {
 		OrderBean order=new OrderBean();
 		int idOrder=order.getIdOrder();
 		order.setIdCart(cart.getIdCart());
+		order.setDatePurchase(Date.valueOf(LocalDate.now()));
+		order.setDateShipping(Date.valueOf(LocalDate.now().plusDays(1)));
+		order.setDateDelivery(Date.valueOf(LocalDate.now().plusDays(3)));
+		
 		ArrayList<Product_in_orderBean> products_in_order=new ArrayList<Product_in_orderBean>();
 		
 		for(Product_situatedin_cartBean product_incart: cart.getProducts()) {
