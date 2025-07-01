@@ -96,7 +96,7 @@ if(!errors.equals("")) {
 		}
 		
 		response.sendRedirect("/view/index.jsp");
-		
+		return;
 	}
 		else {
 			errors+="Username e password non validi!<br>";

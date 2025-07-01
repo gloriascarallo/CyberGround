@@ -181,11 +181,11 @@ if(!errors.equals("")) {
 	dispatcherToRegistrationPage.forward(request, response);
 }
 		
-		RegisteredUserDaoDataSource ds1=new RegisteredUserDaoDataSource();
+		RegisteredUserDaoDataSource ds_user=new RegisteredUserDaoDataSource();
 		
 		
 		try {
-			if(ds1.doRetrieveByKey(username).getUsername().equals(username)) {
+			if(ds_user.doRetrieveByKey(username).getUsername().equals(username)) {
 		
 			errors+="Esiste già un utente con tale username<br>";
 			request.setAttribute("errors", errors);
@@ -211,9 +211,9 @@ if(!errors.equals("")) {
 		user.setTelephone(telephone);
 		user.setEmail(email);
 		
-		ds1=new RegisteredUserDaoDataSource();
-		
-		try {ds1.doSave(user);
+		ds_user=new RegisteredUserDaoDataSource();
+		// salvarce anche user e cart nel database?
+		try {ds_user.doSave(user);
 		}
 		
 		catch(SQLException e) {
