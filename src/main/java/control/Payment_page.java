@@ -33,6 +33,16 @@ public class Payment_page extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//CartBean cart=(CartBean)request.getSession().getAttribute("cart");
+		
+		String errors="";
+		Boolean isRegisteredUser=(Boolean)request.getSession().getAttribute("isRegisteredUser");
+		if (Boolean.FALSE.equals(isRegisteredUser)) {
+		    errors += "Non sei utente registrato<br>";
+		    request.setAttribute("errors", errors);
+		    request.getRequestDispatcher("/view/cart.jsp").forward(request, response);
+		    return;
+		}
+		
 		String username=(String)request.getSession().getAttribute("username");
 		RegisteredUser_has_addressDaoDataSource ds_has_address=new RegisteredUser_has_addressDaoDataSource();
 		RegisteredUser_has_method_paymentDaoDataSource ds_has_methods_payment=new RegisteredUser_has_method_paymentDaoDataSource();
