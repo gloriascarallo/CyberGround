@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
 import javax.naming.Context;
@@ -212,9 +213,176 @@ public class ProductDaoDataSource implements IBeanDao<ProductBean> {
 	}
 
 	
+	public synchronized ArrayList<ProductBean> doRetrievebySupplier(String supplier) throws SQLException {
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+
+		ArrayList<ProductBean> products = new ArrayList<ProductBean>();
+
+		String selectSQL = "SELECT * FROM " + ProductDaoDataSource.TABLE_NAME + "WHERE SUPPLIER LIKE= ?";
+        
+
+		try {
+			connection = ds.getConnection();
+			preparedStatement = connection.prepareStatement(selectSQL);
+            preparedStatement.setString(1, "%" + supplier + "%");
+			ResultSet rs = preparedStatement.executeQuery();
+
+			while (rs.next()) {
+				ProductBean bean = new ProductBean();
+
+				bean.setId(rs.getInt("ID"));
+				bean.setName(rs.getString("NAME"));
+				bean.setDescription(rs.getString("DESCRIPTION"));
+				bean.setPrice(rs.getInt("PRICE"));
+				bean.setCategoryName(rs.getString("CATEGORYNAME"));
+				bean.setSupplier(rs.getString("SUPPLIER"));
+				bean.setDateUpload(rs.getDate("DATEUPLOAD"));
+				bean.setImagePath(rs.getString("IMAGEPATH"));
+				bean.setQuantityAvailable(rs.getInt("QUANTITYAVAILABLE"));
+				products.add(bean);
+			}
+
+		} finally {
+			try {
+				if (preparedStatement != null)
+					preparedStatement.close();
+			} finally {
+				if (connection != null)
+					connection.close();
+			}
+		}
+		return products;
+	}
 	
 	
+	public synchronized ArrayList<ProductBean> doRetrievebyPrice(double price) throws SQLException {
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+
+		ArrayList<ProductBean> products = new ArrayList<ProductBean>();
+
+		String selectSQL = "SELECT * FROM " + ProductDaoDataSource.TABLE_NAME + "WHERE PRICE >= ?";
+        
+
+		try {
+			connection = ds.getConnection();
+			preparedStatement = connection.prepareStatement(selectSQL);
+            preparedStatement.setDouble(1, price);
+			ResultSet rs = preparedStatement.executeQuery();
+
+			while (rs.next()) {
+				ProductBean bean = new ProductBean();
+
+				bean.setId(rs.getInt("ID"));
+				bean.setName(rs.getString("NAME"));
+				bean.setDescription(rs.getString("DESCRIPTION"));
+				bean.setPrice(rs.getInt("PRICE"));
+				bean.setCategoryName(rs.getString("CATEGORYNAME"));
+				bean.setSupplier(rs.getString("SUPPLIER"));
+				bean.setDateUpload(rs.getDate("DATEUPLOAD"));
+				bean.setImagePath(rs.getString("IMAGEPATH"));
+				bean.setQuantityAvailable(rs.getInt("QUANTITYAVAILABLE"));
+				products.add(bean);
+			}
+
+		} finally {
+			try {
+				if (preparedStatement != null)
+					preparedStatement.close();
+			} finally {
+				if (connection != null)
+					connection.close();
+			}
+		}
+		return products;
+	}
 	
+	
+	public synchronized ArrayList<ProductBean> doRetrievebyYearUpload(int year) throws SQLException {
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+
+		ArrayList<ProductBean> products = new ArrayList<ProductBean>();
+
+		String selectSQL = "SELECT * FROM " + ProductDaoDataSource.TABLE_NAME + "WHERE DATEUPLOAD BETWEEN ? AND ?";
+        
+
+		try {
+			connection = ds.getConnection();
+			preparedStatement = connection.prepareStatement(selectSQL);
+            preparedStatement.setString(1, year + "-01-01");
+            preparedStatement.setString(2, year + "-12-31");
+			ResultSet rs = preparedStatement.executeQuery();
+
+			while (rs.next()) {
+				ProductBean bean = new ProductBean();
+
+				bean.setId(rs.getInt("ID"));
+				bean.setName(rs.getString("NAME"));
+				bean.setDescription(rs.getString("DESCRIPTION"));
+				bean.setPrice(rs.getInt("PRICE"));
+				bean.setCategoryName(rs.getString("CATEGORYNAME"));
+				bean.setSupplier(rs.getString("SUPPLIER"));
+				bean.setDateUpload(rs.getDate("DATEUPLOAD"));
+				bean.setImagePath(rs.getString("IMAGEPATH"));
+				bean.setQuantityAvailable(rs.getInt("QUANTITYAVAILABLE"));
+				products.add(bean);
+			}
+
+		} finally {
+			try {
+				if (preparedStatement != null)
+					preparedStatement.close();
+			} finally {
+				if (connection != null)
+					connection.close();
+			}
+		}
+		return products;
+	}
+	
+	public synchronized ArrayList<ProductBean> doRetrievebyName(String name) throws SQLException {
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+
+		ArrayList<ProductBean> products = new ArrayList<ProductBean>();
+
+		String selectSQL = "SELECT * FROM " + ProductDaoDataSource.TABLE_NAME + "WHERE NAME LIKE= ?";
+        
+
+		try {
+			connection = ds.getConnection();
+			preparedStatement = connection.prepareStatement(selectSQL);
+            preparedStatement.setString(1, "%" + name + "%");
+			ResultSet rs = preparedStatement.executeQuery();
+
+			while (rs.next()) {
+				ProductBean bean = new ProductBean();
+
+				bean.setId(rs.getInt("ID"));
+				bean.setName(rs.getString("NAME"));
+				bean.setDescription(rs.getString("DESCRIPTION"));
+				bean.setPrice(rs.getInt("PRICE"));
+				bean.setCategoryName(rs.getString("CATEGORYNAME"));
+				bean.setSupplier(rs.getString("SUPPLIER"));
+				bean.setDateUpload(rs.getDate("DATEUPLOAD"));
+				bean.setImagePath(rs.getString("IMAGEPATH"));
+				bean.setQuantityAvailable(rs.getInt("QUANTITYAVAILABLE"));
+				products.add(bean);
+			}
+
+		} finally {
+			try {
+				if (preparedStatement != null)
+					preparedStatement.close();
+			} finally {
+				if (connection != null)
+					connection.close();
+			}
+		}
+		return products;
+	}
 	
 	
 	
