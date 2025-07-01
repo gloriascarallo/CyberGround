@@ -11,7 +11,8 @@ import bean.OrderBean;
 import java.sql.Connection;
 	import java.sql.PreparedStatement;
 	import java.sql.ResultSet;
-	import java.util.Collection;
+import java.util.ArrayList;
+import java.util.Collection;
 	import java.util.LinkedList;
 
 	public class OrderDaoDataSource implements IBeanDao<OrderBean> {
@@ -39,17 +40,16 @@ import java.sql.Connection;
 			PreparedStatement preparedStatement = null;
 
 			String insertSQL = "INSERT INTO " + OrderDaoDataSource.TABLE_NAME
-					+ " (ID_ORDER, ID, DATEPURCHASE, DATEDELIVERY, DATESHIPPING, IDCART) VALUES (?, ?, ?, ?, ?, ?)";
+					+ " (IDORDER, DATEPURCHASE, DATEDELIVERY, DATESHIPPING, IDCART) VALUES (?, ?, ?, ?, ?)";
 
 			try {
 				connection = ds.getConnection();
 				preparedStatement = connection.prepareStatement(insertSQL);
-				preparedStatement.setInt(1, order.getId_Order());
-				preparedStatement.setInt(2, order.getId());
-				preparedStatement.setDate(3, order.getDatePurchase());
-				preparedStatement.setDate(4, order.getDateDelivery());
-				preparedStatement.setDate(5, order.getDateShipping());
-				preparedStatement.setInt(6, order.getIdCart());
+				preparedStatement.setInt(1, order.getIdOrder());
+				preparedStatement.setDate(2, order.getDatePurchase());
+				preparedStatement.setDate(3, order.getDateDelivery());
+				preparedStatement.setDate(4, order.getDateShipping());
+				preparedStatement.setInt(5, order.getIdCart());
 				
 				
 
@@ -74,7 +74,7 @@ import java.sql.Connection;
 	        
 			OrderBean bean = new OrderBean();
 
-			String selectSQL = "SELECT * FROM " + OrderDaoDataSource.TABLE_NAME + " WHERE ID_ORDER = ?";
+			String selectSQL = "SELECT * FROM " + OrderDaoDataSource.TABLE_NAME + " WHERE IDORDER = ?";
 
 			try {
 				connection = ds.getConnection();
@@ -84,8 +84,7 @@ import java.sql.Connection;
 				ResultSet rs = preparedStatement.executeQuery();
 
 				while (rs.next()) {
-					bean.setId(rs.getInt("ID_ORDER"));
-					bean.setId(rs.getInt("ID"));
+					bean.setIdOrder(rs.getInt("IDORDER"));
 					bean.setDatePurchase(rs.getDate("DATEPURCHASE"));
 					bean.setDateDelivery(rs.getDate("DATEDELIVERY"));
 					bean.setDateShipping(rs.getDate("DATESHIPPING"));
@@ -113,7 +112,7 @@ import java.sql.Connection;
 	        
 			int result = 0;
 
-			String deleteSQL = "DELETE FROM " + OrderDaoDataSource.TABLE_NAME + " WHERE ID_ORDER = ?";
+			String deleteSQL = "DELETE FROM " + OrderDaoDataSource.TABLE_NAME + " WHERE IDORDER = ?";
 
 			try {
 				connection = ds.getConnection();
@@ -150,13 +149,13 @@ import java.sql.Connection;
 			try {
 				connection = ds.getConnection();
 				preparedStatement = connection.prepareStatement(selectSQL);
+				
 
 				ResultSet rs = preparedStatement.executeQuery();
 
 				while (rs.next()) {
 					OrderBean bean = new OrderBean();
-					bean.setId_Order(rs.getInt("ID_ORDER"));
-					bean.setId(rs.getInt("ID"));
+					bean.setIdOrder(rs.getInt("IDORDER"));
 					bean.setDatePurchase(rs.getDate("DATEPURCHASE"));
 					bean.setDateDelivery(rs.getDate("DATEDELIVERY"));
 					bean.setDateShipping(rs.getDate("DATESHIPPING"));
@@ -177,6 +176,46 @@ import java.sql.Connection;
 			return orders;
 		}
 
+		
+		public synchronized ArrayList<OrderBean> doRetrieveByIdCart(int id) throws SQLException {
+			Connection connection = null;
+			PreparedStatement preparedStatement = null;
 
+			ArrayList<OrderBean> orders=new ArrayList<OrderBean>();
+
+			String selectSQL = "SELECT * FROM " + OrderDaoDataSource.TABLE_NAME + "WHERE IDCART = ?";
+            
+
+			try {
+				connection = ds.getConnection();
+				preparedStatement = connection.prepareStatement(selectSQL);
+				preparedStatement.setInt(1, id);
+				ResultSet rs = preparedStatement.executeQuery();
+
+				while (rs.next()) {
+					OrderBean bean = new OrderBean();
+					
+					bean.setIdOrder(rs.getInt("IDORDER"));
+					bean.setDatePurchase(rs.getDate("DATEPURCHASE"));
+					bean.setDateDelivery(rs.getDate("DATEDELIVERY"));
+					bean.setDateShipping(rs.getDate("DATESHIPPING"));
+					bean.setIdCart(rs.getInt("IDCART"));
+					
+					orders.add(bean);
+				}
+
+			} finally {
+				try {
+					if (preparedStatement != null)
+						preparedStatement.close();
+				} finally {
+					if (connection != null)
+						connection.close();
+				}
+			}
+			return orders;
+		}
+
+		
 
 }
