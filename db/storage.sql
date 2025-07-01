@@ -85,18 +85,26 @@ CREATE TABLE `product_situatedin_cart` (
 
 
 CREATE TABLE `order` (
-  `id_Order` int AUTO_INCREMENT PRIMARY KEY,
-  `id` int NOT NULL,
+  `idOrder` int AUTO_INCREMENT PRIMARY KEY,
   `datePurchase` date DEFAULT NULL,
   `dateDelivery` date DEFAULT NULL,
   `dateShipping` date DEFAULT NULL,
   `idCart` int NOT NULL,
-  UNIQUE (`id`,`idCart`),
   KEY `idCart_idx` (`idCart`),
   CONSTRAINT `idCart_Order` FOREIGN KEY (`idCart`) REFERENCES `cart` (`idCart`) ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
-
+CREATE TABLE `product_in_order` (
+  `id_product_in_order` int AUTO_INCREMENT PRIMARY KEY,
+  `idOrder` int NOT NULL,
+  `idProduct` int NOT NULL,
+  `quantity` int DEFAULT 0,
+  `price` double DEFAULT 0,
+  KEY `idOrder_idx` (`idOrder`),
+  KEY `idProduct_idx` (`idProduct`),
+  CONSTRAINT `idOrder_in_order` FOREIGN KEY (`idOrder`) REFERENCES `order` (`idOrder`) ON DELETE RESTRICT ON UPDATE CASCADE
+  CONSTRAINT `idProduct_in_order` FOREIGN KEY (`idProduct`) REFERENCES `order` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
+);
 
 
 

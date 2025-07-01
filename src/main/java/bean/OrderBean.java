@@ -1,37 +1,42 @@
 package bean;
 import java.sql.Date;
+import java.util.ArrayList;
 
 public class OrderBean {
 
 
 
-    private int id_Order;
-	private int id;
+    private int idOrder;
     private Date datePurchase;
     private Date dateDelivery;
     private Date dateShipping;
     private int idCart;
+    private ArrayList<Product_in_orderBean> products_in_order;
 	
 	
-    public int getId_Order() {
-		return id_Order;
+    public int getIdOrder() {
+		return idOrder;
 	}
 
 
 
-	public void setId_Order(int id_Order) {
-		this.id_Order = id_Order;
+	public void setIdOrder(int idOrder) {
+		this.idOrder = idOrder;
 	}
+
+
+
+	public ArrayList<Product_in_orderBean> getProducts_in_order() {
+		return products_in_order;
+	}
+
+
+
+	public void setProducts_in_order(ArrayList<Product_in_orderBean> products_in_order) {
+		this.products_in_order = products_in_order;
+	}
+
 	
-	public int getId() {
-		return id;
-	}
-
-
-
-	public void setId(int id) {
-		this.id = id;
-	}
 
 
 
@@ -82,13 +87,23 @@ public class OrderBean {
 	}
 
 
+public double getTotalOrder() {
+	
+	double total=0;
+	for(Product_in_orderBean product_in_order: products_in_order) {
+		total+=product_in_order.getSubtotal();
+		
+	}
+	return total;
+}
 
 	public OrderBean() {
-		id=-1;
+		
 		datePurchase=new Date(0);
 		dateDelivery=new Date(0);
 		dateShipping=new Date(0);
 		idCart=-1;
+		products_in_order=new ArrayList<Product_in_orderBean>();
 	}
 
 }
