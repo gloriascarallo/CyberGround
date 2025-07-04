@@ -10,6 +10,8 @@ import dao.ProductDaoDataSource;
 import java.io.IOException;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.time.LocalDate;
+
 import bean.CartBean;
 import bean.Product_situatedin_cartBean;
 import dao.Product_situatedin_cartDaoDataSource;
@@ -43,7 +45,7 @@ public class Adding_to_cart extends HttpServlet {
 		
 		product_situatedin_cart.setIdCart(cart.getIdCart());
 		product_situatedin_cart.setQuantity(quantity);
-		product_situatedin_cart.setDateAdded(new Date(System.currentTimeMillis()));
+		product_situatedin_cart.setDateAdded(Date.valueOf(LocalDate.now()));
 		
 		ProductDaoDataSource ds_product=new ProductDaoDataSource();
 		Product_situatedin_cartDaoDataSource ds_cart=new Product_situatedin_cartDaoDataSource();
@@ -52,7 +54,7 @@ public class Adding_to_cart extends HttpServlet {
 		try {
 			product_situatedin_cart.setProduct(ds_product.doRetrieveByKey(idProdotto));
 			cart.addProduct(product_situatedin_cart);
-			ds_cart.doSave(product_situatedin_cart); // non so se è necessario
+			ds_cart.doSave(product_situatedin_cart); 
 		}
         
 		catch(SQLException e) {

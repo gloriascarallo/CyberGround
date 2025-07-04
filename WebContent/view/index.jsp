@@ -17,7 +17,7 @@ if(errors!=null && !errors.equals("")) {%>
 %>
 
 <a href="<%=request.getContextPath()%>/User">
-  <img src="<%=request.getContextPath()%>/images/user_profile.jpg" alt="Profilo">
+ <img src="<%=request.getContextPath() %>/images/user_profile.jpg" width=40 height=40>
 </a>
 
 </body>
