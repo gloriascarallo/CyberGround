@@ -4,6 +4,7 @@ package dao;
 	import java.sql.PreparedStatement;
 	import java.sql.ResultSet;
 	import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collection;
 	import java.util.LinkedList;
@@ -38,19 +39,23 @@ import bean.RegisteredUser_has_method_paymentBean;
 			PreparedStatement preparedStatement = null;
 
 			String insertSQL = "INSERT INTO " + RegisteredUser_has_method_paymentDaoDataSource.TABLE_NAME
-					+ " (ID_HAS_METHOD_PAYMENT, USERNAMEREGISTEREDUSER, PANMETHODPAYMENT, EXPIRATIONDATEMETHODPAYMENT, CVCMETHODPAYMENT) VALUES (?, ?, ?, ?, ?)";
+					+ " (USERNAMEREGISTEREDUSER, PANMETHODPAYMENT, EXPIRATIONDATEMETHODPAYMENT, CVCMETHODPAYMENT) VALUES (?, ?, ?, ?)";
 
 			try {
 				connection = ds.getConnection();
-				preparedStatement = connection.prepareStatement(insertSQL);
-				preparedStatement.setInt(1, registereduser_has_method_payment.getId_has_method_payment());
-				preparedStatement.setString(2, registereduser_has_method_payment.getUsernameRegisteredUser());
-				preparedStatement.setString(3, registereduser_has_method_payment.getPan());
-				preparedStatement.setString(4, registereduser_has_method_payment.getExpirationDate());
-				preparedStatement.setString(5, registereduser_has_method_payment.getCvc());
-				
-
+				preparedStatement = connection.prepareStatement(insertSQL, Statement.RETURN_GENERATED_KEYS);
+				preparedStatement.setString(1, registereduser_has_method_payment.getUsernameRegisteredUser());
+				preparedStatement.setString(2, registereduser_has_method_payment.getPan());
+				preparedStatement.setString(3, registereduser_has_method_payment.getExpirationDate());
+				preparedStatement.setString(4, registereduser_has_method_payment.getCvc());
 				preparedStatement.executeUpdate();
+				
+				ResultSet rs=preparedStatement.getGeneratedKeys();
+				
+				if(rs.next()) {
+					registereduser_has_method_payment.setId_has_method_payment(rs.getInt(1));
+					
+				}
 
 			} finally {
 				try {

@@ -1,7 +1,9 @@
 package dao;
 
 	import java.sql.SQLException;
-    import javax.naming.Context;
+import java.sql.Statement;
+
+import javax.naming.Context;
 	import javax.naming.InitialContext;
 	import javax.naming.NamingException;
 	import javax.sql.DataSource;
@@ -40,21 +42,25 @@ import java.util.Collection;
 			PreparedStatement preparedStatement = null;
 
 			String insertSQL = "INSERT INTO " + OrderDaoDataSource.TABLE_NAME
-					+ " (IDORDER, DATEPURCHASE, DATEDELIVERY, DATESHIPPING, IDCART) VALUES (?, ?, ?, ?, ?)";
+					+ " (DATEPURCHASE, DATEDELIVERY, DATESHIPPING, IDCART) VALUES (?, ?, ?, ?)";
 
 			try {
 				connection = ds.getConnection();
-				preparedStatement = connection.prepareStatement(insertSQL);
-				preparedStatement.setInt(1, order.getIdOrder());
-				preparedStatement.setDate(2, order.getDatePurchase());
-				preparedStatement.setDate(3, order.getDateDelivery());
-				preparedStatement.setDate(4, order.getDateShipping());
-				preparedStatement.setInt(5, order.getIdCart());
+				preparedStatement = connection.prepareStatement(insertSQL, Statement.RETURN_GENERATED_KEYS);
+				preparedStatement.setDate(1, order.getDatePurchase());
+				preparedStatement.setDate(2, order.getDateDelivery());
+				preparedStatement.setDate(3, order.getDateShipping());
+				preparedStatement.setInt(4, order.getIdCart());
 				
 				
 
 				preparedStatement.executeUpdate();
-
+				ResultSet rs=preparedStatement.getGeneratedKeys();
+				
+				if(rs.next()) {
+					order.setIdOrder(rs.getInt(1));
+					
+				}
 			} finally {
 				try {
 					if (preparedStatement != null)
