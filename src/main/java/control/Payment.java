@@ -10,6 +10,7 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Random;
 
 import bean.CartBean;
 import bean.Product_situatedin_cartBean;
@@ -38,11 +39,24 @@ public class Payment extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		CartBean cart=(CartBean)request.getSession().getAttribute("cart");
 		OrderBean order=new OrderBean();
-		int idOrder=order.getIdOrder();
+		
 		order.setIdCart(cart.getIdCart());
 		order.setDatePurchase(Date.valueOf(LocalDate.now()));
-		order.setDateShipping(Date.valueOf(LocalDate.now().plusDays(1)));
-		order.setDateDelivery(Date.valueOf(LocalDate.now().plusDays(3)));
+		Random rand=new Random();
+		int randomDayShipping=rand.nextInt(30)+1;
+		int randomDayDelivery=randomDayShipping+rand.nextInt(30)+1;
+		order.setDateShipping(Date.valueOf(LocalDate.now().plusDays(randomDayShipping)));
+		order.setDateDelivery(Date.valueOf(LocalDate.now().plusDays(randomDayDelivery)));
+		OrderDaoDataSource ds_order=new OrderDaoDataSource();
+		
+		try {
+			ds_order.doSave(order);
+			
+		}
+		catch(SQLException e) {
+			
+			e.printStackTrace();
+		}
 		
 		ArrayList<Product_in_orderBean> products_in_order=new ArrayList<Product_in_orderBean>();
 		
@@ -53,7 +67,7 @@ public class Payment extends HttpServlet {
 			
 			Product_in_orderDaoDataSource ds=new Product_in_orderDaoDataSource();
 			Product_in_orderBean product_in_order=new Product_in_orderBean();
-			product_in_order.setIdOrder(idOrder);
+			product_in_order.setIdOrder(order.getIdOrder());
 			product_in_order.setProduct(product_in_order.getProduct());
 			product_in_order.setPrice(product_incart.getProduct().getPrice());
 			product_in_order.setQuantity(product_incart.getQuantity());
@@ -73,17 +87,9 @@ public class Payment extends HttpServlet {
 			
 		}
 		
-		OrderDaoDataSource ds_order=new OrderDaoDataSource();
-		order.setProducts_in_order(products_in_order);
+		order.setProducts_in_order(products_in_order); // non penso sia necessario
 		
-		try {
-			ds_order.doSave(order);
-			
-		}
-		catch(SQLException e) {
-			
-			e.printStackTrace();
-		}
+	
 		response.sendRedirect(request.getContextPath()+"/view/success_payment");
 		return;
 	}
