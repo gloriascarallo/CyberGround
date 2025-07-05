@@ -31,10 +31,24 @@ public class Discounts extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ArrayList<ProductBean> products=new ArrayList<>();
-		ProductDaoDataSource ds=new ProductDaoDataSource();
+		String discountStr=request.getParameter("discounPercentage");
+		Double discountPercentage=0.0;
 		String errors="";
+		
+		if (discountStr != null && !discountStr.trim().isEmpty()) {
+		    try {
+		        discountPercentage = Double.parseDouble(discountStr);
+		    } catch (NumberFormatException e) {
+		        errors += "Il valore dello sconto non è valido.<br>";
+		        request.setAttribute("errors", errors);
+				request.getRequestDispatcher("/view/index.jsp").forward(request, response);
+				return;
+		    }
+		}
+		ProductDaoDataSource ds=new ProductDaoDataSource();
+
 		try {
-			products=ds.doRetrieveDiscountedProducts(null);
+			products=ds.doRetrieveDiscountedProducts(discountPercentage);
 		} catch (SQLException e) {
 			
 			e.printStackTrace();
