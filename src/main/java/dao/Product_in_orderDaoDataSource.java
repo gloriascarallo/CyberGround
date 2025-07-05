@@ -6,6 +6,7 @@ package dao;
 	import java.sql.PreparedStatement;
 	import java.sql.ResultSet;
 	import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collection;
 	import java.util.LinkedList;
@@ -40,20 +41,24 @@ import bean.Product_in_orderBean;
 			PreparedStatement preparedStatement = null;
 
 			String insertSQL = "INSERT INTO " + Product_in_orderDaoDataSource.TABLE_NAME
-					+ " (ID_PRODUCT_IN_ORDER, IDORDER, IDPRODUCT, QUANTITY, PRICE) VALUES (?, ?, ?, ?, ?)";
+					+ " (IDORDER, IDPRODUCT, QUANTITY, PRICE) VALUES (?, ?, ?, ?)";
 
 			try {
 				connection = ds.getConnection();
-				preparedStatement = connection.prepareStatement(insertSQL);
-				preparedStatement.setInt(1, product_in_order.getId_product_in_order());
-				preparedStatement.setInt(2, product_in_order.getIdOrder());
-				preparedStatement.setInt(3, product_in_order.getProduct().getId());
-				preparedStatement.setInt(4, product_in_order.getQuantity());
-				preparedStatement.setDouble(5, product_in_order.getPrice());
+				preparedStatement = connection.prepareStatement(insertSQL, Statement.RETURN_GENERATED_KEYS);
+				preparedStatement.setInt(1, product_in_order.getIdOrder());
+				preparedStatement.setInt(2, product_in_order.getProduct().getId());
+				preparedStatement.setInt(3, product_in_order.getQuantity());
+				preparedStatement.setDouble(4, product_in_order.getPrice());
 				
 
 				preparedStatement.executeUpdate();
-
+                ResultSet rs=preparedStatement.getGeneratedKeys();
+				
+				if(rs.next()) {
+					product_in_order.setId_product_in_order(rs.getInt(1));
+					
+				}
 			} finally {
 				try {
 					if (preparedStatement != null)

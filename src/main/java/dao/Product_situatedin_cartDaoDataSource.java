@@ -5,7 +5,8 @@ package dao;
 	import java.sql.PreparedStatement;
 	import java.sql.ResultSet;
 	import java.sql.SQLException;
-    import java.util.ArrayList;
+import java.sql.Statement;
+import java.util.ArrayList;
     import java.util.Collection;
 	import java.util.LinkedList;
 	import javax.naming.Context;
@@ -39,19 +40,24 @@ import bean.Product_situatedin_cartBean;
 			PreparedStatement preparedStatement = null;
 
 			String insertSQL = "INSERT INTO " + Product_situatedin_cartDaoDataSource.TABLE_NAME
-					+ " (ID_SITUATEDIN, IDCART, IDPRODUCT, DATEADDED, QUANTITY) VALUES (?, ?, ?, ?, ?)";
+					+ " (IDCART, IDPRODUCT, DATEADDED, QUANTITY) VALUES (?, ?, ?, ?)";
 
 			try {
 				connection = ds.getConnection();
-				preparedStatement = connection.prepareStatement(insertSQL);
-				preparedStatement.setInt(1, product_situatedin_cart.getId_SituatedIn());
-				preparedStatement.setInt(2, product_situatedin_cart.getIdCart());
-				preparedStatement.setInt(3, product_situatedin_cart.getIdProduct());
-				preparedStatement.setDate(4, product_situatedin_cart.getDateAdded());
-				preparedStatement.setInt(5, product_situatedin_cart.getQuantity());
+				preparedStatement = connection.prepareStatement(insertSQL, Statement.RETURN_GENERATED_KEYS);
+				preparedStatement.setInt(1, product_situatedin_cart.getIdCart());
+				preparedStatement.setInt(2, product_situatedin_cart.getIdProduct());
+				preparedStatement.setDate(3, product_situatedin_cart.getDateAdded());
+				preparedStatement.setInt(4, product_situatedin_cart.getQuantity());
 				
 
 				preparedStatement.executeUpdate();
+				ResultSet rs=preparedStatement.getGeneratedKeys();
+				
+				if(rs.next()) {
+					product_situatedin_cart.setId_SituatedIn(rs.getInt(1));
+					
+				}
 
 			} finally {
 				try {
