@@ -11,7 +11,8 @@ import javax.naming.Context;
 import bean.OrderBean;
 
 import java.sql.Connection;
-	import java.sql.PreparedStatement;
+import java.sql.Date;
+import java.sql.PreparedStatement;
 	import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -196,6 +197,47 @@ import java.util.Collection;
 				connection = ds.getConnection();
 				preparedStatement = connection.prepareStatement(selectSQL);
 				preparedStatement.setInt(1, id);
+				ResultSet rs = preparedStatement.executeQuery();
+
+				while (rs.next()) {
+					OrderBean bean = new OrderBean();
+					
+					bean.setIdOrder(rs.getInt("IDORDER"));
+					bean.setDatePurchase(rs.getDate("DATEPURCHASE"));
+					bean.setDateDelivery(rs.getDate("DATEDELIVERY"));
+					bean.setDateShipping(rs.getDate("DATESHIPPING"));
+					bean.setIdCart(rs.getInt("IDCART"));
+					
+					orders.add(bean);
+				}
+
+			} finally {
+				try {
+					if (preparedStatement != null)
+						preparedStatement.close();
+				} finally {
+					if (connection != null)
+						connection.close();
+				}
+			}
+			return orders;
+		}
+		
+		public synchronized ArrayList<OrderBean> doRetrieveByIdCartAndDatePurchaseRange(int id, Date dateX, Date dateY) throws SQLException {
+			Connection connection = null;
+			PreparedStatement preparedStatement = null;
+
+			ArrayList<OrderBean> orders=new ArrayList<OrderBean>();
+
+			String selectSQL = "SELECT * FROM " + OrderDaoDataSource.TABLE_NAME + "WHERE IDCART = ? AND DATEPUCHASE BETWEEN ? AND ?";
+            
+
+			try {
+				connection = ds.getConnection();
+				preparedStatement = connection.prepareStatement(selectSQL);
+				preparedStatement.setInt(1, id);
+				preparedStatement.setDate(2, dateX);
+				preparedStatement.setDate(3, dateY);
 				ResultSet rs = preparedStatement.executeQuery();
 
 				while (rs.next()) {
