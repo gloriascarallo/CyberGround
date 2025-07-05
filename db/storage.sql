@@ -49,9 +49,11 @@ CREATE TABLE `cart` (
 CREATE TABLE `product` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(45) DEFAULT NULL,
-  `price` double DEFAULT NULL,
+  `price` double DEFAULT 0,
+   `discountPercentage` DECIMAL(5, 2) DEFAULT NULL,
+   `dateExpirationDiscount` date DEFAULT NULL,
   `description` varchar(500) DEFAULT NULL,
-  `dateUpload` date DEFAULT NULL,
+  `dateUpload` date DEFAULT CURRENT_TIMESTAMP,
   `supplier` varchar(45) DEFAULT NULL,
   `categoryName` varchar(45) DEFAULT NULL,
   `imagePath` varchar(100) DEFAULT NULL;
@@ -65,7 +67,7 @@ CREATE TABLE `product_situatedin_cart` (
   `id_SituatedIn` int AUTO_INCREMENT PRIMARY KEY,
   `idCart` int NOT NULL,
   `idProduct` int NOT NULL,
-  `dateAdded` date NOT NULL,
+  `dateAdded` date DEFAULT CURRENT_TIMESTAMP,
   `quantity` int NOT NULL DEFAULT 1,
   UNIQUE (`idProduct`,`idCart`),
   KEY `idCart_idx` (`idCart`),
@@ -81,7 +83,7 @@ CREATE TABLE `product_situatedin_cart` (
 
 CREATE TABLE `order` (
   `idOrder` int AUTO_INCREMENT PRIMARY KEY,
-  `datePurchase` date DEFAULT NULL,
+  `datePurchase` date DEFAULT CURRENT_TIMESTAMP,
   `dateDelivery` date DEFAULT NULL,
   `dateShipping` date DEFAULT NULL,
   `idCart` int NOT NULL,
@@ -93,7 +95,7 @@ CREATE TABLE `product_in_order` (
   `id_product_in_order` int AUTO_INCREMENT PRIMARY KEY,
   `idOrder` int NOT NULL,
   `idProduct` int NOT NULL,
-  `quantity` int DEFAULT 0,
+  `quantity` int DEFAULT 1,
   `price` double DEFAULT 0,
   KEY `idOrder_idx` (`idOrder`),
   KEY `idProduct_idx` (`idProduct`),

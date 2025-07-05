@@ -6,7 +6,9 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.Date;
 import java.sql.SQLException;
+import java.util.Objects;
 
 import dao.ProductDaoDataSource;
 import bean.ProductBean;
@@ -35,6 +37,10 @@ public class Update_product extends HttpServlet {
 		String name=request.getParameter("name");
 		double price=0;
 		String priceStr = request.getParameter("price");
+		String discountStr = request.getParameter("discountPercentage");
+		Double discountPercentage = null;
+		String expirationStr = request.getParameter("dateExpirationDiscount");
+		Date dateExpirationDiscount=null;
 		String description=request.getParameter("description");
 		String supplier=request.getParameter("supplier");
 		String category=request.getParameter("category");
@@ -57,6 +63,23 @@ if (priceStr== null || priceStr.trim().isEmpty()) {
         }
     } catch (NumberFormatException e) {
         errors += "Il prezzo deve essere un numero valido.<br>";
+    }
+}
+
+if (discountStr != null && !discountStr.trim().isEmpty()) {
+    try {
+        discountPercentage = Double.parseDouble(discountStr);
+    } catch (NumberFormatException e) {
+        errors += "Il valore dello sconto non è valido.<br>";
+    }
+}
+
+
+if (expirationStr != null && !expirationStr.trim().isEmpty()) {
+    try {
+        dateExpirationDiscount = Date.valueOf(expirationStr); 
+    } catch (IllegalArgumentException e) {
+        errors += "Formato data non valido.<br>";
     }
 }
 
@@ -120,6 +143,16 @@ if(product.getPrice()!=(price)) {
 	product.setPrice(price);
 	modified=true;
 	
+}
+
+if (!Objects.equals(product.getDiscountPercentage(), discountPercentage)) {
+    product.setDiscountPercentage(discountPercentage);
+    modified = true;
+}
+
+if (!Objects.equals(product.getDateExpirationDiscount(), dateExpirationDiscount)) {
+    product.setDateExpirationDiscount(dateExpirationDiscount);
+    modified = true;
 }
 
 if(!product.getCategoryName().equals(category)) {

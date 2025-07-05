@@ -6,6 +6,10 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import dao.ProductDaoDataSource;
+import bean.ProductBean;
 
 /**
  * Servlet implementation class Discounts
@@ -26,8 +30,28 @@ public class Discounts extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		ArrayList<ProductBean> products=new ArrayList<>();
+		ProductDaoDataSource ds=new ProductDaoDataSource();
+		String errors="";
+		try {
+			products=ds.doRetrieveDiscountedProducts(null);
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}
+		
+		if(products.isEmpty()) {
+			
+			errors+="Prodotti scontati non trovati.<br>";
+			request.setAttribute("errors", errors);
+			request.getRequestDispatcher("/view/index.jsp").forward(request, response);
+			return;
+			
+		}
+		
+		request.setAttribute("productsDiscounted", products);
+		request.getRequestDispatcher("/view/discounts.jsp").forward(request, response);
+		return;
 	}
 
 	/**

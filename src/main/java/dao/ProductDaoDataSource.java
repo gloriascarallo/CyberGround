@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
@@ -40,19 +41,21 @@ public class ProductDaoDataSource implements IBeanDao<ProductBean> {
 		PreparedStatement preparedStatement = null;
 
 		String insertSQL = "INSERT INTO " + ProductDaoDataSource.TABLE_NAME
-				+ " (NAME, PRICE, DESCRIPTION, DATEUPLOAD, SUPPLIER, CATEGORYNAME, IMAGEPATH, QUANTITYAVAILABLE) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+				+ " (NAME, PRICE, DISCOUNTPERCENTAGE, DATEEXPIRATIONDISCOUNT, DESCRIPTION, DATEUPLOAD, SUPPLIER, CATEGORYNAME, IMAGEPATH, QUANTITYAVAILABLE) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 		try {
 			connection = ds.getConnection();
 			preparedStatement = connection.prepareStatement(insertSQL, Statement.RETURN_GENERATED_KEYS);
 			preparedStatement.setString(1, product.getName());
 			preparedStatement.setDouble(2, product.getPrice());
-			preparedStatement.setString(3, product.getDescription());
-			preparedStatement.setDate(4, product.getDateUpload());
-			preparedStatement.setString(5, product.getSupplier());
-			preparedStatement.setString(6, product.getCategoryName());
-			preparedStatement.setString(7, product.getImagePath());
-			preparedStatement.setInt(8, product.getQuantityAvailable());
+			preparedStatement.setDouble(3, product.getDiscountPercentage());
+			preparedStatement.setDate(4, product.getDateExpirationDiscount());
+			preparedStatement.setString(5, product.getDescription());
+			preparedStatement.setDate(6, product.getDateUpload());
+			preparedStatement.setString(7, product.getSupplier());
+			preparedStatement.setString(8, product.getCategoryName());
+			preparedStatement.setString(9, product.getImagePath());
+			preparedStatement.setInt(10, product.getQuantityAvailable());
 
 			preparedStatement.executeUpdate();
            ResultSet rs=preparedStatement.getGeneratedKeys();
@@ -93,7 +96,14 @@ public class ProductDaoDataSource implements IBeanDao<ProductBean> {
 				bean.setId(rs.getInt("ID"));
 				bean.setName(rs.getString("NAME"));
 				bean.setDescription(rs.getString("DESCRIPTION"));
-				bean.setPrice(rs.getInt("PRICE"));
+				bean.setPrice(rs.getDouble("PRICE"));
+				double value = rs.getDouble("DISCOUNTPERCENTAGE");
+				if (rs.wasNull()) {
+				    bean.setDiscountPercentage(null);
+				} else {
+				    bean.setDiscountPercentage(value);
+				}
+				bean.setDateExpirationDiscount(rs.getDate("DATEEXPIRATIONDISCOUNT"));
 				bean.setCategoryName(rs.getString("CATEGORYNAME"));
 				bean.setSupplier(rs.getString("SUPPLIER"));
 				bean.setDateUpload(rs.getDate("DATEUPLOAD"));
@@ -167,7 +177,14 @@ public class ProductDaoDataSource implements IBeanDao<ProductBean> {
 				bean.setId(rs.getInt("ID"));
 				bean.setName(rs.getString("NAME"));
 				bean.setDescription(rs.getString("DESCRIPTION"));
-				bean.setPrice(rs.getInt("PRICE"));
+				bean.setPrice(rs.getDouble("PRICE"));
+				double value = rs.getDouble("DISCOUNTPERCENTAGE");
+				if (rs.wasNull()) {
+				    bean.setDiscountPercentage(null);
+				} else {
+				    bean.setDiscountPercentage(value);
+				}
+				bean.setDateExpirationDiscount(rs.getDate("DATEEXPIRATIONDISCOUNT"));
 				bean.setCategoryName(rs.getString("CATEGORYNAME"));
 				bean.setSupplier(rs.getString("SUPPLIER"));
 				bean.setDateUpload(rs.getDate("DATEUPLOAD"));
@@ -196,7 +213,7 @@ public class ProductDaoDataSource implements IBeanDao<ProductBean> {
         
 		int result = 0;
 
-		String deleteSQL = "UPDATE" + ProductDaoDataSource.TABLE_NAME + "SET QUANTITYAVAILABLE= QUANTITYAVAILABLE-1 WHERE ID = ?";
+		String deleteSQL = "UPDATE" + ProductDaoDataSource.TABLE_NAME + " SET QUANTITYAVAILABLE= QUANTITYAVAILABLE-1 WHERE ID = ?";
 
 		try {
 			connection = ds.getConnection();
@@ -224,7 +241,7 @@ public class ProductDaoDataSource implements IBeanDao<ProductBean> {
 
 		ArrayList<ProductBean> products = new ArrayList<ProductBean>();
 
-		String selectSQL = "SELECT * FROM " + ProductDaoDataSource.TABLE_NAME + "WHERE SUPPLIER LIKE= ?";
+		String selectSQL = "SELECT * FROM " + ProductDaoDataSource.TABLE_NAME + " WHERE SUPPLIER LIKE= ?";
         
 
 		try {
@@ -239,7 +256,14 @@ public class ProductDaoDataSource implements IBeanDao<ProductBean> {
 				bean.setId(rs.getInt("ID"));
 				bean.setName(rs.getString("NAME"));
 				bean.setDescription(rs.getString("DESCRIPTION"));
-				bean.setPrice(rs.getInt("PRICE"));
+				bean.setPrice(rs.getDouble("PRICE"));
+				double value = rs.getDouble("DISCOUNTPERCENTAGE");
+				if (rs.wasNull()) {
+				    bean.setDiscountPercentage(null);
+				} else {
+				    bean.setDiscountPercentage(value);
+				}
+				bean.setDateExpirationDiscount(rs.getDate("DATEEXPIRATIONDISCOUNT"));
 				bean.setCategoryName(rs.getString("CATEGORYNAME"));
 				bean.setSupplier(rs.getString("SUPPLIER"));
 				bean.setDateUpload(rs.getDate("DATEUPLOAD"));
@@ -261,19 +285,20 @@ public class ProductDaoDataSource implements IBeanDao<ProductBean> {
 	}
 	
 	
-	public synchronized ArrayList<ProductBean> doRetrievebyPrice(double price) throws SQLException {
+	public synchronized ArrayList<ProductBean> doRetrievebyPriceRange(double priceMin, double priceMax) throws SQLException {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 
 		ArrayList<ProductBean> products = new ArrayList<ProductBean>();
 
-		String selectSQL = "SELECT * FROM " + ProductDaoDataSource.TABLE_NAME + "WHERE PRICE >= ?";
+		String selectSQL = "SELECT * FROM " + ProductDaoDataSource.TABLE_NAME + " WHERE PRICE BETWEEN ? AND ?";
         
 
 		try {
 			connection = ds.getConnection();
 			preparedStatement = connection.prepareStatement(selectSQL);
-            preparedStatement.setDouble(1, price);
+            preparedStatement.setDouble(1, priceMin);
+            preparedStatement.setDouble(2, priceMax);
 			ResultSet rs = preparedStatement.executeQuery();
 
 			while (rs.next()) {
@@ -282,7 +307,14 @@ public class ProductDaoDataSource implements IBeanDao<ProductBean> {
 				bean.setId(rs.getInt("ID"));
 				bean.setName(rs.getString("NAME"));
 				bean.setDescription(rs.getString("DESCRIPTION"));
-				bean.setPrice(rs.getInt("PRICE"));
+				bean.setPrice(rs.getDouble("PRICE"));
+				double value = rs.getDouble("DISCOUNTPERCENTAGE");
+				if (rs.wasNull()) {
+				    bean.setDiscountPercentage(null);
+				} else {
+				    bean.setDiscountPercentage(value);
+				}
+				bean.setDateExpirationDiscount(rs.getDate("DATEEXPIRATIONDISCOUNT"));
 				bean.setCategoryName(rs.getString("CATEGORYNAME"));
 				bean.setSupplier(rs.getString("SUPPLIER"));
 				bean.setDateUpload(rs.getDate("DATEUPLOAD"));
@@ -310,7 +342,7 @@ public class ProductDaoDataSource implements IBeanDao<ProductBean> {
 
 		ArrayList<ProductBean> products = new ArrayList<ProductBean>();
 
-		String selectSQL = "SELECT * FROM " + ProductDaoDataSource.TABLE_NAME + "WHERE DATEUPLOAD BETWEEN ? AND ?";
+		String selectSQL = "SELECT * FROM " + ProductDaoDataSource.TABLE_NAME + " WHERE DATEUPLOAD BETWEEN ? AND ?";
         
 
 		try {
@@ -326,7 +358,14 @@ public class ProductDaoDataSource implements IBeanDao<ProductBean> {
 				bean.setId(rs.getInt("ID"));
 				bean.setName(rs.getString("NAME"));
 				bean.setDescription(rs.getString("DESCRIPTION"));
-				bean.setPrice(rs.getInt("PRICE"));
+				bean.setPrice(rs.getDouble("PRICE"));
+				double value = rs.getDouble("DISCOUNTPERCENTAGE");
+				if (rs.wasNull()) {
+				    bean.setDiscountPercentage(null);
+				} else {
+				    bean.setDiscountPercentage(value);
+				}
+				bean.setDateExpirationDiscount(rs.getDate("DATEEXPIRATIONDISCOUNT"));
 				bean.setCategoryName(rs.getString("CATEGORYNAME"));
 				bean.setSupplier(rs.getString("SUPPLIER"));
 				bean.setDateUpload(rs.getDate("DATEUPLOAD"));
@@ -353,7 +392,7 @@ public class ProductDaoDataSource implements IBeanDao<ProductBean> {
 
 		ArrayList<ProductBean> products = new ArrayList<ProductBean>();
 
-		String selectSQL = "SELECT * FROM " + ProductDaoDataSource.TABLE_NAME + "WHERE NAME LIKE= ?";
+		String selectSQL = "SELECT * FROM " + ProductDaoDataSource.TABLE_NAME + " WHERE NAME LIKE= ?";
         
 
 		try {
@@ -368,7 +407,14 @@ public class ProductDaoDataSource implements IBeanDao<ProductBean> {
 				bean.setId(rs.getInt("ID"));
 				bean.setName(rs.getString("NAME"));
 				bean.setDescription(rs.getString("DESCRIPTION"));
-				bean.setPrice(rs.getInt("PRICE"));
+				bean.setPrice(rs.getDouble("PRICE"));
+				double value = rs.getDouble("DISCOUNTPERCENTAGE");
+				if (rs.wasNull()) {
+				    bean.setDiscountPercentage(null);
+				} else {
+				    bean.setDiscountPercentage(value);
+				}
+				bean.setDateExpirationDiscount(rs.getDate("DATEEXPIRATIONDISCOUNT"));
 				bean.setCategoryName(rs.getString("CATEGORYNAME"));
 				bean.setSupplier(rs.getString("SUPPLIER"));
 				bean.setDateUpload(rs.getDate("DATEUPLOAD"));
@@ -395,7 +441,7 @@ public class ProductDaoDataSource implements IBeanDao<ProductBean> {
 
 		ArrayList<ProductBean> products = new ArrayList<ProductBean>();
 
-		String selectSQL = "SELECT * FROM " + ProductDaoDataSource.TABLE_NAME + "WHERE CATEGOTYNAME LIKE= ?";
+		String selectSQL = "SELECT * FROM " + ProductDaoDataSource.TABLE_NAME + " WHERE CATEGOTYNAME LIKE= ?";
         
 
 		try {
@@ -410,7 +456,63 @@ public class ProductDaoDataSource implements IBeanDao<ProductBean> {
 				bean.setId(rs.getInt("ID"));
 				bean.setName(rs.getString("NAME"));
 				bean.setDescription(rs.getString("DESCRIPTION"));
-				bean.setPrice(rs.getInt("PRICE"));
+				bean.setPrice(rs.getDouble("PRICE"));
+				double value = rs.getDouble("DISCOUNTPERCENTAGE");
+				if (rs.wasNull()) {
+				    bean.setDiscountPercentage(null);
+				} else {
+				    bean.setDiscountPercentage(value);
+				}
+				bean.setDateExpirationDiscount(rs.getDate("DATEEXPIRATIONDISCOUNT"));
+				bean.setCategoryName(rs.getString("CATEGORYNAME"));
+				bean.setSupplier(rs.getString("SUPPLIER"));
+				bean.setDateUpload(rs.getDate("DATEUPLOAD"));
+				bean.setImagePath(rs.getString("IMAGEPATH"));
+				bean.setQuantityAvailable(rs.getInt("QUANTITYAVAILABLE"));
+				products.add(bean);
+			}
+
+		} finally {
+			try {
+				if (preparedStatement != null)
+					preparedStatement.close();
+			} finally {
+				if (connection != null)
+					connection.close();
+			}
+		}
+		return products;
+	}
+	
+	public synchronized ArrayList<ProductBean> doRetrieveDiscountedProducts(Double discount) throws SQLException {
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+
+		ArrayList<ProductBean> products = new ArrayList<ProductBean>();
+
+		String selectSQL = "SELECT * FROM " + ProductDaoDataSource.TABLE_NAME + " WHERE DISCOUNT = ? AND (DATEEXPIRATIONDISCOUNT IS NULL OR DATEEXPIRATIONDISCOUNT > CURRENT_DATE)";
+        
+
+		try {
+			connection = ds.getConnection();
+			preparedStatement = connection.prepareStatement(selectSQL);
+            preparedStatement.setDouble(1, discount);
+			ResultSet rs = preparedStatement.executeQuery();
+
+			while (rs.next()) {
+				ProductBean bean = new ProductBean();
+
+				bean.setId(rs.getInt("ID"));
+				bean.setName(rs.getString("NAME"));
+				bean.setDescription(rs.getString("DESCRIPTION"));
+				bean.setPrice(rs.getDouble("PRICE"));
+				double value = rs.getDouble("DISCOUNTPERCENTAGE");
+				if (rs.wasNull()) {
+				    bean.setDiscountPercentage(null);
+				} else {
+				    bean.setDiscountPercentage(value);
+				}
+				bean.setDateExpirationDiscount(rs.getDate("DATEEXPIRATIONDISCOUNT"));
 				bean.setCategoryName(rs.getString("CATEGORYNAME"));
 				bean.setSupplier(rs.getString("SUPPLIER"));
 				bean.setDateUpload(rs.getDate("DATEUPLOAD"));
@@ -437,29 +539,34 @@ public class ProductDaoDataSource implements IBeanDao<ProductBean> {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 
-		String updateSQL = "UPDATE" + ProductDaoDataSource.TABLE_NAME
-				+ "SET NAME = ?, PRICE = ?, DESCRIPTION = ?, DATEUPLOAD = ?, SUPPLIER = ?, CATEGORYNAME = ?, IMAGEPATH = ?, QUANTITYAVAILABLE = ?) WHERE ID = ?";
+		String updateSQL = "UPDATE " + ProductDaoDataSource.TABLE_NAME
+				+ " SET NAME = ?, PRICE = ?, DISCOUNTPERCENTAGE = ?, DATEEXPIRATIONDISCOUNT = ?, DESCRIPTION = ?, DATEUPLOAD = ?, SUPPLIER = ?, CATEGORYNAME = ?, IMAGEPATH = ?, QUANTITYAVAILABLE = ? WHERE ID = ?";
 
 		try {
 			connection = ds.getConnection();
-			preparedStatement = connection.prepareStatement(updateSQL, Statement.RETURN_GENERATED_KEYS);
+			preparedStatement = connection.prepareStatement(updateSQL);
 			preparedStatement.setString(1, product.getName());
 			preparedStatement.setDouble(2, product.getPrice());
-			preparedStatement.setString(3, product.getDescription());
-			preparedStatement.setDate(4, product.getDateUpload());
-			preparedStatement.setString(5, product.getSupplier());
-			preparedStatement.setString(6, product.getCategoryName());
-			preparedStatement.setString(7, product.getImagePath());
-			preparedStatement.setInt(8, product.getQuantityAvailable());
-			preparedStatement.setInt(9, product.getId());
+			if (product.getDiscountPercentage() != null) {
+			    preparedStatement.setDouble(3, product.getDiscountPercentage());
+			} else {
+			    preparedStatement.setNull(3, Types.DOUBLE);
+			}
+			if (product.getDateExpirationDiscount() != null) {
+			    preparedStatement.setDate(4, product.getDateExpirationDiscount());
+			} else {
+			    preparedStatement.setNull(4, Types.DATE);
+			}
+			preparedStatement.setString(5, product.getDescription());
+			preparedStatement.setDate(6, product.getDateUpload());
+			preparedStatement.setString(7, product.getSupplier());
+			preparedStatement.setString(8, product.getCategoryName());
+			preparedStatement.setString(9, product.getImagePath());
+			preparedStatement.setInt(10, product.getQuantityAvailable());
+			preparedStatement.setInt(11, product.getId());
 
 			preparedStatement.executeUpdate();
-           ResultSet rs=preparedStatement.getGeneratedKeys();
-			
-			if(rs.next()) {
-				product.setId(rs.getInt(1));
-				
-			}
+         
 		} finally {
 			try {
 				if (preparedStatement != null)
