@@ -9,7 +9,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
-
+import dao.AdminDaoDataSource;
 import dao.RegisteredUserDaoDataSource;
 import dao.Product_situatedin_cartDaoDataSource;
 import bean.CartBean;
@@ -69,12 +69,22 @@ if(!errors.equals("")) {
 	dispatcherToLoginPage.forward(request, response);
 }
 
-	RegisteredUserDaoDataSource ds=new RegisteredUserDaoDataSource();
+	RegisteredUserDaoDataSource ds_user=new RegisteredUserDaoDataSource();
+	AdminDaoDataSource ds_admin=new AdminDaoDataSource();
 	Product_situatedin_cartDaoDataSource ds_cart=new Product_situatedin_cartDaoDataSource();
 	
-	try {
+	try {if(ds_admin.doRetrieveByUsername(username).getUsername().equals(username) && ds_admin.doRetrieveByUsername(username).getPassword().equals(hasPassword)) {
+		request.getSession().setAttribute("isAdmin", Boolean.TRUE);
+		request.getSession().setAttribute("isRegisteredUser", Boolean.FALSE);
+		
+		request.getSession().removeAttribute("cart");
+		request.getSession().removeAttribute("id");
+		
+		request.getSession().setAttribute("id", ds_admin.doRetrieveByUsername(username).getId());
+		// redirect
+	}
 		// da aggiungere confronto con tabella admin
-		if(ds.doRetrieveByKey(username).getUsername().equals(username) && ds.doRetrieveByKey(username).getPassword().equals(hasPassword)) {
+		if(ds_user.doRetrieveByKey(username).getUsername().equals(username) && ds_user.doRetrieveByKey(username).getPassword().equals(hasPassword)) {
 		request.getSession().setAttribute("isAdmin", Boolean.FALSE);
 		request.getSession().setAttribute("isRegisteredUser", Boolean.TRUE);
 		//request.getSession().setAttribute("id", ds.doRetrieveByKey(username).getId()); perche l'id nella sessione c'è dall'inizio
@@ -83,6 +93,7 @@ if(!errors.equals("")) {
 		CartBean cart=(CartBean)request.getSession().getAttribute("cart");
 		ArrayList<Product_situatedin_cartBean> products_incart=cart.getProducts();
 		for(Product_situatedin_cartBean product_incart: products_incart) {
+			
 			
 			try {
 				
@@ -110,7 +121,7 @@ if(!errors.equals("")) {
 	
 	catch(SQLException e) {
 		e.printStackTrace();
-	    dispatcherToLoginPage.forward(request, response);
+	    
 	
 	}
 	
