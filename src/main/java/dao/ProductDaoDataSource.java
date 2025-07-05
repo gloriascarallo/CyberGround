@@ -213,7 +213,7 @@ public class ProductDaoDataSource implements IBeanDao<ProductBean> {
         
 		int result = 0;
 
-		String deleteSQL = "UPDATE" + ProductDaoDataSource.TABLE_NAME + " SET QUANTITYAVAILABLE= QUANTITYAVAILABLE-1 WHERE ID = ?";
+		String deleteSQL = "UPDATE " + ProductDaoDataSource.TABLE_NAME + " SET QUANTITYAVAILABLE= QUANTITYAVAILABLE-1 WHERE ID = ?";
 
 		try {
 			connection = ds.getConnection();
@@ -490,7 +490,7 @@ public class ProductDaoDataSource implements IBeanDao<ProductBean> {
 
 		ArrayList<ProductBean> products = new ArrayList<ProductBean>();
 
-		String selectSQL = "SELECT * FROM " + ProductDaoDataSource.TABLE_NAME + " WHERE DISCOUNT = ? AND (DATEEXPIRATIONDISCOUNT IS NULL OR DATEEXPIRATIONDISCOUNT > CURRENT_DATE)";
+		String selectSQL = "SELECT * FROM " + ProductDaoDataSource.TABLE_NAME + " WHERE DISCOUNTPERCENTAGE IS NOT NULL AND DISCOUNTPERCENTAGE >= ? AND (DATEEXPIRATIONDISCOUNT IS NULL OR DATEEXPIRATIONDISCOUNT > CURRENT_DATE)";
         
 
 		try {

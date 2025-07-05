@@ -42,7 +42,7 @@ public class Product_refund extends HttpServlet {
 		}
 		
 		request.setAttribute("product", product);
-		request.getRequestDispatcher("/view/product_refund.jsp");
+		request.getRequestDispatcher("/view/product_refund.jsp").forward(request, response);;
 		return;
 		
 	}

@@ -190,7 +190,7 @@ import java.util.Collection;
 
 			ArrayList<OrderBean> orders=new ArrayList<OrderBean>();
 
-			String selectSQL = "SELECT * FROM " + OrderDaoDataSource.TABLE_NAME + "WHERE IDCART = ?";
+			String selectSQL = "SELECT * FROM " + OrderDaoDataSource.TABLE_NAME + " WHERE IDCART = ?";
             
 
 			try {
@@ -229,7 +229,7 @@ import java.util.Collection;
 
 			ArrayList<OrderBean> orders=new ArrayList<OrderBean>();
 
-			String selectSQL = "SELECT * FROM " + OrderDaoDataSource.TABLE_NAME + "WHERE IDCART = ? AND DATEPUCHASE BETWEEN ? AND ?";
+			String selectSQL = "SELECT * FROM " + OrderDaoDataSource.TABLE_NAME + " WHERE IDCART = ? AND DATEPUCHASE BETWEEN ? AND ?";
             
 
 			try {

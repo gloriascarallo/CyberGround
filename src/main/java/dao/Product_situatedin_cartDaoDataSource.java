@@ -187,7 +187,7 @@ import bean.Product_situatedin_cartBean;
 			Connection connection = null;
 			PreparedStatement preparedStatement = null;
 			
-			String selectSQL = "SELECT * FROM " + Product_situatedin_cartDaoDataSource.TABLE_NAME +" WHERE IDCART= ?";
+			String selectSQL = "SELECT * FROM " + Product_situatedin_cartDaoDataSource.TABLE_NAME + " WHERE IDCART= ?";
 			ArrayList<Product_situatedin_cartBean> products_situatedin_cart=new ArrayList<Product_situatedin_cartBean>();
 			
 			try {
@@ -226,7 +226,7 @@ import bean.Product_situatedin_cartBean;
 			Connection connection = null;
 			PreparedStatement preparedStatement = null;
 			
-			String selectSQL = "SELECT * FROM " + Product_situatedin_cartDaoDataSource.TABLE_NAME +" WHERE IDCART= ? AND DATEADDED = ?";
+			String selectSQL = "SELECT * FROM " + Product_situatedin_cartDaoDataSource.TABLE_NAME + " WHERE IDCART= ? AND DATEADDED = ?";
 			ArrayList<Product_situatedin_cartBean> products_situatedin_cart=new ArrayList<Product_situatedin_cartBean>();
 			
 			try {
@@ -310,7 +310,7 @@ import bean.Product_situatedin_cartBean;
 			PreparedStatement preparedStatement = null;
 			int result=0;
 			
-			String updateSQL = "UPDATE" + Product_situatedin_cartDaoDataSource.TABLE_NAME + "SET QUANTITY = QUANTITY - 1 WHERE ID_SITUATEDIN = ?";
+			String updateSQL = "UPDATE " + Product_situatedin_cartDaoDataSource.TABLE_NAME + " SET QUANTITY = QUANTITY - 1 WHERE ID_SITUATEDIN = ?";
 			try {
 				connection = ds.getConnection();
 				preparedStatement = connection.prepareStatement(updateSQL);
@@ -335,7 +335,7 @@ import bean.Product_situatedin_cartBean;
 			PreparedStatement preparedStatement = null;
 			int result=0;
 			
-			String updateSQL = "UPDATE" + Product_situatedin_cartDaoDataSource.TABLE_NAME + "SET QUANTITY = QUANTITY + 1 WHERE ID_SITUATEDIN = ?";
+			String updateSQL = "UPDATE " + Product_situatedin_cartDaoDataSource.TABLE_NAME + " SET QUANTITY = QUANTITY + 1 WHERE ID_SITUATEDIN = ?";
 			try {
 				connection = ds.getConnection();
 				preparedStatement = connection.prepareStatement(updateSQL);

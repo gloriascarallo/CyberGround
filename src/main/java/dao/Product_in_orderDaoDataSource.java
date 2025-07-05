@@ -189,7 +189,7 @@ import bean.Product_in_orderBean;
 
 			ArrayList<Product_in_orderBean> order=new ArrayList<Product_in_orderBean>();
 
-			String selectSQL = "SELECT * FROM " + Product_in_orderDaoDataSource.TABLE_NAME + "WHERE IDORDER = ?";
+			String selectSQL = "SELECT * FROM " + Product_in_orderDaoDataSource.TABLE_NAME + " WHERE IDORDER = ?";
             
 
 			try {
