@@ -31,11 +31,11 @@ public class RegisteredUserMethods_Payment extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		String username=(String)request.getSession().getAttribute("username");
+		int id=(Integer)request.getSession().getAttribute("id");
 		RegisteredUser_has_method_paymentDaoDataSource ds_has_methods_payment=new RegisteredUser_has_method_paymentDaoDataSource();
 		ArrayList<RegisteredUser_has_method_paymentBean> user_methods_payment=new ArrayList<RegisteredUser_has_method_paymentBean>();
 		try {
-		user_methods_payment=ds_has_methods_payment.doRetrieveByUsername(username);
+		user_methods_payment=ds_has_methods_payment.doRetrieveByIdRegisteredUser(id);
 		}
 		catch(SQLException e) {
 			

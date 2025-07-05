@@ -39,13 +39,13 @@ import bean.RegisteredUser_has_addressBean;
 			PreparedStatement preparedStatement = null;
 
 			String insertSQL = "INSERT INTO " + RegisteredUser_has_addressDaoDataSource.TABLE_NAME
-					+ " (USERNAMEREGISTEREDUSER, NAMEADDRESS) VALUES (?, ?)";
+					+ " (IDREGISTEREDUSER, NAMEADDRESS) VALUES (?, ?)";
 
 			try {
 				connection = ds.getConnection();
 				preparedStatement = connection.prepareStatement(insertSQL);
 				
-				preparedStatement.setString(1, registereduser_has_address.getUsernameRegisteredUser());
+				preparedStatement.setInt(1, registereduser_has_address.getIdRegisteredUser());
 				preparedStatement.setString(2, registereduser_has_address.getNameAddress());
 				preparedStatement.executeUpdate();
 				
@@ -86,7 +86,7 @@ ResultSet rs=preparedStatement.getGeneratedKeys();
 
 				while (rs.next()) {
 					bean.setId_has_address(rs.getInt("ID_HAS_ADDRESS"));
-					bean.setUsernameRegisteredUser(rs.getString("USERNAMEREGISTEREDUSER"));
+					bean.setIdRegisteredUser(rs.getInt("IDREGISTEREDUSER"));
 					bean.setNameAddress(rs.getString("NAMEADDRESS"));
 			}
 
@@ -102,26 +102,26 @@ ResultSet rs=preparedStatement.getGeneratedKeys();
 			return bean;
 		}
 		
-		public synchronized ArrayList<RegisteredUser_has_addressBean> doRetrieveByUsername(String username) throws SQLException {
+		public synchronized ArrayList<RegisteredUser_has_addressBean> doRetrieveByIdRegisteredUser(int id) throws SQLException {
 			Connection connection = null;
 			PreparedStatement preparedStatement = null;
 	        
 	        
 			ArrayList<RegisteredUser_has_addressBean> user_addresses = new ArrayList<RegisteredUser_has_addressBean>();
 
-			String selectSQL = "SELECT * FROM " + RegisteredUser_has_addressDaoDataSource.TABLE_NAME + " WHERE USERNAME = ?";
+			String selectSQL = "SELECT * FROM " + RegisteredUser_has_addressDaoDataSource.TABLE_NAME + " WHERE IDREGISTEREDUSER = ?";
 
 			try {
 				connection = ds.getConnection();
 				preparedStatement = connection.prepareStatement(selectSQL);
-				preparedStatement.setString(1, username);
+				preparedStatement.setInt(1, id);
 
 				ResultSet rs = preparedStatement.executeQuery();
 
 				while (rs.next()) {
 					RegisteredUser_has_addressBean bean=new RegisteredUser_has_addressBean();
 					bean.setId_has_address(rs.getInt("ID_HAS_ADDRESS"));
-					bean.setUsernameRegisteredUser(rs.getString("USERNAMEREGISTEREDUSER"));
+					bean.setIdRegisteredUser(rs.getInt("IDREGISTEREDUSER"));
 					bean.setNameAddress(rs.getString("NAMEADDRESS"));
 					user_addresses.add(bean);
 			}
@@ -191,7 +191,7 @@ ResultSet rs=preparedStatement.getGeneratedKeys();
 					RegisteredUser_has_addressBean bean = new RegisteredUser_has_addressBean();
 
 					bean.setId_has_address(rs.getInt("ID_HAS_ADDRESS"));
-					bean.setUsernameRegisteredUser(rs.getString("USERNAMEREGISTEREDUSER"));
+					bean.setIdRegisteredUser(rs.getInt("USERNAMEREGISTEREDUSER"));
 					bean.setNameAddress(rs.getString("NAMEADDRESS"));
 					registeredusers_have_addresses.add(bean);
 				}

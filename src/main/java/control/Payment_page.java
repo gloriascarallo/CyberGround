@@ -34,23 +34,23 @@ public class Payment_page extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//CartBean cart=(CartBean)request.getSession().getAttribute("cart");
 		
-		String errors="";
-		Boolean isRegisteredUser=(Boolean)request.getSession().getAttribute("isRegisteredUser");
+		/*Boolean isRegisteredUser=(Boolean)request.getSession().getAttribute("isRegisteredUser");
 		if (Boolean.FALSE.equals(isRegisteredUser)) {
 		    errors += "Non sei utente registrato<br>";
 		    request.setAttribute("errors", errors);
 		    request.getRequestDispatcher("/view/cart.jsp").forward(request, response);
 		    return;
 		}
+		*/
 		
-		String username=(String)request.getSession().getAttribute("username");
+		int id=(Integer)request.getSession().getAttribute("id");
 		RegisteredUser_has_addressDaoDataSource ds_has_address=new RegisteredUser_has_addressDaoDataSource();
 		RegisteredUser_has_method_paymentDaoDataSource ds_has_methods_payment=new RegisteredUser_has_method_paymentDaoDataSource();
 		ArrayList<RegisteredUser_has_addressBean> user_addresses=new ArrayList<RegisteredUser_has_addressBean>();
 		ArrayList<RegisteredUser_has_method_paymentBean> user_methods_payment=new ArrayList<RegisteredUser_has_method_paymentBean>();
 		try {
-		user_addresses=ds_has_address.doRetrieveByUsername(username);
-		user_methods_payment=ds_has_methods_payment.doRetrieveByUsername(username);
+		user_addresses=ds_has_address.doRetrieveByIdRegisteredUser(id);
+		user_methods_payment=ds_has_methods_payment.doRetrieveByIdRegisteredUser(id);
 		}
 		catch(SQLException e) {
 			

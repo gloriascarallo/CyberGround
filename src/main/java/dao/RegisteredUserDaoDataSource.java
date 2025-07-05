@@ -40,18 +40,19 @@ import bean.RegisteredUserBean;
 			PreparedStatement preparedStatement = null;
 
 			String insertSQL = "INSERT INTO " + RegisteredUserDaoDataSource.TABLE_NAME
-					+ " (USERNAME, PASSWORD, NAME, LASTNAME, EMAIL, TELEPHONENUMBER, IDUSER) VALUES (?, ?, ?, ?, ?, ?, ?)";
+					+ " (IDUSER, USERNAME, PASSWORD, NAME, LASTNAME, EMAIL, TELEPHONENUMBER) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
 			try {
 				connection = ds.getConnection();
 				preparedStatement = connection.prepareStatement(insertSQL);
-	            preparedStatement.setString(1, user.getUsername());
-				preparedStatement.setString(2, user.getPassword());
-				preparedStatement.setString(3, user.getName());
-				preparedStatement.setString(4, user.getLastName());
-				preparedStatement.setString(5, user.getEmail());
-				preparedStatement.setString(6, user.getTelephone());
-				preparedStatement.setInt(7, user.getId());
+				preparedStatement.setInt(1, user.getId());
+	            preparedStatement.setString(2, user.getUsername());
+				preparedStatement.setString(3, user.getPassword());
+				preparedStatement.setString(4, user.getName());
+				preparedStatement.setString(5, user.getLastName());
+				preparedStatement.setString(6, user.getEmail());
+				preparedStatement.setString(7, user.getTelephone());
+				
 			
 
 				preparedStatement.executeUpdate();
@@ -68,30 +69,31 @@ import bean.RegisteredUserBean;
 		}
 
 		@Override
-		public synchronized RegisteredUserBean doRetrieveByKey(Object o_username) throws SQLException {
+		public synchronized RegisteredUserBean doRetrieveByKey(Object o_id) throws SQLException {
 			Connection connection = null;
 			PreparedStatement preparedStatement = null;
-			String username=(String)o_username;
+		   int id=(Integer)o_id;
 
 			RegisteredUserBean bean = new RegisteredUserBean();
 
-			String selectSQL = "SELECT * FROM " + RegisteredUserDaoDataSource.TABLE_NAME + " WHERE USERNAME = ?";
+			String selectSQL = "SELECT * FROM " + RegisteredUserDaoDataSource.TABLE_NAME + " WHERE IDUSER = ?";
 
 			try {
 				connection = ds.getConnection();
 				preparedStatement = connection.prepareStatement(selectSQL);
-				preparedStatement.setString(1, username);
+				preparedStatement.setInt(1, id);
 
 				ResultSet rs = preparedStatement.executeQuery();
 
 				while (rs.next()) {
+					bean.setId(rs.getInt("IDUSER"));
 					bean.setUsername(rs.getString("USERNAME"));
 					bean.setPassword(rs.getString("PASSWORD"));
 					bean.setName(rs.getString("NAME"));
 					bean.setLastName(rs.getString("LASTNAME"));
 					bean.setEmail(rs.getString("EMAIL"));
 					bean.setTelephone(rs.getString("TELEPHONE"));
-					bean.setId(rs.getInt("IDUSER"));
+					
 			
 				}
 
@@ -108,19 +110,19 @@ import bean.RegisteredUserBean;
 		}
 
 		@Override
-		public synchronized boolean doDelete(Object o_username) throws SQLException {
+		public synchronized boolean doDelete(Object o_id) throws SQLException {
 			Connection connection = null;
 			PreparedStatement preparedStatement = null;
-			String username=(String)o_username;
+			int id=(Integer)o_id;
 
 			int result = 0;
 
-			String deleteSQL = "DELETE FROM " + RegisteredUserDaoDataSource.TABLE_NAME + " WHERE USERNAME = ?";
+			String deleteSQL = "DELETE FROM " + RegisteredUserDaoDataSource.TABLE_NAME + " WHERE IDUSER = ?";
 
 			try {
 				connection = ds.getConnection();
 				preparedStatement = connection.prepareStatement(deleteSQL);
-				preparedStatement.setString(1, username);
+				preparedStatement.setInt(1, id);
 
 				result = preparedStatement.executeUpdate();
 
@@ -157,14 +159,13 @@ import bean.RegisteredUserBean;
 
 				while (rs.next()) {
 					RegisteredUserBean bean = new RegisteredUserBean();
-
+					bean.setId(rs.getInt("IDUSER"));
 					bean.setUsername(rs.getString("USERNAME"));
 					bean.setPassword(rs.getString("PASSWORD"));
 					bean.setName(rs.getString("NAME"));
 					bean.setLastName(rs.getString("LASTNAME"));
 					bean.setEmail(rs.getString("EMAIL"));
 					bean.setTelephone(rs.getString("TELEPHONE"));
-					bean.setId(rs.getInt("IDUSER"));
 					users.add(bean);
 				}
 
@@ -180,6 +181,46 @@ import bean.RegisteredUserBean;
 			return users;
 		}
 
+	
+	public synchronized RegisteredUserBean doRetrieveByUsername(String o_username) throws SQLException {
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+	   String username=(String)o_username;
+
+		RegisteredUserBean bean = new RegisteredUserBean();
+
+		String selectSQL = "SELECT * FROM " + RegisteredUserDaoDataSource.TABLE_NAME + " WHERE USERNAME = ?";
+
+		try {
+			connection = ds.getConnection();
+			preparedStatement = connection.prepareStatement(selectSQL);
+			preparedStatement.setString(1, username);
+
+			ResultSet rs = preparedStatement.executeQuery();
+
+			while (rs.next()) {
+				bean.setId(rs.getInt("IDUSER"));
+				bean.setUsername(rs.getString("USERNAME"));
+				bean.setPassword(rs.getString("PASSWORD"));
+				bean.setName(rs.getString("NAME"));
+				bean.setLastName(rs.getString("LASTNAME"));
+				bean.setEmail(rs.getString("EMAIL"));
+				bean.setTelephone(rs.getString("TELEPHONE"));
+				
+		
+			}
+
+		} finally {
+			try {
+				if (preparedStatement != null)
+					preparedStatement.close();
+			} finally {
+				if (connection != null)
+					connection.close();
+			}
+		}
+		return bean;
+	}
 
 	}
 

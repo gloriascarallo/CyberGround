@@ -30,11 +30,11 @@ public class RegisteredUserAddresses extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String username=(String)request.getSession().getAttribute("username");
+		int id=(Integer)request.getSession().getAttribute("id");
 		ArrayList<RegisteredUser_has_addressBean> user_addresses=new ArrayList<RegisteredUser_has_addressBean>();
 		RegisteredUser_has_addressDaoDataSource ds_has_address=new RegisteredUser_has_addressDaoDataSource();
 		try {
-		user_addresses=ds_has_address.doRetrieveByUsername(username);
+		user_addresses=ds_has_address.doRetrieveByIdRegisteredUser(id);
 		
 		}
 		catch(SQLException e) {

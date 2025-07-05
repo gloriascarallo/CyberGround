@@ -13,14 +13,14 @@ CREATE TABLE `user` (
 
 
 CREATE TABLE `registereduser` (
+  `idUser` int NOT NULL,
   `username` varchar(45) NOT NULL,
   `password` varchar(100) DEFAULT NULL,
   `name` varchar(20) DEFAULT NULL,
   `lastName` varchar(20) DEFAULT NULL,
   `email` varchar(45) DEFAULT NULL,
   `telephoneNumber` char(10) DEFAULT NULL,
-  `idUser` int NOT NULL,
-  PRIMARY KEY (`username`),
+  PRIMARY KEY (`idUser`),
   UNIQUE(`username`, `idUser`),
   KEY `idUser_idx` (`idUser`),
   CONSTRAINT `idUser_RegistratedUser` FOREIGN KEY (`idUser`) REFERENCES `user` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
@@ -52,7 +52,7 @@ CREATE TABLE `product` (
   `price` double DEFAULT 0,
    `discountPercentage` DECIMAL(5, 2) DEFAULT NULL,
    `dateExpirationDiscount` date DEFAULT NULL,
-  `description` varchar(500) DEFAULT NULL,
+  `description` varchar(500) DEFAULT NULL,  
   `dateUpload` date DEFAULT CURRENT_TIMESTAMP,
   `supplier` varchar(45) DEFAULT NULL,
   `categoryName` varchar(45) DEFAULT NULL,
@@ -121,17 +121,17 @@ CREATE TABLE `method_payment` (
 CREATE TABLE `registereduser_has_method_payment` (
 
   `id_has_method_payment` int AUTO_INCREMENT PRIMARY KEY,
-  `usernameRegisteredUser` varchar(45) NOT NULL,
+  `idRegisteredUser` int NOT NULL,
   `panMethodPayment` char(19) NOT NULL,
   `expirationDateMethodPayment` char(5) NOT NULL,
   `cvcMethodPayment` varchar(4) NOT NULL,
-  UNIQUE (`usernameRegisteredUser`,`panMethodPayment`,`expirationDateMethodPayment`,`cvcMethodPayment`),
+  UNIQUE (`idRegisteredUser`,`panMethodPayment`,`expirationDateMethodPayment`,`cvcMethodPayment`),
   KEY `expirationDate_HasMethodPayment_idx` (`expirationDateMethodPayment`),
   KEY `pan_HasMethodPayment_idx` (`panMethodPayment`),
   KEY `cvc_methodPayment_idx` (`cvcMethodPayment`),
   CONSTRAINT `cvc_methodPayment` FOREIGN KEY (`cvcMethodPayment`) REFERENCES `method_payment` (`cvc`) ON DELETE RESTRICT ON UPDATE CASCADE,
   CONSTRAINT `expirationDate_HasMethodPayment` FOREIGN KEY (`expirationDateMethodPayment`) REFERENCES `method_payment` (`expirationDate`) ON UPDATE CASCADE,
-  CONSTRAINT `usernameRegisteredUser_HasMethodPayment` FOREIGN KEY (`usernameRegisteredUser`) REFERENCES `registereduser` (`username`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  CONSTRAINT `idRegisteredUser_HasMethodPayment` FOREIGN KEY (`idRegisteredUser`) REFERENCES `registereduser` (`idUser`) ON DELETE RESTRICT ON UPDATE CASCADE,
   CONSTRAINT `pan_HasMethodPayment` FOREIGN KEY (`panMethodPayment`) REFERENCES `method_payment` (`pan`) ON UPDATE CASCADE
 );
 
@@ -147,12 +147,12 @@ CREATE TABLE `address` (
 
 CREATE TABLE `registereduser_has_address` (
   `id_has_address` int AUTO_INCREMENT PRIMARY KEY,
-  `usernameRegisteredUser` varchar(45) NOT NULL,
+  `idRegisteredUser` varchar(45) NOT NULL,
   `nameAddress` varchar(45) NOT NULL,
-  UNIQUE (`usernameRegisteredUser`,`nameAddress`),
-  KEY `usernameRegisteredUser_HasAddress_idx` (`usernameRegisteredUser`),
+  UNIQUE (`idRegisteredUser`,`nameAddress`),
+  KEY `idRegisteredUser_HasAddress_idx` (`idRegisteredUser`),
   KEY `nameAddress_HasAddress_idx` (`nameAddress`),
-  CONSTRAINT `usernameRegisteredUser_HasAddress` FOREIGN KEY (`usernameRegisteredUser`) REFERENCES `registereduser` (`username`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  CONSTRAINT `idRegisteredUser_HasAddress` FOREIGN KEY (`idRegisteredUser`) REFERENCES `registereduser` (`idUser`) ON DELETE RESTRICT ON UPDATE CASCADE,
   CONSTRAINT `nameAddress_HasAddress` FOREIGN KEY (`nameAddress`) REFERENCES `address` (`name`) ON DELETE RESTRICT ON UPDATE CASCADE
 ) ;
 

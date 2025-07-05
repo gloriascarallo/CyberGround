@@ -37,6 +37,7 @@ public class Registration extends HttpServlet {
 		
 		RequestDispatcher dispatcherToRegistrationPage=request.getRequestDispatcher("/view/registration.jsp");
 		String errors="";
+		int id=(Integer)request.getSession().getAttribute("id");
 		String username=request.getParameter("username");
 		String name=request.getParameter("name");
 		String lastName=request.getParameter("lastName");
@@ -185,7 +186,7 @@ if(!errors.equals("")) {
 		
 		
 		try {
-			if(ds_user.doRetrieveByKey(username).getUsername().equals(username)) {
+			if(ds_user.doRetrieveByKey(id).getUsername().equals(username)) {
 		
 			errors+="Esiste già un utente con tale username<br>";
 			request.setAttribute("errors", errors);
@@ -202,7 +203,7 @@ if(!errors.equals("")) {
 		
 		RegisteredUserBean user=new RegisteredUserBean();
 		
-		user.setId((Integer)request.getSession().getAttribute("id"));
+		user.setId(id);
 		user.setUsername(username);
 		user.setName(name);
 		user.setLastName(lastName);
@@ -228,7 +229,7 @@ if(!errors.equals("")) {
 		for(String address: addresses) {
 			
 			has_address.setNameAddress(address);
-			has_address.setUsernameRegisteredUser(username);
+			has_address.setIdRegisteredUser(id);
 			
 			try {
 				
@@ -248,6 +249,7 @@ if(!errors.equals("")) {
 			for(String expirationDate: expirationDates) {
 				for(String cvc: cvcs) {
 					
+					has_method_payment.setIdRegisteredUser(id);
 					has_method_payment.setPan(pan);
 					has_method_payment.setExpirationDate(expirationDate);
 					has_method_payment.setCvc(cvc);

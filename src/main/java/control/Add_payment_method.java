@@ -32,7 +32,7 @@ public class Add_payment_method extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		String username=(String)request.getSession().getAttribute("username");
+		int id=(Integer)request.getSession().getAttribute("id");
 		String pan=request.getParameter("PAN");
 		String expirationDate=request.getParameter("Scadenza");
 		String cvc=request.getParameter("CVC");
@@ -43,7 +43,7 @@ public class Add_payment_method extends HttpServlet {
 		RegisteredUser_has_method_paymentDaoDataSource ds=new RegisteredUser_has_method_paymentDaoDataSource();
 		
 		
-		registereduser_has_method_payment.setUsernameRegisteredUser(username);
+		registereduser_has_method_payment.setIdRegisteredUser(id);
 		registereduser_has_method_payment.setPan(pan);
 		registereduser_has_method_payment.setExpirationDate(expirationDate);
 		registereduser_has_method_payment.setCvc(cvc);

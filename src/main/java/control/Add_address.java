@@ -31,7 +31,7 @@ public class Add_address extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		String username=(String)request.getSession().getAttribute("username");
+		int id=(Integer)request.getSession().getAttribute("id");
 		String nameAddress=request.getParameter("indirizzo");
 		String url=request.getRequestURI();
 		
@@ -40,7 +40,7 @@ public class Add_address extends HttpServlet {
 		RegisteredUser_has_addressDaoDataSource ds=new RegisteredUser_has_addressDaoDataSource();
 		
 		registereduser_has_address.setNameAddress(nameAddress);
-		registereduser_has_address.setUsernameRegisteredUser(username);
+		registereduser_has_address.setIdRegisteredUser(id);
 		
 		try {
 			

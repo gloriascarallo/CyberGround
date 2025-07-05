@@ -84,11 +84,10 @@ if(!errors.equals("")) {
 		// redirect
 	}
 		// da aggiungere confronto con tabella admin
-		if(ds_user.doRetrieveByKey(username).getUsername().equals(username) && ds_user.doRetrieveByKey(username).getPassword().equals(hasPassword)) {
+		if(ds_user.doRetrieveByUsername(username).getUsername().equals(username) && ds_user.doRetrieveByUsername(username).getPassword().equals(hasPassword)) {
 		request.getSession().setAttribute("isAdmin", Boolean.FALSE);
 		request.getSession().setAttribute("isRegisteredUser", Boolean.TRUE);
 		//request.getSession().setAttribute("id", ds.doRetrieveByKey(username).getId()); perche l'id nella sessione c'è dall'inizio
-		request.getSession().setAttribute("username", username);
 		
 		CartBean cart=(CartBean)request.getSession().getAttribute("cart");
 		ArrayList<Product_situatedin_cartBean> products_incart=cart.getProducts();
