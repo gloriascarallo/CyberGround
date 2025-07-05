@@ -6,6 +6,7 @@
 <%
 RegisteredUserBean user=(RegisteredUserBean)request.getAttribute("user");
 %>
+
 <html>
 <head>
 <meta charset="UTF-8">
@@ -19,6 +20,7 @@ RegisteredUserBean user=(RegisteredUserBean)request.getAttribute("user");
 <p>Last Name: ${user.lastName}</p>
 <p>Telephone number: ${user.telephone}</p>
 <p>Email: ${user.email}</p>
+<p>Password: ${user.password}</p>
 
 
 </body>

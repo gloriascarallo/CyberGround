@@ -1,3 +1,5 @@
+<%@page import="bean.RegisteredUser_has_method_paymentBean"%>
+<%@page import="bean.RegisteredUser_has_addressBean"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -6,7 +8,10 @@
 
 <% 
 CartBean cart=(CartBean)request.getSession().getAttribute("cart");
+RegisteredUser_has_addressBean addresses=(RegisteredUser_has_addressBean)request.getAttribute("user_addresses");
+RegisteredUser_has_method_paymentBean methods=(RegisteredUser_has_method_paymentBean)request.getAttribute("user_methods_payment");
 %>
+
 <html>
 <head>
 <meta charset="UTF-8">
@@ -24,10 +29,13 @@ CartBean cart=(CartBean)request.getSession().getAttribute("cart");
     
 <h2>Seleziona indirizzo e metodo di pagamento</h2>
 
+<form action="${pageContext.request.contextPath}/Payment" method="post">
 <div>
 Indirizzo <br>
 <select name="indirizzo" id="indirizzo">
-	<option value=""> </option>
+<c:forEach var="user_address" items="${addresses}">
+	<option value="${user_address.id_has_address}">${user_address.nameAddress} (${user_address.usernameRegisteredUser})</option>
+	</c:forEach>
 </select>
 </div>
 
@@ -36,17 +44,19 @@ Vuoi aggiungere un nuovo indirizzo? <a href="./add_address.jsp">Clicca qui!</a>
 <div>
 Metodo di pagamento <br>
 <select name="metodo_pagamento" id="metodo_pagamento">
-	<option value=""> </option>
+<c:forEach var="user_methods" items="${methods}">
+	<option value="${user_methods.id_has_method_payment}">${user_methods.pan} - ${user_methods.expirationDate} - ${user_methods.cvc} (${user_methods.usernameRegisteredUser})</option>
+	</c:forEach>
 </select>
 </div>
 
 Vuoi aggiungere un nuovo metodo di pagamento? <a href="./add_payment_method.jsp">Clicca qui!</a>
 
-<div align="right">
-<form action="${pageContext.request.contextPath}/Payment">
+<div>
 <input type="submit" value="Conferma pagamento">
-</form>
 </div>
+
+</form>
 
 </body>
 </html>

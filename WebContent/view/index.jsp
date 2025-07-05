@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Index Page</title>
 </head>
 <body>
 
@@ -17,7 +17,9 @@ if(errors!=null && !errors.equals("")) {%>
 %>
 
 <a href="<%=request.getContextPath()%>/User">
- <img src="<%=request.getContextPath() %>/images/user_profile.jpg" width=40 height=40>
+
+  <img src="<%=request.getContextPath()%>/images/user_profile.jpg" alt="Profilo" width="100" height="100">
+
 </a>
 
 </body>
