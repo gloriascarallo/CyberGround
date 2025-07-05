@@ -23,7 +23,7 @@ public class Filter_by extends HttpServlet {
      */
     public Filter_by() {
         super();
-        // TODO Auto-generated constructor stub
+       
     }
 
 	/**
@@ -41,6 +41,14 @@ public class Filter_by extends HttpServlet {
 		case "supplier": 
 			
 			String supplier=request.getParameter("supplier");
+			if(supplier==null || supplier.equals("")) {
+				
+				errors+="Aggiungi nome fornitore<br>";
+				request.setAttribute("errors", errors);
+				request.getRequestDispatcher("/view/index.jsp");
+				return;
+				
+			}
 			try {
 				products=ds.doRetrievebySupplier(supplier);
 				
@@ -52,9 +60,34 @@ public class Filter_by extends HttpServlet {
 		    
 		case "price":
 			
-			double price=Double.parseDouble(request.getParameter("price"));
+			String priceMinStr=request.getParameter("priceMin");
+			double priceMin=0;
+			String priceMaxStr=request.getParameter("priceMax");
+			double priceMax=0;
+			if (priceMinStr== null || priceMinStr.trim().isEmpty() || priceMaxStr== null || priceMaxStr.trim().isEmpty()) {
+			    errors += "Inserisci prezzi validi.<br>";
+			} else {
+			    try {
+			       priceMin = Double.parseDouble(priceMinStr);
+			       priceMax=Double.parseDouble(priceMaxStr);
+			        if (priceMin < 0 || priceMax<0) {
+			            errors += "Il prezzo non può essere negativo.<br>";
+			        }
+			    } catch (NumberFormatException e) {
+			        errors += "Il prezzo deve essere un numero valido.<br>";
+			    }
+			}
+			
+			if(!errors.equals("")) {
+				
+				request.setAttribute("errors", errors);
+				request.getRequestDispatcher("/view/index.jsp");
+				return;
+				
+			}
+			
 			try {
-				products=ds.doRetrievebyPrice(price);
+				products=ds.doRetrievebyPriceRange(priceMin, priceMax);
 				
 			} catch (SQLException e) {
 				
@@ -64,9 +97,32 @@ public class Filter_by extends HttpServlet {
 			
 		case "yearUpload": 
 			
-			int year=Integer.parseInt(request.getParameter("yearUpload"));
+			String yearUploadStr=request.getParameter("yearUpload");
+			int yearUpload=0;
+			if (yearUploadStr== null || yearUploadStr.trim().isEmpty()) {
+			    errors += "Inserisci anno valido.<br>";
+			} else {
+			    try {
+			       yearUpload = Integer.parseInt(yearUploadStr);
+			        if (yearUpload < 0) {
+			            errors += "L'anno non può essere negativo.<br>";
+			        }
+			    } catch (NumberFormatException e) {
+			        errors += "L'anno deve essere un numero valido.<br>";
+			    }
+			}
+			
+			if(!errors.equals("")) {
+				
+				request.setAttribute("errors", errors);
+				request.getRequestDispatcher("/view/index.jsp");
+				return;
+				
+			}
+			
+			
 			try {
-				products=ds.doRetrievebyYearUpload(year);
+				products=ds.doRetrievebyYearUpload(yearUpload);
 				
 			} catch (SQLException e) {
 				
@@ -78,6 +134,14 @@ public class Filter_by extends HttpServlet {
 		default: 
 			
 			String name=request.getParameter("name");
+			if(name==null || name.equals("")) {
+				
+				errors+="Aggiungi nome prodotto<br>";
+				request.setAttribute("errors", errors);
+				request.getRequestDispatcher("/view/index.jsp");
+				return;
+				
+			}
 			try {
 				products=ds.doRetrievebyName(name);
 				
