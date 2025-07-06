@@ -1,0 +1,29 @@
+body {
+	font-family: sans-serif;
+	max-width: 600px;
+	margin: 2em auto;
+}
+
+.faq-set {
+	border-bottom: 1px solid #ddd;
+	padding: 10px;
+	cursor: pointer;
+}
+
+.faq-question {
+	font-weight: bold;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.faq-answer {
+	display: none;
+	margin-top: 5px;
+	color: #000000;
+}
+.arrow {
+	margin-left: 10px;
+	font-size: 1.2 em;
+	color: #666;
+}

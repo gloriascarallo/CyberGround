@@ -27,6 +27,8 @@ OrderBean orders=(OrderBean)request.getAttribute("orders");
 	<p>Data Acquisto: ${user_orders.datePurchase}<p>
 	<p>Data Spedizione: ${user_orders.dateShipping}<p>
 	<p>Data Consegna: ${user_orders.dateDelivery}<p>
+	<p>Prezzo Totale: ${user_orders.totalOrder}<p>
+	
 </c:forEach>
 
 </body>
