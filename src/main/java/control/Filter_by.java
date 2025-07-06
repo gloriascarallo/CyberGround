@@ -85,7 +85,8 @@ public class Filter_by extends HttpServlet {
 				
 				e.printStackTrace();
 			}
-			
+			break;
+		}
 			if(products.isEmpty()) {
 				
 				errors+="Input errato o prodotti non trovati<br>";
@@ -97,7 +98,7 @@ public class Filter_by extends HttpServlet {
 			request.setAttribute("products", products);
 			request.getRequestDispatcher("/view/category.jsp");
 		}
-	}
+	
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

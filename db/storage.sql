@@ -29,19 +29,14 @@ CREATE TABLE `registereduser` (
 
 
 CREATE TABLE `admin` (
-  `id` int NOT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
   `username` varchar(45) NOT NULL,
-  PRIMARY KEY (`username`),
-  UNIQUE(`username`, `id`),
-  KEY `id_Admin_idx` (`id`),
-  CONSTRAINT `idUser_Admin` FOREIGN KEY (`id`) REFERENCES `user` (`id`) ON UPDATE CASCADE,
-  CONSTRAINT `username_Admin` FOREIGN KEY (`username`) REFERENCES `registereduser` (`username`) ON DELETE RESTRICT ON UPDATE CASCADE
+  `password` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE(`username`, `id`)
+ 
 );
 
-CREATE TABLE `category` (
-  `name` varchar(45) NOT NULL,
-  PRIMARY KEY (`name`)
-);
 
 
 CREATE TABLE `cart` (
@@ -62,8 +57,8 @@ CREATE TABLE `product` (
   `imagePath` varchar(100) DEFAULT NULL;
   `quantityAvailable` int DEFAULT 1;
   PRIMARY KEY (`id`),
-  KEY `categoryName_idx` (`categoryName`),
-  CONSTRAINT `categoryName` FOREIGN KEY (`categoryName`) REFERENCES `category` (`name`) ON DELETE RESTRICT ON UPDATE CASCADE
+ -- KEY `categoryName_idx` (`categoryName`),
+ -- CONSTRAINT `categoryName` FOREIGN KEY (`categoryName`) REFERENCES `category` (`name`) ON DELETE RESTRICT ON UPDATE CASCADE
 ) ;
 
 CREATE TABLE `product_situatedin_cart` (

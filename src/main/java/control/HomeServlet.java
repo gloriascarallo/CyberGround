@@ -55,10 +55,10 @@ public class HomeServlet extends HttpServlet {
 			
 			 try (Connection con = ds.getConnection()) {
 			        PreparedStatement ps = con.prepareStatement(
-			            "INSERT INTO USER (ID) VALUES (?)", 
+			            "INSERT INTO USER () VALUES ()", 
 			            Statement.RETURN_GENERATED_KEYS
 			        );
-			        ps.setString(1, request.getSession().getId());
+			    
 			        ps.executeUpdate();
 
 			        ResultSet rs = ps.getGeneratedKeys();
@@ -83,7 +83,7 @@ public class HomeServlet extends HttpServlet {
 			    }
 		}
 			
-		
+		request.getSession().setAttribute("isAdmin", Boolean.FALSE);
 		request.getSession().setAttribute("isRegisteredUser", Boolean.FALSE);
 		response.sendRedirect(request.getContextPath()+"/view/index.jsp");
 		return;

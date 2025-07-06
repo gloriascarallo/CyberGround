@@ -39,18 +39,22 @@ import bean.RegisteredUser_has_addressBean;
 			PreparedStatement preparedStatement = null;
 
 			String insertSQL = "INSERT INTO " + RegisteredUser_has_addressDaoDataSource.TABLE_NAME
-					+ " (ID_HAS_ADDRESS, USERNAMEREGISTEREDUSER, NAMEADDRESS) VALUES (?, ?, ?)";
+					+ " (USERNAMEREGISTEREDUSER, NAMEADDRESS) VALUES (?, ?)";
 
 			try {
 				connection = ds.getConnection();
 				preparedStatement = connection.prepareStatement(insertSQL);
-				preparedStatement.setInt(1, registereduser_has_address.getId_has_address());
-				preparedStatement.setString(2, registereduser_has_address.getUsernameRegisteredUser());
-				preparedStatement.setString(3, registereduser_has_address.getNameAddress());
 				
-				
-
+				preparedStatement.setString(1, registereduser_has_address.getUsernameRegisteredUser());
+				preparedStatement.setString(2, registereduser_has_address.getNameAddress());
 				preparedStatement.executeUpdate();
+				
+ResultSet rs=preparedStatement.getGeneratedKeys();
+				
+				if(rs.next()) {
+					registereduser_has_address.setId_has_address(rs.getInt(1));
+					
+				}
 
 			} finally {
 				try {

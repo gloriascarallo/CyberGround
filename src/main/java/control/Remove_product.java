@@ -8,19 +8,18 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 
-import bean.Product_in_orderBean;
-import dao.Product_in_orderDaoDataSource;
+import dao.ProductDaoDataSource;
 /**
- * Servlet implementation class Product_refund
+ * Servlet implementation class Remove_product
  */
-@WebServlet("/Product_refund")
-public class Product_refund extends HttpServlet {
+@WebServlet("/Remove_product")
+public class Remove_product extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Product_refund() {
+    public Remove_product() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -29,22 +28,17 @@ public class Product_refund extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		int id=(Integer)(request.getAttribute("idProduct_in_order"));
-		Product_in_orderDaoDataSource ds=new Product_in_orderDaoDataSource();
-		Product_in_orderBean product=new Product_in_orderBean();
-		
+		int id=Integer.parseInt(request.getParameter("idProduct"));
+		ProductDaoDataSource ds=new ProductDaoDataSource();
 		try {
-			product=ds.doRetrieveByKey(id);
+			ds.doDelete(id);
 		} catch (SQLException e) {
 			
 			e.printStackTrace();
 		}
 		
-		request.setAttribute("product", product);
-		request.getRequestDispatcher("/view/product_refund.jsp");
+		response.sendRedirect("/admin/"); // da finire
 		return;
-		
 	}
 
 	/**

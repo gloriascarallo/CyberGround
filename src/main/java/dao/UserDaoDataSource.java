@@ -1,11 +1,12 @@
 package dao;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Collection;
 import java.util.LinkedList;
-
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -38,17 +39,20 @@ public class UserDaoDataSource implements IBeanDao<UserBean> {
 		PreparedStatement preparedStatement = null;
 
 		String insertSQL = "INSERT INTO " + UserDaoDataSource.TABLE_NAME
-				+ " (ID) VALUES (?)";
+				+ " () VALUES ()";
 
 		try {
 			connection = ds.getConnection();
-			preparedStatement = connection.prepareStatement(insertSQL);
-			preparedStatement.setInt(1, user.getId());
-		
-			
-
+			preparedStatement = connection.prepareStatement(insertSQL, Statement.RETURN_GENERATED_KEYS);
 			preparedStatement.executeUpdate();
 
+			ResultSet rs=preparedStatement.getGeneratedKeys();
+			
+			if(rs.next()) {
+				user.setId(rs.getInt(1));
+				
+			}
+			
 		} finally {
 			try {
 				if (preparedStatement != null)

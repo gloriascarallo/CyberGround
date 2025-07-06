@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
@@ -39,23 +40,27 @@ public class ProductDaoDataSource implements IBeanDao<ProductBean> {
 		PreparedStatement preparedStatement = null;
 
 		String insertSQL = "INSERT INTO " + ProductDaoDataSource.TABLE_NAME
-				+ " (ID, NAME, PRICE, DESCRIPTION, DATEUPLOAD, SUPPLIER, CATEGORYNAME, IMAGEPATH, QUANTITYAVAILABLE) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+				+ " (NAME, PRICE, DESCRIPTION, DATEUPLOAD, SUPPLIER, CATEGORYNAME, IMAGEPATH, QUANTITYAVAILABLE) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
 		try {
 			connection = ds.getConnection();
-			preparedStatement = connection.prepareStatement(insertSQL);
-			preparedStatement.setInt(1, product.getId());
-			preparedStatement.setString(2, product.getName());
-			preparedStatement.setDouble(3, product.getPrice());
-			preparedStatement.setString(4, product.getDescription());
-			preparedStatement.setDate(5, product.getDateUpload());
-			preparedStatement.setString(6, product.getSupplier());
-			preparedStatement.setString(7, product.getCategoryName());
-			preparedStatement.setString(8, product.getImagePath());
-			preparedStatement.setInt(9, product.getQuantityAvailable());
+			preparedStatement = connection.prepareStatement(insertSQL, Statement.RETURN_GENERATED_KEYS);
+			preparedStatement.setString(1, product.getName());
+			preparedStatement.setDouble(2, product.getPrice());
+			preparedStatement.setString(3, product.getDescription());
+			preparedStatement.setDate(4, product.getDateUpload());
+			preparedStatement.setString(5, product.getSupplier());
+			preparedStatement.setString(6, product.getCategoryName());
+			preparedStatement.setString(7, product.getImagePath());
+			preparedStatement.setInt(8, product.getQuantityAvailable());
 
 			preparedStatement.executeUpdate();
-
+           ResultSet rs=preparedStatement.getGeneratedKeys();
+			
+			if(rs.next()) {
+				product.setId(rs.getInt(1));
+				
+			}
 		} finally {
 			try {
 				if (preparedStatement != null)
@@ -384,6 +389,87 @@ public class ProductDaoDataSource implements IBeanDao<ProductBean> {
 		return products;
 	}
 	
+	public synchronized ArrayList<ProductBean> doRetrievebyCategoryName(String category) throws SQLException {
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+
+		ArrayList<ProductBean> products = new ArrayList<ProductBean>();
+
+		String selectSQL = "SELECT * FROM " + ProductDaoDataSource.TABLE_NAME + "WHERE CATEGOTYNAME LIKE= ?";
+        
+
+		try {
+			connection = ds.getConnection();
+			preparedStatement = connection.prepareStatement(selectSQL);
+            preparedStatement.setString(1, "%" + category + "%");
+			ResultSet rs = preparedStatement.executeQuery();
+
+			while (rs.next()) {
+				ProductBean bean = new ProductBean();
+
+				bean.setId(rs.getInt("ID"));
+				bean.setName(rs.getString("NAME"));
+				bean.setDescription(rs.getString("DESCRIPTION"));
+				bean.setPrice(rs.getInt("PRICE"));
+				bean.setCategoryName(rs.getString("CATEGORYNAME"));
+				bean.setSupplier(rs.getString("SUPPLIER"));
+				bean.setDateUpload(rs.getDate("DATEUPLOAD"));
+				bean.setImagePath(rs.getString("IMAGEPATH"));
+				bean.setQuantityAvailable(rs.getInt("QUANTITYAVAILABLE"));
+				products.add(bean);
+			}
+
+		} finally {
+			try {
+				if (preparedStatement != null)
+					preparedStatement.close();
+			} finally {
+				if (connection != null)
+					connection.close();
+			}
+		}
+		return products;
+	}
+	
+	
+	public synchronized void doUpdate(ProductBean product) throws SQLException {
+
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+
+		String updateSQL = "UPDATE" + ProductDaoDataSource.TABLE_NAME
+				+ "SET NAME = ?, PRICE = ?, DESCRIPTION = ?, DATEUPLOAD = ?, SUPPLIER = ?, CATEGORYNAME = ?, IMAGEPATH = ?, QUANTITYAVAILABLE = ?) WHERE ID = ?";
+
+		try {
+			connection = ds.getConnection();
+			preparedStatement = connection.prepareStatement(updateSQL, Statement.RETURN_GENERATED_KEYS);
+			preparedStatement.setString(1, product.getName());
+			preparedStatement.setDouble(2, product.getPrice());
+			preparedStatement.setString(3, product.getDescription());
+			preparedStatement.setDate(4, product.getDateUpload());
+			preparedStatement.setString(5, product.getSupplier());
+			preparedStatement.setString(6, product.getCategoryName());
+			preparedStatement.setString(7, product.getImagePath());
+			preparedStatement.setInt(8, product.getQuantityAvailable());
+			preparedStatement.setInt(9, product.getId());
+
+			preparedStatement.executeUpdate();
+           ResultSet rs=preparedStatement.getGeneratedKeys();
+			
+			if(rs.next()) {
+				product.setId(rs.getInt(1));
+				
+			}
+		} finally {
+			try {
+				if (preparedStatement != null)
+					preparedStatement.close();
+			} finally {
+				if (connection != null)
+					connection.close();
+			}
+		}
+	}
 	
 	
 	
