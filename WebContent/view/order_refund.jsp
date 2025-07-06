@@ -22,7 +22,7 @@ OrderBean order=(OrderBean)request.getAttribute("order");
 	<input type="radio" name="idProdotto" value="${user_order.product_in_order.id_product_in_order}" required>
 	<img alt="Immagine ${user_order.product_in_order.product.name}" src="${pageContext.request.contextPath}${user_order.product_in_order.product.imagePath}"/>
 	${user_order.product_in_order.product.name}<br>
-	${user_order.product_in_order.product.description}
+	${user_order.product_in_order.SubTotal}
 	</label><br>
 </c:forEach>
 <input type="submit" value="Seleziona prodotto">
