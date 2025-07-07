@@ -14,7 +14,7 @@ import jakarta.servlet.http.HttpServletResponse;
 /**
  * Servlet Filter implementation class AccessControlFilter
  */
-@WebFilter(filterName = "/AccessControlFilter", urlPatterns = "/*")
+@WebFilter(filterName = "/AccessControlFilter", urlPatterns = {"/registeredUser/*", "/admin/*"})
 public class AccessControlFilter extends HttpFilter implements Filter {
     
 	private static final long serialVersionUID = 1L;
@@ -27,21 +27,16 @@ public class AccessControlFilter extends HttpFilter implements Filter {
 		HttpServletResponse httpServletResponse = (HttpServletResponse) response;
 		Boolean isRegisteredUser = (Boolean) httpServletRequest.getSession().getAttribute("isRegisteredUser");
 		Boolean isAdmin = (Boolean) httpServletRequest.getSession().getAttribute("isAdmin");
-		//String path = httpServletRequest.getServletPath();
+		String path = httpServletRequest.getServletPath();
+		System.out.println(path);
+		if (path.contains("/registeredUser/") && (isRegisteredUser==null || !isRegisteredUser)) {	
+			httpServletResponse.sendRedirect(httpServletRequest.getContextPath() + "/login.jsp");
+			return;
+		} else if (path.contains("/admin/") && (isAdmin==null || !isAdmin)) {
+			httpServletResponse.sendRedirect(httpServletRequest.getContextPath() + "/login.jsp");
+			return;
+		}
 
-		String referer=httpServletRequest.getHeader("Referer");
-		
-	if(referer!=null && !referer.isEmpty()) {
-		
-		if(isRegisteredUser==null || !isRegisteredUser) {
-			
-			httpServletResponse.sendRedirect(referer);
-		}
-		
-		if (isAdmin==null || !isAdmin) {
-			httpServletResponse.sendRedirect(referer);
-		}
-	}
 		chain.doFilter(request, response);
 	}
 }
