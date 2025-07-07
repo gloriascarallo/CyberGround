@@ -18,7 +18,7 @@ CartBean cart=(CartBean)request.getSession().getAttribute("cart");
 </head>
 <body>
 
-
+<form action="${pageContext.request.contextPath}/Payment_page">
 <c:forEach var="product_incart" items="${cart}">
 <a href="${pageContext.request.contextPath}/Product">
     <img src="${product_incart.product.imagePath}" alt="Product image" />
@@ -34,10 +34,8 @@ CartBean cart=(CartBean)request.getSession().getAttribute("cart");
     
     <button onclick="window.location.href='${pageContext.request.contextPath}/UpdateCart?action=remove&product_incartID=${product_incart.id}'">Rimuovi</button>
     
-   
 </c:forEach>
 
-<form action="${pageContext.request.contextPath}/Payment_page">
     <input type="submit" value="Payment">
     </form>
     
