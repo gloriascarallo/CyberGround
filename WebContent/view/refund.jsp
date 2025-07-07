@@ -5,23 +5,26 @@
 <head>
 <meta charset="UTF-8">
 <title>Refund page</title>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/styles/Refund.css"/>
 </head>
 <body>
 
 <h2 align="center">Pagina di Rimborso</h2>
 
 <form action="<%=request.getContextPath() %>/Refund" method="post">
-<fieldset>
-<legend>Compilare i campi</legend>
-<div align="center">
+
+ <div>
 
 	<label for="id">Inserisci l'ID dell'ordine:</label>
 	<input type="text" name="id" id="id" onchange="validateFormElement(this, IDPattern, document.getElementById('errorID'), errorIDMessage" required>
 	<span id="errorID"></span> <br>
 
+<div id="form-buttons">
+<input type="submit" value="Invia" onclick="return validate()">
+<input type="reset" value="Reset">
+</div>
 
 </div>
-</fieldset>
 </form>
 </body>
 </html>
