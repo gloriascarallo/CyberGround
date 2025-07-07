@@ -74,7 +74,7 @@ import bean.RegisteredUserBean;
 			PreparedStatement preparedStatement = null;
 		   int id=(Integer)o_id;
 
-			RegisteredUserBean bean = new RegisteredUserBean();
+			RegisteredUserBean bean = null;
 
 			String selectSQL = "SELECT * FROM " + RegisteredUserDaoDataSource.TABLE_NAME + " WHERE IDUSER = ?";
 
@@ -86,6 +86,7 @@ import bean.RegisteredUserBean;
 				ResultSet rs = preparedStatement.executeQuery();
 
 				while (rs.next()) {
+					bean=new RegisteredUserBean();
 					bean.setId(rs.getInt("IDUSER"));
 					bean.setUsername(rs.getString("USERNAME"));
 					bean.setPassword(rs.getString("PASSWORD"));
@@ -187,7 +188,7 @@ import bean.RegisteredUserBean;
 		PreparedStatement preparedStatement = null;
 	   String username=(String)o_username;
 
-		RegisteredUserBean bean = new RegisteredUserBean();
+		RegisteredUserBean bean = null;
 
 		String selectSQL = "SELECT * FROM " + RegisteredUserDaoDataSource.TABLE_NAME + " WHERE USERNAME = ?";
 
@@ -199,6 +200,7 @@ import bean.RegisteredUserBean;
 			ResultSet rs = preparedStatement.executeQuery();
 
 			while (rs.next()) {
+				bean= new RegisteredUserBean();
 				bean.setId(rs.getInt("IDUSER"));
 				bean.setUsername(rs.getString("USERNAME"));
 				bean.setPassword(rs.getString("PASSWORD"));

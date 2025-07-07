@@ -81,7 +81,7 @@ public class ProductDaoDataSource implements IBeanDao<ProductBean> {
 		PreparedStatement preparedStatement = null;
         int id=(Integer)o_id;
         
-		ProductBean bean = new ProductBean();
+		ProductBean bean = null;
 
 		String selectSQL = "SELECT * FROM " + ProductDaoDataSource.TABLE_NAME + " WHERE ID = ?";
 
@@ -93,6 +93,7 @@ public class ProductDaoDataSource implements IBeanDao<ProductBean> {
 			ResultSet rs = preparedStatement.executeQuery();
 
 			while (rs.next()) {
+				bean=new ProductBean();
 				bean.setId(rs.getInt("ID"));
 				bean.setName(rs.getString("NAME"));
 				bean.setDescription(rs.getString("DESCRIPTION"));
@@ -206,19 +207,20 @@ public class ProductDaoDataSource implements IBeanDao<ProductBean> {
 	}
 	
 	
-	public synchronized boolean decreaseQuantityAvailable(int o_id) throws SQLException {
+	public synchronized boolean decreaseQuantityAvailable(int o_id, int quantity) throws SQLException {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
         int id=(Integer)o_id;
         
 		int result = 0;
 
-		String deleteSQL = "UPDATE " + ProductDaoDataSource.TABLE_NAME + " SET QUANTITYAVAILABLE= QUANTITYAVAILABLE-1 WHERE ID = ?";
+		String deleteSQL = "UPDATE " + ProductDaoDataSource.TABLE_NAME + " SET QUANTITYAVAILABLE= QUANTITYAVAILABLE-? WHERE ID = ?";
 
 		try {
 			connection = ds.getConnection();
 			preparedStatement = connection.prepareStatement(deleteSQL);
-			preparedStatement.setInt(1, id);
+			preparedStatement.setInt(1, quantity);
+			preparedStatement.setInt(2, id);
 
 			result = preparedStatement.executeUpdate();
 

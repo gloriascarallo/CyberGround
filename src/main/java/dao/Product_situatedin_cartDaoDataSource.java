@@ -77,7 +77,7 @@ import bean.Product_situatedin_cartBean;
 			PreparedStatement preparedStatement = null;
 	        int id=(Integer)o_id;
 	        
-			Product_situatedin_cartBean bean = new Product_situatedin_cartBean();
+			Product_situatedin_cartBean bean = null;
 
 			String selectSQL = "SELECT * FROM " + Product_situatedin_cartDaoDataSource.TABLE_NAME + " WHERE ID_SITUATEDIN = ?";
 
@@ -89,6 +89,7 @@ import bean.Product_situatedin_cartBean;
 				ResultSet rs = preparedStatement.executeQuery();
 
 				while (rs.next()) {
+					bean=new Product_situatedin_cartBean();
 					bean.setId_SituatedIn(rs.getInt("ID_SITUATEDIN"));
 					bean.setIdCart(rs.getInt("IDCART"));
 					int idProduct=rs.getInt("IDPRODUCT");

@@ -71,7 +71,7 @@ import bean.AdminBean;
 			PreparedStatement preparedStatement = null;
 			int id=(Integer)o_id;
 
-			AdminBean bean = new AdminBean();
+			AdminBean bean = null;
 
 			String selectSQL = "SELECT * FROM " + AdminDaoDataSource.TABLE_NAME + " WHERE ID = ?";
 
@@ -83,6 +83,7 @@ import bean.AdminBean;
 				ResultSet rs = preparedStatement.executeQuery();
 
 				while (rs.next()) {
+					bean=new AdminBean();
 					bean.setId(rs.getInt("ID"));
 					bean.setUsername(rs.getString("USERNAME"));
 					bean.setPassword(rs.getString("PASSWORD"));
@@ -176,7 +177,7 @@ import bean.AdminBean;
 			PreparedStatement preparedStatement = null;
 			String username=(String)o_id;
 
-			AdminBean bean = new AdminBean();
+			AdminBean bean = null;
 
 			String selectSQL = "SELECT * FROM " + AdminDaoDataSource.TABLE_NAME + " WHERE USERNAME = ?";
 
@@ -188,6 +189,7 @@ import bean.AdminBean;
 				ResultSet rs = preparedStatement.executeQuery();
 
 				while (rs.next()) {
+					bean=new AdminBean();
 					bean.setId(rs.getInt("ID"));
 					bean.setUsername(rs.getString("USERNAME"));
 					bean.setPassword(rs.getString("PASSWORD"));

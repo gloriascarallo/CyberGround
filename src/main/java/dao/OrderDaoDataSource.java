@@ -34,7 +34,7 @@ import java.util.Collection;
 			}
 		}
 
-		private static final String TABLE_NAME = "order";
+		private static final String TABLE_NAME = "orders";
 
 		@Override
 		public synchronized void doSave(OrderBean order) throws SQLException {
@@ -79,7 +79,7 @@ import java.util.Collection;
 			PreparedStatement preparedStatement = null;
 	        int id=(Integer)o_id;
 	        
-			OrderBean bean = new OrderBean();
+			OrderBean bean = null;
 
 			String selectSQL = "SELECT * FROM " + OrderDaoDataSource.TABLE_NAME + " WHERE IDORDER = ?";
 
@@ -91,6 +91,7 @@ import java.util.Collection;
 				ResultSet rs = preparedStatement.executeQuery();
 
 				while (rs.next()) {
+					bean=new OrderBean();
 					bean.setIdOrder(rs.getInt("IDORDER"));
 					bean.setDatePurchase(rs.getDate("DATEPURCHASE"));
 					bean.setDateDelivery(rs.getDate("DATEDELIVERY"));
@@ -229,7 +230,7 @@ import java.util.Collection;
 
 			ArrayList<OrderBean> orders=new ArrayList<OrderBean>();
 
-			String selectSQL = "SELECT * FROM " + OrderDaoDataSource.TABLE_NAME + " WHERE IDCART = ? AND DATEPUCHASE BETWEEN ? AND ?";
+			String selectSQL = "SELECT * FROM " + OrderDaoDataSource.TABLE_NAME + " WHERE IDCART = ? AND DATEPURCHASE BETWEEN ? AND ?";
             
 
 			try {
