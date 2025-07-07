@@ -1,5 +1,5 @@
 package control;
-
+import java.util.ArrayList;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -8,12 +8,14 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import dao.AdminDaoDataSource;
 import dao.RegisteredUserDaoDataSource;
 import dao.Product_situatedin_cartDaoDataSource;
+import bean.AdminBean;
 import bean.CartBean;
 import bean.Product_situatedin_cartBean;
+import bean.RegisteredUserBean;
+
 /**
  * Servlet implementation class Login
  */
@@ -37,6 +39,18 @@ public class Login extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		request.getRequestDispatcher("/view/login.jsp").forward(request, response);
+		return;
+		
+		}
+		
+	
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		String username=request.getParameter("username");
 		String password=request.getParameter("password");
 		String hasPassword=Security.toHash(password);
@@ -45,7 +59,7 @@ public class Login extends HttpServlet {
 		
 		if(username==null || username.trim().equals("")) {
 			
-			errors+="Inserisci l'username<br>";
+			errors+="Inserisci l'username.<br>";
 		} 
 		
 		else {
@@ -55,7 +69,7 @@ public class Login extends HttpServlet {
 		
 if(password==null || password.trim().equals("")) {
 			
-			errors+="Inserisci la password<br>";
+			errors+="Inserisci la password.<br>";
 		} 
 		
 		else {
@@ -67,75 +81,69 @@ if(!errors.equals("")) {
 	
 	request.setAttribute("errors", errors);
 	dispatcherToLoginPage.forward(request, response);
+	return;
 }
 
 	RegisteredUserDaoDataSource ds_user=new RegisteredUserDaoDataSource();
 	AdminDaoDataSource ds_admin=new AdminDaoDataSource();
 	Product_situatedin_cartDaoDataSource ds_cart=new Product_situatedin_cartDaoDataSource();
+	AdminBean admin=null;
 	
-	try {if(ds_admin.doRetrieveByUsername(username).getUsername().equals(username) && ds_admin.doRetrieveByUsername(username).getPassword().equals(hasPassword)) {
+	try {
+		admin=ds_admin.doRetrieveByUsername(username);
+		if(admin!=null && admin.getPassword().equals(hasPassword)) {
 		request.getSession().setAttribute("isAdmin", Boolean.TRUE);
 		request.getSession().setAttribute("isRegisteredUser", Boolean.FALSE);
 		
 		request.getSession().removeAttribute("cart");
 		request.getSession().removeAttribute("id");
 		
-		request.getSession().setAttribute("id", ds_admin.doRetrieveByUsername(username).getId());
-		// redirect
-	}
-		// da aggiungere confronto con tabella admin
-		if(ds_user.doRetrieveByUsername(username).getUsername().equals(username) && ds_user.doRetrieveByUsername(username).getPassword().equals(hasPassword)) {
-		request.getSession().setAttribute("isAdmin", Boolean.FALSE);
-		request.getSession().setAttribute("isRegisteredUser", Boolean.TRUE);
-		//request.getSession().setAttribute("id", ds.doRetrieveByKey(username).getId()); perche l'id nella sessione c'è dall'inizio
-		
-		CartBean cart=(CartBean)request.getSession().getAttribute("cart");
-		ArrayList<Product_situatedin_cartBean> products_incart=cart.getProducts();
-		for(Product_situatedin_cartBean product_incart: products_incart) {
-			
-			
-			try {
-				
-				ds_cart.doSave(product_incart);
-				
-			}
-			catch(SQLException e) {
-				
-				e.printStackTrace();
-			}
-		}
-		
-		response.sendRedirect("/view/index.jsp");
+		request.getSession().setAttribute("id", admin.getId());
+		response.sendRedirect(request.getContextPath()+"/admin/view/dashboard.jsp");
 		return;
 	}
-		else {
-			errors+="Username e password non validi!<br>";
-			request.setAttribute("errors", errors);
-			dispatcherToLoginPage.forward(request, response);
-			
-		}
-		
-		
 	}
 	
 	catch(SQLException e) {
 		e.printStackTrace();
-	    
-	
+		request.getRequestDispatcher("/500.html").forward(request, response);
+		return;
 	}
 	
-	
-	response.sendRedirect("/view/index.jsp");
-	return;
-	
+	RegisteredUserBean user=null;
+	try {
+		user=ds_user.doRetrieveByUsername(username);
+		if(user!=null && user.getPassword().equals(hasPassword)) {
+		request.getSession().setAttribute("isAdmin", Boolean.FALSE);
+		request.getSession().setAttribute("isRegisteredUser", Boolean.TRUE);
+		
+		
+		CartBean cart=(CartBean)request.getSession().getAttribute("cart");
+		if(cart!=null) {
+		ArrayList<Product_situatedin_cartBean> products_incart=cart.getProducts();
+		for(Product_situatedin_cartBean product_incart: products_incart) {
+			
+				
+				ds_cart.doSave(product_incart);
+				
+			}
+		}
+		response.sendRedirect(request.getContextPath()+"/view/index.jsp");
+		return;
 	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	}
+			catch(SQLException e) {
+				
+				e.printStackTrace();
+				request.getRequestDispatcher("/500.html").forward(request, response);
+				return;
+			}
 	
-		doGet(request, response);
+			errors+="Username e password non validi!<br>";
+			request.setAttribute("errors", errors);
+			dispatcherToLoginPage.forward(request, response);
+			return;
+			
 	}
 
 }

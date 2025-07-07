@@ -30,7 +30,8 @@ public class Discounts extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		ArrayList<ProductBean> products=new ArrayList<>();
+		
+		
 		String discountStr=request.getParameter("discounPercentage");
 		Double discountPercentage=0.0;
 		String errors="";
@@ -45,13 +46,17 @@ public class Discounts extends HttpServlet {
 				return;
 		    }
 		}
+		
 		ProductDaoDataSource ds=new ProductDaoDataSource();
-
+		ArrayList<ProductBean> products=new ArrayList<>();
+		
 		try {
 			products=ds.doRetrieveDiscountedProducts(discountPercentage);
 		} catch (SQLException e) {
 			
 			e.printStackTrace();
+			request.getRequestDispatcher("/500.html").forward(request, response);
+			return;
 		}
 		
 		if(products.isEmpty()) {

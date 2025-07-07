@@ -35,9 +35,11 @@ public class Remove_product extends HttpServlet {
 		} catch (SQLException e) {
 			
 			e.printStackTrace();
+			request.getRequestDispatcher("/500.html").forward(request, response);
+			return;
 		}
 		
-		response.sendRedirect("/admin/"); // da finire
+		response.sendRedirect(request.getContextPath()+"/admin/view/products.jsp");
 		return;
 	}
 

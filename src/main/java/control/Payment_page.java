@@ -8,7 +8,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import bean.CartBean;
 import bean.RegisteredUser_has_addressBean;
 import bean.RegisteredUser_has_method_paymentBean;
 import dao.RegisteredUser_has_addressDaoDataSource;
@@ -32,22 +31,22 @@ public class Payment_page extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//CartBean cart=(CartBean)request.getSession().getAttribute("cart");
-		
-		/*Boolean isRegisteredUser=(Boolean)request.getSession().getAttribute("isRegisteredUser");
-		if (Boolean.FALSE.equals(isRegisteredUser)) {
-		    errors += "Non sei utente registrato<br>";
-		    request.setAttribute("errors", errors);
-		    request.getRequestDispatcher("/view/cart.jsp").forward(request, response);
-		    return;
+	
+		String errors="";
+		Object idObj = request.getSession().getAttribute("id");
+		if (idObj == null) {
+			errors = "Sessione scaduta o ID utente mancante. Ricarica la pagina e riprova.";
+	        request.setAttribute("errors", errors);
+	        request.getRequestDispatcher("/view/index.jsp").forward(request, response);
+	        return;
 		}
-		*/
+		int id = (Integer) idObj;
 		
-		int id=(Integer)request.getSession().getAttribute("id");
 		RegisteredUser_has_addressDaoDataSource ds_has_address=new RegisteredUser_has_addressDaoDataSource();
 		RegisteredUser_has_method_paymentDaoDataSource ds_has_methods_payment=new RegisteredUser_has_method_paymentDaoDataSource();
 		ArrayList<RegisteredUser_has_addressBean> user_addresses=new ArrayList<RegisteredUser_has_addressBean>();
 		ArrayList<RegisteredUser_has_method_paymentBean> user_methods_payment=new ArrayList<RegisteredUser_has_method_paymentBean>();
+		
 		try {
 		user_addresses=ds_has_address.doRetrieveByIdRegisteredUser(id);
 		user_methods_payment=ds_has_methods_payment.doRetrieveByIdRegisteredUser(id);
@@ -55,6 +54,8 @@ public class Payment_page extends HttpServlet {
 		catch(SQLException e) {
 			
 			e.printStackTrace();
+			request.getRequestDispatcher("500.html").forward(request, response);
+			return;
 		}
 		
 		request.setAttribute("user_addresses", user_addresses);

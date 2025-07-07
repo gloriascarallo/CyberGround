@@ -11,8 +11,8 @@ import java.io.IOException;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
-
 import bean.CartBean;
+import bean.ProductBean;
 import bean.Product_situatedin_cartBean;
 import dao.Product_situatedin_cartDaoDataSource;
 /**
@@ -35,24 +35,92 @@ public class Adding_to_cart extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	    
+		String errors="";
 		CartBean cart=(CartBean)request.getSession().getAttribute("cart");
-		int idProdotto=Integer.parseInt(request.getParameter("idProdotto"));
-		int quantity=Integer.parseInt(request.getParameter("quantity"));
+		if (cart == null) {
+		    response.sendRedirect(request.getContextPath() + "/view/cart.jsp");
+		    return;
+		}
+		int idCart=cart.getIdCart();
 		
-		RequestDispatcher dispatcherToProduct=request.getRequestDispatcher("/view/product.jsp");
+		Object idObj = request.getParameter("idProduct");
+	    if (idObj == null) {
+	    	errors = "Prodotto non trovato.<br>";
+	        request.setAttribute("errors", errors);
+	        request.getRequestDispatcher("/view/product.jsp").forward(request, response);
+	        return;
+	        
+	    }
+	    int idProduct=(Integer)idObj;
+	    
+	    String quantityStr=request.getParameter("quantity");
+	    int quantity=1;
+	    if (quantityStr== null || quantityStr.trim().isEmpty()) {
+	        errors += "Inserisci la quantità.<br>";
+	    } else {
+	        try {
+	            quantity = Integer.parseInt(quantityStr);
+	            if (quantity <= 0) {
+	                errors += "La quantità disponibile non può essere minore di 1.<br>";
+	            }
+	        } catch (NumberFormatException e) {
+	            errors += "La quantità disponibile deve essere un numero valido.<br>";
+	        }
+	        
+	        ProductDaoDataSource ds_product=new ProductDaoDataSource();
+	        ProductBean product=null;
+	        
+	        try {
+	        product=ds_product.doRetrieveByKey(idProduct);
+	        }
+	        catch(SQLException e) {
+	        	
+	        	e.printStackTrace();
+	        	request.getRequestDispatcher("/500.html").forward(request, response);
+	        	return;
+	        }
+	        
+	        if(product==null) {
+	        	errors+="Prodotto non trovato.<br>";
+	        	request.setAttribute("errors", errors);
+	        	request.getRequestDispatcher("/view/product.jsp").forward(request, response);
+	        	return;
+	        	
+	        }
+	        
+	       
+				if(product.getQuantityAvailable()<quantity) {
+					
+					errors+="La quantità disponibile di tale prodotto è minore rispetto alla quantità selezionata.<br>";
+					request.setAttribute("errors", errors);
+					request.getRequestDispatcher("/view/product.jsp").forward(request, response);
+					return;
+					
+					
+				}
+				
+			try {
+				ds_product.decreaseQuantityAvailable(idProduct, quantity);
+			} catch (SQLException e) {
+				
+				e.printStackTrace();
+				request.getRequestDispatcher("/500.html").forward(request, response);
+	        	return;
+			}
+	     
 		
 		Product_situatedin_cartBean product_situatedin_cart=new Product_situatedin_cartBean();
 		
-		product_situatedin_cart.setIdCart(cart.getIdCart());
+		product_situatedin_cart.setIdCart(idCart);
 		product_situatedin_cart.setQuantity(quantity);
 		product_situatedin_cart.setDateAdded(Date.valueOf(LocalDate.now()));
 		
-		ProductDaoDataSource ds_product=new ProductDaoDataSource();
+		
 		Product_situatedin_cartDaoDataSource ds_cart=new Product_situatedin_cartDaoDataSource();
 		
 		
 		try {
-			product_situatedin_cart.setProduct(ds_product.doRetrieveByKey(idProdotto));
+			product_situatedin_cart.setProduct(product);
 			cart.addProduct(product_situatedin_cart);
 			ds_cart.doSave(product_situatedin_cart); 
 		}
@@ -60,11 +128,13 @@ public class Adding_to_cart extends HttpServlet {
 		catch(SQLException e) {
 			
 			e.printStackTrace();
-			dispatcherToProduct.forward(request, response);
+			request.getRequestDispatcher("/500.html").forward(request, response);
+        	return;
 		}
 		
 		response.sendRedirect(request.getContextPath()+"/view/after_adding_to_cart.jsp");
 		return;
+	}
 	}
 
 	/**

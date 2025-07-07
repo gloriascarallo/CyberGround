@@ -5,10 +5,18 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.Part;
+
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.util.Objects;
+import java.util.UUID;
 
 import dao.ProductDaoDataSource;
 import bean.ProductBean;
@@ -19,7 +27,7 @@ import bean.ProductBean;
 @WebServlet("/Update_product")
 public class Update_product extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+	private static final String UPLOAD_DIRECTORY = "images";
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -27,13 +35,53 @@ public class Update_product extends HttpServlet {
         super();
         // TODO Auto-generated constructor stub
     }
+    
+    private String getFileName(Part part) {
+        String contentDisp = part.getHeader("content-disposition");
+        for (String token : contentDisp.split(";")) {
+            if (token.trim().startsWith("filename")) {
+                return token.substring(token.indexOf("=") + 2, token.length() - 1);
+            }
+        }
+        return null;
+    }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// imagePath modificato?
+		
+		response.sendRedirect(request.getContextPath() + "/admin/view/products.jsp");
+		return;
+	
+}
+
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String errors="";
 		int id=Integer.parseInt(request.getParameter("idProduct"));
+		ProductBean product=null;
+		ProductDaoDataSource ds=new ProductDaoDataSource();
+		boolean modified=false;
+		try {
+			product=ds.doRetrieveByKey(id);
+			if(product==null) {
+				
+				errors += "Prodotto non trovato.<br>";
+		        request.setAttribute("errors", errors);
+		        request.getRequestDispatcher("/admin/.jsp").forward(request, response); // da finire
+		        return;
+			}
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+			request.getRequestDispatcher("/500.html").forward(request, response);
+			return;
+		}
+		
 		String name=request.getParameter("name");
 		double price=0;
 		String priceStr = request.getParameter("price");
@@ -45,12 +93,51 @@ public class Update_product extends HttpServlet {
 		String supplier=request.getParameter("supplier");
 		String category=request.getParameter("category");
 		int quantityAvailable=1;
-		String quantityAvailableStr=request.getParameter(name);
-		String errors="";
+		String quantityAvailableStr=request.getParameter("quantityAvailable");
+		String imageUrl=product.getImagePath();
+		
+		
+		try {
+            // Get the file part from the request
+            Part filePart = request.getPart("productImgFile"); // Make sure your HTML input has name="productImgFile"
+            if (filePart != null && filePart.getSize() > 0) {
+                // Carico nuova immagine
+
+                String fileName = getFileName(filePart);
+
+                if (fileName == null || fileName.isEmpty()) {
+                    errors += "Nessun file immagine selezionato.<br>";
+                } else if (!filePart.getContentType().startsWith("image/")) {
+                    errors += "Il file caricato non è un'immagine valida.<br>";
+                } else {
+                    String uploadPath = getServletContext().getRealPath("") + File.separator + UPLOAD_DIRECTORY;
+                    File uploadDir = new File(uploadPath);
+                    if (!uploadDir.exists()) uploadDir.mkdirs();
+
+                    String fileExtension = "";
+                    int dotIndex = fileName.lastIndexOf('.');
+                    if (dotIndex > 0) fileExtension = fileName.substring(dotIndex);
+
+                    String uniqueFileName = UUID.randomUUID().toString() + fileExtension;
+                    Path filePath = Paths.get(uploadPath, uniqueFileName);
+
+                    try (InputStream input = filePart.getInputStream()) {
+                        Files.copy(input, filePath, java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+                    }
+
+                    imageUrl = request.getContextPath() + "/" + UPLOAD_DIRECTORY + "/" + uniqueFileName;
+                }
+            }
+        } catch (ServletException | IOException e) {
+            e.printStackTrace();
+            errors += "Errore nel caricamento dell'immagine: " + e.getMessage() + "<br>";
+        }
+
+            
 		
 if(name==null || name.trim().equals("")) {
 			
-			errors+="Inserisci l'username<br>";
+			errors+="Inserisci il nome del prodotto.<br>";
 		} 
 
 if (priceStr== null || priceStr.trim().isEmpty()) {
@@ -99,11 +186,11 @@ if(supplier==null || supplier.trim().equals("")) {
 
 if(category==null || category.trim().equals("")) {
 	
-	errors+="Inserisci la descrizione<br>";
+	errors+="Inserisci la categoria.<br>";
 } 
 
 if (quantityAvailableStr== null || quantityAvailableStr.trim().isEmpty()) {
-    errors += "Inserisci il prezzo.<br>";
+    errors += "Inserisci la quantità disponibile.<br>";
 } else {
     try {
         quantityAvailable = Integer.parseInt(quantityAvailableStr);
@@ -111,25 +198,16 @@ if (quantityAvailableStr== null || quantityAvailableStr.trim().isEmpty()) {
             errors += "La quantità disponibile non può essere minore di 1.<br>";
         }
     } catch (NumberFormatException e) {
-        errors += "La quntità disponibile deve essere un numero valido.<br>";
+        errors += "La quantità disponibile deve essere un numero valido.<br>";
     }
 }
 if(!errors.equals("")) {
 	
 	request.setAttribute("errors", errors);
-	request.getRequestDispatcher("/admin/.jsp").forward(request, response); // da finire
+	request.getRequestDispatcher("/admin/view/update_product.jsp").forward(request, response); 
 	return;
 }
 
-ProductBean product=new ProductBean();
-ProductDaoDataSource ds=new ProductDaoDataSource();
-boolean modified=false;
-try {
-	product=ds.doRetrieveByKey(id);
-} catch (SQLException e) {
-	
-	e.printStackTrace();
-}
 
 if(!product.getName().equals(name)) {
 	
@@ -138,11 +216,10 @@ if(!product.getName().equals(name)) {
 	
 }
 
-if(product.getPrice()!=(price)) {
-	
-	product.setPrice(price);
-	modified=true;
-	
+
+if (Double.compare(product.getPrice(), price) != 0) {
+    product.setPrice(price);
+    modified = true;
 }
 
 if (!Objects.equals(product.getDiscountPercentage(), discountPercentage)) {
@@ -183,6 +260,11 @@ if(!product.getSupplier().equals(supplier)) {
 	
 }
 
+if (!Objects.equals(product.getImagePath(), imageUrl)) {
+    product.setImagePath(imageUrl);
+    modified = true;
+}
+
 
 if(modified) {
 	
@@ -191,21 +273,15 @@ if(modified) {
 	} catch (SQLException e) {
 		
 		e.printStackTrace();
+		request.getRequestDispatcher("/500.html").forward(request, response);
+		return;
+		}
 	}
-	
-}
 
-response.sendRedirect("/admin/"); // da finire
+response.sendRedirect(request.getContextPath()+"/admin/view/products"); 
 return;
 
-	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
-	}
-
+  }
 }
+
+

@@ -44,33 +44,47 @@ public class Filter_orders_byDates extends HttpServlet {
 		} catch (SQLException e) {
 			
 			e.printStackTrace();
-		}
-		
-		for(OrderBean order: orders) {
-			
-			Product_in_orderDaoDataSource ds_products=new Product_in_orderDaoDataSource();
-			ArrayList<Product_in_orderBean> products=new ArrayList<>();
-			try {
-				products=ds_products.doRetrieveByIdOrder(order.getIdOrder());
-			} catch (SQLException e) {
-				
-				e.printStackTrace();
-			}
-			
-			order.setProducts_in_order(products);
-			
+			request.getRequestDispatcher("/500.html").forward(request, response);
+			return;
 		}
 		
 		if(orders.isEmpty()) {
 			
 			errors+="Ordini non trovati<br>";
 			request.setAttribute("errors", errors);
-			request.getRequestDispatcher("/admin/").forward(request, response); // da vedere
+			request.getRequestDispatcher("/admin/view/user_profile.jsp").forward(request, response); // da vedere
 			return;
 		}
+		
+		Product_in_orderDaoDataSource ds_products=new Product_in_orderDaoDataSource();
+		
+		for(OrderBean order: orders) {
+			
+			ArrayList<Product_in_orderBean> products=new ArrayList<>();
+			try {
+				products=ds_products.doRetrieveByIdOrder(order.getIdOrder());
+			} catch (SQLException e) {
+				
+				e.printStackTrace();
+				request.getRequestDispatcher("/500.html").forward(request, response);
+				return;
+			}
+			
+			if(products.isEmpty()) {
+				
+				errors+="Errore nel caricamento ordini.<br>";
+				request.setAttribute("errors", errors);
+				request.getRequestDispatcher("/admin/view/user_profile.jsp").forward(request, response);
+				return;
+				
+			}
+			order.setProducts_in_order(products);
+			
+		}
+		
 			
 		request.setAttribute("orders", orders);
-		request.getRequestDispatcher("/admin/").forward(request, response); // da vedere
+		request.getRequestDispatcher("/admin/view/user_orders.jsp").forward(request, response);
 		return;
 		
 	}

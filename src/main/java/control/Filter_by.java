@@ -33,6 +33,13 @@ public class Filter_by extends HttpServlet {
 		
 		String errors="";
 		String action=request.getParameter("action");
+		if(action==null || action.trim().equals("")) {
+			
+			errors+="Operazione non riuscita.<br>";
+			request.setAttribute("errors", errors);
+			request.getRequestDispatcher("/view/index.jsp").forward(request, response);
+			return;
+		}
 		ArrayList<ProductBean> products=new ArrayList<ProductBean>();
 		ProductDaoDataSource ds=new ProductDaoDataSource();
 		
@@ -55,6 +62,8 @@ public class Filter_by extends HttpServlet {
 			} catch (SQLException e) {
 				
 				e.printStackTrace();
+				request.getRequestDispatcher("/500.html").forward(request, response);
+				return;
 			}
 		    break;
 		    
@@ -81,7 +90,7 @@ public class Filter_by extends HttpServlet {
 			if(!errors.equals("")) {
 				
 				request.setAttribute("errors", errors);
-				request.getRequestDispatcher("/view/index.jsp");
+				request.getRequestDispatcher("/view/index.jsp").forward(request, response);
 				return;
 				
 			}
@@ -92,6 +101,8 @@ public class Filter_by extends HttpServlet {
 			} catch (SQLException e) {
 				
 				e.printStackTrace();
+				request.getRequestDispatcher("/500.html").forward(request, response);
+				return;
 			}
 			break;
 			
@@ -115,7 +126,7 @@ public class Filter_by extends HttpServlet {
 			if(!errors.equals("")) {
 				
 				request.setAttribute("errors", errors);
-				request.getRequestDispatcher("/view/index.jsp");
+				request.getRequestDispatcher("/view/index.jsp").forward(request, response);
 				return;
 				
 			}
@@ -127,6 +138,8 @@ public class Filter_by extends HttpServlet {
 			} catch (SQLException e) {
 				
 				e.printStackTrace();
+				request.getRequestDispatcher("/500.html").forward(request, response);
+				return;
 			}
 			
 		break;
@@ -138,7 +151,7 @@ public class Filter_by extends HttpServlet {
 				
 				errors+="Aggiungi nome prodotto<br>";
 				request.setAttribute("errors", errors);
-				request.getRequestDispatcher("/view/index.jsp");
+				request.getRequestDispatcher("/view/index.jsp").forward(request, response);
 				return;
 				
 			}
@@ -148,6 +161,8 @@ public class Filter_by extends HttpServlet {
 			} catch (SQLException e) {
 				
 				e.printStackTrace();
+				request.getRequestDispatcher("/500.html").forward(request, response);
+				return;
 			}
 			break;
 		}
@@ -155,12 +170,13 @@ public class Filter_by extends HttpServlet {
 				
 				errors+="Input errato o prodotti non trovati<br>";
 				request.setAttribute("errors", errors);
-				request.getRequestDispatcher("/view/index.jsp");
+				request.getRequestDispatcher("/view/index.jsp").forward(request, response);
 				return;
 				
 			}
 			request.setAttribute("products", products);
-			request.getRequestDispatcher("/view/category.jsp");
+			request.getRequestDispatcher("/view/category.jsp").forward(request, response);
+			return;
 		}
 	
 

@@ -57,6 +57,16 @@ public class Add_product extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	
+		response.sendRedirect(request.getContextPath() + "/admin/view/products.jsp"); // da ridefinire
+		return;
+	}
+	
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		String name=request.getParameter("name");
 		double price=0;
 		String priceStr = request.getParameter("price");
@@ -127,7 +137,7 @@ public class Add_product extends HttpServlet {
 		
 if(name==null || name.trim().equals("")) {
 			
-			errors+="Inserisci l'username<br>";
+			errors+="Inserisci il nome del prodotto.<br>";
 		} 
 
 if (priceStr== null || priceStr.trim().isEmpty()) {
@@ -189,7 +199,7 @@ if (quantityAvailableStr== null || quantityAvailableStr.trim().isEmpty()) {
             errors += "La quantità disponibile non può essere minore di 1.<br>";
         }
     } catch (NumberFormatException e) {
-        errors += "La quntità disponibile deve essere un numero valido.<br>";
+        errors += "La quantità disponibile deve essere un numero valido.<br>";
     }
 }
 if(!errors.equals("")) {
@@ -217,19 +227,12 @@ try {
 } catch (SQLException e) {
 	
 	e.printStackTrace();
+	request.getRequestDispatcher("/500.html").forward(request, response);
+	return;
 }
 
-response.sendRedirect(request.getContextPath() + "/admin/"); // da finire
+response.sendRedirect(request.getContextPath() + "/admin/view/products.jsp"); // da finire
 return;
-	}
-	
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
 	}
 
 }

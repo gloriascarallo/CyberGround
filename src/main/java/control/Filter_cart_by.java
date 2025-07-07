@@ -32,6 +32,7 @@ public class Filter_cart_by extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		String action=request.getParameter("action");
 		double priceMin=Double.parseDouble(request.getParameter("priceMin"));
 		double priceMax=Double.parseDouble(request.getParameter("priceMax"));
 		Date dateAdded=Date.valueOf(request.getParameter("dateAdded"));
@@ -39,6 +40,7 @@ public class Filter_cart_by extends HttpServlet {
 		Product_situatedin_cartDaoDataSource ds=new Product_situatedin_cartDaoDataSource();
 		ArrayList<Product_situatedin_cartBean>products=new ArrayList<Product_situatedin_cartBean>();
 		String errors="";
+		
 		
 		// aggiungere action
 		try {

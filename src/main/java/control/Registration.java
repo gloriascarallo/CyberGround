@@ -35,9 +35,25 @@ public class Registration extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		request.getRequestDispatcher("/view/registration.jsp").forward(request, response);
+		return;
+		
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		RequestDispatcher dispatcherToRegistrationPage=request.getRequestDispatcher("/view/registration.jsp");
 		String errors="";
-		int id=(Integer)request.getSession().getAttribute("id");
+		Object idObj = request.getSession().getAttribute("id");
+	    if (idObj == null) {
+	    	errors = "Sessione scaduta o ID utente mancante. Ricarica la pagina e riprova.";
+	        request.setAttribute("errors", errors);
+	        request.getRequestDispatcher("/view/index.jsp").forward(request, response);
+	        return;
+	    }
+	    int id=(Integer)idObj;
 		String username=request.getParameter("username");
 		String name=request.getParameter("name");
 		String lastName=request.getParameter("lastName");
@@ -51,7 +67,7 @@ public class Registration extends HttpServlet {
 		
 if(username==null || username.trim().equals("")) {
 			
-			errors+="Inserisci l'username<br>";
+			errors+="Inserisci l'username.<br>";
 			
 		} 
 		
@@ -62,7 +78,7 @@ if(username==null || username.trim().equals("")) {
 
 if(name==null || name.trim().equals("")) {
 	
-	errors+="Inserisci il nome<br>";
+	errors+="Inserisci il nome.<br>";
 	
 } 
 
@@ -73,7 +89,7 @@ else {
 
 if(lastName==null || lastName.trim().equals("")) {
 	
-	errors+="Inserisci il cognome<br>";
+	errors+="Inserisci il cognome.<br>";
 	
 } 
 
@@ -84,7 +100,7 @@ else {
 
 if(telephone==null || telephone.trim().equals("")) {
 	
-	errors+="Inserisci il numero di telefono<br>";
+	errors+="Inserisci il numero di telefono.<br>";
 	
 } 
 
@@ -95,7 +111,7 @@ else {
 
 if(email==null || email.trim().equals("")) {
 	
-	errors+="Inserisci l'email<br>";
+	errors+="Inserisci l'email.<br>";
 	
 } 
 
@@ -106,7 +122,7 @@ else {
 
 if(password==null || password.trim().equals("")) {
 	
-	errors+="Inserisci la password<br>";
+	errors+="Inserisci la password.<br>";
 	
 } 
 
@@ -120,7 +136,7 @@ for(String address: addresses) {
 	
 	if(address==null || address.trim().equals("")) {
 		
-		errors+="Inserisci indirizzi<br>";
+		errors+="Inserisci indirizzi.<br>";
 		break;
 	} 
 
@@ -135,7 +151,7 @@ for(String pan: pans) {
 	
 	if(pan==null || pan.trim().equals("")) {
 		
-		errors+="Inserisci pan<br>";
+		errors+="Inserisci pan.<br>";
 		break;
 	} 
 
@@ -150,7 +166,7 @@ for(String expirationDate: expirationDates) {
 	
 	if(expirationDate==null || expirationDate.trim().equals("")) {
 		
-		errors+="Inserisci scadenza<br>";
+		errors+="Inserisci scadenza.<br>";
 		break;
 	} 
 
@@ -165,7 +181,7 @@ for(String cvc: cvcs) {
 	
 	if(cvc==null || cvc.trim().equals("")) {
 		
-		errors+="Inserisci cvc<br>";
+		errors+="Inserisci cvc.<br>";
 		break;
 	} 
 
@@ -180,23 +196,26 @@ if(!errors.equals("")) {
 	
 	request.setAttribute("errors", errors);
 	dispatcherToRegistrationPage.forward(request, response);
+	return;
 }
 		
 		RegisteredUserDaoDataSource ds_user=new RegisteredUserDaoDataSource();
 		
 		
 		try {
-			if(ds_user.doRetrieveByKey(id).getUsername().equals(username)) {
+			if(ds_user.doRetrieveByUsername(username)!=null) {
 		
-			errors+="Esiste già un utente con tale username<br>";
+			errors+="Esiste già un utente con tale username.<br>";
 			request.setAttribute("errors", errors);
 			dispatcherToRegistrationPage.forward(request, response);
+			return;
 			}
 		}
 			catch(SQLException e) {
 				
 				e.printStackTrace();
-				dispatcherToRegistrationPage.forward(request, response);
+				request.getRequestDispatcher("/500.html").forward(request, response);
+				return;
 			}
 		
 
@@ -207,81 +226,70 @@ if(!errors.equals("")) {
 		user.setUsername(username);
 		user.setName(name);
 		user.setLastName(lastName);
-		user.setUsername(username);
 		user.setPassword(password);
 		user.setTelephone(telephone);
 		user.setEmail(email);
-		
-		ds_user=new RegisteredUserDaoDataSource();
-		// salvarce anche user e cart nel database?
+
 		try {ds_user.doSave(user);
 		}
 		
 		catch(SQLException e) {
 			
 			e.printStackTrace();
-			dispatcherToRegistrationPage.forward(request, response);
+			request.getRequestDispatcher("/500.html").forward(request, response);
+			return;
 		}
 		
-		RegisteredUser_has_addressDaoDataSource ds2=new RegisteredUser_has_addressDaoDataSource();
-		RegisteredUser_has_addressBean has_address=new RegisteredUser_has_addressBean();
+		RegisteredUser_has_addressDaoDataSource ds_hasaddress=new RegisteredUser_has_addressDaoDataSource();
+		
 		
 		for(String address: addresses) {
-			
+			RegisteredUser_has_addressBean has_address=new RegisteredUser_has_addressBean();
 			has_address.setNameAddress(address);
 			has_address.setIdRegisteredUser(id);
 			
 			try {
 				
-				ds2.doSave(has_address);
+				ds_hasaddress.doSave(has_address);
 			}
 			catch(SQLException e) {
 				
 				e.printStackTrace();
-				dispatcherToRegistrationPage.forward(request, response);
+				request.getRequestDispatcher("/500.html").forward(request, response);
+				return;
 			}
 		}
 		
-		RegisteredUser_has_method_paymentDaoDataSource ds3=new RegisteredUser_has_method_paymentDaoDataSource();
-		RegisteredUser_has_method_paymentBean has_method_payment=new RegisteredUser_has_method_paymentBean();
+		RegisteredUser_has_method_paymentDaoDataSource ds_has_method_payment=new RegisteredUser_has_method_paymentDaoDataSource();
 		
-		for(String pan: pans) {
-			for(String expirationDate: expirationDates) {
-				for(String cvc: cvcs) {
-					
+		
+		for(int i=0; i<pans.length; i++) {
+			RegisteredUser_has_method_paymentBean has_method_payment=new RegisteredUser_has_method_paymentBean();
 					has_method_payment.setIdRegisteredUser(id);
-					has_method_payment.setPan(pan);
-					has_method_payment.setExpirationDate(expirationDate);
-					has_method_payment.setCvc(cvc);
+					has_method_payment.setPan(pans[i]);
+					has_method_payment.setExpirationDate(expirationDates[i]);
+					has_method_payment.setCvc(cvcs[i]);
 					
 					try {
 						
-						ds3.doSave(has_method_payment);
+						ds_has_method_payment.doSave(has_method_payment);
 						
 					}
 					catch(SQLException e) {
 						
 						e.printStackTrace();
-						dispatcherToRegistrationPage.forward(request, response);
+						request.getRequestDispatcher("/500.html").forward(request, response);
+						return;
 					}
 				}
 				
-			}
 			
-		}
+			
 		
-		response.sendRedirect("/view/login.jsp");
+		
+		response.sendRedirect(request.getContextPath()+"/view/login.jsp");
 		return;
 		
-		
-	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		doGet(request, response);
 	}
 
 }

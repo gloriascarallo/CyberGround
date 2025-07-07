@@ -30,9 +30,19 @@ public class Filter_registeredusers_byUsername extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		String errors="";
 		String username=request.getParameter("username");
+		if(username==null || username.trim().equals("")) {
+			
+			errors+="Inserire username.<br>";
+			request.setAttribute("errors", errors);
+			request.getRequestDispatcher("/admin/view/users.jsp").forward(request, response);
+			return;
+			
+		}
 		RegisteredUserDaoDataSource ds=new RegisteredUserDaoDataSource();
-		RegisteredUserBean user=new RegisteredUserBean();
+		RegisteredUserBean user=null;
 		try {
 			
 			user=ds.doRetrieveByUsername(username);
@@ -41,11 +51,21 @@ public class Filter_registeredusers_byUsername extends HttpServlet {
 		catch(SQLException e) {
 			
 			e.printStackTrace();
+			request.getRequestDispatcher("/500.html").forward(request, response);
+			return;
 			
 		}
 		
+		if(user==null) {
+			
+			errors+="Utente non trovato.<br>";
+			request.setAttribute("errors", errors);
+			request.getRequestDispatcher("/admin/view/users.jsp").forward(request, response);
+			return;
+		}
+		
 		request.setAttribute("user", user);
-		request.getRequestDispatcher("/admin/").forward(request, response); // da finire
+		request.getRequestDispatcher("/admin/view/user_profile.jsp").forward(request, response); 
 		return;
 		
 	}
