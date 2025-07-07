@@ -128,9 +128,9 @@ public class ProductBean {
 		this.quantityAvailable = quantityAvailable;
 	}
 	
-	public void decreaseQuantityAvailable() {
+	public void decreaseQuantityAvailable(int quantity) {
 		
-		quantityAvailable--;
+		quantityAvailable=quantityAvailable-quantity;
 	}
 	
 
