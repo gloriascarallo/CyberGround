@@ -73,7 +73,7 @@ ResultSet rs=preparedStatement.getGeneratedKeys();
 			PreparedStatement preparedStatement = null;
 	        int id=(Integer)o_id;
 	        
-			RegisteredUser_has_addressBean bean = new RegisteredUser_has_addressBean();
+			RegisteredUser_has_addressBean bean = null;
 
 			String selectSQL = "SELECT * FROM " + RegisteredUser_has_addressDaoDataSource.TABLE_NAME + " WHERE ID_HAS_ADDRESS = ?";
 
@@ -85,6 +85,7 @@ ResultSet rs=preparedStatement.getGeneratedKeys();
 				ResultSet rs = preparedStatement.executeQuery();
 
 				while (rs.next()) {
+					bean=new RegisteredUser_has_addressBean();
 					bean.setId_has_address(rs.getInt("ID_HAS_ADDRESS"));
 					bean.setIdRegisteredUser(rs.getInt("IDREGISTEREDUSER"));
 					bean.setNameAddress(rs.getString("NAMEADDRESS"));
@@ -208,6 +209,35 @@ ResultSet rs=preparedStatement.getGeneratedKeys();
 			return registeredusers_have_addresses;
 		}
 
-
+		public boolean existsByUserAndAddress(int userId, String address) throws SQLException {
+			Connection connection = null;
+			PreparedStatement preparedStatement = null;
+			ResultSet rs=null;
+		        String selectSQL = "SELECT 1 FROM " + RegisteredUser_has_addressDaoDataSource.TABLE_NAME +" WHERE IDREGISTEREDUSER = ? AND NAMEADDRESS = ?";
+		        try {
+					connection = ds.getConnection();
+					preparedStatement = connection.prepareStatement(selectSQL);
+					 preparedStatement.setInt(1, userId);
+			            preparedStatement.setString(2, address);
+					rs = preparedStatement.executeQuery();
+					return rs.next(); 
+		        }
+		        finally {
+					try {
+						
+						if(rs!=null) {
+							
+							rs.close();
+						}
+						if (preparedStatement != null)
+							preparedStatement.close();
+					} finally {
+						if (connection != null)
+							connection.close();
+					}
+		        }
+		            
+		     
+		}
 
 }

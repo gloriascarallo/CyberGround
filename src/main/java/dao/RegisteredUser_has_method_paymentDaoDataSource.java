@@ -74,7 +74,7 @@ import bean.RegisteredUser_has_method_paymentBean;
 			PreparedStatement preparedStatement = null;
 	        int id=(Integer)o_id;
 	        
-			RegisteredUser_has_method_paymentBean bean = new RegisteredUser_has_method_paymentBean();
+			RegisteredUser_has_method_paymentBean bean = null;
 
 			String selectSQL = "SELECT * FROM " + RegisteredUser_has_method_paymentDaoDataSource.TABLE_NAME + " WHERE ID_HAS_METHOD_PAYMENT = ?";
 
@@ -86,6 +86,7 @@ import bean.RegisteredUser_has_method_paymentBean;
 				ResultSet rs = preparedStatement.executeQuery();
 
 				while (rs.next()) {
+					bean=new RegisteredUser_has_method_paymentBean();
 					bean.setId_has_method_payment(rs.getInt("ID_HAS_METHOD_PAYMENT"));
 					bean.setIdRegisteredUser(rs.getInt("IDREGISTEREDUSER"));
 					bean.setPan(rs.getString("PANMETHODPAYMENT"));
@@ -212,6 +213,39 @@ import bean.RegisteredUser_has_method_paymentBean;
 				}
 			}
 			return registeredusers_have_methods_payment;
+		}
+		
+		public boolean existsByUserAndPanAndExpirationDateAndCvc(int userId, String pan, String expirationDate, String cvc) throws SQLException {
+			Connection connection = null;
+			PreparedStatement preparedStatement = null;
+			ResultSet rs=null;
+		        String selectSQL = "SELECT 1 FROM " + RegisteredUser_has_method_paymentDaoDataSource.TABLE_NAME +" WHERE IDREGISTEREDUSER = ? AND PAN = ? AND EXPIRATIONDATE = ? AND CVC = ?";
+		        try {
+					connection = ds.getConnection();
+					preparedStatement = connection.prepareStatement(selectSQL);
+					 preparedStatement.setInt(1, userId);
+			            preparedStatement.setString(2, pan);
+			            preparedStatement.setString(3, expirationDate);
+			            preparedStatement.setString(4, cvc);
+					rs = preparedStatement.executeQuery();
+					return rs.next(); 
+		        }
+		        finally {
+		        	
+					try {
+						if(rs!=null) {
+							rs.close();
+							
+						}
+						if (preparedStatement != null)
+							preparedStatement.close();
+					} finally {
+						if (connection != null)
+							connection.close();
+					}
+		        }
+		            
+		     
 		}
 
 
