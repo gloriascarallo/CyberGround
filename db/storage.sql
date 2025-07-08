@@ -53,7 +53,7 @@ CREATE TABLE `product` (
    `discountPercentage` DECIMAL(5, 2) DEFAULT NULL,
    `dateExpirationDiscount` date DEFAULT NULL,
   `description` varchar(500) DEFAULT NULL,  
-  `dateUpload` date DEFAULT CURRENT_TIMESTAMP,
+  `dateUpload` date DEFAULT NULL,
   `supplier` varchar(45) DEFAULT NULL,
   `categoryName` varchar(45) DEFAULT NULL,
   `imagePath` varchar(100) DEFAULT NULL,
@@ -66,7 +66,7 @@ CREATE TABLE `product_situatedin_cart` (
   `id_SituatedIn` int AUTO_INCREMENT PRIMARY KEY,
   `idCart` int NOT NULL,
   `idProduct` int NOT NULL,
-  `dateAdded` date DEFAULT CURRENT_TIMESTAMP,
+  `dateAdded` date DEFAULT NULL,
   `quantity` int NOT NULL DEFAULT 1,
   UNIQUE (`idProduct`,`idCart`),
   KEY `idCart_idx` (`idCart`),
@@ -82,7 +82,7 @@ CREATE TABLE `product_situatedin_cart` (
 
 CREATE TABLE `orders` (
   `idOrder` int AUTO_INCREMENT PRIMARY KEY,
-  `datePurchase` date DEFAULT CURRENT_TIMESTAMP,
+  `datePurchase` date DEFAULT NULL,
   `dateDelivery` date DEFAULT NULL,
   `dateShipping` date DEFAULT NULL,
   `idCart` int NOT NULL,
