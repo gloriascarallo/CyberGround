@@ -2,7 +2,8 @@ package dao;
 
 
 	import java.sql.Connection;
-	import java.sql.PreparedStatement;
+import java.sql.Date;
+import java.sql.PreparedStatement;
 	import java.sql.ResultSet;
 	import java.sql.SQLException;
 import java.sql.Statement;
@@ -76,7 +77,7 @@ import bean.Product_situatedin_cartBean;
 			PreparedStatement preparedStatement = null;
 	        int id=(Integer)o_id;
 	        
-			Product_situatedin_cartBean bean = new Product_situatedin_cartBean();
+			Product_situatedin_cartBean bean = null;
 
 			String selectSQL = "SELECT * FROM " + Product_situatedin_cartDaoDataSource.TABLE_NAME + " WHERE ID_SITUATEDIN = ?";
 
@@ -88,6 +89,7 @@ import bean.Product_situatedin_cartBean;
 				ResultSet rs = preparedStatement.executeQuery();
 
 				while (rs.next()) {
+					bean=new Product_situatedin_cartBean();
 					bean.setId_SituatedIn(rs.getInt("ID_SITUATEDIN"));
 					bean.setIdCart(rs.getInt("IDCART"));
 					int idProduct=rs.getInt("IDPRODUCT");
@@ -186,7 +188,7 @@ import bean.Product_situatedin_cartBean;
 			Connection connection = null;
 			PreparedStatement preparedStatement = null;
 			
-			String selectSQL = "SELECT * FROM " + Product_situatedin_cartDaoDataSource.TABLE_NAME +" WHERE IDCART= ?";
+			String selectSQL = "SELECT * FROM " + Product_situatedin_cartDaoDataSource.TABLE_NAME + " WHERE IDCART= ?";
 			ArrayList<Product_situatedin_cartBean> products_situatedin_cart=new ArrayList<Product_situatedin_cartBean>();
 			
 			try {
@@ -220,12 +222,96 @@ import bean.Product_situatedin_cartBean;
 			return products_situatedin_cart;
 		}
 			
+		
+		public synchronized ArrayList<Product_situatedin_cartBean> doRetrieveByDateAdded(int id, Date date) throws SQLException{
+			Connection connection = null;
+			PreparedStatement preparedStatement = null;
+			
+			String selectSQL = "SELECT * FROM " + Product_situatedin_cartDaoDataSource.TABLE_NAME + " WHERE IDCART= ? AND DATEADDED = ?";
+			ArrayList<Product_situatedin_cartBean> products_situatedin_cart=new ArrayList<Product_situatedin_cartBean>();
+			
+			try {
+				connection = ds.getConnection();
+				preparedStatement = connection.prepareStatement(selectSQL);
+				preparedStatement.setInt(1, id);
+				preparedStatement.setDate(2,  date);
+
+				ResultSet rs = preparedStatement.executeQuery();
+
+				while (rs.next()) {
+					Product_situatedin_cartBean bean=new Product_situatedin_cartBean();
+					bean.setId_SituatedIn(rs.getInt("ID_SITUATEDIN"));
+					bean.setIdCart(rs.getInt("IDCART"));
+					int idProduct=rs.getInt("IDPRODUCT");
+					ProductDaoDataSource ds=new ProductDaoDataSource();
+					bean.setProduct(ds.doRetrieveByKey(idProduct));
+					bean.setDateAdded(rs.getDate("DATEADDED"));
+					bean.setQuantity(rs.getInt("QUANTITY"));
+					products_situatedin_cart.add(bean);
+			}
+
+			} finally {
+				try {
+					if (preparedStatement != null)
+						preparedStatement.close();
+				} finally {
+					if (connection != null)
+						connection.close();
+				}
+			}
+			return products_situatedin_cart;
+		}
+		
+		public synchronized ArrayList<Product_situatedin_cartBean> doRetrieveByIdCartAndPriceRange(int idCart, double minPrice, double maxPrice) throws SQLException {
+		    Connection connection = null;
+		    PreparedStatement preparedStatement = null;
+
+		    String selectSQL = "SELECT c.* FROM " + Product_situatedin_cartDaoDataSource.TABLE_NAME + " c " +
+		                       "JOIN product p ON c.IDPRODUCT = p.ID " +
+		                       "WHERE c.IDCART = ? AND p.PRICE BETWEEN ? AND ?";
+
+		    ArrayList<Product_situatedin_cartBean> productsInRange = new ArrayList<Product_situatedin_cartBean>();
+
+		    try {
+		        connection = ds.getConnection();
+		        preparedStatement = connection.prepareStatement(selectSQL);
+		        preparedStatement.setInt(1, idCart);
+		        preparedStatement.setDouble(2, minPrice);
+		        preparedStatement.setDouble(3, maxPrice);
+
+		        ResultSet rs = preparedStatement.executeQuery();
+
+		        while (rs.next()) {
+		            Product_situatedin_cartBean bean = new Product_situatedin_cartBean();
+		            bean.setId_SituatedIn(rs.getInt("ID_SITUATEDIN"));
+		            bean.setIdCart(rs.getInt("IDCART"));
+		            int idProduct = rs.getInt("IDPRODUCT");
+		            ProductDaoDataSource ds = new ProductDaoDataSource();
+		            bean.setProduct(ds.doRetrieveByKey(idProduct));
+		            bean.setDateAdded(rs.getDate("DATEADDED"));
+		            bean.setQuantity(rs.getInt("QUANTITY"));
+
+		            productsInRange.add(bean);
+		        }
+
+		    } finally {
+		        try {
+		            if (preparedStatement != null) preparedStatement.close();
+		        } finally {
+		            if (connection != null) connection.close();
+		        }
+		    }
+
+		    return productsInRange;
+		}
+		
+		
 		public synchronized boolean decreaseQuantity(int id) throws SQLException{
 			Connection connection = null;
 			PreparedStatement preparedStatement = null;
 			int result=0;
 			
-			String updateSQL = "UPDATE" + Product_situatedin_cartDaoDataSource.TABLE_NAME + "SET QUANTITY = QUANTITY - 1 WHERE ID_SITUATEDIN = ?";
+			String updateSQL = "UPDATE " + Product_situatedin_cartDaoDataSource.TABLE_NAME + " SET QUANTITY = QUANTITY - 1 WHERE ID_SITUATEDIN = ?";
 			try {
 				connection = ds.getConnection();
 				preparedStatement = connection.prepareStatement(updateSQL);
@@ -250,7 +336,7 @@ import bean.Product_situatedin_cartBean;
 			PreparedStatement preparedStatement = null;
 			int result=0;
 			
-			String updateSQL = "UPDATE" + Product_situatedin_cartDaoDataSource.TABLE_NAME + "SET QUANTITY = QUANTITY + 1 WHERE ID_SITUATEDIN = ?";
+			String updateSQL = "UPDATE " + Product_situatedin_cartDaoDataSource.TABLE_NAME + " SET QUANTITY = QUANTITY + 1 WHERE ID_SITUATEDIN = ?";
 			try {
 				connection = ds.getConnection();
 				preparedStatement = connection.prepareStatement(updateSQL);

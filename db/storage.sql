@@ -13,15 +13,15 @@ CREATE TABLE `user` (
 
 
 CREATE TABLE `registereduser` (
+  `idUser` int NOT NULL,
   `username` varchar(45) NOT NULL,
   `password` varchar(100) DEFAULT NULL,
   `name` varchar(20) DEFAULT NULL,
   `lastName` varchar(20) DEFAULT NULL,
   `email` varchar(45) DEFAULT NULL,
   `telephoneNumber` char(10) DEFAULT NULL,
-  `idUser` int NOT NULL,
-  PRIMARY KEY (`username`),
-  UNIQUE(`username`, `idUser`),
+  PRIMARY KEY (`idUser`),
+  UNIQUE(`username`),
   KEY `idUser_idx` (`idUser`),
   CONSTRAINT `idUser_RegistratedUser` FOREIGN KEY (`idUser`) REFERENCES `user` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
 );
@@ -33,7 +33,7 @@ CREATE TABLE `admin` (
   `username` varchar(45) NOT NULL,
   `password` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE(`username`, `id`)
+  UNIQUE(`username`)
  
 );
 
@@ -49,23 +49,24 @@ CREATE TABLE `cart` (
 CREATE TABLE `product` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(45) DEFAULT NULL,
-  `price` double DEFAULT NULL,
-  `description` varchar(500) DEFAULT NULL,
+  `price` double DEFAULT 0,
+   `discountPercentage` DECIMAL(5, 2) DEFAULT NULL,
+   `dateExpirationDiscount` date DEFAULT NULL,
+  `description` varchar(500) DEFAULT NULL,  
   `dateUpload` date DEFAULT NULL,
   `supplier` varchar(45) DEFAULT NULL,
   `categoryName` varchar(45) DEFAULT NULL,
-  `imagePath` varchar(100) DEFAULT NULL;
-  `quantityAvailable` int DEFAULT 1;
-  PRIMARY KEY (`id`),
- -- KEY `categoryName_idx` (`categoryName`),
- -- CONSTRAINT `categoryName` FOREIGN KEY (`categoryName`) REFERENCES `category` (`name`) ON DELETE RESTRICT ON UPDATE CASCADE
+  `imagePath` varchar(100) DEFAULT NULL,
+  `quantityAvailable` int DEFAULT 1,
+  PRIMARY KEY (`id`)
+
 ) ;
 
 CREATE TABLE `product_situatedin_cart` (
   `id_SituatedIn` int AUTO_INCREMENT PRIMARY KEY,
   `idCart` int NOT NULL,
   `idProduct` int NOT NULL,
-  `dateAdded` date NOT NULL,
+  `dateAdded` date DEFAULT NULL,
   `quantity` int NOT NULL DEFAULT 1,
   UNIQUE (`idProduct`,`idCart`),
   KEY `idCart_idx` (`idCart`),
@@ -79,7 +80,7 @@ CREATE TABLE `product_situatedin_cart` (
 
 
 
-CREATE TABLE `order` (
+CREATE TABLE `orders` (
   `idOrder` int AUTO_INCREMENT PRIMARY KEY,
   `datePurchase` date DEFAULT NULL,
   `dateDelivery` date DEFAULT NULL,
@@ -93,12 +94,12 @@ CREATE TABLE `product_in_order` (
   `id_product_in_order` int AUTO_INCREMENT PRIMARY KEY,
   `idOrder` int NOT NULL,
   `idProduct` int NOT NULL,
-  `quantity` int DEFAULT 0,
+  `quantity` int DEFAULT 1,
   `price` double DEFAULT 0,
   KEY `idOrder_idx` (`idOrder`),
   KEY `idProduct_idx` (`idProduct`),
-  CONSTRAINT `idOrder_in_order` FOREIGN KEY (`idOrder`) REFERENCES `order` (`idOrder`) ON DELETE RESTRICT ON UPDATE CASCADE
-  CONSTRAINT `idProduct_in_order` FOREIGN KEY (`idProduct`) REFERENCES `order` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
+  CONSTRAINT `idOrder_in_order` FOREIGN KEY (`idOrder`) REFERENCES `orders` (`idOrder`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  CONSTRAINT `idProduct_in_order` FOREIGN KEY (`idProduct`) REFERENCES `product` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
 
@@ -108,10 +109,9 @@ CREATE TABLE `method_payment` (
   `pan` char(19) NOT NULL,
   `expirationDate` char(5) NOT NULL,
   `cvc` varchar(4) NOT NULL,
-  PRIMARY KEY (`pan`),
-  KEY `SECONDARY` (`expirationDate`),
-  KEY `TERTIARY` (`cvc`)
-) ;
+  PRIMARY KEY (`pan`)
+  
+);
 
 
 
@@ -119,17 +119,14 @@ CREATE TABLE `method_payment` (
 CREATE TABLE `registereduser_has_method_payment` (
 
   `id_has_method_payment` int AUTO_INCREMENT PRIMARY KEY,
-  `usernameRegisteredUser` varchar(45) NOT NULL,
+  `idRegisteredUser` int NOT NULL,
   `panMethodPayment` char(19) NOT NULL,
   `expirationDateMethodPayment` char(5) NOT NULL,
   `cvcMethodPayment` varchar(4) NOT NULL,
-  UNIQUE (`usernameRegisteredUser`,`panMethodPayment`,`expirationDateMethodPayment`,`cvcMethodPayment`),
-  KEY `expirationDate_HasMethodPayment_idx` (`expirationDateMethodPayment`),
+  UNIQUE (`idRegisteredUser`,`panMethodPayment`),
+  KEY `idRegisteredUser_HasMethodPayment_idx` (`idRegisteredUser`),
   KEY `pan_HasMethodPayment_idx` (`panMethodPayment`),
-  KEY `cvc_methodPayment_idx` (`cvcMethodPayment`),
-  CONSTRAINT `cvc_methodPayment` FOREIGN KEY (`cvcMethodPayment`) REFERENCES `method_payment` (`cvc`) ON DELETE RESTRICT ON UPDATE CASCADE,
-  CONSTRAINT `expirationDate_HasMethodPayment` FOREIGN KEY (`expirationDateMethodPayment`) REFERENCES `method_payment` (`expirationDate`) ON UPDATE CASCADE,
-  CONSTRAINT `usernameRegisteredUser_HasMethodPayment` FOREIGN KEY (`usernameRegisteredUser`) REFERENCES `registereduser` (`username`) ON DELETE RESTRICT ON UPDATE CASCADE,
+ CONSTRAINT `idRegisteredUser_HasMethodPayment` FOREIGN KEY (`idRegisteredUser`) REFERENCES `registereduser` (`idUser`) ON DELETE RESTRICT ON UPDATE CASCADE,
   CONSTRAINT `pan_HasMethodPayment` FOREIGN KEY (`panMethodPayment`) REFERENCES `method_payment` (`pan`) ON UPDATE CASCADE
 );
 
@@ -145,14 +142,14 @@ CREATE TABLE `address` (
 
 CREATE TABLE `registereduser_has_address` (
   `id_has_address` int AUTO_INCREMENT PRIMARY KEY,
-  `usernameRegisteredUser` varchar(45) NOT NULL,
+  `idRegisteredUser` int NOT NULL,
   `nameAddress` varchar(45) NOT NULL,
-  UNIQUE (`usernameRegisteredUser`,`nameAddress`),
-  KEY `usernameRegisteredUser_HasAddress_idx` (`usernameRegisteredUser`),
+  UNIQUE (`idRegisteredUser`,`nameAddress`),
+  KEY `idRegisteredUser_HasAddress_idx` (`idRegisteredUser`),
   KEY `nameAddress_HasAddress_idx` (`nameAddress`),
-  CONSTRAINT `usernameRegisteredUser_HasAddress` FOREIGN KEY (`usernameRegisteredUser`) REFERENCES `registereduser` (`username`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  CONSTRAINT `idRegisteredUser_HasAddress` FOREIGN KEY (`idRegisteredUser`) REFERENCES `registereduser` (`idUser`) ON DELETE RESTRICT ON UPDATE CASCADE,
   CONSTRAINT `nameAddress_HasAddress` FOREIGN KEY (`nameAddress`) REFERENCES `address` (`name`) ON DELETE RESTRICT ON UPDATE CASCADE
-) ;
+);
 
 
 

@@ -1,5 +1,6 @@
 package bean;
 import java.sql.Date;
+import java.time.LocalDate;
 
 public class Product_situatedin_cartBean {
 
@@ -98,9 +99,11 @@ public class Product_situatedin_cartBean {
 
 
 	public Product_situatedin_cartBean() {
+		id_SituatedIn=-1;
 		idCart=-1;
 		product=new ProductBean();
-		dateAdded=new Date(0);
+		dateAdded=Date.valueOf(LocalDate.now());
+		quantity=1;
 	}
 
 }

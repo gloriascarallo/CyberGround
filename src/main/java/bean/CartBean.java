@@ -57,5 +57,16 @@ public class CartBean {
 		products.remove(product);
 	}
 	
+	public double getTotal() {
+		
+		double total=0;
+		for(Product_situatedin_cartBean product_incart: products) {
+			total+=product_incart.getTotalPrice();
+			
+		}
+		return total;
+		}
+	}
+	
 
-}
+

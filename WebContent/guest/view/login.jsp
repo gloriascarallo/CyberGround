@@ -6,18 +6,22 @@
 
 <meta charset="UTF-8">
 <title>Login</title>
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/styles/Login.css?v=3"/>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/styles/Login.css"/>
 </head>
 <body>
 
 
 <div id="container">
 <%
-if(request.getAttribute("errors")!=null){
-String errors=(String)request.getAttribute("errors");
-if(!errors.equals("")) {%> <div id="error"><%=errors %></div>
-
-<% } } %>
+    String errors = (String) request.getAttribute("errors");
+    if (errors != null && !errors.isEmpty()) {
+%>
+    <div id="error" style="color: red;">
+        <%= errors %>
+    </div>
+<%
+    }
+%>
 
 <h1>Login</h1>
 

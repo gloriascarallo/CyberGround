@@ -8,8 +8,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
-
 import dao.Product_situatedin_cartDaoDataSource;
+import bean.CartBean;
 import bean.Product_situatedin_cartBean;
 import java.util.ArrayList;
 /**
@@ -32,23 +32,50 @@ public class Cart extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		int idCart=(Integer)request.getSession().getAttribute("id");
+		String errors="";
 		RequestDispatcher dispatchToCart=request.getRequestDispatcher("/view/cart.jsp");
+		CartBean cart=(CartBean)request.getSession().getAttribute("cart");
+		
+		if(cart==null) {
+			
+			errors="Sessione scaduta o carrello mancante. Ricarica la pagina e riprova oppure effettua il login.<br>";
+			
+			
+		}
+		if (cart.getProducts()==null || cart.getProducts().isEmpty()) {
+			errors+="Carrello vuoto o non inizializzato.<br>";
+			request.setAttribute("errors", errors);
+			dispatchToCart.forward(request, response);
+			return;
+		    
+		}
+		int idCart=cart.getIdCart();
 		
 		Product_situatedin_cartDaoDataSource ds=new Product_situatedin_cartDaoDataSource();
 		ArrayList<Product_situatedin_cartBean> products_situatedin_cart=new ArrayList<Product_situatedin_cartBean>();
 		
+		
 		try {
 			
 			products_situatedin_cart=ds.doRetrieveByIdCart(idCart);
-			request.setAttribute("products_situatedin_cart", products_situatedin_cart);
+			
 		}
 		
 		catch(SQLException e) {
 			e.printStackTrace();
-			request.getRequestDispatcher("/view/index.jsp").forward(request, response);
+			request.getRequestDispatcher("/500.html").forward(request, response);
+			return;
 		}
 		
+		if(products_situatedin_cart.isEmpty()) {
+			
+			errors+="Prodotti nel carrello non trovati.<br>";
+			request.setAttribute("errors", errors);
+			dispatchToCart.forward(request, response);
+			return;
+			
+		}
+		request.setAttribute("products_situatedin_cart", products_situatedin_cart);
 		dispatchToCart.forward(request, response);
 		return;
 	}

@@ -64,9 +64,9 @@ import bean.AddressBean;
 		public synchronized AddressBean doRetrieveByKey(Object o_name) throws SQLException {
 			Connection connection = null;
 			PreparedStatement preparedStatement = null;
+			AddressBean bean=null;
 			String name=(String)o_name;
 
-			AddressBean bean = new AddressBean();
 
 			String selectSQL = "SELECT * FROM " + AddressDaoDataSource.TABLE_NAME + " WHERE NAME = ?";
 
@@ -78,6 +78,7 @@ import bean.AddressBean;
 				ResultSet rs = preparedStatement.executeQuery();
 
 				while (rs.next()) {
+					bean = new AddressBean();
 					bean.setName(rs.getString("NAME"));
 					
 			

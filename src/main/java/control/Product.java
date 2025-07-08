@@ -7,6 +7,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Arrays;
+import java.util.List;
 
 import dao.ProductDaoDataSource;
 import bean.ProductBean;
@@ -30,17 +32,49 @@ public class Product extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		int id=Integer.parseInt(request.getParameter("idProdotto"));
+		String errors="";
+		String toRedirect=request.getParameter("toRedirect");
+		
+		if (toRedirect == null || toRedirect.trim().isEmpty()) {
+	        toRedirect = "500.html";
+	    }
+		
+		List<String> allowedRedirects = Arrays.asList("/view/category.jsp", "/view/index.jsp", "/view/cart.jsp", "/view/discounts.jsp", "/view/orders.jsp");
+		if (!allowedRedirects.contains(toRedirect)) {
+		    toRedirect = "/500.html";
+		}
+		
+		int id;
+		try {
+		    id = Integer.parseInt(request.getParameter("idProdotto"));
+		} catch (NumberFormatException | NullPointerException e) {
+		    errors += "ID prodotto non valido.<br>";
+		    request.setAttribute("errors", errors);
+		    request.getRequestDispatcher(toRedirect).forward(request, response);
+		    return;
+		}
 		
 		ProductDaoDataSource ds=new ProductDaoDataSource();
-		ProductBean product=new ProductBean();
+		ProductBean product=null;
 		try {product=ds.doRetrieveByKey(id);
 		}
 		
 		catch(SQLException e) {
 			
 			e.printStackTrace();
+			request.getRequestDispatcher("500.html").forward(request, response);
+			return;
 		}
+		
+		if(product==null) {
+			errors+="Prodotto non trovato.<br>";
+			request.setAttribute("errors", errors);
+			request.getRequestDispatcher(toRedirect).forward(request, response);
+			return;
+			
+			
+		}
+		
 		
 		request.setAttribute("product", product);
 		request.getRequestDispatcher("/view/product.jsp").forward(request, response);

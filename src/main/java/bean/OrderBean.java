@@ -1,5 +1,6 @@
 package bean;
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class OrderBean {
@@ -98,10 +99,10 @@ public double getTotalOrder() {
 }
 
 	public OrderBean() {
-		
-		datePurchase=new Date(0);
-		dateDelivery=new Date(0);
-		dateShipping=new Date(0);
+		idOrder=-1;
+		datePurchase=Date.valueOf(LocalDate.now());
+		dateDelivery=null;
+		dateShipping=null;
 		idCart=-1;
 		products_in_order=new ArrayList<Product_in_orderBean>();
 	}

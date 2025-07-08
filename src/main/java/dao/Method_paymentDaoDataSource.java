@@ -67,7 +67,7 @@ import bean.Method_paymentBean;
 				PreparedStatement preparedStatement = null;
 				String pan=(String)o_pan;
 
-				Method_paymentBean bean = new Method_paymentBean();
+				Method_paymentBean bean = null;
 
 				String selectSQL = "SELECT * FROM " + Method_paymentDaoDataSource.TABLE_NAME + " WHERE PAN = ?";
 
@@ -78,6 +78,7 @@ import bean.Method_paymentBean;
 					ResultSet rs = preparedStatement.executeQuery();
 
 					while (rs.next()) {
+						bean=new Method_paymentBean();
 						bean.setPan(rs.getString("PAN"));
 						bean.setExpirationDate(rs.getString("EXPIRATIONDATE"));
 						bean.setCvc(rs.getString("CVC"));

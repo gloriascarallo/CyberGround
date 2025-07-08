@@ -76,7 +76,7 @@ import bean.Product_in_orderBean;
 			PreparedStatement preparedStatement = null;
 	        int id=(Integer)o_id;
 	        
-			Product_in_orderBean bean = new Product_in_orderBean();
+			Product_in_orderBean bean = null;
 
 			String selectSQL = "SELECT * FROM " + Product_in_orderDaoDataSource.TABLE_NAME + " WHERE ID_PRODUCT_IN_ORDER = ?";
 
@@ -88,6 +88,7 @@ import bean.Product_in_orderBean;
 				ResultSet rs = preparedStatement.executeQuery();
 
 				while (rs.next()) {
+					bean=new Product_in_orderBean();
 					bean.setId_product_in_order(rs.getInt("ID_PRODUCT_IN_ORDER"));
 					bean.setIdOrder(rs.getInt("IDORDER"));
 					int idProduct=rs.getInt("IDPRODUCT");
@@ -189,7 +190,7 @@ import bean.Product_in_orderBean;
 
 			ArrayList<Product_in_orderBean> order=new ArrayList<Product_in_orderBean>();
 
-			String selectSQL = "SELECT * FROM " + Product_in_orderDaoDataSource.TABLE_NAME + "WHERE IDORDER = ?";
+			String selectSQL = "SELECT * FROM " + Product_in_orderDaoDataSource.TABLE_NAME + " WHERE IDORDER = ?";
             
 
 			try {

@@ -33,16 +33,20 @@ public class Refund extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		String errors="";
-		
-		Boolean isRegisteredUser=(Boolean)request.getSession().getAttribute("isRegisteredUser");
-		if (Boolean.FALSE.equals(isRegisteredUser)) {
-		    errors += "Non sei utente registrato<br>";
-		    request.setAttribute("errors", errors);
-		    request.getRequestDispatcher("/view/refund.jsp").forward(request, response);
-		    return;
-		}
-		
-		int id=(Integer)(request.getAttribute("id"));
+		String idStr = request.getParameter("id");
+	    int id;
+	    try {
+	        if (idStr == null || idStr.trim().isEmpty()) {
+	            throw new NumberFormatException("ID ordine mancante");
+	        }
+	        id = Integer.parseInt(idStr.trim());
+	    } catch (NumberFormatException e) {
+	        errors += "ID ordine non valido.<br>";
+	        request.setAttribute("errors", errors);
+	        request.getRequestDispatcher("/view/refund.jsp").forward(request, response);
+	        return;
+	    }
+	    
 		OrderDaoDataSource ds_order=new OrderDaoDataSource();
 		OrderBean order=null;
 		
@@ -74,6 +78,7 @@ public class Refund extends HttpServlet {
 		catch(SQLException e) {
 			
 			e.printStackTrace();
+			request.getRequestDispatcher("/500.html").forward(request, response);
 		}
 		
 		

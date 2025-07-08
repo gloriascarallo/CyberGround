@@ -30,19 +30,42 @@ public class Product_refund extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		int id=(Integer)(request.getAttribute("idProduct_in_order"));
+		String idStr = request.getParameter("idProduct_in_order");
+	    int id;
+	    String errors = "";
+
+	    try {
+	        if (idStr == null || idStr.trim().isEmpty()) {
+	            throw new NumberFormatException("Parametro mancante");
+	        }
+	        id = Integer.parseInt(idStr.trim());
+	    } catch (NumberFormatException e) {
+	        errors += "ID prodotto non valido.<br>";
+	        request.setAttribute("errors", errors);
+	        request.getRequestDispatcher("/view/refund.jsp").forward(request, response);
+	        return;
+	    }
+	    
 		Product_in_orderDaoDataSource ds=new Product_in_orderDaoDataSource();
-		Product_in_orderBean product=new Product_in_orderBean();
+		Product_in_orderBean product=null;
 		
 		try {
 			product=ds.doRetrieveByKey(id);
+			
 		} catch (SQLException e) {
 			
 			e.printStackTrace();
 		}
+		if(product==null) {
+			errors += "Prodotto non trovato nell'ordine.<br>";
+	        request.setAttribute("errors", errors);
+	        request.getRequestDispatcher("/view/refund.jsp").forward(request, response);
+	        return;
+			
+		}
 		
 		request.setAttribute("product", product);
-		request.getRequestDispatcher("/view/product_refund.jsp");
+		request.getRequestDispatcher("/view/product_refund.jsp").forward(request, response);;
 		return;
 		
 	}

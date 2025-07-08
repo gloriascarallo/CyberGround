@@ -75,6 +75,8 @@ public class RegisteredUserBean extends UserBean{
 		this.telephone = telephone;
 	}
 
+	
+	
 	private String username;
 	private String password;
 	private String name;

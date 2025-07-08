@@ -1,11 +1,14 @@
 package bean;
 import java.sql.Date;
+import java.time.LocalDate;
 
 public class ProductBean {
 
 	private int id;
 	private String name;
 	private double price;
+	private Double discountPercentage;
+	private Date dateExpirationDiscount;
 	private String description;
 	private Date dateUpload;
 	private String supplier;
@@ -36,7 +39,11 @@ public class ProductBean {
 
 
 	public double getPrice() {
-		return price;
+		if (discountPercentage == null) {
+		    return price;
+		} else {
+		    return price * (1 - discountPercentage / 100);
+		}
 	}
 
 
@@ -44,7 +51,25 @@ public class ProductBean {
 		this.price = price;
 	}
 
+	public Double getDiscountPercentage() {
+		return discountPercentage;
+	}
 
+
+	public void setDiscountPercentage(Double discountPercentage) {
+		this.discountPercentage = discountPercentage;
+	}
+
+
+	public Date getDateExpirationDiscount() {
+		return dateExpirationDiscount;
+	}
+
+
+	public void setDateExpirationDiscount(Date dateExpirationDiscount) {
+		this.dateExpirationDiscount = dateExpirationDiscount;
+	}
+	
 	public String getDescription() {
 		return description;
 	}
@@ -103,9 +128,9 @@ public class ProductBean {
 		this.quantityAvailable = quantityAvailable;
 	}
 	
-	public void decreaseQuantityAvailable() {
+	public void decreaseQuantityAvailable(int quantity) {
 		
-		quantityAvailable--;
+		quantityAvailable=quantityAvailable-quantity;
 	}
 	
 
@@ -113,8 +138,10 @@ public class ProductBean {
 		id=-1;
 		name="";
 		price=0;
+		discountPercentage=null;
+		dateExpirationDiscount=null;
 		description="";
-		dateUpload=new Date(0);
+		dateUpload=Date.valueOf(LocalDate.now());
 		supplier="";
 		categoryName="";
 		imagePath="";

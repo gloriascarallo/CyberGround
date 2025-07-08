@@ -11,7 +11,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Random;
-
+import dao.Product_situatedin_cartDaoDataSource;
 import bean.CartBean;
 import bean.Product_situatedin_cartBean;
 import bean.Product_in_orderBean;
@@ -37,10 +37,20 @@ public class Payment extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		CartBean cart=(CartBean)request.getSession().getAttribute("cart");
-		OrderBean order=new OrderBean();
 		
-		order.setIdCart(cart.getIdCart());
+		CartBean cart=(CartBean)request.getSession().getAttribute("cart");
+		if (cart == null) {
+		    response.sendRedirect(request.getContextPath() + "/view/cart.jsp");
+		    return;
+		}
+		int idCart=cart.getIdCart();
+		if (cart.getProducts() == null || cart.getProducts().isEmpty()) {
+		    response.sendRedirect(request.getContextPath() + "/view/cart.jsp");
+		    return;
+		}
+		
+		OrderBean order=new OrderBean();
+		order.setIdCart(idCart);
 		order.setDatePurchase(Date.valueOf(LocalDate.now()));
 		Random rand=new Random();
 		int randomDayShipping=rand.nextInt(30)+1;
@@ -56,19 +66,18 @@ public class Payment extends HttpServlet {
 		catch(SQLException e) {
 			
 			e.printStackTrace();
+			request.getRequestDispatcher("/500.html").forward(request, response);
+			return;
 		}
 		
 		ArrayList<Product_in_orderBean> products_in_order=new ArrayList<Product_in_orderBean>();
+		Product_situatedin_cartDaoDataSource ds_cart=new Product_situatedin_cartDaoDataSource();
+		Product_in_orderDaoDataSource ds=new Product_in_orderDaoDataSource();
 		
 		for(Product_situatedin_cartBean product_incart: cart.getProducts()) {
-			
-		
-			cart.removeProduct(product_incart);
-			
-			Product_in_orderDaoDataSource ds=new Product_in_orderDaoDataSource();
 			Product_in_orderBean product_in_order=new Product_in_orderBean();
 			product_in_order.setIdOrder(order.getIdOrder());
-			product_in_order.setProduct(product_in_order.getProduct());
+			product_in_order.setProduct(product_incart.getProduct());
 			product_in_order.setPrice(product_incart.getProduct().getPrice());
 			product_in_order.setQuantity(product_incart.getQuantity());
 			
@@ -81,11 +90,28 @@ public class Payment extends HttpServlet {
 			catch(SQLException e) {
 				
 				e.printStackTrace();
-				
+				request.getRequestDispatcher("/500.html").forward(request, response);
+				return;
 			}
 			products_in_order.add(product_in_order);
 			
 		}
+		
+		ArrayList<Product_situatedin_cartBean> productsToRemove = new ArrayList<>(cart.getProducts());
+
+		for (Product_situatedin_cartBean product_incart : productsToRemove) {
+		   
+		    cart.removeProduct(product_incart);
+		    try {
+				ds_cart.doDelete(product_incart.getId_SituatedIn());
+			} catch (SQLException e) {
+				
+				e.printStackTrace();
+				request.getRequestDispatcher("/500.html").forward(request, response);
+				return;
+			}
+		}
+		
 		
 		order.setProducts_in_order(products_in_order); // non penso sia necessario
 		

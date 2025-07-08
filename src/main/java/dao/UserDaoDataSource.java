@@ -70,7 +70,7 @@ public class UserDaoDataSource implements IBeanDao<UserBean> {
 		PreparedStatement preparedStatement = null;
 		int id=(Integer)o_id;
 
-		UserBean bean = new UserBean();
+		UserBean bean = null;
 
 		String selectSQL = "SELECT * FROM " + UserDaoDataSource.TABLE_NAME + " WHERE ID = ?";
 
@@ -82,6 +82,7 @@ public class UserDaoDataSource implements IBeanDao<UserBean> {
 			ResultSet rs = preparedStatement.executeQuery();
 
 			while (rs.next()) {
+				bean=new UserBean();
 				bean.setId(rs.getInt("ID"));
 		
 			}

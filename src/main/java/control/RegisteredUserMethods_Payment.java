@@ -31,15 +31,35 @@ public class RegisteredUserMethods_Payment extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		String username=(String)request.getSession().getAttribute("username");
+		String errors="";
+		Object idObj = request.getSession().getAttribute("id");
+	    if (idObj == null) {
+	    	errors = "Sessione scaduta o ID utente mancante. Ricarica la pagina e riprova.";
+	        request.setAttribute("errors", errors);
+	        request.getRequestDispatcher("/view/index.jsp").forward(request, response);
+	        return;
+	    }
+	    int id=(Integer)idObj;
+	    
 		RegisteredUser_has_method_paymentDaoDataSource ds_has_methods_payment=new RegisteredUser_has_method_paymentDaoDataSource();
-		ArrayList<RegisteredUser_has_method_paymentBean> user_methods_payment=new ArrayList<RegisteredUser_has_method_paymentBean>();
+		ArrayList<RegisteredUser_has_method_paymentBean> user_methods_payment;
 		try {
-		user_methods_payment=ds_has_methods_payment.doRetrieveByUsername(username);
+		user_methods_payment=ds_has_methods_payment.doRetrieveByIdRegisteredUser(id);
 		}
 		catch(SQLException e) {
 			
 			e.printStackTrace();
+			request.getRequestDispatcher("/500.html").forward(request, response);
+			return;
+		}
+		
+		if(user_methods_payment==null || user_methods_payment.isEmpty()) {
+			
+			errors+="Metodi di pagamento non trovati.<br>";
+			request.setAttribute("errors", errors);
+			request.getRequestDispatcher("/view/registeredUser_methods_payment.jsp").forward(request, response);
+			return;
+			
 		}
 		
 	

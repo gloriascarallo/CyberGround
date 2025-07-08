@@ -30,16 +30,37 @@ public class RegisteredUserAddresses extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String username=(String)request.getSession().getAttribute("username");
-		ArrayList<RegisteredUser_has_addressBean> user_addresses=new ArrayList<RegisteredUser_has_addressBean>();
+		
+		String errors="";
+		Object idObj = request.getSession().getAttribute("id");
+	    if (idObj == null) {
+	    	errors = "Sessione scaduta o ID utente mancante. Ricarica la pagina e riprova.";
+	        request.setAttribute("errors", errors);
+	        request.getRequestDispatcher("/view/index.jsp").forward(request, response);
+	        return;
+	    }
+	    int id=(Integer)idObj;
+	    
+		ArrayList<RegisteredUser_has_addressBean> user_addresses;
 		RegisteredUser_has_addressDaoDataSource ds_has_address=new RegisteredUser_has_addressDaoDataSource();
 		try {
-		user_addresses=ds_has_address.doRetrieveByUsername(username);
+		user_addresses=ds_has_address.doRetrieveByIdRegisteredUser(id);
 		
 		}
 		catch(SQLException e) {
 			
 			e.printStackTrace();
+			request.getRequestDispatcher("500.html").forward(request, response);
+			return;
+		}
+		
+		if(user_addresses==null || user_addresses.isEmpty()) {
+			
+			errors+="Indirizzi non trovati.<br>";
+			request.setAttribute("errors", errors);
+			request.getRequestDispatcher("/view/registeredUser_addresses.jsp").forward(request, response);
+			return;
+			
 		}
 		
 		request.setAttribute("user_addresses", user_addresses);

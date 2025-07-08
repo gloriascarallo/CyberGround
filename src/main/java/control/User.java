@@ -32,36 +32,40 @@ public class User extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		String errors="";
+		Object idObj = request.getSession().getAttribute("id");
+	    if (idObj == null) {
+	    	errors = "Sessione scaduta o ID utente mancante. Ricarica la pagina e riprova.";
+	        request.setAttribute("errors", errors);
+	        request.getRequestDispatcher("/view/index.jsp").forward(request, response);
+	        return;
+	        
+	    }
+	    int id=(Integer)idObj;
 	    
-	Boolean isRegisteredUser=(Boolean)request.getSession().getAttribute("isRegisteredUser");
-	if (Boolean.FALSE.equals(isRegisteredUser)) {
-	    errors += "Non sei utente<br>";
-	    request.setAttribute("errors", errors);
-	    request.getRequestDispatcher("/view/index.jsp").forward(request, response);
-	    return;
-	}
-	
-	
-		String username=(String)request.getSession().getAttribute("username");
-		RequestDispatcher dispatchToIndexPage=request.getRequestDispatcher("/view/index.jsp");
 		RequestDispatcher dispatchToUserPage=request.getRequestDispatcher("/view/user.jsp");
-		RegisteredUserBean user=new RegisteredUserBean();
+		RegisteredUserBean user=null;
 		RegisteredUserDaoDataSource ds=new RegisteredUserDaoDataSource();
 		try {
 			
-			user=ds.doRetrieveByKey(username);
+			user=ds.doRetrieveByKey(id);
+			if (user == null) {
+				errors+="Utente non trovato.<br>";
+				request.setAttribute("errors", errors);
+	            request.getRequestDispatcher("/view/index.jsp").forward(request, response);
+	            return;
 			
-			
-			
+			}
 		}
 		catch(SQLException e) {
 			
 			e.printStackTrace();
-			dispatchToIndexPage.forward(request, response);
+			request.getRequestDispatcher("/500.html").forward(request, response);
+			return;
 		}
 		
 		request.setAttribute("user", user);
 		dispatchToUserPage.forward(request, response);
+		return;
 		
 	}
 

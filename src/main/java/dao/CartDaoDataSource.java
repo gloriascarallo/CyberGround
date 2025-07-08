@@ -67,7 +67,7 @@ import bean.CartBean;
 			PreparedStatement preparedStatement = null;
 			int id=(Integer)o_id;
 
-			CartBean bean = new CartBean();
+			CartBean bean = null;
 
 			String selectSQL = "SELECT * FROM " + CartDaoDataSource.TABLE_NAME + " WHERE IDCART = ?";
 
@@ -79,6 +79,7 @@ import bean.CartBean;
 				ResultSet rs = preparedStatement.executeQuery();
 
 				while (rs.next()) {
+					bean=new CartBean();
 					bean.setIdCart(rs.getInt("IDCART"));
 			
 				}

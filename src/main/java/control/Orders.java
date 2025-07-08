@@ -34,9 +34,15 @@ public class Orders extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		String errors="";
 		ArrayList<OrderBean> orders=new ArrayList<OrderBean>();
 		CartBean cart=(CartBean)request.getSession().getAttribute("cart");
+		if (cart == null) {
+		    response.sendRedirect(request.getContextPath() + "/view/cart.jsp");
+		    return;
+		}
 		int idCart=cart.getIdCart();
+		
 		OrderDaoDataSource ds_order=new OrderDaoDataSource();
 		
 		try {
@@ -46,27 +52,50 @@ public class Orders extends HttpServlet {
 		}
 		catch(SQLException e) {
 			e.printStackTrace();
+			request.getRequestDispatcher("/500.html").forward(request, response);
+			return;
+			
+		}
+		
+		if(orders.isEmpty()) {
+			
+			errors+="Ordini non trovati.";
+			request.setAttribute("errors", errors);
+			request.getRequestDispatcher("/view/user.jsp").forward(request, response);
+			return;
 			
 		}
 		
 		for(OrderBean order: orders) {
 			
 			Product_in_orderDaoDataSource ds_product=new Product_in_orderDaoDataSource();
+			ArrayList<Product_in_orderBean> products_in_order=new ArrayList<Product_in_orderBean>();
 			try {
-				ArrayList<Product_in_orderBean> products_in_order=new ArrayList<Product_in_orderBean>();
+
 				products_in_order=ds_product.doRetrieveByIdOrder(order.getIdOrder());
+				if(products_in_order.isEmpty()) {
+					
+					errors+="Prodotti nell'ordine non trovati.";
+					request.setAttribute("errors", errors);
+					request.getRequestDispatcher("/view/user.jsp").forward(request, response);
+					return;
+					
+				}
+				
 				order.setProducts_in_order(products_in_order);
+				
 			} catch (SQLException e) {
 				
 				e.printStackTrace();
+				request.getRequestDispatcher("/500.html").forward(request, response);
+				return;
 			}
 			
 			
 		}
 		
-		
 		request.setAttribute("orders", orders);
-		request.getRequestDispatcher("/view/orders.jsp");
+		request.getRequestDispatcher("/view/orders.jsp").forward(request, response);
 		return;
 	}
 

@@ -9,9 +9,10 @@ public class Product_in_orderBean {
 	private double price;
 	
 	public Product_in_orderBean() {
+		id_product_in_order=-1;
 		idOrder=-1;
 		product=new ProductBean();
-		quantity=0;
+		quantity=1;
 		price=0;
 	}
 
