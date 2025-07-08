@@ -23,23 +23,26 @@ CartBean cart=(CartBean)request.getSession().getAttribute("cart");
 <a href="${pageContext.request.contextPath}/Product">
     <img src="${product_incart.product.imagePath}" alt="Product image" />
     </a>
+    <div id="product-${product_incart.id}">
+    
     Nome: ${product_incart.product.name}<br>
-    Prezzo: ${product_incart.totalPrice}<br>
+    Prezzo: <span id="total-${product_incart.id}">${product_incart.totalPrice}</span><br>
     
     <div>
-    <button onclick="window.location.href='${pageContext.request.contextPath}/UpdateCart?action=decrease&product_incartID=${product_incart.id}'">-</button>
-     ${product_incart.quantity}
-     <button onclick="window.location.href='${pageContext.request.contextPath }/UpdateCart?action=increase&product_incartID=${product_incart.id}'">+</button>
+        <button type="button" onclick="updateCartAjax('decrease', ${product_incart.id})">-</button>
+        <span id="quantity-${product_incart.id}">${product_incart.quantity}</span>
+        <button type="button" onclick="updateCartAjax('increase', ${product_incart.id})">+</button>
     </div>
     
-    <button onclick="window.location.href='${pageContext.request.contextPath}/UpdateCart?action=remove&product_incartID=${product_incart.id}'">Rimuovi</button>
-    
+   <button type="button" onclick="updateCartAjax('remove', ${product_incart.id})">Rimuovi</button>
+    </div>
 </c:forEach>
-
+<h3>Totale carrello: €<span id="cart-total">${cart.total}</span></h3>
     <input type="submit" value="Payment">
     </form>
     
 </body>
+<script src="${pageContext.request.contextPath}/scripts/update_cart.js"></script>
 </html>
 
 
