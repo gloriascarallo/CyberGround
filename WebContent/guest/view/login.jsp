@@ -13,13 +13,15 @@
 
 <div id="container">
 <%
-String errors=(String)request.getAttribute("errors");
-
-if(errors!=null && !errors.equals("")) { %>
-
-<div class="error"><%=errors%></div>
-
-<%  }%>
+    String errors = (String) request.getAttribute("errors");
+    if (errors != null && !errors.isEmpty()) {
+%>
+    <div id="error" style="color: red;">
+        <%= errors %>
+    </div>
+<%
+    }
+%>
 
 <h1>Login</h1>
 
