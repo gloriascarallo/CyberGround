@@ -1,3 +1,3 @@
 function tornaHome() {
-    window.location.href = "/CyberGround/view/index.jsp";
+    window.location.href = "/CyberGround/guest/view/index.jsp";
 }
