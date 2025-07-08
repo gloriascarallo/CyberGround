@@ -1,0 +1,47 @@
+body {
+  background-color: #141C5C;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+}
+h2 {
+  font-size: 28px;
+  margin-bottom: 40px;
+  color: #FF8800;
+}
+
+/* Contenitore per i link */
+.links {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* Stile dei link */
+.links a {
+  background-color: #ffffff;
+  color: #141C5C;
+  padding: 12px 20px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-size: 16px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+.links a:hover {
+  background-color: #FF8800;
+  color: white;
+}
+/* Icone */
+.links a i {
+  font-size: 18px;
+}

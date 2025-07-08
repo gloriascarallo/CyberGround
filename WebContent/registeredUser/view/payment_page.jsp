@@ -16,6 +16,7 @@ RegisteredUser_has_method_paymentBean methods=(RegisteredUser_has_method_payment
 <head>
 <meta charset="UTF-8">
 <title>Payment Page</title>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/styles/Payment_page.css"/>
 </head>
 <body>
 

@@ -1,7 +1,7 @@
 /* Layout base */
 body {
   font-family: Arial, sans-serif;
-  background-color: #f4f4f4;
+  background-color: #141C5C;
   margin: 0;
   padding: 0;
   display: flex;
@@ -14,7 +14,7 @@ body {
 /* Titolo */
 h2 {
   font-size: 32px;
-  color: #333;
+  color: #FF8800;
   margin-top: 20px;
   margin-bottom: 20px;
 }
@@ -31,7 +31,7 @@ form {
 
 /* Fieldset e legend */
 fieldset {
-  border: 2px solid #ccc;
+  border: 2px solid rgb(255, 100, 64);
   border-radius: 8px;
   padding: 20px;
 }
@@ -40,7 +40,7 @@ legend {
   font-weight: bold;
   font-size: 18px;
   padding: 0 10px;
-  color: #333;
+  color: rgb(255, 100, 64);
 }
 
 /* Centro contenuto */
@@ -56,7 +56,7 @@ label {
   margin-bottom: 6px;
   font-size: 16px;
   font-weight: bold;
-  color: #444;
+  color: #141C5C;
   text-align: center;
 }
 
@@ -65,7 +65,7 @@ input[type="text"] {
   width: 80%;
   padding: 10px;
   font-size: 16px;
-  border: 1px solid #ccc;
+  border: 1px solid #141C5C;
   border-radius: 6px;
   margin-bottom: 8px;
   box-sizing: border-box;
@@ -87,11 +87,11 @@ span[id^="error"] {
 /* Bottoni */
 input[type="submit"],
 input[type="reset"] {
-  background-color: black;
-  color: white;
+  background-color: white;
+  color: #141C5C;
   padding: 12px 24px;
   font-size: 16px;
-  border: none;
+  border: 2px solid #141C5C;
   border-radius: 6px;
   cursor: pointer;
   margin: 16px 8px 0 8px;
@@ -101,7 +101,9 @@ input[type="reset"] {
 
 input[type="submit"]:hover,
 input[type="reset"]:hover {
-  background-color: #333;
+  background-color: #FF8800;
+  border: 2px solid #FF8800;
+  color: white; 
 }
 
 /* Responsive */

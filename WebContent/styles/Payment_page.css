@@ -1,0 +1,104 @@
+/* Base layout */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #141C5C;
+  margin: 0;
+  padding: 30px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Titolo */
+h2 {
+  font-size: 28px;
+  color: #FF8800;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Lista prodotti */
+c\:forEach,
+.product-item {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+img {
+  max-width: 150px;
+  height: auto;
+  border-radius: 6px;
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 10px;
+}
+
+.product-info {
+  font-size: 16px;
+  color: #444;
+  margin-bottom: 5px;
+}
+
+/* Form container */
+form {
+  background-color: #fff;
+  padding: 30px 40px;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  max-width: 600px;
+  width: 100%;
+  margin-top: 20px;
+}
+
+/* Dropdown (select) */
+select {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  margin-top: 5px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-sizing: border-box;
+}
+
+/* Link */
+a {
+  font-size: 14px;
+  color: #007bff;
+  text-decoration: none;
+  margin-bottom: 20px;
+  display: inline-block;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* Submit button */
+input[type="submit"] {
+  background-color: #141C5C;
+  color: #FF8800;
+  padding: 12px 24px;
+  font-size: 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  width: 100%;
+  transition: background-color 0.3s ease;
+  font-weight: bolder;
+}
+
+input[type="submit"]:hover {
+  background-color: black;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  form {
+    padding: 20px;
+  }
+
+  img {
+    max-width: 100px;
+  }
+}

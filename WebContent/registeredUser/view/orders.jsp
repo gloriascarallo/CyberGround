@@ -11,13 +11,15 @@ OrderBean orders=(OrderBean)request.getAttribute("orders");
 <head>
 <meta charset="UTF-8">
 <title>Personal Orders Page</title>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/styles/Orders.css">
 </head>
 <body>
 
 <h2>Qui sono mostrati tutti i tuoi ordini</h2>
 
 <c:forEach var="user_orders" items="${orders}">
-	Id Ordine: ${user_orders.idOrder}
+	<div id="order-box">
+	<p>Id Ordine: ${user_orders.idOrder}</p>
 	<a href="${pageContext.request.contextPath}/Product">
     <img src="${user_orders.product_in_order.product.imagePath}" alt="Product image"/>
     </a>
@@ -28,7 +30,7 @@ OrderBean orders=(OrderBean)request.getAttribute("orders");
 	<p>Data Spedizione: ${user_orders.dateShipping}<p>
 	<p>Data Consegna: ${user_orders.dateDelivery}<p>
 	<p>Prezzo Totale: ${user_orders.totalOrder}<p>
-	
+	</div>
 </c:forEach>
 
 </body>

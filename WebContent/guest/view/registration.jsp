@@ -5,11 +5,10 @@
 <head>
 <meta charset="UTF-8">
 <title>Pagina di registrazione</title>
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/styles/Registration.css"/>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/styles/Registration.css?v=3"/>
 </head>
 <body>
 
-<div id="container">
 <%
 if(request.getAttribute("errors")!=null){
 String errors=(String)request.getAttribute("errors");
@@ -17,6 +16,7 @@ if(!errors.equals("")) {%> <div id="error"><%=errors %></div>
 
 <% } } %>
 
+<div id="container">
 <h1>Registrati</h1>
 
 <form name="registrationForm" id="registrationForm" action="<%=request.getContextPath()%>/Registration" method="post">

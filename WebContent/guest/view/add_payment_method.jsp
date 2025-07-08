@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Add Payment Method Page</title>
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/styles/Add_payment_method.css"/>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/styles/Add_payment_method.css?v=3"/>
 </head>
 <body>
 

@@ -2,15 +2,27 @@ body {
 	font-family: sans-serif;
 	max-width: 600px;
 	margin: 2em auto;
+	background-color: #141C5C;
+}
+
+h2 {
+	color: rgb(255, 100, 64);
+	text-align: center;
+}
+
+a {
+	color: rgb(255, 100, 64);
 }
 
 .faq-set {
-	border-bottom: 1px solid #ddd;
+	border-bottom: 1px solid #fff;
+	border-top: 1px solid #fff;
 	padding: 10px;
 	cursor: pointer;
 }
 
 .faq-question {
+	color: white;
 	font-weight: bold;
 	display: flex;
 	justify-content: space-between;
@@ -20,7 +32,7 @@ body {
 .faq-answer {
 	display: none;
 	margin-top: 5px;
-	color: #000000;
+	color: #fff;
 }
 .arrow {
 	margin-left: 10px;
