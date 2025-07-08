@@ -24,7 +24,7 @@ import javax.sql.DataSource;
 @WebServlet("/HomeServlet")
 public class HomeServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	public static final String SECRET_KEY = "qwerTY-SECRET-KEY-2025";
+	
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -37,6 +37,8 @@ public class HomeServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		System.out.println("ci arrivo qui");
+		final String SECRET_KEY = "qwerTY-SECRET-KEY-2025";
 		
 		DataSource ds = null;
 
@@ -50,7 +52,7 @@ public class HomeServlet extends HttpServlet {
 			} catch (NamingException e) {
 				System.out.println("Error:" + e.getMessage());
 			}
-		
+			System.out.println("ci arrivo qui");
 			Cookie[] cookies = request.getCookies();
 			String guestIdStr = null;
 			int guestId=-1;
@@ -84,7 +86,7 @@ public class HomeServlet extends HttpServlet {
 			
 			 try (Connection con = ds.getConnection()) {
 			        PreparedStatement ps = con.prepareStatement(
-			            "INSERT INTO USER () VALUES ()", 
+			            "INSERT INTO USER DEFAULT VALUES", 
 			            Statement.RETURN_GENERATED_KEYS
 			        );
 			    
@@ -121,7 +123,7 @@ public class HomeServlet extends HttpServlet {
 	    response.addCookie(guestCookie);
 		request.getSession().setAttribute("isAdmin", Boolean.FALSE);
 		request.getSession().setAttribute("isRegisteredUser", Boolean.FALSE);
-		response.sendRedirect(request.getContextPath()+"/view/index.jsp");
+		response.sendRedirect(request.getContextPath()+"/guest/view/index.jsp");
 		return;
 			
 		}

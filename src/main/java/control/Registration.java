@@ -38,7 +38,7 @@ public class Registration extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		request.getRequestDispatcher("/view/registration.jsp").forward(request, response);
+		request.getRequestDispatcher("/guest/view/registration.jsp").forward(request, response);
 		return;
 		
 	}
@@ -47,13 +47,13 @@ public class Registration extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher dispatcherToRegistrationPage=request.getRequestDispatcher("/view/registration.jsp");
+		RequestDispatcher dispatcherToRegistrationPage=request.getRequestDispatcher("/guest/view/registration.jsp");
 		String errors="";
 		Object idObj = request.getSession().getAttribute("id");
 	    if (idObj == null) {
 	    	errors = "Sessione scaduta o ID utente mancante. Ricarica la pagina e riprova.";
 	        request.setAttribute("errors", errors);
-	        request.getRequestDispatcher("/view/index.jsp").forward(request, response);
+	        request.getRequestDispatcher("/guest/view/index.jsp").forward(request, response);
 	        return;
 	    }
 	    int id=(Integer)idObj;
