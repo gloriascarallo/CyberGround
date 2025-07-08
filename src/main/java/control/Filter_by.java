@@ -52,7 +52,7 @@ public class Filter_by extends HttpServlet {
 				
 				errors+="Aggiungi nome fornitore<br>";
 				request.setAttribute("errors", errors);
-				request.getRequestDispatcher("/view/index.jsp");
+				request.getRequestDispatcher("/view/index.jsp").forward(request, response);
 				return;
 				
 			}
@@ -81,6 +81,9 @@ public class Filter_by extends HttpServlet {
 			       priceMax=Double.parseDouble(priceMaxStr);
 			        if (priceMin < 0 || priceMax<0) {
 			            errors += "Il prezzo non può essere negativo.<br>";
+			        }
+			        if (priceMin > priceMax) {
+                        errors+="Il prezzo minimo non può essere maggiore del massimo.<br>";
 			        }
 			    } catch (NumberFormatException e) {
 			        errors += "Il prezzo deve essere un numero valido.<br>";

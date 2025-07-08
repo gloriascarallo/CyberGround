@@ -32,7 +32,7 @@ public class Discounts extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		
-		String discountStr=request.getParameter("discounPercentage");
+		String discountStr=request.getParameter("discountPercentage");
 		Double discountPercentage=0.0;
 		String errors="";
 		

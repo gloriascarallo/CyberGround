@@ -32,9 +32,26 @@ public class Filter_orders_byDates extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Date dateX=Date.valueOf(request.getParameter("dateX"));
-		Date dateY=Date.valueOf(request.getParameter("dateY"));
-		int id=Integer.parseInt(request.getParameter("id"));
+		
+		Date dateX = null;
+		Date dateY = null;
+		try {
+		    dateX = Date.valueOf(request.getParameter("dateX"));
+		    dateY = Date.valueOf(request.getParameter("dateY"));
+		} catch (IllegalArgumentException e) {
+		    request.setAttribute("errors", "Formato data non valido.");
+		    request.getRequestDispatcher("/admin/view/user_profile.jsp").forward(request, response);
+		    return;
+		}
+		int id;
+		try {
+		    id = Integer.parseInt(request.getParameter("id"));
+		} catch (NumberFormatException e) {
+		    request.setAttribute("errors", "ID non valido.");
+		    request.getRequestDispatcher("/admin/view/user_profile.jsp").forward(request, response);
+		    return;
+		}
+		
 		OrderDaoDataSource ds=new OrderDaoDataSource();
 		ArrayList<OrderBean> orders=new ArrayList<>();
 		String errors="";

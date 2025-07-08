@@ -1,6 +1,5 @@
 package control;
 
-import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -36,36 +35,54 @@ public class Adding_to_cart extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	    
 		String errors="";
-		CartBean cart=(CartBean)request.getSession().getAttribute("cart");
-		if (cart == null) {
-		    response.sendRedirect(request.getContextPath() + "/view/cart.jsp");
-		    return;
-		}
-		int idCart=cart.getIdCart();
-		
-		Object idObj = request.getParameter("idProduct");
-	    if (idObj == null) {
-	    	errors = "Prodotto non trovato.<br>";
+		CartBean cart = (CartBean) request.getSession().getAttribute("cart");
+	    if (cart == null) {
+	        response.sendRedirect(request.getContextPath() + "/view/cart.jsp");
+	        return;
+	    }
+	    int idCart = cart.getIdCart();
+
+	    String idProductStr = request.getParameter("idProduct");
+	    if (idProductStr == null || idProductStr.trim().isEmpty()) {
+	        errors = "Prodotto non trovato.<br>";
 	        request.setAttribute("errors", errors);
 	        request.getRequestDispatcher("/view/product.jsp").forward(request, response);
 	        return;
-	        
 	    }
-	    int idProduct=(Integer)idObj;
+	    int idProduct;
+	    try {
+	        idProduct = Integer.parseInt(idProductStr);
+	    } catch (NumberFormatException e) {
+	        errors = "ID prodotto non valido.<br>";
+	        request.setAttribute("errors", errors);
+	        request.getRequestDispatcher("/view/product.jsp").forward(request, response);
+	        return;
+	    }
 	    
-	    String quantityStr=request.getParameter("quantity");
-	    int quantity=1;
-	    if (quantityStr== null || quantityStr.trim().isEmpty()) {
-	        errors += "Inserisci la quantità.<br>";
+	    String quantityStr = request.getParameter("quantity");
+	    int quantity = 1; 
+	    if (quantityStr == null || quantityStr.trim().isEmpty()) {
+	        errors = "Inserisci la quantità.<br>";
+	        request.setAttribute("errors", errors);
+	        request.getRequestDispatcher("/view/product.jsp").forward(request, response);
+	        return;
 	    } else {
 	        try {
 	            quantity = Integer.parseInt(quantityStr);
 	            if (quantity <= 0) {
-	                errors += "La quantità disponibile non può essere minore di 1.<br>";
+	                errors = "La quantità disponibile non può essere minore di 1.<br>";
+	                request.setAttribute("errors", errors);
+	                request.getRequestDispatcher("/view/product.jsp").forward(request, response);
+	                return;
 	            }
 	        } catch (NumberFormatException e) {
-	            errors += "La quantità disponibile deve essere un numero valido.<br>";
+	            errors = "La quantità disponibile deve essere un numero valido.<br>";
+	            request.setAttribute("errors", errors);
+	            request.getRequestDispatcher("/view/product.jsp").forward(request, response);
+	            return;
 	        }
+	    }
+
 	        
 	        ProductDaoDataSource ds_product=new ProductDaoDataSource();
 	        ProductBean product=null;
@@ -135,7 +152,7 @@ public class Adding_to_cart extends HttpServlet {
 		response.sendRedirect(request.getContextPath()+"/view/after_adding_to_cart.jsp");
 		return;
 	}
-	}
+
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

@@ -8,6 +8,9 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+
+import bean.CartBean;
+import bean.Product_situatedin_cartBean;
 import bean.RegisteredUser_has_addressBean;
 import bean.RegisteredUser_has_method_paymentBean;
 import dao.RegisteredUser_has_addressDaoDataSource;
@@ -42,6 +45,40 @@ public class Payment_page extends HttpServlet {
 		}
 		int id = (Integer) idObj;
 		
+		CartBean cart=(CartBean)request.getSession().getAttribute("cart");
+		if (cart == null) {
+		    response.sendRedirect(request.getContextPath() + "/view/cart.jsp");
+		    return;
+		}
+		
+		if (cart.getProducts() == null || cart.getProducts().isEmpty()) {
+		    errors+="Carrello vuoto.<br>";
+		    request.setAttribute("errors", errors);
+		    request.getRequestDispatcher("/view/cart.jsp").forward(request, response);
+		    return;
+		}
+		
+		for(Product_situatedin_cartBean product_incart: cart.getProducts()) {
+			
+			if(product_incart.getProduct().getQuantityAvailable()<product_incart.getQuantity()) {
+				
+				errors += "La quantità selezionata per il prodotto \"" + product_incart.getProduct().getName()
+	                    + "\" (ID: " + product_incart.getProduct().getId()
+	                    + ") supera la disponibilità (" + product_incart.getProduct().getQuantityAvailable() + ").<br>";
+	        }
+				
+			}
+			
+	
+		
+		if(!errors.equals("")) {
+			
+			request.setAttribute("errors", errors);
+	        request.getRequestDispatcher("/view/cart.jsp").forward(request, response);
+	        return;
+			
+		}
+		
 		RegisteredUser_has_addressDaoDataSource ds_has_address=new RegisteredUser_has_addressDaoDataSource();
 		RegisteredUser_has_method_paymentDaoDataSource ds_has_methods_payment=new RegisteredUser_has_method_paymentDaoDataSource();
 		ArrayList<RegisteredUser_has_addressBean> user_addresses=new ArrayList<RegisteredUser_has_addressBean>();
@@ -50,11 +87,26 @@ public class Payment_page extends HttpServlet {
 		try {
 		user_addresses=ds_has_address.doRetrieveByIdRegisteredUser(id);
 		user_methods_payment=ds_has_methods_payment.doRetrieveByIdRegisteredUser(id);
+		if (user_addresses == null || user_addresses.isEmpty()) {
+			errors+="Nessun indirizzo salvato.<br>";
+		    
+		}
+		if (user_methods_payment == null || user_methods_payment.isEmpty()) {
+			errors+="Nessun metodo di pagamento salvato.<br>";
+		   
+		}
+		if(!errors.equals("")) {
+			
+			request.setAttribute("errors", errors);
+			request.getRequestDispatcher("/view/cart.jsp").forward(request, response);
+	        return;
+			
+		}
 		}
 		catch(SQLException e) {
 			
 			e.printStackTrace();
-			request.getRequestDispatcher("500.html").forward(request, response);
+			request.getRequestDispatcher("/500.html").forward(request, response);
 			return;
 		}
 		

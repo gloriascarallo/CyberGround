@@ -7,7 +7,10 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
-
+import dao.AddressDaoDataSource;
+import dao.Method_paymentDaoDataSource;
+import bean.Method_paymentBean;
+import bean.AddressBean;
 import bean.RegisteredUserBean;
 import bean.RegisteredUser_has_addressBean;
 import bean.RegisteredUser_has_method_paymentBean;
@@ -241,16 +244,22 @@ if(!errors.equals("")) {
 		}
 		
 		RegisteredUser_has_addressDaoDataSource ds_hasaddress=new RegisteredUser_has_addressDaoDataSource();
+		AddressDaoDataSource ds_address=new AddressDaoDataSource();
+		RegisteredUser_has_addressBean has_address=null;
+		AddressBean address=null;
 		
-		
-		for(String address: addresses) {
-			RegisteredUser_has_addressBean has_address=new RegisteredUser_has_addressBean();
-			has_address.setNameAddress(address);
+		for(String addressName: addresses) {
+			has_address=new RegisteredUser_has_addressBean();
+			has_address.setNameAddress(addressName);
 			has_address.setIdRegisteredUser(id);
+			address=new AddressBean();
+			address.setName(addressName);
+			
 			
 			try {
 				
 				ds_hasaddress.doSave(has_address);
+			ds_address.doSave(address);
 			}
 			catch(SQLException e) {
 				
@@ -261,18 +270,25 @@ if(!errors.equals("")) {
 		}
 		
 		RegisteredUser_has_method_paymentDaoDataSource ds_has_method_payment=new RegisteredUser_has_method_paymentDaoDataSource();
-		
+		Method_paymentDaoDataSource ds_method_payment=new Method_paymentDaoDataSource();
+		RegisteredUser_has_method_paymentBean has_method_payment=null;
+		Method_paymentBean method_payment=null;
 		
 		for(int i=0; i<pans.length; i++) {
-			RegisteredUser_has_method_paymentBean has_method_payment=new RegisteredUser_has_method_paymentBean();
+			has_method_payment=new RegisteredUser_has_method_paymentBean();
 					has_method_payment.setIdRegisteredUser(id);
 					has_method_payment.setPan(pans[i]);
 					has_method_payment.setExpirationDate(expirationDates[i]);
 					has_method_payment.setCvc(cvcs[i]);
+					method_payment=new Method_paymentBean();
+					method_payment.setPan(pans[i]);
+					method_payment.setExpirationDate(expirationDates[i]);
+					method_payment.setCvc(cvcs[i]);
 					
 					try {
 						
 						ds_has_method_payment.doSave(has_method_payment);
+						ds_method_payment.doSave(method_payment);
 						
 					}
 					catch(SQLException e) {

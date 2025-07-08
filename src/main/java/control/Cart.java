@@ -35,7 +35,14 @@ public class Cart extends HttpServlet {
 		String errors="";
 		RequestDispatcher dispatchToCart=request.getRequestDispatcher("/view/cart.jsp");
 		CartBean cart=(CartBean)request.getSession().getAttribute("cart");
-		if (cart == null || cart.getProducts()==null || cart.getProducts().isEmpty()) {
+		
+		if(cart==null) {
+			
+			errors="Sessione scaduta o carrello mancante. Ricarica la pagina e riprova oppure effettua il login.<br>";
+			
+			
+		}
+		if (cart.getProducts()==null || cart.getProducts().isEmpty()) {
 			errors+="Carrello vuoto o non inizializzato.<br>";
 			request.setAttribute("errors", errors);
 			dispatchToCart.forward(request, response);
@@ -56,7 +63,7 @@ public class Cart extends HttpServlet {
 		
 		catch(SQLException e) {
 			e.printStackTrace();
-			request.getRequestDispatcher("500.html").forward(request, response);
+			request.getRequestDispatcher("/500.html").forward(request, response);
 			return;
 		}
 		
