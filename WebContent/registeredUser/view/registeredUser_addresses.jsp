@@ -16,14 +16,13 @@ RegisteredUser_has_addressBean addresses=(RegisteredUser_has_addressBean)request
 
 <h2>Qui sono mostrati tutti i tuoi indirizzi</h2>
 
-<form action="RegisteredUserAddresses" method="post">
+<form action="Add_address" method="post">
 <c:forEach var="user_address" items="${addresses}">
 	<label>
 	<input type="radio" name="idMetodo" value="${user_address.id_has_address}" required>${user_address.nameAddress} (${user_address.usernameRegisteredUser})
 	</label><br>
 </c:forEach>
-
-<input type="submit" value="Salva indirizzo">
+<input type="submit" value="Aggiungi indirizzo">
 
 </form>
 </body>
