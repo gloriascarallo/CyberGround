@@ -6,6 +6,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import dao.ProductDaoDataSource;
@@ -26,6 +27,10 @@ public class Filter_by extends HttpServlet {
        
     }
 
+    private String escapeJson(String value) {
+        return value == null ? "" : value.replace("\"", "\\\"");
+    }
+    
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
@@ -177,10 +182,33 @@ public class Filter_by extends HttpServlet {
 				return;
 				
 			}
-			request.setAttribute("products", products);
+			/*request.setAttribute("products", products);
 			request.getRequestDispatcher("/view/category.jsp").forward(request, response);
 			return;
-		}
+			*/
+			response.setContentType("application/json");
+	        PrintWriter out = response.getWriter();
+	        out.print("{\"products\":[");
+
+	        for (int i = 0; i < products.size(); i++) {
+	            ProductBean p = products.get(i);
+	            out.print("{");
+	            out.print("\"name\":\"" + escapeJson(p.getName()) + "\",");
+	            out.print("\"price\":" + p.getPrice() + ",");
+	            out.print("\"dateUpload\":" + p.getDateUpload() + ",");
+	            out.print("\"supplier\":" +  escapeJson(p.getSupplier()) + ",");
+	            out.print("\"imagePath\":\"" + escapeJson(p.getImagePath()) + "\"");
+	            out.print("}");
+	            if (i < products.size() - 1) {
+	                out.print(",");
+	            }
+	        }
+
+	        out.print("]}");
+	        out.flush();
+	    }
+
+	
 	
 
 	/**
