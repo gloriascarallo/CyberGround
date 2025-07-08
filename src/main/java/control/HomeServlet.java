@@ -52,6 +52,9 @@ public class HomeServlet extends HttpServlet {
 			} catch (NamingException e) {
 				System.out.println("Error:" + e.getMessage());
 			}
+			if (ds == null) {
+			    throw new ServletException("Datasource non trovato.");
+			}
 			System.out.println("ci arrivo qui");
 			Cookie[] cookies = request.getCookies();
 			String guestIdStr = null;
