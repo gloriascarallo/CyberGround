@@ -1,0 +1,50 @@
+/* Impostazioni generali */
+body {
+  background-color: #141C5C;
+  color: #FF8800;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+}
+
+/* Titolo */
+h1 {
+  font-size: 30px;
+  margin-bottom: 40px;
+}
+
+/* Contenitore link */
+.links {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* Stile dei link come pulsanti */
+.links a {
+  background-color: white;
+  color: #FF8800;
+  padding: 12px 24px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-size: 16px;
+  border: 2px solid #FF8800;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.links a i {
+  margin-right: 8px;
+  font-size: 18px;
+}
+
+.links a:hover {
+  background-color: #FF8800;
+  color: white;
+}

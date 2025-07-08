@@ -1,0 +1,60 @@
+/* Stile base */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #141C5C;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+/* Contenitore centrale */
+#container {
+  background-color: white;
+  padding: 40px 50px;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+  width: 90%;
+  color: #333;
+  text-align: center;
+}
+
+/* Paragrafi */
+#container p {
+  font-size: 18px;
+  margin-bottom: 16px;
+  line-height: 1.6;
+  font-weight: bolder;
+}
+
+.recapiti {
+	color: #5FA5EA
+}
+
+#container a:hover {
+  text-decoration: underline;
+}
+
+/* Icone */
+#container i {
+  color: #FF8800;
+  margin-right: 8px;
+}
+
+
+/* Nomi contatti */
+#container h3 {
+  font-size: 24px;
+  margin: 20px 0 10px;
+  color: #141C5C;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  #container {
+    padding: 25px 20px;
+  }
+}

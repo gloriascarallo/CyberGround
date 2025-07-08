@@ -5,11 +5,11 @@
 <head>
 <meta charset="UTF-8">
 <title>Refund page</title>
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/styles/Refund.css"/>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/styles/Refund.css?v=3"/>
 </head>
 <body>
 
-<h2 align="center">Pagina di Rimborso</h2>
+<h2>Pagina di Rimborso</h2>
 
 <form action="<%=request.getContextPath() %>/Refund" method="post">
 

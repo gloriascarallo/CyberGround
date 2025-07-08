@@ -1,0 +1,77 @@
+/* Stile generale */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #141C5C;
+  margin: 0;
+  padding: 40px 0;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  color: #333;
+}
+
+/* Contenitore principale */
+form {
+  background-color: white;
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+  width: 90%;
+  max-width: 800px;
+}
+
+/* Blocchi di prodotto */
+form > * {
+  margin-bottom: 30px;
+  display: block;
+}
+
+/* Immagine prodotto */
+img {
+  max-width: 150px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+/* Info prodotto */
+form a {
+  text-decoration: none;
+}
+
+form div {
+  margin-top: 10px;
+}
+
+/* Pulsanti quantità e rimozione */
+button {
+  background-color: #FF8800;
+  border: none;
+  color: white;
+  padding: 8px 12px;
+  margin: 0 5px;
+  font-size: 14px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+button:hover {
+  background-color: #e46e00;
+}
+
+/* Pulsante pagamento */
+input[type="submit"] {
+  background-color: #28a745;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+input[type="submit"]:hover {
+  background-color: #218838;
+}

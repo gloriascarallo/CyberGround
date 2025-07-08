@@ -79,7 +79,7 @@ public class HomeServlet extends HttpServlet {
 				        ps.close();
 			        }
 			     catch (SQLException e) {
-			        e.printStackTrace(); 
+			        e.printStackTrace();
 			    }
 		}
 			

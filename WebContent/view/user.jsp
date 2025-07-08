@@ -11,9 +11,11 @@ RegisteredUserBean user=(RegisteredUserBean)request.getAttribute("user");
 <head>
 <meta charset="UTF-8">
 <title>Hello, <%=user.getName() %></title>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/styles/User.css">
 </head>
 <body>
 
+<div class="container">
 <img src="${user.imagePath}" alt="User image"></img>
 <p>Username: ${user.username}</p>
 <p>Name: ${user.name} </p>
@@ -21,7 +23,7 @@ RegisteredUserBean user=(RegisteredUserBean)request.getAttribute("user");
 <p>Telephone number: ${user.telephone}</p>
 <p>Email: ${user.email}</p>
 <p>Password: ${user.password}</p>
-
+</div>
 
 </body>
 </html>
