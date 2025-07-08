@@ -5,16 +5,19 @@
 <head>
 <meta charset="UTF-8">
 <title>Pagina di registrazione</title>
-
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/styles/Registration.css"/>
 </head>
 <body>
 
+<div id="container">
 <%
 if(request.getAttribute("errors")!=null){
 String errors=(String)request.getAttribute("errors");
 if(!errors.equals("")) {%> <div id="error"><%=errors %></div>
 
 <% } } %>
+
+<h1>Registrati</h1>
 
 <form name="registrationForm" id="registrationForm" action="<%=request.getContextPath()%>/Registration" method="post">
 
@@ -49,11 +52,11 @@ if(!errors.equals("")) {%> <div id="error"><%=errors %></div>
 <div id="methodsPayment">
 <div id="methodPaymentNum1">
 <label for="methodPaymentPAN1"> Inserisci un metodo di pagamento (o più metodi di pagamento): </label><br>
-<input type="text" name="methodPaymentPAN" id="methodPaymentPAN1" onchange="validateFormElement(this, PANPattern, document.getElementById('errorPAN1'), errorPANMessage)" placeholder="####-####-####-####">
+PAN:<input type="text" name="methodPaymentPAN" id="methodPaymentPAN1" onchange="validateFormElement(this, PANPattern, document.getElementById('errorPAN1'), errorPANMessage)" placeholder="####-####-####-####">
 <span id="errorPAN1"></span><br>
-<input type="text" name="methodPaymentScadenza" id="methodPaymentScadenza1" onchange="validateFormElement(this, ScadenzaPattern, document.getElementById('errorScadenza1'), errorScadenzaMessage)" placeholder="##/##">
+Data di scadenza:<input type="text" name="methodPaymentScadenza" id="methodPaymentScadenza1" onchange="validateFormElement(this, ScadenzaPattern, document.getElementById('errorScadenza1'), errorScadenzaMessage)" placeholder="##/##">
 <span id="errorScadenza1"></span><br>
-<input type="text" name="methodPaymentCVC" id="methodPaymentCVC1" onchange="validateFormElement(this, CVCPattern, document.getElementById('errorCVC1'), errorCVCMessage)" placeholder="### or ####"><input type="button" value="+" onclick="addMethodPayment()">
+CVC:<input type="text" name="methodPaymentCVC" id="methodPaymentCVC1" onchange="validateFormElement(this, CVCPattern, document.getElementById('errorCVC1'), errorCVCMessage)" placeholder="### or ####"><input type="button" value="+" onclick="addMethodPayment()">
 <span id="errorCVC1"></span><br>
 
 </div>
@@ -69,10 +72,13 @@ if(!errors.equals("")) {%> <div id="error"><%=errors %></div>
 <input type="password" name="password" id="password" onchange="validateFormElement(this, passwordPattern, document.getElementById('errorPassword'), errorPasswordMessage)" placeholder="Inserisci la tua password"><span id="errorPassword"></span><br>
 </div>
 
-<input type="submit" value="Submit" onclick="return validateRegistrationForm()">
+<div id="form-buttons">
+<input type="submit" value="Registrati" onclick="return validateRegistrationForm()">
 <input type="reset" value="Reset">
+</div>
 
 </form>
+</div>
 </body>
 <script src="<%=request.getContextPath() %>/scripts/validation.js" type="text/javascript"></script>
 </html>

@@ -1,0 +1,119 @@
+/* Layout base */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+/* Titolo pagina */
+h2 {
+  font-size: 28px;
+  color: #333;
+  margin-top: 30px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Form */
+form {
+  background-color: #ffffff;
+  padding: 30px 40px;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  width: 90%;
+  max-width: 500px;
+}
+
+/* Fieldset */
+fieldset {
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  padding: 20px;
+}
+
+legend {
+  font-weight: bold;
+  font-size: 16px;
+  padding: 0 10px;
+  color: #333;
+}
+
+/* Layout interno */
+form div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Etichette */
+label {
+  font-size: 16px;
+  font-weight: bold;
+  color: #444;
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+/* Input */
+input[type="text"] {
+  width: 80%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  margin-bottom: 8px;
+  box-sizing: border-box;
+}
+
+input[type="text"]:focus {
+  border-color: #007bff;
+  background-color: #fff;
+  outline: none;
+}
+
+/* Messaggi di errore */
+span[id^="error"] {
+  font-size: 14px;
+  color: red;
+  margin-bottom: 10px;
+  display: block;
+}
+
+/* Pulsanti */
+input[type="submit"],
+input[type="reset"] {
+  background-color: black;
+  color: white;
+  padding: 10px 24px;
+  font-size: 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  margin: 10px 5px 0 5px;
+  width: 40%;
+  transition: background-color 0.3s ease;
+}
+
+input[type="submit"]:hover,
+input[type="reset"]:hover {
+  background-color: #333;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  input[type="text"] {
+    width: 100%;
+  }
+
+  input[type="submit"],
+  input[type="reset"] {
+    width: 100%;
+    margin: 8px 0;
+  }
+}
