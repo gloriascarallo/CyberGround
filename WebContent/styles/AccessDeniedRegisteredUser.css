@@ -1,0 +1,51 @@
+/* Stile coerente con il resto del sito */
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #141C5C;
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#container {
+  background-color: #fff;
+  padding: 40px;
+  border-radius: 10px;
+  text-align: center;
+  max-width: 500px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.2);
+}
+
+h2 {
+  color: #e67e22;
+  font-size: 28px;
+  margin-bottom: 20px;
+}
+
+p {
+  color: #333;
+  font-size: 18px;
+  margin-bottom: 30px;
+}
+
+.back-button {
+  text-decoration: none;
+  background-color: #141C5C;
+  color: white;
+  padding: 12px 24px;
+  border-radius: 6px;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.back-button i {
+  margin-right: 8px;
+}
+
+.back-button:hover {
+  background-color: #0f1547;
+}

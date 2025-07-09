@@ -11,19 +11,19 @@ RegisteredUser_has_addressBean addresses=(RegisteredUser_has_addressBean)request
 <head>
 <meta charset="UTF-8">
 <title>Personal Addresses Page</title>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/styles/RegisteredUser_addresses.css">
 </head>
 <body>
 
 <h2>Qui sono mostrati tutti i tuoi indirizzi</h2>
 
-<form action="Add_address" method="post">
+<div id="container">
 <c:forEach var="user_address" items="${addresses}">
 	<label>
-	<input type="radio" name="idMetodo" value="${user_address.id_has_address}" required>${user_address.nameAddress} (${user_address.usernameRegisteredUser})
+	${user_address.nameAddress}
 	</label><br>
 </c:forEach>
-<input type="submit" value="Aggiungi indirizzo">
+</div>
 
-</form>
 </body>
 </html>

@@ -16,7 +16,7 @@
     <a href="assistance.jsp">
       <i class="fas fa-life-ring"></i> Assistenza
     </a>
-    <a href="refund.jsp">
+    <a href="${pageContext.request.contextPath}/registeredUser/view/refund.jsp">
       <i class="fas fa-undo-alt"></i> Rimborso Ordini
     </a>
   </div>
