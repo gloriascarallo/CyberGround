@@ -6,11 +6,6 @@
 <%@page import="bean.CartBean" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 
-<% 
-CartBean cart=(CartBean)request.getSession().getAttribute("cart");
-RegisteredUser_has_addressBean addresses=(RegisteredUser_has_addressBean)request.getAttribute("user_addresses");
-RegisteredUser_has_method_paymentBean methods=(RegisteredUser_has_method_paymentBean)request.getAttribute("user_methods_payment");
-%>
 
 <html>
 <head>
@@ -20,7 +15,7 @@ RegisteredUser_has_method_paymentBean methods=(RegisteredUser_has_method_payment
 </head>
 <body>
 
-<c:forEach var="product_incart" items="${cart}">
+<c:forEach var="product_incart" items="${cart.products}">
 <a href="${pageContext.request.contextPath}/Product">
     <img src="${product_incart.product.imagePath}" alt="Product image" />
     </a>

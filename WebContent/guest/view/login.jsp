@@ -47,7 +47,7 @@
 <input type="reset" value="Reset">
 </div>
 </form>
-<span> Non sei ancora registrato? Clicca qui per registrarti: <a href="./registration.jsp">Registrati!</a></span>
+<span> Non sei ancora registrato? Clicca qui per registrarti: <a href="registration.jsp">Registrati!</a></span>
 <span> Desideri continuare come guest? Clicca qui per andare alla home: <a href="./index.jsp">Home!</a></span>
 </div>
 
