@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -94,6 +95,10 @@ if(!errors.equals("")) {
 	try {
 		admin=ds_admin.doRetrieveByUsername(username);
 		if(admin!=null && admin.getPassword().equals(hasPassword)) {
+			 Cookie guestCookie = new Cookie("guestId", "");
+			    guestCookie.setMaxAge(0);
+			    guestCookie.setPath("/");
+			    response.addCookie(guestCookie);
 	    request.getSession().invalidate();
         HttpSession newSession = request.getSession(true);
 		newSession.setAttribute("isAdmin", Boolean.TRUE);
@@ -114,10 +119,16 @@ if(!errors.equals("")) {
 	try {
 		user=ds_user.doRetrieveByUsername(username);
 		if(user!=null && user.getPassword().equals(hasPassword)) {
-		request.getSession().setAttribute("isAdmin", Boolean.FALSE);
-		request.getSession().setAttribute("isRegisteredUser", Boolean.TRUE);
-		request.getSession().setAttribute("id", user.getId());
-		
+			 Cookie guestCookie = new Cookie("guestId", "");
+			    guestCookie.setMaxAge(0);
+			    guestCookie.setPath("/");
+			    response.addCookie(guestCookie);
+			    request.getSession().invalidate();
+			    HttpSession newSession = request.getSession(true);
+			    newSession.setAttribute("isAdmin", Boolean.FALSE);
+			    newSession.setAttribute("isRegisteredUser", Boolean.TRUE);
+			    newSession.setAttribute("id", user.getId());
+	
 		// da rivedere (controllare id sessione e compararlo con quello dell'utente registrato estratto dal database)
 		CartBean cart = (CartBean) request.getSession().getAttribute("cart");
         ArrayList<Product_situatedin_cartBean> dbProducts = ds_cart.doRetrieveByIdCart(user.getId());
