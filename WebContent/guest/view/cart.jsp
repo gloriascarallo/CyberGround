@@ -38,6 +38,7 @@ CartBean cart=(CartBean)request.getSession().getAttribute("cart");
     </div>
 </c:forEach>
 <h3>Totale carrello: €<span id="cart-total">${cart.total}</span></h3>
+<form action="${pageContext.request.contextPath}/Payment_page">
     <input type="submit" value="Payment">
     </form>
     
