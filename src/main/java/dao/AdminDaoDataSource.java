@@ -31,7 +31,7 @@ import bean.AdminBean;
 			}
 		}
 
-		private static final String TABLE_NAME = "user";
+		private static final String TABLE_NAME = "ADMIN";
 
 		@Override
 		public synchronized void doSave(AdminBean admin) throws SQLException {
@@ -45,6 +45,8 @@ import bean.AdminBean;
 			try {
 				connection = ds.getConnection();
 				preparedStatement = connection.prepareStatement(insertSQL, Statement.RETURN_GENERATED_KEYS);
+				preparedStatement.setString(1, admin.getUsername());
+				preparedStatement.setString(2, admin.getPassword());
 				preparedStatement.executeUpdate();
 
 				ResultSet rs=preparedStatement.getGeneratedKeys();

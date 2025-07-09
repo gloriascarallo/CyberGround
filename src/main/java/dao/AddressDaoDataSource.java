@@ -30,7 +30,7 @@ import bean.AddressBean;
 			}
 		}
 
-		private static final String TABLE_NAME = "address";
+		private static final String TABLE_NAME = "ADDRESS";
 
 		@Override
 		public synchronized void doSave(AddressBean address) throws SQLException {

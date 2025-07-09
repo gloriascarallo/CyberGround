@@ -30,7 +30,7 @@ import bean.CartBean;
 			}
 		}
 
-		private static final String TABLE_NAME = "cart";
+		private static final String TABLE_NAME = "CART";
 
 		@Override
 		public synchronized void doSave(CartBean cart) throws SQLException {
@@ -104,7 +104,7 @@ import bean.CartBean;
 	        
 			int result = 0;
 
-			String deleteSQL = "DELETE FROM " + CartDaoDataSource.TABLE_NAME + " WHERE ID = ?";
+			String deleteSQL = "DELETE FROM " + CartDaoDataSource.TABLE_NAME + " WHERE IDCART = ?";
 
 			try {
 				connection = ds.getConnection();

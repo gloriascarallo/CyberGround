@@ -32,7 +32,7 @@ public class ProductDaoDataSource implements IBeanDao<ProductBean> {
 		}
 	}
 
-	private static final String TABLE_NAME = "product";
+	private static final String TABLE_NAME = "PRODUCT";
 
 	@Override
 	public synchronized void doSave(ProductBean product) throws SQLException {
@@ -48,8 +48,16 @@ public class ProductDaoDataSource implements IBeanDao<ProductBean> {
 			preparedStatement = connection.prepareStatement(insertSQL, Statement.RETURN_GENERATED_KEYS);
 			preparedStatement.setString(1, product.getName());
 			preparedStatement.setDouble(2, product.getPrice());
-			preparedStatement.setDouble(3, product.getDiscountPercentage());
-			preparedStatement.setDate(4, product.getDateExpirationDiscount());
+			if (product.getDiscountPercentage() != null) {
+			    preparedStatement.setDouble(3, product.getDiscountPercentage());
+			} else {
+			    preparedStatement.setNull(3, Types.DOUBLE);
+			}
+			if (product.getDateExpirationDiscount() != null) {
+			    preparedStatement.setDate(4, product.getDateExpirationDiscount());
+			} else {
+			    preparedStatement.setNull(4, Types.DATE);
+			}
 			preparedStatement.setString(5, product.getDescription());
 			preparedStatement.setDate(6, product.getDateUpload());
 			preparedStatement.setString(7, product.getSupplier());
@@ -214,11 +222,11 @@ public class ProductDaoDataSource implements IBeanDao<ProductBean> {
         
 		int result = 0;
 
-		String deleteSQL = "UPDATE " + ProductDaoDataSource.TABLE_NAME + " SET QUANTITYAVAILABLE= QUANTITYAVAILABLE-? WHERE ID = ?";
+		String updateSQL = "UPDATE " + ProductDaoDataSource.TABLE_NAME + " SET QUANTITYAVAILABLE= QUANTITYAVAILABLE-? WHERE ID = ?";
 
 		try {
 			connection = ds.getConnection();
-			preparedStatement = connection.prepareStatement(deleteSQL);
+			preparedStatement = connection.prepareStatement(updateSQL);
 			preparedStatement.setInt(1, quantity);
 			preparedStatement.setInt(2, id);
 
@@ -243,7 +251,7 @@ public class ProductDaoDataSource implements IBeanDao<ProductBean> {
 
 		ArrayList<ProductBean> products = new ArrayList<ProductBean>();
 
-		String selectSQL = "SELECT * FROM " + ProductDaoDataSource.TABLE_NAME + " WHERE SUPPLIER LIKE= ?";
+		String selectSQL = "SELECT * FROM " + ProductDaoDataSource.TABLE_NAME + " WHERE SUPPLIER LIKE ?";
         
 
 		try {
@@ -394,7 +402,7 @@ public class ProductDaoDataSource implements IBeanDao<ProductBean> {
 
 		ArrayList<ProductBean> products = new ArrayList<ProductBean>();
 
-		String selectSQL = "SELECT * FROM " + ProductDaoDataSource.TABLE_NAME + " WHERE NAME LIKE= ?";
+		String selectSQL = "SELECT * FROM " + ProductDaoDataSource.TABLE_NAME + " WHERE NAME LIKE ?";
         
 
 		try {
@@ -443,7 +451,7 @@ public class ProductDaoDataSource implements IBeanDao<ProductBean> {
 
 		ArrayList<ProductBean> products = new ArrayList<ProductBean>();
 
-		String selectSQL = "SELECT * FROM " + ProductDaoDataSource.TABLE_NAME + " WHERE CATEGOTYNAME LIKE= ?";
+		String selectSQL = "SELECT * FROM " + ProductDaoDataSource.TABLE_NAME + " WHERE CATEGORYNAME LIKE ?";
         
 
 		try {

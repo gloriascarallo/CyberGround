@@ -30,7 +30,7 @@ public class UserDaoDataSource implements IBeanDao<UserBean> {
 		}
 	}
 
-	private static final String TABLE_NAME = "user";
+	private static final String TABLE_NAME = "USER";
 
 	@Override
 	public synchronized void doSave(UserBean user) throws SQLException {
