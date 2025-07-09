@@ -27,7 +27,7 @@ ProductBean pr = (ProductBean)request.getAttribute("product");
     <p>Fornitore: ${pr.supplier}</p>
     <p>Quantità disponibili: ${pr.quantityAvailable}</p>
     
-    <form action="${pageContext.request.contextPath}/AddToCart" method="post">
+    <form action="${pageContext.request.contextPath}/Adding_to_cart" method="post">
     <input type="hidden" name="productID" value="${pr.id}">
     <button type="submit" class="add-to-cart-btn">
       <i class="fas fa-cart-plus"></i> Aggiungi al carrello
