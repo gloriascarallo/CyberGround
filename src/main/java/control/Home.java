@@ -12,23 +12,25 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import bean.CartBean;
+
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import bean.CartBean;
+
 /**
- * Servlet implementation class HomeServlet
+ * Servlet implementation class Home
  */
-@WebServlet("/HomeServlet")
-public class HomeServlet extends HttpServlet {
+@WebServlet("/Home")
+public class Home extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
+       
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public HomeServlet() {
+    public Home() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -37,8 +39,7 @@ public class HomeServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("ci arrivo qui");
-		final String SECRET_KEY = "qwerTY-SECRET-KEY-2025";
+final String SECRET_KEY = "qwerTY-SECRET-KEY-2025";
 		
 		DataSource ds = null;
 
@@ -89,7 +90,7 @@ public class HomeServlet extends HttpServlet {
 			
 			 try (Connection con = ds.getConnection()) {
 			        PreparedStatement ps = con.prepareStatement(
-			            "INSERT INTO USER DEFAULT VALUES", 
+			            "INSERT INTO USER () VALUES ()", 
 			            Statement.RETURN_GENERATED_KEYS
 			        );
 			    
@@ -128,9 +129,7 @@ public class HomeServlet extends HttpServlet {
 		request.getSession().setAttribute("isRegisteredUser", Boolean.FALSE);
 		response.sendRedirect(request.getContextPath()+"/guest/view/index.jsp");
 		return;
-			
-		}
-		
+	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
