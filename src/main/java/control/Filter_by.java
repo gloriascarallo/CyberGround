@@ -42,7 +42,7 @@ public class Filter_by extends HttpServlet {
 			
 			errors+="Operazione non riuscita.<br>";
 			request.setAttribute("errors", errors);
-			request.getRequestDispatcher("/view/index.jsp").forward(request, response);
+			request.getRequestDispatcher("/guest/view/index.jsp").forward(request, response);
 			return;
 		}
 		ArrayList<ProductBean> products=new ArrayList<ProductBean>();
@@ -57,7 +57,7 @@ public class Filter_by extends HttpServlet {
 				
 				errors+="Aggiungi nome fornitore<br>";
 				request.setAttribute("errors", errors);
-				request.getRequestDispatcher("/view/index.jsp").forward(request, response);
+				request.getRequestDispatcher("/guest/view/index.jsp").forward(request, response);
 				return;
 				
 			}
@@ -98,7 +98,7 @@ public class Filter_by extends HttpServlet {
 			if(!errors.equals("")) {
 				
 				request.setAttribute("errors", errors);
-				request.getRequestDispatcher("/view/index.jsp").forward(request, response);
+				request.getRequestDispatcher("/guest/view/index.jsp").forward(request, response);
 				return;
 				
 			}
@@ -159,7 +159,7 @@ public class Filter_by extends HttpServlet {
 				
 				errors+="Aggiungi nome prodotto<br>";
 				request.setAttribute("errors", errors);
-				request.getRequestDispatcher("/view/index.jsp").forward(request, response);
+				request.getRequestDispatcher("/guest/view/index.jsp").forward(request, response);
 				return;
 				
 			}
@@ -178,7 +178,7 @@ public class Filter_by extends HttpServlet {
 				
 				errors+="Input errato o prodotti non trovati<br>";
 				request.setAttribute("errors", errors);
-				request.getRequestDispatcher("/view/index.jsp").forward(request, response);
+				request.getRequestDispatcher("/guest/view/index.jsp").forward(request, response);
 				return;
 				
 			}

@@ -33,12 +33,15 @@ public class Cart extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		String errors="";
-		RequestDispatcher dispatchToCart=request.getRequestDispatcher("/view/cart.jsp");
+		RequestDispatcher dispatchToCart=request.getRequestDispatcher("/guest/view/cart.jsp");
 		CartBean cart=(CartBean)request.getSession().getAttribute("cart");
 		
 		if(cart==null) {
 			
-			errors="Sessione scaduta o carrello mancante. Ricarica la pagina e riprova oppure effettua il login.<br>";
+			errors = "Sessione scaduta o carrello mancante. Ricarica la pagina e riprova.";
+	        request.setAttribute("errors", errors);
+	        request.getRequestDispatcher("/expiredSession.html").forward(request, response);
+	        return;
 			
 			
 		}
