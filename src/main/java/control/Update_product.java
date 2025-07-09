@@ -72,7 +72,7 @@ public class Update_product extends HttpServlet {
 				
 				errors += "Prodotto non trovato.<br>";
 		        request.setAttribute("errors", errors);
-		        request.getRequestDispatcher("/admin/.jsp").forward(request, response); // da finire
+		        request.getRequestDispatcher("/admin/view/update_product.jsp").forward(request, response); 
 		        return;
 			}
 		} catch (SQLException e) {
@@ -278,7 +278,7 @@ if(modified) {
 		}
 	}
 
-response.sendRedirect(request.getContextPath()+"/admin/view/products"); 
+response.sendRedirect(request.getContextPath()+"/admin/view/products.jsp"); 
 return;
 
   }

@@ -36,8 +36,9 @@ public class RegisteredUserAddresses extends HttpServlet {
 	    if (idObj == null) {
 	    	errors = "Sessione scaduta o ID utente mancante. Ricarica la pagina e riprova.";
 	        request.setAttribute("errors", errors);
-	        request.getRequestDispatcher("/view/index.jsp").forward(request, response);
+	        request.getRequestDispatcher("/expiredSession.html").forward(request, response);
 	        return;
+	       
 	    }
 	    int id=(Integer)idObj;
 	    
@@ -50,7 +51,7 @@ public class RegisteredUserAddresses extends HttpServlet {
 		catch(SQLException e) {
 			
 			e.printStackTrace();
-			request.getRequestDispatcher("500.html").forward(request, response);
+			request.getRequestDispatcher("/500.html").forward(request, response);
 			return;
 		}
 		
@@ -58,13 +59,13 @@ public class RegisteredUserAddresses extends HttpServlet {
 			
 			errors+="Indirizzi non trovati.<br>";
 			request.setAttribute("errors", errors);
-			request.getRequestDispatcher("/view/registeredUser_addresses.jsp").forward(request, response);
+			request.getRequestDispatcher("/registeredUser/view/registeredUser_addresses.jsp").forward(request, response);
 			return;
 			
 		}
 		
 		request.setAttribute("user_addresses", user_addresses);
-		request.getRequestDispatcher("/view/registeredUser_addresses.jsp").forward(request, response);
+		request.getRequestDispatcher("/registeredUser/view/registeredUser_addresses.jsp").forward(request, response);
 		return;
 	}
 	

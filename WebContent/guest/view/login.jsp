@@ -6,24 +6,27 @@
 
 <meta charset="UTF-8">
 <title>Login</title>
+
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/styles/Login.css?v=2"/>
 </head>
 <body>
 
 
 <div id="container">
+
+
+<h1>Login</h1>
+
 <%
     String errors = (String) request.getAttribute("errors");
-    if (errors != null && !errors.isEmpty()) {
+    if (errors != null && !errors.equals("")) {
 %>
-    <div id="error" style="color: red;">
+    <div id="error">
         <%= errors %>
     </div>
 <%
     }
 %>
-
-<h1>Login</h1>
 
 <form name="LoginForm" action="<%= request.getContextPath() %>/Login" method="post">
 

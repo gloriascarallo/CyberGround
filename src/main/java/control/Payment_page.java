@@ -40,21 +40,23 @@ public class Payment_page extends HttpServlet {
 		if (idObj == null) {
 			errors = "Sessione scaduta o ID utente mancante. Ricarica la pagina e riprova.";
 	        request.setAttribute("errors", errors);
-	        request.getRequestDispatcher("/view/index.jsp").forward(request, response);
+	        request.getRequestDispatcher("/expiredSession.html").forward(request, response);
 	        return;
 		}
 		int id = (Integer) idObj;
 		
 		CartBean cart=(CartBean)request.getSession().getAttribute("cart");
 		if (cart == null) {
-		    response.sendRedirect(request.getContextPath() + "/view/cart.jsp");
-		    return;
+			errors = "Sessione scaduta o carrello mancante. Ricarica la pagina e riprova.";
+	        request.setAttribute("errors", errors);
+	        request.getRequestDispatcher("/expiredSession.html").forward(request, response);
+	        return;
 		}
 		
 		if (cart.getProducts() == null || cart.getProducts().isEmpty()) {
 		    errors+="Carrello vuoto.<br>";
 		    request.setAttribute("errors", errors);
-		    request.getRequestDispatcher("/view/cart.jsp").forward(request, response);
+		    request.getRequestDispatcher("/guest/view/cart.jsp").forward(request, response);
 		    return;
 		}
 		
@@ -74,7 +76,7 @@ public class Payment_page extends HttpServlet {
 		if(!errors.equals("")) {
 			
 			request.setAttribute("errors", errors);
-	        request.getRequestDispatcher("/view/cart.jsp").forward(request, response);
+	        request.getRequestDispatcher("/guest/view/cart.jsp").forward(request, response);
 	        return;
 			
 		}
@@ -98,7 +100,7 @@ public class Payment_page extends HttpServlet {
 		if(!errors.equals("")) {
 			
 			request.setAttribute("errors", errors);
-			request.getRequestDispatcher("/view/cart.jsp").forward(request, response);
+			request.getRequestDispatcher("/guest/view/cart.jsp").forward(request, response);
 	        return;
 			
 		}
@@ -112,7 +114,7 @@ public class Payment_page extends HttpServlet {
 		
 		request.setAttribute("user_addresses", user_addresses);
 		request.setAttribute("user_methods_payment", user_methods_payment);
-		request.getRequestDispatcher("/view/payment_page.jsp").forward(request, response);
+		request.getRequestDispatcher("/registeredUser/view/payment_page.jsp").forward(request, response);
 		return;
 	}
 

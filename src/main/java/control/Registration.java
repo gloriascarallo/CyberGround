@@ -53,9 +53,10 @@ public class Registration extends HttpServlet {
 	    if (idObj == null) {
 	    	errors = "Sessione scaduta o ID utente mancante. Ricarica la pagina e riprova.";
 	        request.setAttribute("errors", errors);
-	        request.getRequestDispatcher("/guest/view/index.jsp").forward(request, response);
+	        request.getRequestDispatcher("/expiredSession.html").forward(request, response);
 	        return;
 	    }
+	    
 	    int id=(Integer)idObj;
 		String username=request.getParameter("username");
 		String name=request.getParameter("name");
@@ -302,8 +303,8 @@ if(!errors.equals("")) {
 			
 			
 		
-		
-		response.sendRedirect(request.getContextPath()+"/view/login.jsp");
+		request.setAttribute("message", "Registrazione avvenuta con successo!<br>");
+		request.getRequestDispatcher("/guest/view/login.jsp").forward(request, response);
 		return;
 		
 	}

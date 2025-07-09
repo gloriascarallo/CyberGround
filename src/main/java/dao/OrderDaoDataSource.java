@@ -34,7 +34,7 @@ import java.util.Collection;
 			}
 		}
 
-		private static final String TABLE_NAME = "orders";
+		private static final String TABLE_NAME = "ORDERS";
 
 		@Override
 		public synchronized void doSave(OrderBean order) throws SQLException {
@@ -48,9 +48,20 @@ import java.util.Collection;
 			try {
 				connection = ds.getConnection();
 				preparedStatement = connection.prepareStatement(insertSQL, Statement.RETURN_GENERATED_KEYS);
-				preparedStatement.setDate(1, order.getDatePurchase());
-				preparedStatement.setDate(2, order.getDateDelivery());
-				preparedStatement.setDate(3, order.getDateShipping());
+				if (order.getDatePurchase() != null)
+		            preparedStatement.setDate(1, order.getDatePurchase());
+		        else
+		            preparedStatement.setNull(1, java.sql.Types.DATE);
+
+		        if (order.getDateDelivery() != null)
+		            preparedStatement.setDate(2, order.getDateDelivery());
+		        else
+		            preparedStatement.setNull(2, java.sql.Types.DATE);
+
+		        if (order.getDateShipping() != null)
+		            preparedStatement.setDate(3, order.getDateShipping());
+		        else
+		            preparedStatement.setNull(3, java.sql.Types.DATE);
 				preparedStatement.setInt(4, order.getIdCart());
 				
 				

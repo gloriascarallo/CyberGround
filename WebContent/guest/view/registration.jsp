@@ -80,5 +80,5 @@ CVC:<input type="text" name="methodPaymentCVC" id="methodPaymentCVC1" onchange="
 </form>
 </div>
 </body>
-<script src="<%=request.getContextPath() %>/scripts/validation.js" type="text/javascript"></script>
+<script src="<%=request.getContextPath() %>/scripts/validation.js?v=3" type="text/javascript"></script>
 </html>
