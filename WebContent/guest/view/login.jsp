@@ -6,7 +6,8 @@
 
 <meta charset="UTF-8">
 <title>Login</title>
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/styles/Login.css?v=3"/>
+
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/styles/Login.css?v=2"/>
 </head>
 <body>
 
@@ -47,6 +48,7 @@
 </div>
 </form>
 <span> Non sei ancora registrato? Clicca qui per registrarti: <a href="./registration.jsp">Registrati!</a></span>
+<span> Desideri continuare come guest? Clicca qui per andare alla home: <a href="./index.jsp">Home!</a></span>
 </div>
 
 </body>

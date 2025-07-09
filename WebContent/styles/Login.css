@@ -46,6 +46,10 @@ div#error {
   text-align: center;
 }
 
+span a {
+	color: rgb(255, 100, 64);
+}
+
 input[type="text"],
 input[type="password"] {
   text-align: center;

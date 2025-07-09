@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Added to cart Page</title>
-<script src="${pageContext.request.contextPath}/scripts/after_adding_to_cart.js"></script>
+<script src="${pageContext.request.contextPath}/scripts/after_adding_to_cart.js?v=3"></script>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/styles/After_adding_to_cart.css"/>
 </head>
 <body>
