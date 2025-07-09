@@ -1,5 +1,5 @@
 function vaiAlCarrello() {
-    window.location.href = "/CyberGround/view/cart.jsp";
+    window.location.href = "/CyberGround/guest/view/cart.jsp";
 }
 
 function tornaIndietro() {

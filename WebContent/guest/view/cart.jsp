@@ -14,7 +14,7 @@ CartBean cart=(CartBean)request.getSession().getAttribute("cart");
 <head>
 <meta charset="UTF-8">
 <title>Carrello</title>
-
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/styles/Cart.css"/>
 </head>
 <body>
 
