@@ -11,20 +11,19 @@ RegisteredUser_has_method_paymentBean methods=(RegisteredUser_has_method_payment
 <head>
 <meta charset="UTF-8">
 <title>Personal Methods Page</title>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/styles/RegisteredUser_methods_payment.css">
 </head>
 <body>
 
 <h2>Qui sono mostrati tutti i tuoi metodi di pagamento</h2>
 
-<form action="Add_payment_method" method="post">
+<div id="container">
 <c:forEach var="user_methods" items="${methods}">
 	<label>
-	<input type="radio" name="idMetodo" value="${user_methods.id_has_method_payment}" required>${user_methods.pan} - ${user_methods.expirationDate} - ${user_methods.cvc} (${user_methods.usernameRegisteredUser})
+	${user_methods.pan} - ${user_methods.expirationDate} - ${user_methods.cvc}
 	</label><br>
 </c:forEach>
-<input type="submit" value="Aggiungi metodo di pagamento">
-
-</form>
+</div>
 
 </body>
 </html>
