@@ -32,7 +32,7 @@ import bean.Product_in_orderBean;
 			}
 		}
 
-		private static final String TABLE_NAME = "product_in_order";
+		private static final String TABLE_NAME = "PRODUCT_IN_ORDER";
 
 		@Override
 		public synchronized void doSave(Product_in_orderBean product_in_order) throws SQLException {
@@ -86,13 +86,12 @@ import bean.Product_in_orderBean;
 				preparedStatement.setInt(1, id);
 
 				ResultSet rs = preparedStatement.executeQuery();
-
+				ProductDaoDataSource ds=new ProductDaoDataSource();
 				while (rs.next()) {
 					bean=new Product_in_orderBean();
 					bean.setId_product_in_order(rs.getInt("ID_PRODUCT_IN_ORDER"));
 					bean.setIdOrder(rs.getInt("IDORDER"));
 					int idProduct=rs.getInt("IDPRODUCT");
-					ProductDaoDataSource ds=new ProductDaoDataSource();
 					bean.setProduct(ds.doRetrieveByKey(idProduct));
 					bean.setQuantity(rs.getInt("QUANTITY"));
 					bean.setPrice(rs.getDouble("PRICE"));
@@ -157,14 +156,13 @@ import bean.Product_in_orderBean;
 				preparedStatement = connection.prepareStatement(selectSQL);
 
 				ResultSet rs = preparedStatement.executeQuery();
-
+				ProductDaoDataSource ds=new ProductDaoDataSource();
 				while (rs.next()) {
 					Product_in_orderBean bean = new Product_in_orderBean();
 
 					bean.setId_product_in_order(rs.getInt("ID_PRODUCT_IN_ORDER"));
 					bean.setIdOrder(rs.getInt("IDORDER"));
 					int idProduct=rs.getInt("IDPRODUCT");
-					ProductDaoDataSource ds=new ProductDaoDataSource();
 					bean.setProduct(ds.doRetrieveByKey(idProduct));
 					bean.setQuantity(rs.getInt("QUANTITY"));
 					bean.setPrice(rs.getDouble("PRICE"));
@@ -198,14 +196,13 @@ import bean.Product_in_orderBean;
 				preparedStatement = connection.prepareStatement(selectSQL);
 				preparedStatement.setInt(1, id);
 				ResultSet rs = preparedStatement.executeQuery();
-
+				ProductDaoDataSource ds=new ProductDaoDataSource();
 				while (rs.next()) {
 					Product_in_orderBean bean = new Product_in_orderBean();
 					
 					bean.setId_product_in_order(rs.getInt("ID_PRODUCT_IN_ORDER"));
 					bean.setIdOrder(rs.getInt("IDORDER"));
 					int idProduct=rs.getInt("IDPRODUCT");
-					ProductDaoDataSource ds=new ProductDaoDataSource();
 					bean.setProduct(ds.doRetrieveByKey(idProduct));
 					bean.setQuantity(rs.getInt("QUANTITY"));
 					bean.setPrice(rs.getDouble("PRICE"));

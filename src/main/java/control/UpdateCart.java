@@ -31,8 +31,23 @@ public class UpdateCart extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		String action=request.getParameter("action");
-		int id=Integer.parseInt(request.getParameter("product_incartID"));
-		CartBean cart=(CartBean)request.getSession().getAttribute("cart");
+		String idStr = request.getParameter("product_incartID");
+		int id;
+		try {
+		    id = Integer.parseInt(idStr);
+		} catch (NumberFormatException e) {
+		    response.setContentType("application/json");
+		    response.setCharacterEncoding("UTF-8");
+		    response.getWriter().write("{\"result\":\"ERROR\", \"message\":\"ID prodotto non valido\"}");
+		    return;
+		}
+		CartBean cart = (CartBean) request.getSession().getAttribute("cart");
+		if (cart == null) {
+		    response.setContentType("application/json");
+		    response.setCharacterEncoding("UTF-8");
+		    response.getWriter().write("{\"result\":\"ERROR\", \"message\":\"Carrello non trovato\"}");
+		    return;
+		}
 		Product_situatedin_cartDaoDataSource ds=new Product_situatedin_cartDaoDataSource();
 		Product_situatedin_cartBean product_incart=cart.getProduct(id);
 		if (product_incart == null) {
@@ -42,45 +57,63 @@ public class UpdateCart extends HttpServlet {
 		    return;
 		}
 		
+		Boolean isRegistered = (Boolean) request.getSession().getAttribute("isRegisteredUser");
+		boolean saveToDb = isRegistered != null && isRegistered;
+		
 		switch(action) {
 		
 		case "decrease":
 			
-			try {
 				int quantity = product_incart.getQuantity();
 
 				if (quantity == 1) {
 				    cart.removeProduct(product_incart);
-				    ds.doDelete(id);
+				    if(saveToDb) {
+			try {
+			ds.doDelete(id);
+		}
+	catch(SQLException e) {
+					    	
+	e.printStackTrace();
+	request.getRequestDispatcher("/500.html").forward(request, response);
+	return;
+}
+				    }
+				    
 				}
 				else {
 				product_incart.decreaseQuantity();
-				ds.decreaseQuantity(id);
+				if(saveToDb) {
+				try {
+					ds.decreaseQuantity(id);
+				} catch (SQLException e) {
+					
+					e.printStackTrace();
+					request.getRequestDispatcher("/500.html").forward(request, response);
+					return;
 				}
 			}
-			catch(SQLException e) {
-				
-				e.printStackTrace();
-				request.getRequestDispatcher("/500.html").forward(request, response);
-				return;
-			}
+		}
+
+			
 		break;
 		
 		case "increase":
 			
-			try {
 				
 				product_incart.increaseQuantity();
-				ds.increaseQuantity(id); // database
+				if(saveToDb) {
+					try {
+				ds.increaseQuantity(id); 
+					}
+					catch(SQLException e) {
+						
+						e.printStackTrace();
+						request.getRequestDispatcher("/500.html").forward(request, response);
+						return;
 				}
-			
-			
-			catch(SQLException e) {
-				
-				e.printStackTrace();
-				request.getRequestDispatcher("/500.html").forward(request, response);
-				return;
 			}
+			
 			
 		break;
 		
@@ -88,6 +121,7 @@ public class UpdateCart extends HttpServlet {
 			
 			cart.removeProduct(product_incart);
 			
+			if(saveToDb) {
 			try {
 				
 				ds.doDelete(id);
@@ -99,7 +133,7 @@ public class UpdateCart extends HttpServlet {
 				request.getRequestDispatcher("/500.html").forward(request, response);
 				return;
 			}
-			
+		}	
 		break;
 		
 		default:

@@ -31,7 +31,7 @@ import bean.RegisteredUserBean;
 			}
 		}
 
-		private static final String TABLE_NAME = "registereduser";
+		private static final String TABLE_NAME = "REGISTEREDUSER";
 
 		@Override
 		public synchronized void doSave(RegisteredUserBean user) throws SQLException {
@@ -93,7 +93,7 @@ import bean.RegisteredUserBean;
 					bean.setName(rs.getString("NAME"));
 					bean.setLastName(rs.getString("LASTNAME"));
 					bean.setEmail(rs.getString("EMAIL"));
-					bean.setTelephone(rs.getString("TELEPHONE"));
+					bean.setTelephone(rs.getString("TELEPHONENUMBER"));
 					
 			
 				}
@@ -166,7 +166,7 @@ import bean.RegisteredUserBean;
 					bean.setName(rs.getString("NAME"));
 					bean.setLastName(rs.getString("LASTNAME"));
 					bean.setEmail(rs.getString("EMAIL"));
-					bean.setTelephone(rs.getString("TELEPHONE"));
+					bean.setTelephone(rs.getString("TELEPHONENUMBER"));
 					users.add(bean);
 				}
 
@@ -207,7 +207,7 @@ import bean.RegisteredUserBean;
 				bean.setName(rs.getString("NAME"));
 				bean.setLastName(rs.getString("LASTNAME"));
 				bean.setEmail(rs.getString("EMAIL"));
-				bean.setTelephone(rs.getString("TELEPHONE"));
+				bean.setTelephone(rs.getString("TELEPHONENUMBER"));
 				
 		
 			}

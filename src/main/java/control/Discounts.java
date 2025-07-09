@@ -42,7 +42,7 @@ public class Discounts extends HttpServlet {
 		    } catch (NumberFormatException e) {
 		        errors += "Il valore dello sconto non è valido.<br>";
 		        request.setAttribute("errors", errors);
-				request.getRequestDispatcher("/view/index.jsp").forward(request, response);
+				request.getRequestDispatcher("/guest/view/index.jsp").forward(request, response);
 				return;
 		    }
 		}
@@ -63,13 +63,13 @@ public class Discounts extends HttpServlet {
 			
 			errors+="Prodotti scontati non trovati.<br>";
 			request.setAttribute("errors", errors);
-			request.getRequestDispatcher("/view/index.jsp").forward(request, response);
+			request.getRequestDispatcher("/guest/view/index.jsp").forward(request, response);
 			return;
 			
 		}
 		
 		request.setAttribute("productsDiscounted", products);
-		request.getRequestDispatcher("/view/discounts.jsp").forward(request, response);
+		request.getRequestDispatcher("/guest/view/discounts.jsp").forward(request, response);
 		return;
 	}
 

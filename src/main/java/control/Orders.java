@@ -38,8 +38,10 @@ public class Orders extends HttpServlet {
 		ArrayList<OrderBean> orders=new ArrayList<OrderBean>();
 		CartBean cart=(CartBean)request.getSession().getAttribute("cart");
 		if (cart == null) {
-		    response.sendRedirect(request.getContextPath() + "/view/cart.jsp");
-		    return;
+			errors = "Sessione scaduta o carrello mancante. Ricarica la pagina e riprova.";
+	        request.setAttribute("errors", errors);
+	        request.getRequestDispatcher("/expiredSession.html").forward(request, response);
+	        return;
 		}
 		int idCart=cart.getIdCart();
 		
@@ -61,7 +63,7 @@ public class Orders extends HttpServlet {
 			
 			errors+="Ordini non trovati.";
 			request.setAttribute("errors", errors);
-			request.getRequestDispatcher("/view/user.jsp").forward(request, response);
+			request.getRequestDispatcher("/registeredUser/view/user.jsp").forward(request, response);
 			return;
 			
 		}
@@ -77,7 +79,7 @@ public class Orders extends HttpServlet {
 					
 					errors+="Prodotti nell'ordine non trovati.";
 					request.setAttribute("errors", errors);
-					request.getRequestDispatcher("/view/user.jsp").forward(request, response);
+					request.getRequestDispatcher("/registeredUser/view/user.jsp").forward(request, response);
 					return;
 					
 				}
@@ -95,7 +97,7 @@ public class Orders extends HttpServlet {
 		}
 		
 		request.setAttribute("orders", orders);
-		request.getRequestDispatcher("/view/orders.jsp").forward(request, response);
+		request.getRequestDispatcher("/registeredUser/view/orders.jsp").forward(request, response);
 		return;
 	}
 

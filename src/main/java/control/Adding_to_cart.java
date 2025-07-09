@@ -37,7 +37,9 @@ public class Adding_to_cart extends HttpServlet {
 		String errors="";
 		CartBean cart = (CartBean) request.getSession().getAttribute("cart");
 	    if (cart == null) {
-	        response.sendRedirect(request.getContextPath() + "/view/cart.jsp");
+	    	errors = "Sessione scaduta o carrello mancante. Ricarica la pagina e riprova.";
+	        request.setAttribute("errors", errors);
+	        request.getRequestDispatcher("/expiredSession.html").forward(request, response);
 	        return;
 	    }
 	    int idCart = cart.getIdCart();
@@ -46,7 +48,7 @@ public class Adding_to_cart extends HttpServlet {
 	    if (idProductStr == null || idProductStr.trim().isEmpty()) {
 	        errors = "Prodotto non trovato.<br>";
 	        request.setAttribute("errors", errors);
-	        request.getRequestDispatcher("/view/product.jsp").forward(request, response);
+	        request.getRequestDispatcher("/guest/view/product.jsp").forward(request, response);
 	        return;
 	    }
 	    int idProduct;
@@ -55,7 +57,7 @@ public class Adding_to_cart extends HttpServlet {
 	    } catch (NumberFormatException e) {
 	        errors = "ID prodotto non valido.<br>";
 	        request.setAttribute("errors", errors);
-	        request.getRequestDispatcher("/view/product.jsp").forward(request, response);
+	        request.getRequestDispatcher("/guest/view/product.jsp").forward(request, response);
 	        return;
 	    }
 	    
@@ -64,7 +66,7 @@ public class Adding_to_cart extends HttpServlet {
 	    if (quantityStr == null || quantityStr.trim().isEmpty()) {
 	        errors = "Inserisci la quantità.<br>";
 	        request.setAttribute("errors", errors);
-	        request.getRequestDispatcher("/view/product.jsp").forward(request, response);
+	        request.getRequestDispatcher("/guest/view/product.jsp").forward(request, response);
 	        return;
 	    } else {
 	        try {
@@ -72,13 +74,13 @@ public class Adding_to_cart extends HttpServlet {
 	            if (quantity <= 0) {
 	                errors = "La quantità disponibile non può essere minore di 1.<br>";
 	                request.setAttribute("errors", errors);
-	                request.getRequestDispatcher("/view/product.jsp").forward(request, response);
+	                request.getRequestDispatcher("/guest/view/product.jsp").forward(request, response);
 	                return;
 	            }
 	        } catch (NumberFormatException e) {
 	            errors = "La quantità disponibile deve essere un numero valido.<br>";
 	            request.setAttribute("errors", errors);
-	            request.getRequestDispatcher("/view/product.jsp").forward(request, response);
+	            request.getRequestDispatcher("/guest/view/product.jsp").forward(request, response);
 	            return;
 	        }
 	    }
@@ -100,7 +102,7 @@ public class Adding_to_cart extends HttpServlet {
 	        if(product==null) {
 	        	errors+="Prodotto non trovato.<br>";
 	        	request.setAttribute("errors", errors);
-	        	request.getRequestDispatcher("/view/product.jsp").forward(request, response);
+	        	request.getRequestDispatcher("/guest/view/product.jsp").forward(request, response);
 	        	return;
 	        	
 	        }
@@ -110,7 +112,7 @@ public class Adding_to_cart extends HttpServlet {
 					
 					errors+="La quantità disponibile di tale prodotto è minore rispetto alla quantità selezionata.<br>";
 					request.setAttribute("errors", errors);
-					request.getRequestDispatcher("/view/product.jsp").forward(request, response);
+					request.getRequestDispatcher("/guest/view/product.jsp").forward(request, response);
 					return;
 					
 					
@@ -149,7 +151,7 @@ public class Adding_to_cart extends HttpServlet {
         	return;
 		}
 		
-		response.sendRedirect(request.getContextPath()+"/view/after_adding_to_cart.jsp");
+		response.sendRedirect(request.getContextPath()+"/guest/view/after_adding_to_cart.jsp");
 		return;
 	}
 

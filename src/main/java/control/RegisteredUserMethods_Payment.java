@@ -36,7 +36,7 @@ public class RegisteredUserMethods_Payment extends HttpServlet {
 	    if (idObj == null) {
 	    	errors = "Sessione scaduta o ID utente mancante. Ricarica la pagina e riprova.";
 	        request.setAttribute("errors", errors);
-	        request.getRequestDispatcher("/view/index.jsp").forward(request, response);
+	        request.getRequestDispatcher("/expiredSession.html").forward(request, response);
 	        return;
 	    }
 	    int id=(Integer)idObj;
@@ -57,14 +57,14 @@ public class RegisteredUserMethods_Payment extends HttpServlet {
 			
 			errors+="Metodi di pagamento non trovati.<br>";
 			request.setAttribute("errors", errors);
-			request.getRequestDispatcher("/view/registeredUser_methods_payment.jsp").forward(request, response);
+			request.getRequestDispatcher("/registeredUser/view/registeredUser_methods_payment.jsp").forward(request, response);
 			return;
 			
 		}
 		
 	
 		request.setAttribute("user_methods_payment", user_methods_payment);
-		request.getRequestDispatcher("/view/registeredUser_methods_payment.jsp").forward(request, response);
+		request.getRequestDispatcher("/registeredUser/view/registeredUser_methods_payment.jsp").forward(request, response);
 		return;
 	}
 

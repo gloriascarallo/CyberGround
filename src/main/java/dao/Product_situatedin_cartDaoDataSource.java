@@ -32,7 +32,7 @@ import bean.Product_situatedin_cartBean;
 			}
 		}
 
-		private static final String TABLE_NAME = "product_situatedin_cart";
+		private static final String TABLE_NAME = "PRODUCT_SITUATEDIN_CART";
 
 		@Override
 		public synchronized void doSave(Product_situatedin_cartBean product_situatedin_cart) throws SQLException {
@@ -87,13 +87,12 @@ import bean.Product_situatedin_cartBean;
 				preparedStatement.setInt(1, id);
 
 				ResultSet rs = preparedStatement.executeQuery();
-
+				ProductDaoDataSource ds=new ProductDaoDataSource();
 				while (rs.next()) {
 					bean=new Product_situatedin_cartBean();
 					bean.setId_SituatedIn(rs.getInt("ID_SITUATEDIN"));
 					bean.setIdCart(rs.getInt("IDCART"));
 					int idProduct=rs.getInt("IDPRODUCT");
-					ProductDaoDataSource ds=new ProductDaoDataSource();
 					bean.setProduct(ds.doRetrieveByKey(idProduct));
 					bean.setDateAdded(rs.getDate("DATEADDED"));
 					bean.setQuantity(rs.getInt("QUANTITY"));
@@ -158,14 +157,13 @@ import bean.Product_situatedin_cartBean;
 				preparedStatement = connection.prepareStatement(selectSQL);
 
 				ResultSet rs = preparedStatement.executeQuery();
-
+				ProductDaoDataSource ds=new ProductDaoDataSource();
 				while (rs.next()) {
 					Product_situatedin_cartBean bean = new Product_situatedin_cartBean();
 
 					bean.setId_SituatedIn(rs.getInt("ID_SITUATEDIN"));
 					bean.setIdCart(rs.getInt("IDCART"));
 					int idProduct=rs.getInt("IDPRODUCT");
-					ProductDaoDataSource ds=new ProductDaoDataSource();
 					bean.setProduct(ds.doRetrieveByKey(idProduct));
 					bean.setDateAdded(rs.getDate("DATEADDED"));
 					bean.setQuantity(rs.getInt("QUANTITY"));
@@ -237,13 +235,12 @@ import bean.Product_situatedin_cartBean;
 				preparedStatement.setDate(2,  date);
 
 				ResultSet rs = preparedStatement.executeQuery();
-
+				ProductDaoDataSource ds=new ProductDaoDataSource();
 				while (rs.next()) {
 					Product_situatedin_cartBean bean=new Product_situatedin_cartBean();
 					bean.setId_SituatedIn(rs.getInt("ID_SITUATEDIN"));
 					bean.setIdCart(rs.getInt("IDCART"));
 					int idProduct=rs.getInt("IDPRODUCT");
-					ProductDaoDataSource ds=new ProductDaoDataSource();
 					bean.setProduct(ds.doRetrieveByKey(idProduct));
 					bean.setDateAdded(rs.getDate("DATEADDED"));
 					bean.setQuantity(rs.getInt("QUANTITY"));
@@ -280,13 +277,12 @@ import bean.Product_situatedin_cartBean;
 		        preparedStatement.setDouble(3, maxPrice);
 
 		        ResultSet rs = preparedStatement.executeQuery();
-
+		        ProductDaoDataSource ds = new ProductDaoDataSource();
 		        while (rs.next()) {
 		            Product_situatedin_cartBean bean = new Product_situatedin_cartBean();
 		            bean.setId_SituatedIn(rs.getInt("ID_SITUATEDIN"));
 		            bean.setIdCart(rs.getInt("IDCART"));
 		            int idProduct = rs.getInt("IDPRODUCT");
-		            ProductDaoDataSource ds = new ProductDaoDataSource();
 		            bean.setProduct(ds.doRetrieveByKey(idProduct));
 		            bean.setDateAdded(rs.getDate("DATEADDED"));
 		            bean.setQuantity(rs.getInt("QUANTITY"));

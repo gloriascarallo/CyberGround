@@ -33,7 +33,7 @@ public class Add_address extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		request.getRequestDispatcher("/view/add_address.jsp").forward(request, response);
+		request.getRequestDispatcher("/registeredUser/view/add_address.jsp").forward(request, response);
 		return;
 	}
 
@@ -42,12 +42,12 @@ public class Add_address extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String errors="";
-		RequestDispatcher dispatcherToAdd_address=request.getRequestDispatcher("/view/add_address.jsp");
+		RequestDispatcher dispatcherToAdd_address=request.getRequestDispatcher("/registeredUser/view/add_address.jsp");
 		Object idObj=request.getSession().getAttribute("id");
 		if (idObj == null) {
 			errors = "Sessione scaduta o ID utente mancante. Ricarica la pagina e riprova.";
 	        request.setAttribute("errors", errors);
-	        request.getRequestDispatcher("/view/index.jsp").forward(request, response);
+	        request.getRequestDispatcher("/expiredSession.html").forward(request, response);
 	        return;
 	    }
 	    int id = (Integer) idObj;

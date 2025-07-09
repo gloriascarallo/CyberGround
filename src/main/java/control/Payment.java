@@ -38,14 +38,19 @@ public class Payment extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		String errors="";
 		CartBean cart=(CartBean)request.getSession().getAttribute("cart");
 		if (cart == null) {
-		    response.sendRedirect(request.getContextPath() + "/view/cart.jsp");
-		    return;
+			errors = "Sessione scaduta o carrello mancante. Ricarica la pagina e riprova.";
+	        request.setAttribute("errors", errors);
+	        request.getRequestDispatcher("/expiredSession.html").forward(request, response);
+	        return;
 		}
 		int idCart=cart.getIdCart();
 		if (cart.getProducts() == null || cart.getProducts().isEmpty()) {
-		    response.sendRedirect(request.getContextPath() + "/view/cart.jsp");
+		    errors="Carrello vuoto.<br>";
+		    request.setAttribute("errors", errors);
+		    request.getRequestDispatcher("/guest/view/cart.jsp");
 		    return;
 		}
 		
@@ -116,7 +121,7 @@ public class Payment extends HttpServlet {
 		order.setProducts_in_order(products_in_order); // non penso sia necessario
 		
 	
-		response.sendRedirect(request.getContextPath()+"/view/success_payment");
+		response.sendRedirect(request.getContextPath()+"/registeredUser/view/success_payment");
 		return;
 	}
 

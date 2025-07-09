@@ -36,13 +36,13 @@ public class User extends HttpServlet {
 	    if (idObj == null) {
 	    	errors = "Sessione scaduta o ID utente mancante. Ricarica la pagina e riprova.";
 	        request.setAttribute("errors", errors);
-	        request.getRequestDispatcher("/view/index.jsp").forward(request, response);
+	        request.getRequestDispatcher("/expiredSession.html").forward(request, response);
 	        return;
 	        
 	    }
 	    int id=(Integer)idObj;
 	    
-		RequestDispatcher dispatchToUserPage=request.getRequestDispatcher("/view/user.jsp");
+		RequestDispatcher dispatchToUserPage=request.getRequestDispatcher("/registeredUser/view/user.jsp");
 		RegisteredUserBean user=null;
 		RegisteredUserDaoDataSource ds=new RegisteredUserDaoDataSource();
 		try {
@@ -51,7 +51,7 @@ public class User extends HttpServlet {
 			if (user == null) {
 				errors+="Utente non trovato.<br>";
 				request.setAttribute("errors", errors);
-	            request.getRequestDispatcher("/view/index.jsp").forward(request, response);
+	            request.getRequestDispatcher("/guest/view/index.jsp").forward(request, response);
 	            return;
 			
 			}

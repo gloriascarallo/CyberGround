@@ -57,7 +57,7 @@ public class Add_product extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	
-		response.sendRedirect(request.getContextPath() + "/admin/view/products.jsp"); // da ridefinire
+		response.sendRedirect(request.getContextPath() + "/admin/view/products.jsp"); 
 		return;
 	}
 	
@@ -231,7 +231,7 @@ try {
 	return;
 }
 
-response.sendRedirect(request.getContextPath() + "/admin/view/products.jsp"); // da finire
+response.sendRedirect(request.getContextPath() + "/admin/view/products.jsp");
 return;
 	}
 

@@ -30,7 +30,7 @@ import bean.RegisteredUser_has_method_paymentBean;
 			}
 		}
 
-		private static final String TABLE_NAME = "registereduser_has_method_payment";
+		private static final String TABLE_NAME = "REGISTEREDUSER_HAS_METHOD_PAYMENT";
 
 		@Override
 		public synchronized void doSave(RegisteredUser_has_method_paymentBean registereduser_has_method_payment) throws SQLException {
@@ -219,7 +219,7 @@ import bean.RegisteredUser_has_method_paymentBean;
 			Connection connection = null;
 			PreparedStatement preparedStatement = null;
 			ResultSet rs=null;
-		        String selectSQL = "SELECT 1 FROM " + RegisteredUser_has_method_paymentDaoDataSource.TABLE_NAME +" WHERE IDREGISTEREDUSER = ? AND PAN = ? AND EXPIRATIONDATE = ? AND CVC = ?";
+		        String selectSQL = "SELECT 1 FROM " + RegisteredUser_has_method_paymentDaoDataSource.TABLE_NAME +" WHERE IDREGISTEREDUSER = ? AND PANMETHODPAYMENT = ? AND EXPIRATIONDATEMETHODPAYMENT = ? AND CVCMETHODPAYMENT = ?";
 		        try {
 					connection = ds.getConnection();
 					preparedStatement = connection.prepareStatement(selectSQL);

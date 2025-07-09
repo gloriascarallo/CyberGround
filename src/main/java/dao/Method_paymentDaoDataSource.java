@@ -31,7 +31,7 @@ import bean.Method_paymentBean;
 				}
 			}
 
-			private static final String TABLE_NAME = "method_payment";
+			private static final String TABLE_NAME = "METHOD_PAYMENT";
 
 			@Override
 			public synchronized void doSave(Method_paymentBean method_payment) throws SQLException {

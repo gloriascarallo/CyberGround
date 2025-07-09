@@ -4,6 +4,7 @@ package dao;
 	import java.sql.PreparedStatement;
 	import java.sql.ResultSet;
 	import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collection;
 	import java.util.LinkedList;
@@ -30,7 +31,7 @@ import bean.RegisteredUser_has_addressBean;
 			}
 		}
 
-		private static final String TABLE_NAME = "registereduser_has_address";
+		private static final String TABLE_NAME = "REGISTEREDUSER_HAS_ADDRESS";
 
 		@Override
 		public synchronized void doSave(RegisteredUser_has_addressBean registereduser_has_address) throws SQLException {
@@ -43,7 +44,7 @@ import bean.RegisteredUser_has_addressBean;
 
 			try {
 				connection = ds.getConnection();
-				preparedStatement = connection.prepareStatement(insertSQL);
+				preparedStatement = connection.prepareStatement(insertSQL, Statement.RETURN_GENERATED_KEYS);
 				
 				preparedStatement.setInt(1, registereduser_has_address.getIdRegisteredUser());
 				preparedStatement.setString(2, registereduser_has_address.getNameAddress());
@@ -192,7 +193,7 @@ ResultSet rs=preparedStatement.getGeneratedKeys();
 					RegisteredUser_has_addressBean bean = new RegisteredUser_has_addressBean();
 
 					bean.setId_has_address(rs.getInt("ID_HAS_ADDRESS"));
-					bean.setIdRegisteredUser(rs.getInt("USERNAMEREGISTEREDUSER"));
+					bean.setIdRegisteredUser(rs.getInt("IDREGISTEREDUSER"));
 					bean.setNameAddress(rs.getString("NAMEADDRESS"));
 					registeredusers_have_addresses.add(bean);
 				}

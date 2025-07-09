@@ -43,7 +43,7 @@ public class Refund extends HttpServlet {
 	    } catch (NumberFormatException e) {
 	        errors += "ID ordine non valido.<br>";
 	        request.setAttribute("errors", errors);
-	        request.getRequestDispatcher("/view/refund.jsp").forward(request, response);
+	        request.getRequestDispatcher("/registeredUser/view/refund.jsp").forward(request, response);
 	        return;
 	    }
 	    
@@ -58,7 +58,7 @@ public class Refund extends HttpServlet {
 				
 				errors+="Ordine non trovato<br>";
 				request.setAttribute("errors", errors);
-				request.getRequestDispatcher("/view/refund.jsp").forward(request, response);
+				request.getRequestDispatcher("/registeredUser/view/refund.jsp").forward(request, response);
 				return;
 				
 			}
@@ -67,7 +67,7 @@ public class Refund extends HttpServlet {
 				ArrayList<Product_in_orderBean> products=ds_products.doRetrieveByIdOrder(order.getIdOrder());
 				order.setProducts_in_order(products);			
 				request.setAttribute("order", order);
-				request.getRequestDispatcher("/view/order_refund.jsp").forward(request, response);
+				request.getRequestDispatcher("/registeredUser/view/order_refund.jsp").forward(request, response);
 				return;
 						
 						
@@ -79,6 +79,7 @@ public class Refund extends HttpServlet {
 			
 			e.printStackTrace();
 			request.getRequestDispatcher("/500.html").forward(request, response);
+			return;
 		}
 		
 		

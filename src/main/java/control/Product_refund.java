@@ -42,7 +42,7 @@ public class Product_refund extends HttpServlet {
 	    } catch (NumberFormatException e) {
 	        errors += "ID prodotto non valido.<br>";
 	        request.setAttribute("errors", errors);
-	        request.getRequestDispatcher("/view/refund.jsp").forward(request, response);
+	        request.getRequestDispatcher("/registeredUser/view/refund.jsp").forward(request, response);
 	        return;
 	    }
 	    
@@ -59,13 +59,13 @@ public class Product_refund extends HttpServlet {
 		if(product==null) {
 			errors += "Prodotto non trovato nell'ordine.<br>";
 	        request.setAttribute("errors", errors);
-	        request.getRequestDispatcher("/view/refund.jsp").forward(request, response);
+	        request.getRequestDispatcher("/registeredUser/view/refund.jsp").forward(request, response);
 	        return;
 			
 		}
 		
 		request.setAttribute("product", product);
-		request.getRequestDispatcher("/view/product_refund.jsp").forward(request, response);;
+		request.getRequestDispatcher("/registeredUser/view/product_refund.jsp").forward(request, response);;
 		return;
 		
 	}
