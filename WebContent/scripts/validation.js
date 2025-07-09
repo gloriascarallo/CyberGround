@@ -3,8 +3,8 @@ const usernamePattern=/^\w{1,45}$/;
 const passwordPattern=/^\w{5,20}$/;
 const telephonePattern=/^[0-9]{10}$/;
 const emailPattern=/^\S+@\S+\.\S+$/;
-const addressPattern=/^\w+(\s\w+)*$/g;
-const PANPattern=/^[0-9]{4}-[0-9]{4}-[0-9]{4}$/;
+const addressPattern = /^\w+(\s\w+)*$/;
+const PANPattern=/^[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{4}$/;
 const ScadenzaPattern=/^(0[1-9]|1[0-2])\/\d{2}$/;
 const CVCPattern=/^[0-9]{3,4}$/;
 const errorNameMessage="Devi inserire almeno una lettera e non devi superare 20 lettere";
@@ -59,7 +59,7 @@ function addAddress() {
 	let button=document.createElement("input");
 	button.type="button";
 	button.value="-";
-	button.addEventListener("click", function() {div.parentNode.removeChild(div); countAddress--;});
+	button.addEventListener("click", function() {div.parentNode.removeChild(div);});
 	div.appendChild(button);
 	
 	let span=document.createElement("span");
@@ -131,7 +131,7 @@ function addMethodPayment() {
 	let button=document.createElement("input");
 	button.type="button";
 	button.value="-";
-	button.addEventListener("click", function() {div.parentNode.removeChild(div); countMethodPayment--;});
+	button.addEventListener("click", function() {div.parentNode.removeChild(div);});
 	div.appendChild(button);
 	
 	
@@ -158,54 +158,68 @@ function validateLoginForm(){
 }
 	
 function validateRegistrationForm() {
+	const usernameEl = document.getElementsByName("username")[0];
+	const nameEl = document.getElementsByName("name")[0];
+	const lastNameEl = document.getElementsByName("lastName")[0];
+	const telephoneEl = document.getElementsByName("telephone")[0];
+	const emailEl = document.getElementsByName("email")[0];
+	const passwordEl = document.getElementsByName("password")[0];
+	const addressesEl = document.getElementsByName("address");
+	const panEl = document.getElementsByName("methodPaymentPAN");
+	const expirationDateEl = document.getElementsByName("methodPaymentScadenza");
+	const cvcEl = document.getElementsByName("methodPaymentCVC");
+
 	
-	const usernameEl=document.getElementsByName("username")[0];
-	const nameEl=document.getElementsByName("name")[0];
-	const lastNameEl=document.getElementsByName("lastName")[0];
-	const telephoneEl=document.getElementsByName("username")[0];
-	const emailEl=document.getElementsByName("email")[0];
-	const passwordEl=document.getElementsByName("password")[0];
-	let addressesEl=document.getElementsByName("address");
-	let panEl=document.getElementsByName("methodPaymentPAN");
-	let expirationDateEl=document.getElementById("methodPaymentScadenza");
-	let cvcEl=document.getElementById("methodPaymentCVC");
-	
-	for(i=0; i<addressesEl.lenght; i++) {
-	
-		if(!validateFormElement(addressesEl[i], addressPattern, document.getElementById("errorAddress" + (i+1)), errorAddressMessage));
-		return false;
 		
-	}
-	
-	for(i=0; i<panEl.lenght; i++) {
-		
-			if(!validateFormElement(panEl[i], PANPattern, document.getElementById("errorPAN" + (i+1)), errorPANMessage));
-			return false;
-			
-		}
-		
-		for(i=0; i<expirationDateEl.lenght; i++) {
-				
-					if(!validateFormElement(expirationDateEl[i], ScadenzaPattern, document.getElementById("errorScadenza" + (i+1)), errorScadenzaMessage));
+		for (let i = 0; i < addressesEl.length; i++) {
+				const input = addressesEl[i];
+				const suffix = input.id.replace("address", "");  
+				const span = document.getElementById("errorAddress" + suffix);
+				if (!validateFormElement(input, addressPattern, span, errorAddressMessage)) {
 					return false;
-					
 				}
-				
-				for(i=0; i<cvcEl.lenght; i++) {
-						
-							if(!validateFormElement(cvcEl[i], CVCPattern, document.getElementById("errorCVC" + (i+1)), errorCVCMessage));
-							return false;
-							
-						}	
-						
-				return (validateFormElement(nameEl, namePattern, document.getElementById('errorName'), errorNameMessage) 
-				&& validateFormElement(lastNameEl, namePattern, document.getElementById('errorLastName'))
-				&& validateFormElement(telephoneEl, telephonePattern, document.getElementById('errorTelephone'), errorTelephoneMessage)
-				&& validateFormElement(emailEl, emailPattern, document.getElementById('errorEmail'), errorEmailMessage)
-				&& validateFormElement(usernameEl, usernamePattern, document.getElementById('errorUsername'), errorUsernameMessage)
-				&& validateFormElement(passwordEl, passwordPattern, document.getElementById('errorPassword'), errorPasswordMessage))
-				
+			}
+		
 	
+
+		for (let i = 0; i < panEl.length; i++) {
+			const input = panEl[i];
+			const suffix = input.id.replace("methodPaymentPAN", "");
+			const span = document.getElementById("errorPAN" + suffix);
+			if (!validateFormElement(input, PANPattern, span, errorPANMessage)) {
+				return false;
+			}
+		}
+	
+
+		for (let i = 0; i < expirationDateEl.length; i++) {
+			const input = expirationDateEl[i];
+			const suffix = input.id.replace("methodPaymentScadenza", "");
+			const span = document.getElementById("errorScadenza" + suffix);
+			if (!validateFormElement(input, ScadenzaPattern, span, errorScadenzaMessage)) {
+				return false;
+			}
+		}
+	
+
+		for (let i = 0; i < cvcEl.length; i++) {
+			const input = cvcEl[i];
+			const suffix = input.id.replace("methodPaymentCVC", "");
+			const span = document.getElementById("errorCVC" + suffix);
+			if (!validateFormElement(input, CVCPattern, span, errorCVCMessage)) {
+				return false;
+			}
+		}
+	
+
+	return (
+		validateFormElement(nameEl, namePattern, document.getElementById('errorName'), errorNameMessage) &&
+		validateFormElement(lastNameEl, namePattern, document.getElementById('errorLastName'), errorNameMessage) &&
+		validateFormElement(telephoneEl, telephonePattern, document.getElementById('errorTelephone'), errorTelephoneMessage) &&
+		validateFormElement(emailEl, emailPattern, document.getElementById('errorEmail'), errorEmailMessage) &&
+		validateFormElement(usernameEl, usernamePattern, document.getElementById('errorUsername'), errorUsernameMessage) &&
+		validateFormElement(passwordEl, passwordPattern, document.getElementById('errorPassword'), errorPasswordMessage)
+	);
 }
 	
 	function validateAdd_addressForm() {
