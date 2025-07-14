@@ -40,7 +40,7 @@ public class Cart extends HttpServlet {
 			
 			errors = "Sessione scaduta o carrello mancante. Ricarica la pagina e riprova.";
 	        request.setAttribute("errors", errors);
-	        request.getRequestDispatcher("/expiredSession.html").forward(request, response);
+	        request.getRequestDispatcher("/error/expiredSession.jsp").forward(request, response);
 	        return;
 			
 			
@@ -66,7 +66,7 @@ public class Cart extends HttpServlet {
 		
 		catch(SQLException e) {
 			e.printStackTrace();
-			request.getRequestDispatcher("/500.html").forward(request, response);
+			request.getRequestDispatcher("/error/500.html").forward(request, response);
 			return;
 		}
 		

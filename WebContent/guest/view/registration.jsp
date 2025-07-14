@@ -4,10 +4,15 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Pagina di registrazione</title>
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/styles/Registration.css?v=3"/>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Registration Page</title>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/styles/Registration.css?v=4"/>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/styles/Layout.css"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
+
+<%@ include file="/includes/header.jsp" %>
 
 <%
 if(request.getAttribute("errors")!=null){
@@ -51,12 +56,15 @@ if(!errors.equals("")) {%> <div id="error"><%=errors %></div>
 
 <div id="methodsPayment">
 <div id="methodPaymentNum1">
-<label for="methodPaymentPAN1"> Inserisci un metodo di pagamento (o più metodi di pagamento): </label><br>
-PAN:<input type="text" name="methodPaymentPAN" id="methodPaymentPAN1" onchange="validateFormElement(this, PANPattern, document.getElementById('errorPAN1'), errorPANMessage)" placeholder="####-####-####-####">
+<label> Inserisci un metodo di pagamento (o più metodi di pagamento): </label><br>
+<label for="methodPaymentPAN1">PAN:</label>
+<input type="text" name="methodPaymentPAN" id="methodPaymentPAN1" onchange="validateFormElement(this, PANPattern, document.getElementById('errorPAN1'), errorPANMessage)" placeholder="####-####-####-####">
 <span id="errorPAN1"></span><br>
-Data di scadenza:<input type="text" name="methodPaymentScadenza" id="methodPaymentScadenza1" onchange="validateFormElement(this, ScadenzaPattern, document.getElementById('errorScadenza1'), errorScadenzaMessage)" placeholder="##/##">
+<label for="methodPaymentScadenza1">Data di scadenza:</label>
+<input type="text" name="methodPaymentScadenza" id="methodPaymentScadenza1" onchange="validateFormElement(this, ScadenzaPattern, document.getElementById('errorScadenza1'), errorScadenzaMessage)" placeholder="##/##">
 <span id="errorScadenza1"></span><br>
-CVC:<input type="text" name="methodPaymentCVC" id="methodPaymentCVC1" onchange="validateFormElement(this, CVCPattern, document.getElementById('errorCVC1'), errorCVCMessage)" placeholder="### or ####"><input type="button" value="+" onclick="addMethodPayment()">
+<label for="methodPaymentCVC1">CVC</label>
+<input type="text" name="methodPaymentCVC" id="methodPaymentCVC1" onchange="validateFormElement(this, CVCPattern, document.getElementById('errorCVC1'), errorCVCMessage)" placeholder="### or ####"><input type="button" value="+" onclick="addMethodPayment()">
 <span id="errorCVC1"></span><br>
 
 </div>
@@ -79,6 +87,7 @@ CVC:<input type="text" name="methodPaymentCVC" id="methodPaymentCVC1" onchange="
 
 </form>
 </div>
+<%@ include file="/includes/footer.jsp" %>
 </body>
 <script src="<%=request.getContextPath() %>/scripts/validation.js?v=3" type="text/javascript"></script>
 </html>

@@ -1,4 +1,4 @@
-package control;
+package control_admin;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
@@ -91,11 +91,11 @@ public class Add_product extends HttpServlet {
 
 		            // Basic validation for the uploaded file
 		            if (fileName == null || fileName.isEmpty()) {
-		                errors += "Nessun file immagine selezionato.";
+		                errors += "Nessun file immagine selezionato.<br>";
 		            } else if (filePart.getSize() == 0) {
-		                errors += "Il file immagine è vuoto.";
+		                errors += "Il file immagine è vuoto.<br>";
 		            } else if (!filePart.getContentType().startsWith("image/")) {
-		                errors += "Il file caricato non è un'immagine valida.";
+		                errors += "Il file caricato non è un'immagine valida.<br>";
 		            } else {
 		                // Construct the absolute path to the upload directory
 		                String uploadPath = getServletContext().getRealPath("") + File.separator + UPLOAD_DIRECTORY;
@@ -227,7 +227,7 @@ try {
 } catch (SQLException e) {
 	
 	e.printStackTrace();
-	request.getRequestDispatcher("/500.html").forward(request, response);
+	request.getRequestDispatcher("/error/500.html").forward(request, response);
 	return;
 }
 

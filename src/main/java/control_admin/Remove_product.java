@@ -1,4 +1,4 @@
-package control;
+package control_admin;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -28,20 +28,31 @@ public class Remove_product extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int id=Integer.parseInt(request.getParameter("idProduct"));
+		
+		String errors="";
+		String idStr=request.getParameter("idProduct");
+		int id;
+		if (idStr== null || idStr.trim().isEmpty()) {
+			errors+="Inserisci un id.<br>";
+			request.setAttribute("errors", errors);
+			request.getRequestDispatcher("/admin/view/products.jsp").forward(request, response);
+			return;
+		} else {
 		ProductDaoDataSource ds=new ProductDaoDataSource();
 		try {
+			id=Integer.parseInt(idStr);
 			ds.doDelete(id);
 		} catch (SQLException e) {
 			
 			e.printStackTrace();
-			request.getRequestDispatcher("/500.html").forward(request, response);
+			request.getRequestDispatcher("/error/500.html").forward(request, response);
 			return;
 		}
 		
 		response.sendRedirect(request.getContextPath()+"/admin/view/products.jsp");
 		return;
 	}
+}	
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

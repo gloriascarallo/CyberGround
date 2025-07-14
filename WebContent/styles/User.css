@@ -13,7 +13,9 @@ body {
 /* Contenitore utente */
 .container {
   background-color: #fff;
+  color: #141C5C;
   padding: 40px 50px;
+  margin-top: 50px;
   border-radius: 12px;
   box-shadow: 0 4px 20px rgba(0,0,0,0.2);
   text-align: center;
@@ -28,18 +30,85 @@ body {
   object-fit: cover;
   border-radius: 50%;
   margin-bottom: 20px;
-  border: 3px solid #FF8800;
 }
 
 /* Testo profilo */
 .container p {
   font-size: 18px;
   margin: 12px 0;
-  color: #333;
+  color: #141C5C;
 }
 
 /* Titolo pagina */
 .container h1 {
   color: #333;
   margin-bottom: 20px;
+}
+
+.orders-button {
+  margin-top: 15px;
+  margin-bottom: 20px;
+  background-color: #141C5C;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background 0.3s ease;
+}
+
+.orders-button i {
+  margin-right: 8px;
+}
+
+.orders-button:hover {
+  background-color: #1d2785;
+}
+
+.logout-button {
+  background-color: #141C5C;
+  color: #fff;
+  text-decoration: none;
+  padding: 12px 24px;
+  border-radius: 6px;
+  font-size: 16px;
+  border: 2px solid #141C5C;
+  transition: background-color 0.3s ease;
+  cursor: pointer;
+    }
+
+.logout-button i {
+  margin-right: 8px;
+    }
+
+.logout-button:hover {
+  background-color: #FF8800;
+  border: 2px solid #FF8800;
+  color: white;
+    }
+
+/* Responsive */
+@media (max-width: 600px) {
+  .container {
+    padding: 30px 20px;
+    max-width: 95%;
+    margin-top: 30px;
+  }
+
+  .container img {
+    width: 120px;
+    height: 120px;
+    margin-bottom: 15px;
+  }
+
+  .container p {
+    font-size: 16px;
+    margin: 10px 0;
+  }
+
+  .container h1 {
+    font-size: 26px;
+    margin-bottom: 15px;
+  }
 }

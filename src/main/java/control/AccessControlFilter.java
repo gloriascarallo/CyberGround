@@ -30,10 +30,10 @@ public class AccessControlFilter extends HttpFilter implements Filter {
 		String path = httpServletRequest.getServletPath();
 		System.out.println(path);
 		if (path.contains("/registeredUser/") && (isRegisteredUser==null || !isRegisteredUser)) {	
-			httpServletResponse.sendRedirect(httpServletRequest.getContextPath() + "/accessDeniedRegisteredUser.html");
+			httpServletResponse.sendRedirect(httpServletRequest.getContextPath() + "/error/accessDeniedRegisteredUser.jsp");
 			return;
 		} else if (path.contains("/admin/") && (isAdmin==null || !isAdmin)) {
-			httpServletResponse.sendRedirect(httpServletRequest.getContextPath() + "/accessDeniedAdmin.html");
+			httpServletResponse.sendRedirect(httpServletRequest.getContextPath() + "/error/accessDeniedAdmin.jsp");
 			return;
 		}
 

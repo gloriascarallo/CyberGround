@@ -45,7 +45,8 @@ public class UploadCart extends HttpServlet {
 
 	    int idCart;
 	    try {
-	        idCart = Integer.parseInt(idParam);
+//	        idCart = Integer.parseInt(idParam);
+	    	idCart = 0;
 	    } catch (NumberFormatException e) {
 	        errors = "ID carrello non valido.<br>";
 	        request.setAttribute("errors", errors);
@@ -65,7 +66,7 @@ public class UploadCart extends HttpServlet {
 		
 		catch(SQLException e) {
 			e.printStackTrace();
-			request.getRequestDispatcher("/500.html").forward(request, response);
+			request.getRequestDispatcher("/error/500.html").forward(request, response);
 			return;
 		}
 		

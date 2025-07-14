@@ -45,7 +45,8 @@ public class UploadOrders extends HttpServlet {
 
 	    int idCart;
 	    try {
-	        idCart = Integer.parseInt(idCartStr);
+//	        idCart = Integer.parseInt(idCartStr);
+	    	idCart = 0;
 	    } catch (NumberFormatException e) {
 	        errors = "ID carrello non valido.<br>";
 	        request.setAttribute("errors", errors);
@@ -63,7 +64,7 @@ public class UploadOrders extends HttpServlet {
 		}
 		catch(SQLException e) {
 			e.printStackTrace();
-			request.getRequestDispatcher("500.html").forward(request, response);
+			request.getRequestDispatcher("/error/500.html").forward(request, response);
 			return;
 			
 		}
@@ -99,7 +100,7 @@ public class UploadOrders extends HttpServlet {
 			} catch (SQLException e) {
 				
 				e.printStackTrace();
-				request.getRequestDispatcher("/500.html").forward(request, response);
+				request.getRequestDispatcher("/error/500.html").forward(request, response);
 				return;
 			}
 			

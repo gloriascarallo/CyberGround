@@ -2,8 +2,6 @@ body {
   background-color: #141C5C;
   font-family: Arial, sans-serif;
   color: #333;
-  margin: 0;
-  padding: 40px 0;
   display: flex;
   justify-content: center;
   flex-direction: column;

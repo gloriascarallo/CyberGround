@@ -43,7 +43,7 @@ public class Payment extends HttpServlet {
 		if (cart == null) {
 			errors = "Sessione scaduta o carrello mancante. Ricarica la pagina e riprova.";
 	        request.setAttribute("errors", errors);
-	        request.getRequestDispatcher("/expiredSession.html").forward(request, response);
+	        request.getRequestDispatcher("/error/expiredSession.jsp").forward(request, response);
 	        return;
 		}
 		int idCart=cart.getIdCart();
@@ -71,7 +71,7 @@ public class Payment extends HttpServlet {
 		catch(SQLException e) {
 			
 			e.printStackTrace();
-			request.getRequestDispatcher("/500.html").forward(request, response);
+			request.getRequestDispatcher("/error/500.html").forward(request, response);
 			return;
 		}
 		
@@ -95,7 +95,7 @@ public class Payment extends HttpServlet {
 			catch(SQLException e) {
 				
 				e.printStackTrace();
-				request.getRequestDispatcher("/500.html").forward(request, response);
+				request.getRequestDispatcher("/error/500.html").forward(request, response);
 				return;
 			}
 			products_in_order.add(product_in_order);
@@ -112,7 +112,7 @@ public class Payment extends HttpServlet {
 			} catch (SQLException e) {
 				
 				e.printStackTrace();
-				request.getRequestDispatcher("/500.html").forward(request, response);
+				request.getRequestDispatcher("/error/500.html").forward(request, response);
 				return;
 			}
 		}
@@ -121,7 +121,7 @@ public class Payment extends HttpServlet {
 		order.setProducts_in_order(products_in_order); // non penso sia necessario
 		
 	
-		response.sendRedirect(request.getContextPath()+"/registeredUser/view/success_payment");
+		response.sendRedirect(request.getContextPath()+"/registeredUser/view/success_payment.jsp");
 		return;
 	}
 

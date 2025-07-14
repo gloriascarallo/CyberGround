@@ -7,6 +7,7 @@ const addressPattern = /^\w+(\s\w+)*$/;
 const PANPattern=/^[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{4}$/;
 const ScadenzaPattern=/^(0[1-9]|1[0-2])\/\d{2}$/;
 const CVCPattern=/^[0-9]{3,4}$/;
+const IDPattern = /^\d+$/;
 const errorNameMessage="Devi inserire almeno una lettera e non devi superare 20 lettere";
 const errorUsernameMessage="Un username valido deve contenere almeno un carattere e non deve superarne 45";
 const errorPasswordMessage="Una password valida deve contenere minimo 5 caratteri e al massimo 20";
@@ -16,6 +17,7 @@ const errorAddressMessage="Un indirizzo valido deve essere formato da sequenze d
 const errorPANMessage="Un metodo di pagamento valido deve avere formato ####-####-####-####";
 const errorScadenzaMessage="Una data di scadenza valida deve avere formato ##/##";
 const errorCVCMessage="Un CVC valido deve avere formato ### o ####";
+const errorIDMessage = "L'ID ordine deve contenere solo numeri";
 
 
 function validateFormElement(formElement, pattern, span, error) {
@@ -214,10 +216,14 @@ function validateRegistrationForm() {
 
 	return (
 		validateFormElement(nameEl, namePattern, document.getElementById('errorName'), errorNameMessage) &&
+		validateFormElement(usernameEl, usernamePattern, document.getElementById('errorUsername'), errorUsernameMessage) &&
 		validateFormElement(lastNameEl, namePattern, document.getElementById('errorLastName'), errorNameMessage) &&
 		validateFormElement(telephoneEl, telephonePattern, document.getElementById('errorTelephone'), errorTelephoneMessage) &&
 		validateFormElement(emailEl, emailPattern, document.getElementById('errorEmail'), errorEmailMessage) &&
-		validateFormElement(usernameEl, usernamePattern, document.getElementById('errorUsername'), errorUsernameMessage) &&
+		validateFormElement(addressesEl, addressPattern, document.getElementById('errorAddress1'), errorAddressMessage) &&
+		validateFormElement(panEl, PANPattern, document.getElementById('errorPAN1'), errorPANMessage) &&
+		validateFormElement(expirationDateEl, ScadenzaPattern, document.getElementById('errorScadenza1'), errorScadenzaMessage) &&
+		validateFormElement(cvcEl, CVCPattern, document.getElementById('errorCVC1'), errorCVCMessage) &&
 		validateFormElement(passwordEl, passwordPattern, document.getElementById('errorPassword'), errorPasswordMessage)
 	);
 }
@@ -243,6 +249,65 @@ function validateRegistrationForm() {
 		
 	}
 	
+function validateProduct_refundForm() {
+	    const addressesEl = document.getElementsByName("ritiro");
+		const panEl = document.getElementsByName("PAN");
+		const expirationDateEl = document.getElementsByName("Scadenza");
+		const cvcEl = document.getElementsByName("CVC");
+		
+				for (let i = 0; i < addressesEl.length; i++) {
+						const input = addressesEl[i];
+						const suffix = input.id.replace("ritiro", "");  
+						const span = document.getElementById("errorAddress" + suffix);
+						if (!validateFormElement(input, addressPattern, span, errorAddressMessage)) {
+							return false;
+						}
+					}
+				
+			
+
+				for (let i = 0; i < panEl.length; i++) {
+					const input = panEl[i];
+					const suffix = input.id.replace("PAN", "");
+					const span = document.getElementById("errorPAN" + suffix);
+					if (!validateFormElement(input, PANPattern, span, errorPANMessage)) {
+						return false;
+					}
+				}
+			
+
+				for (let i = 0; i < expirationDateEl.length; i++) {
+					const input = expirationDateEl[i];
+					const suffix = input.id.replace("Scadenza", "");
+					const span = document.getElementById("errorScadenza" + suffix);
+					if (!validateFormElement(input, ScadenzaPattern, span, errorScadenzaMessage)) {
+						return false;
+					}
+				}
+			
+
+				for (let i = 0; i < cvcEl.length; i++) {
+					const input = cvcEl[i];
+					const suffix = input.id.replace("CVC", "");
+					const span = document.getElementById("errorCVC" + suffix);
+					if (!validateFormElement(input, CVCPattern, span, errorCVCMessage)) {
+						return false;
+					}
+				}
+				
+				return(
+					validateFormElement(addressesEl, addressPattern, document.getElementById('errorAddress1'), errorAddressMessage) &&
+					validateFormElement(panEl, PANPattern, document.getElementById('errorPAN1'), errorPANMessage) &&
+					validateFormElement(expirationDateEl, ScadenzaPattern, document.getElementById('errorScadenza1'), errorScadenzaMessage) &&
+					validateFormElement(cvcEl, CVCPattern, document.getElementById('errorCVC1'), errorCVCMessage)
+				);
+	}
+	
+	function validateRefundForm() {
+		  const idInput = document.getElementById('id');
+		  const errorSpan = document.getElementById('errorID');
+		  return validateFormElement(idInput, IDPattern, errorSpan, errorIDMessage);
+}
 
 
 

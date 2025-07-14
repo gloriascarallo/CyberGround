@@ -1,0 +1,122 @@
+/* Common layout */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #141C5C;
+  color: #FF8800;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Header */
+#main-header {
+  background-color: #141C5C; /* BLU */
+  color: #fff;
+  width: 100vw;
+  box-sizing: border-box;
+  border-bottom: 4px solid #FF8800;
+  padding: 15px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  position: relative;
+  z-index: 10;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+}
+
+.header-left h1 {
+  margin-left: 10px;
+  font-size: 24px;
+  color: #FF8800; /* ARANCIONE */
+}
+
+.logo {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+}
+
+.header-right a {
+  color: #fff; /* bianchi */
+  margin-left: 20px;
+  font-size: 18px;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px; /* spazio tra icona e testo */
+  transition: color 0.3s ease;
+}
+
+.header-right a i {
+  font-size: 20px;
+}
+
+.header-right a:hover {
+  color: #FF8800;
+}
+
+/* Footer */
+#main-footer {
+  background-color: #fff;
+  color: #141C5C;
+  width: 100vw;
+  box-sizing: border-box;
+  border-top: 4px solid #FF8800;
+  padding: 20px 40px;
+  text-align: center;
+  margin-top: auto;
+  position: relative;
+  z-index: 10;
+}
+
+.footer-links {
+  margin-bottom: 10px;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+.footer-links a {
+  color: #141C5C;
+  font-weight: bold;
+  text-decoration: none;
+  font-size: 16px;
+  transition: color 0.3s ease;
+}
+
+.footer-links a:hover {
+  color: #FF8800;
+}
+
+#main-footer p {
+  font-size: 14px;
+  color: #141C5C;
+  margin: 0;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  #main-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .header-right {
+    margin-top: 10px;
+  }
+
+  .footer-links {
+    flex-direction: column;
+    gap: 10px;
+  }
+}

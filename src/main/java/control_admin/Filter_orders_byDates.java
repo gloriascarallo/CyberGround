@@ -1,4 +1,4 @@
-package control;
+package control_admin;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -61,7 +61,7 @@ public class Filter_orders_byDates extends HttpServlet {
 		} catch (SQLException e) {
 			
 			e.printStackTrace();
-			request.getRequestDispatcher("/500.html").forward(request, response);
+			request.getRequestDispatcher("/error/500.html").forward(request, response);
 			return;
 		}
 		
@@ -83,7 +83,7 @@ public class Filter_orders_byDates extends HttpServlet {
 			} catch (SQLException e) {
 				
 				e.printStackTrace();
-				request.getRequestDispatcher("/500.html").forward(request, response);
+				request.getRequestDispatcher("/error/500.html").forward(request, response);
 				return;
 			}
 			

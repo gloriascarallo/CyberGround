@@ -115,7 +115,7 @@ final String SECRET_KEY = "qwerTY-SECRET-KEY-2025";
 			        }
 			     catch (SQLException e) {
 			        e.printStackTrace(); 
-			        request.getRequestDispatcher("/500.html").forward(request, response);
+			        request.getRequestDispatcher("/error/500.html").forward(request, response);
 			        return;
 			    }
 		}
@@ -127,7 +127,7 @@ final String SECRET_KEY = "qwerTY-SECRET-KEY-2025";
 	    response.addCookie(guestCookie);
 		request.getSession().setAttribute("isAdmin", Boolean.FALSE);
 		request.getSession().setAttribute("isRegisteredUser", Boolean.FALSE);
-		response.sendRedirect(request.getContextPath()+"/guest/view/index.jsp");
+		response.sendRedirect(request.getContextPath()+"/guest/view/login.jsp");
 		return;
 	}
 

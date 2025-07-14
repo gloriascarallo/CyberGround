@@ -37,3 +37,28 @@ button {
 button:hover {
     background-color: #b71c1c;
 }
+
+/* Responsive */
+@media (max-width: 600px) {
+    body {
+        padding: 20px;
+    }
+
+    .error-box {
+        width: 100%;
+        padding: 25px;
+    }
+
+    h1 {
+        font-size: 32px;
+    }
+
+    p {
+        font-size: 16px;
+    }
+
+    button {
+        font-size: 14px;
+        padding: 8px 16px;
+    }
+}
