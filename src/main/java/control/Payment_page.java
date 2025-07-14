@@ -36,6 +36,15 @@ public class Payment_page extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	
 		String errors="";
+		Boolean isRegisteredUser = (Boolean) request.getSession().getAttribute("isRegisteredUser");
+
+        if (isRegisteredUser == null || !isRegisteredUser) {
+        	
+        	request.getRequestDispatcher("/accessDenied.html").forward(request, response);
+        	return;
+        	
+        }
+		
 		Object idObj = request.getSession().getAttribute("id");
 		if (idObj == null) {
 			errors = "Sessione scaduta o ID utente mancante. Ricarica la pagina e riprova.";
@@ -71,7 +80,6 @@ public class Payment_page extends HttpServlet {
 				
 			}
 			
-	
 		
 		if(!errors.equals("")) {
 			
@@ -115,6 +123,7 @@ public class Payment_page extends HttpServlet {
 		request.setAttribute("user_addresses", user_addresses);
 		request.setAttribute("user_methods_payment", user_methods_payment);
 		request.getRequestDispatcher("/registeredUser/view/payment_page.jsp").forward(request, response);
+		
 		return;
 	}
 

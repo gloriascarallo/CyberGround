@@ -1,6 +1,8 @@
 package control;
 
 import java.io.IOException;
+
+import jakarta.servlet.DispatcherType;
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -21,22 +23,31 @@ public class AccessControlFilter extends HttpFilter implements Filter {
 
 	
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) 
-			throws IOException, ServletException {
-		
-		HttpServletRequest httpServletRequest = (HttpServletRequest) request;
-		HttpServletResponse httpServletResponse = (HttpServletResponse) response;
-		Boolean isRegisteredUser = (Boolean) httpServletRequest.getSession().getAttribute("isRegisteredUser");
-		Boolean isAdmin = (Boolean) httpServletRequest.getSession().getAttribute("isAdmin");
-		String path = httpServletRequest.getServletPath();
-		System.out.println(path);
-		if (path.contains("/registeredUser/") && (isRegisteredUser==null || !isRegisteredUser)) {	
-			httpServletResponse.sendRedirect(httpServletRequest.getContextPath() + "/error/accessDeniedRegisteredUser.jsp");
-			return;
-		} else if (path.contains("/admin/") && (isAdmin==null || !isAdmin)) {
-			httpServletResponse.sendRedirect(httpServletRequest.getContextPath() + "/error/accessDeniedAdmin.jsp");
-			return;
-		}
+	        throws IOException, ServletException {
 
-		chain.doFilter(request, response);
+	    HttpServletRequest httpRequest = (HttpServletRequest) request;
+	    HttpServletResponse httpResponse = (HttpServletResponse) response;
+
+	    Boolean isRegisteredUser = (Boolean) httpRequest.getSession().getAttribute("isRegisteredUser");
+	    Boolean isAdmin = (Boolean) httpRequest.getSession().getAttribute("isAdmin");
+	    String path = httpRequest.getServletPath();
+	    DispatcherType dispatcherType = httpRequest.getDispatcherType();
+
+	    System.out.println("Filtro path: " + path + ", dispatcher: " + dispatcherType);
+
+	    // Blocca SOLO se è richiesta DIRETTA (REQUEST), non FORWARD o INCLUDE
+	    if (dispatcherType == DispatcherType.REQUEST) {
+	        if (path.contains("/registeredUser/") && (isRegisteredUser == null || !isRegisteredUser)) {
+	            httpResponse.sendRedirect(httpRequest.getContextPath() + "/accessDeniedRegisteredUser.html");
+	            return;
+	        } else if (path.contains("/admin/") && (isAdmin == null || !isAdmin)) {
+	            httpResponse.sendRedirect(httpRequest.getContextPath() + "/accessDeniedAdmin.html");
+	            return;
+	        }
+	    }
+
+	    // Altrimenti lascia passare (anche FORWARD, INCLUDE, ERROR, ecc.)
+	    chain.doFilter(request, response);
 	}
+	
 }
