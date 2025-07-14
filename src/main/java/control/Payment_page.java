@@ -40,7 +40,7 @@ public class Payment_page extends HttpServlet {
 
         if (isRegisteredUser == null || !isRegisteredUser) {
         	
-        	request.getRequestDispatcher("/accessDenied.html").forward(request, response);
+        	request.getRequestDispatcher("/error/accessDeniedRegisteredUser.jsp").forward(request, response);
         	return;
         	
         }

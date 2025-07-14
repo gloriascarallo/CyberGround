@@ -38,10 +38,10 @@ public class AccessControlFilter extends HttpFilter implements Filter {
 	    // Blocca SOLO se è richiesta DIRETTA (REQUEST), non FORWARD o INCLUDE
 	    if (dispatcherType == DispatcherType.REQUEST) {
 	        if (path.contains("/registeredUser/") && (isRegisteredUser == null || !isRegisteredUser)) {
-	            httpResponse.sendRedirect(httpRequest.getContextPath() + "/accessDeniedRegisteredUser.html");
+	            httpResponse.sendRedirect(httpRequest.getContextPath() + "/error/accessDeniedRegisteredUser.jsp");
 	            return;
 	        } else if (path.contains("/admin/") && (isAdmin == null || !isAdmin)) {
-	            httpResponse.sendRedirect(httpRequest.getContextPath() + "/accessDeniedAdmin.html");
+	            httpResponse.sendRedirect(httpRequest.getContextPath() + "/error/accessDeniedAdmin.jsp");
 	            return;
 	        }
 	    }
