@@ -17,6 +17,14 @@ h2 {
   padding: 20px 20px;
 }
 
+.error {
+  color: red;
+  padding: 12px;
+  margin-top: 20px;
+  font-weight: bold;
+  text-align: center;
+}
+
 /* Form */
 form {
   background-color: #ffffff;

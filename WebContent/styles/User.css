@@ -63,7 +63,9 @@ body {
 }
 
 .orders-button:hover {
-  background-color: #1d2785;
+  background-color: #FF8800;
+  border: 0 solid #FF8800;
+  color: white;
 }
 
 .logout-button {
