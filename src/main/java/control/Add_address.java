@@ -51,6 +51,7 @@ public class Add_address extends HttpServlet {
 	        return;
 	    }
 	    int id = (Integer) idObj;
+	    String redirectAfter = request.getParameter("redirectAfter");
 		String nameAddress=request.getParameter("address");
 		
 		if(nameAddress==null || nameAddress.trim().equals("")) {
@@ -105,8 +106,13 @@ public class Add_address extends HttpServlet {
 			return;
 		}
 		
-		request.setAttribute("message", "Indirizzo aggiunto con successo!<br>");
-		dispatcherToAdd_address.forward(request, response);
+		request.getSession().setAttribute("message", "Indirizzo aggiunto con successo!<br>");
+		//dispatcherToAdd_address.forward(request, response);
+		if ("/registeredUser/view/payment_page.jsp".equals(redirectAfter)) {
+		    response.sendRedirect(request.getContextPath() + "/Payment_page");
+		} else if ("/registeredUser/view/user.jsp".equals(redirectAfter)) {
+		    response.sendRedirect(request.getContextPath() + "/registeredUserMethods_Payment");
+		}
 		return;
 	}
 

@@ -25,7 +25,7 @@ request.getAttribute("user_methods_payment");
 
 <%@ include file="/includes/header.jsp" %>
 
-<c:forEach var="product_incart" items="${cart}">
+<c:forEach var="product_incart" items="${sessionScope.cart.products}">
 <a href="${pageContext.request.contextPath}/Product">
     <img src="${product_incart.product.imagePath}" alt="Product image" />
     </a>
@@ -38,6 +38,10 @@ request.getAttribute("user_methods_payment");
 <div id="container">
 <form action="${pageContext.request.contextPath}/Payment" method="post">
 <div>
+<c:if test="${not empty sessionScope.message}">
+    <div class="success-message">${sessionScope.message}</div>
+    <c:remove var="message" scope="session"/>
+</c:if>
 <label for="indirizzo">Indirizzo</label> <br>
 <select name="indirizzo" id="indirizzo">
 <c:forEach var="user_address" items="${user_addresses}">
@@ -46,9 +50,13 @@ request.getAttribute("user_methods_payment");
 </select>
 </div>
 
-<span>Vuoi aggiungere un nuovo indirizzo? <a href="./add_address.jsp">Clicca qui!</a></span>
+<span>Vuoi aggiungere un nuovo indirizzo? <a href="${pageContext.request.contextPath}/registeredUser/view/add_address.jsp?redirectAfter=/registeredUser/view/payment_page.jsp">Clicca qui!</a></span>
 
 <div>
+<c:if test="${not empty sessionScope.message}">
+    <div class="success-message">${sessionScope.message}</div>
+    <c:remove var="message" scope="session"/>
+</c:if>
 <label for="metodo_pagamento">Metodo di pagamento</label> <br>
 <select name="metodo_pagamento" id="metodo_pagamento">
 <c:forEach var="user_methods" items="${user_methods_payment}">
@@ -57,7 +65,7 @@ request.getAttribute("user_methods_payment");
 </select>
 </div>
 
-<span>Vuoi aggiungere un nuovo metodo di pagamento? <a href="./add_payment_method.jsp">Clicca qui!</a></span>
+<span>Vuoi aggiungere un nuovo metodo di pagamento? <a href="${pageContext.request.contextPath}/registeredUser/view/add_payment_method.jsp?redirectAfter=/registeredUser/view/payment_page.jsp">Clicca qui!</a></span>
 
 <div>
 <input type="submit" value="Conferma pagamento">

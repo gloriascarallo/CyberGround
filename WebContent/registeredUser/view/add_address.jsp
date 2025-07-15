@@ -28,6 +28,7 @@ ${message}
 <label for="address">Inserisci nuovo indirizzo:</label> <br>
 	<input type="text" name="address" id="address" onchange="validateFormElement(this, addressPattern, document.getElementById('errorAddress'), errorAddressMessage)" > 
 	<span id="errorAddress"></span> <br>
+	<input type="hidden" name="redirectAfter" value="${param.redirectAfter}">
 	<input type="submit" value="Invia" onclick="return validateAdd_addressForm()">
 	<input type="reset" value="Reset">
 
