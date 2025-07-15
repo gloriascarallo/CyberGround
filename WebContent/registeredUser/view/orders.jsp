@@ -21,22 +21,26 @@ request.getAttribute("orders");
 <%@ include file="/includes/header.jsp" %>
 
 <h2>Qui sono mostrati tutti i tuoi ordini</h2>
-
 <c:forEach var="user_orders" items="${orders}">
-	<div id="order-box">
-	<p>Id Ordine: ${user_orders.idOrder}</p>
-	<a href="${pageContext.request.contextPath}/Product">
-    <img src="${user_orders.product_in_order.product.imagePath}" alt="Product image"/>
-    </a>
-    <p>Nome Prodotto: ${user_orders.product_in_order.product.name}</p>
-    <p>Prezzo Prodotto: ${user_orders.product_in_order.price}<p>
-    <p>Quantità Prodotto: ${user_orders.product_in_order.quantity}<p>
-	<p>Data Acquisto: ${user_orders.datePurchase}<p>
-	<p>Data Spedizione: ${user_orders.dateShipping}<p>
-	<p>Data Consegna: ${user_orders.dateDelivery}<p>
-	<p>Prezzo Totale: ${user_orders.totalOrder}<p>
-	</div>
+  <div id="order-box">
+    <p>Id Ordine: ${user_orders.idOrder}</p>
+
+    <c:forEach var="product_in_order" items="${user_orders.products_in_order}">
+      <a href="${pageContext.request.contextPath}/Product">
+        <img src="${product_in_order.product.imagePath}" alt="Product image"/>
+      </a>
+      <p>Nome Prodotto: ${product_in_order.product.name}</p>
+      <p>Prezzo Prodotto: ${product_in_order.price}</p>
+      <p>Quantità Prodotto: ${product_in_order.quantity}</p>
+    </c:forEach>
+
+    <p>Data Acquisto: ${user_orders.datePurchase}</p>
+    <p>Data Spedizione: ${user_orders.dateShipping}</p>
+    <p>Data Consegna: ${user_orders.dateDelivery}</p>
+    <p>Prezzo Totale: ${user_orders.totalOrder}</p>
+  </div>
 </c:forEach>
+
 <%@ include file="/includes/footer.jsp" %>
 </body>
 </html>
