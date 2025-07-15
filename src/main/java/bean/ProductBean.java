@@ -39,11 +39,7 @@ public class ProductBean {
 
 
 	public double getPrice() {
-		if (discountPercentage == null) {
 		    return price;
-		} else {
-		    return price * (1 - discountPercentage / 100);
-		}
 	}
 
 

@@ -180,7 +180,7 @@ public class Filter_by_admin extends HttpServlet {
 			}
 			
 			request.setAttribute("products", products);
-			request.getRequestDispatcher("guest/view/category.jsp").forward(request, response);
+			request.getRequestDispatcher("admin/view/products.jsp").forward(request, response);
 			return;
 	}
 			

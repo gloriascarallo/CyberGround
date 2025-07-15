@@ -96,4 +96,10 @@ h2 {
   .product-info p {
     font-size: 14px;
   }
+  
+  @media (max-width: 600px) {
+  .product-card {
+    width: 90%;
+  }
+}
 }

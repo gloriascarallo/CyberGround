@@ -87,6 +87,28 @@ body {
   border: 2px solid #FF8800;
   color: white;
     }
+    
+a.dati {
+  background-color: #141C5C;
+  color: #fff;
+  text-decoration: none;
+  padding: 12px 24px;
+  border-radius: 6px;
+  font-size: 16px;
+  border: 2px solid #141C5C;
+  transition: background-color 0.3s ease;
+  cursor: pointer;
+}
+
+a.dati:hover {
+  background-color: #FF8800;
+  border: 2px solid #FF8800;
+  color: white;
+}
+
+a.dati i {
+	 margin-right: 8px;
+}
 
 /* Responsive */
 @media (max-width: 600px) {
