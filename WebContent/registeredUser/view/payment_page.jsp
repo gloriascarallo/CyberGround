@@ -50,6 +50,7 @@
     <c:if test="${not empty sessionScope.message}">
     <div class="success-message">${sessionScope.message}</div>
     <c:remove var="message" scope="session"/>
+    </c:if>
     <br><br>
 
     <div>
@@ -64,6 +65,7 @@
     <c:if test="${not empty sessionScope.message}">
     <div class="success-message">${sessionScope.message}</div>
     <c:remove var="message" scope="session"/>
+    </c:if>
     <br><br>
 
 
