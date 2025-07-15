@@ -43,12 +43,15 @@ public class Adding_to_cart extends HttpServlet {
 	        return;
 	    }
 	    int idCart = cart.getIdCart();
+	    System.out.println(idCart);
 
-	    String idProductStr = request.getParameter("id");
+	    String idProductStr = request.getParameter("productID");
 	    if (idProductStr == null || idProductStr.trim().isEmpty()) {
-	        errors = "Prodotto non trovato.<br>";
+	    	
+	        errors = "Prodotto non trovato1.<br>";
+	        System.out.println(errors);
 	        request.setAttribute("errors", errors);
-	        request.getRequestDispatcher("/guest/view/product.jsp").forward(request, response);
+	        request.getRequestDispatcher("/Product").forward(request, response);
 	        return;
 	    }
 	    int idProduct;
@@ -56,34 +59,13 @@ public class Adding_to_cart extends HttpServlet {
 	        idProduct = Integer.parseInt(idProductStr);
 	    } catch (NumberFormatException e) {
 	        errors = "ID prodotto non valido.<br>";
+	        System.out.println(errors);
 	        request.setAttribute("errors", errors);
-	        request.getRequestDispatcher("/guest/view/product.jsp").forward(request, response);
+	        request.getRequestDispatcher("/Product").forward(request, response);
 	        return;
 	    }
 	    
-	    String quantityStr = request.getParameter("quantity");
-	    int quantity = 1; 
-	    if (quantityStr == null || quantityStr.trim().isEmpty()) {
-	        errors = "Inserisci la quantità.<br>";
-	        request.setAttribute("errors", errors);
-	        request.getRequestDispatcher("/guest/view/product.jsp").forward(request, response);
-	        return;
-	    } else {
-	        try {
-	            quantity = Integer.parseInt(quantityStr);
-	            if (quantity <= 0) {
-	                errors = "La quantità disponibile non può essere minore di 1.<br>";
-	                request.setAttribute("errors", errors);
-	                request.getRequestDispatcher("/guest/view/product.jsp").forward(request, response);
-	                return;
-	            }
-	        } catch (NumberFormatException e) {
-	            errors = "La quantità disponibile deve essere un numero valido.<br>";
-	            request.setAttribute("errors", errors);
-	            request.getRequestDispatcher("/guest/view/product.jsp").forward(request, response);
-	            return;
-	        }
-	    }
+	   
 
 	        
 	        ProductDaoDataSource ds_product=new ProductDaoDataSource();
@@ -101,25 +83,27 @@ public class Adding_to_cart extends HttpServlet {
 	        
 	        if(product==null) {
 	        	errors+="Prodotto non trovato.<br>";
+	        	System.out.println(errors);
 	        	request.setAttribute("errors", errors);
-	        	request.getRequestDispatcher("/guest/view/product.jsp").forward(request, response);
+	        	request.getRequestDispatcher("/Product").forward(request, response);
 	        	return;
 	        	
 	        }
 	        
 	       
-				if(product.getQuantityAvailable()<quantity) {
+				if(product.getQuantityAvailable()<=0) {
 					
 					errors+="La quantità disponibile di tale prodotto è minore rispetto alla quantità selezionata.<br>";
+					System.out.println(errors);
 					request.setAttribute("errors", errors);
-					request.getRequestDispatcher("/guest/view/product.jsp").forward(request, response);
+					request.getRequestDispatcher("/Product").forward(request, response);
 					return;
 					
 					
 				}
 				
 			try {
-				ds_product.decreaseQuantityAvailable(idProduct, quantity);
+				ds_product.decreaseQuantityAvailable(idProduct, 1);
 			} catch (SQLException e) {
 				
 				e.printStackTrace();
@@ -131,7 +115,7 @@ public class Adding_to_cart extends HttpServlet {
 		Product_situatedin_cartBean product_situatedin_cart=new Product_situatedin_cartBean();
 		
 		product_situatedin_cart.setIdCart(idCart);
-		product_situatedin_cart.setQuantity(quantity);
+		product_situatedin_cart.setQuantity(1);
 		product_situatedin_cart.setDateAdded(Date.valueOf(LocalDate.now()));
 		
 		

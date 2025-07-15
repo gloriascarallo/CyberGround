@@ -76,8 +76,8 @@ final String SECRET_KEY = "qwerTY-SECRET-KEY-2025";
 		                    try {
 		                    	int parsedGuestId = Integer.parseInt(parts[0]);
 		                        String expectedHash = Security.hmacSHA256(String.valueOf(parsedGuestId), SECRET_KEY);
-		                        if (expectedHash.equals(parts[1])) {
-		                        
+		                        if (expectedHash.trim().equals(parts[1].trim())) {
+		                        //System.out.println("ci arrivo qui");
 		                        	guestId=parsedGuestId;
 		                        	    cart.setIdCart(guestId);
 		                        	    Product_situatedin_cartDaoDataSource ds_cart=new Product_situatedin_cartDaoDataSource();
@@ -142,6 +142,7 @@ final String SECRET_KEY = "qwerTY-SECRET-KEY-2025";
 	    cart.setIdCart(guestId);
 	    
 		}
+		
 		request.getSession().setAttribute("cart", cart);
 		request.getSession().setAttribute("id", guestId);
 		request.getSession().setAttribute("isAdmin", Boolean.FALSE);

@@ -123,45 +123,52 @@ if(!errors.equals("")) {
 			    guestCookie.setMaxAge(0);
 			    guestCookie.setPath("/");
 			    response.addCookie(guestCookie);
-			    request.getSession().invalidate();
-			    HttpSession newSession = request.getSession(true);
-			    newSession.setAttribute("isAdmin", Boolean.FALSE);
-			    newSession.setAttribute("isRegisteredUser", Boolean.TRUE);
-			    newSession.setAttribute("id", user.getId());
 	
-		// da rivedere (controllare id sessione e compararlo con quello dell'utente registrato estratto dal database)
-		CartBean cart = (CartBean) request.getSession().getAttribute("cart");
-        ArrayList<Product_situatedin_cartBean> dbProducts = ds_cart.doRetrieveByIdCart(user.getId());
+			 // Salva carrello della vecchia sessione PRIMA di invalidare
+		        CartBean oldCart = (CartBean) request.getSession().getAttribute("cart");
 
-        if (dbProducts == null || dbProducts.isEmpty()) {
-            // Il carrello nel DB è vuoto, ma potremmo averne uno in sessione
-            if (cart != null && cart.getProducts() != null && !cart.getProducts().isEmpty()) {
-                // Salva i prodotti del carrello di sessione nel DB
-                for (Product_situatedin_cartBean productInCart : cart.getProducts()) {
-                    productInCart.setIdCart(user.getId()); 
-                    ds_cart.doSave(productInCart);
-                }
-            } else {
-                // Nessun carrello né in sessione né nel DB → crea carrello vuoto
-                cart = new CartBean();
-            }
-        } else {
-            // Il DB ha un carrello → usalo
-            cart = new CartBean();
-            cart.setIdCart(user.getId());
-            cart.setProducts(dbProducts);
-        }
+		        // Invalida la vecchia sessione e creane una nuova
+		        request.getSession().invalidate();
+		        HttpSession newSession = request.getSession(true);
 
-        // Aggiorna il carrello in sessione
-        request.getSession().setAttribute("cart", cart);
-        response.sendRedirect(request.getContextPath()+"/guest/view/index.jsp");
-        return;
-    }
-} catch (SQLException e) {
-    e.printStackTrace();
-    request.getRequestDispatcher("/error/500.html").forward(request, response);
-    return;
-}
+		        newSession.setAttribute("isAdmin", Boolean.FALSE);
+		        newSession.setAttribute("isRegisteredUser", Boolean.TRUE);
+		        newSession.setAttribute("id", user.getId());
+
+		        CartBean cart = new CartBean();
+		        cart.setIdCart(user.getId());
+
+		        ArrayList<Product_situatedin_cartBean> dbProducts = ds_cart.doRetrieveByIdCart(user.getId());
+
+		        if (dbProducts == null || dbProducts.isEmpty()) {
+		            // DB vuoto → usa carrello della vecchia sessione se disponibile
+		            if (oldCart != null && oldCart.getProducts() != null && !oldCart.getProducts().isEmpty()) {
+		                for (Product_situatedin_cartBean product : oldCart.getProducts()) {
+		                    product.setIdCart(user.getId());
+		                    ds_cart.doSave(product); // salva nel DB associandolo all'utente
+		                }
+		                cart.setProducts(oldCart.getProducts());
+		            } else {
+		                cart.setProducts(new ArrayList<>()); // carrello vuoto
+		            }
+		        } else {
+		            cart.setProducts(dbProducts); // carrello dal DB
+		        }
+
+		        // Imposta il carrello nella nuova sessione
+		        newSession.setAttribute("cart", cart);
+
+		        System.out.println("Carrello utente loggato ID: " + cart.getIdCart());
+		        response.sendRedirect(request.getContextPath() + "/guest/view/index.jsp");
+		        return;
+		    }
+		} catch (SQLException e) {
+		    e.printStackTrace();
+		    request.getRequestDispatcher("/error/500.html").forward(request, response);
+		    return;
+		}
+		
+
 	
 	
 			errors+="Username e password non validi!<br>";

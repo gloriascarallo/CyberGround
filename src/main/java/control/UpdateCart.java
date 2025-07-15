@@ -30,31 +30,47 @@ public class UpdateCart extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		String errors="";
 		String action=request.getParameter("action");
-		String idStr = request.getParameter("product_incartID");
+		String idStr = request.getParameter("idProduct");
 		int id;
 		try {
 		    id = Integer.parseInt(idStr);
 		} catch (NumberFormatException e) {
-		    response.setContentType("application/json");
+		 /*   response.setContentType("application/json");
 		    response.setCharacterEncoding("UTF-8");
 		    response.getWriter().write("{\"result\":\"ERROR\", \"message\":\"ID prodotto non valido\"}");
 		    return;
+		    */
+			errors="ID prodotto non valido<br>.";
+			request.setAttribute("errors", errors);
+			request.getRequestDispatcher("/guest/view/cart.jsp").forward(request, response);
+			return;
 		}
 		CartBean cart = (CartBean) request.getSession().getAttribute("cart");
 		if (cart == null) {
-		    response.setContentType("application/json");
+		    /*response.setContentType("application/json");
 		    response.setCharacterEncoding("UTF-8");
 		    response.getWriter().write("{\"result\":\"ERROR\", \"message\":\"Carrello non trovato\"}");
 		    return;
+		    */
+			errors="Carrello non trovato<br>.";
+			request.setAttribute("errors", errors);
+			request.getRequestDispatcher("/guest/view/cart.jsp").forward(request, response);
+			return;
 		}
 		Product_situatedin_cartDaoDataSource ds=new Product_situatedin_cartDaoDataSource();
 		Product_situatedin_cartBean product_incart=cart.getProduct(id);
 		if (product_incart == null) {
-		    response.setContentType("application/json");
+		   /* response.setContentType("application/json");
 		    response.setCharacterEncoding("UTF-8");
 		    response.getWriter().write("{\"result\":\"ERROR\", \"message\":\"Prodotto non trovato nel carrello\"}");
 		    return;
+		    */
+			errors="Prodotto non trovato nel carrello<br>.";
+			request.setAttribute("errors", errors);
+			request.getRequestDispatcher("/guest/view/cart.jsp").forward(request, response);
+			return;
 		}
 		
 		Boolean isRegistered = (Boolean) request.getSession().getAttribute("isRegisteredUser");
@@ -137,13 +153,22 @@ public class UpdateCart extends HttpServlet {
 		break;
 		
 		default:
-            response.setContentType("application/json");
+            /*response.setContentType("application/json");
             response.setCharacterEncoding("UTF-8");
             response.getWriter().write("{\"result\":\"ERROR\", \"message\":\"Azione non valida\"}");
             return;
-    
+            
+    */
+			errors="Azione non valida<br>.";
+			request.setAttribute("errors", errors);
+			request.getRequestDispatcher("/guest/view/cart.jsp").forward(request, response);
+			return;
 		}
-		response.setContentType("application/json");
+		request.getSession().setAttribute("cart", cart);
+		response.sendRedirect(request.getContextPath()+"/guest/view/cart.jsp");
+		return;
+		
+		/*response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
 
 		String jsonResponse = "{"
@@ -154,6 +179,7 @@ public class UpdateCart extends HttpServlet {
 		    + "}";
 
 		response.getWriter().write(jsonResponse);
+		*/
 	}
 
 	/**

@@ -46,7 +46,7 @@ public class Product extends HttpServlet {
 		
 		int id;
 		try {
-		    id = Integer.parseInt(request.getParameter("id"));
+		    id = Integer.parseInt(request.getParameter("idProduct"));
 		} catch (NumberFormatException | NullPointerException e) {
 		    errors += "ID prodotto non valido.<br>";
 		    request.setAttribute("errors", errors);
