@@ -5,7 +5,7 @@
 <%@page import="bean.Product_situatedin_cartBean"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="bean.CartBean" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 
 <html>
 <head>

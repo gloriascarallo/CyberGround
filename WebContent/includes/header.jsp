@@ -9,7 +9,7 @@
   <div class="header-right">
     <a href="${pageContext.request.contextPath}/guest/view/login.jsp" title="Login">
     <i class="fas fa-sign-in-alt"></i>Login</a>
-    <a href="${pageContext.request.contextPath}/registeredUser/view/user.jsp" title="Profilo">
+    <a href="${pageContext.request.contextPath}/User" title="Profilo">
     <i class="fas fa-user-circle"></i>Profilo</a>
     <a href="${pageContext.request.contextPath}/guest/view/cart.jsp" title="Carrello">
     <i class="fas fa-shopping-cart"></i>Carrello</a>

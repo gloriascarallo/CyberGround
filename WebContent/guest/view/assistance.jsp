@@ -16,10 +16,10 @@
 
   <h2>Qui puoi trovare link utili alla tua assistenza</h2>
   <div class="links">
-    <a href="FAQ.html">
+    <a href="FAQ.jsp">
       <i class="fa fa-question-circle"></i> FAQ
     </a>
-    <a href="consult_us.html">
+    <a href="consult_us.jsp">
       <i class="fa fa-comments-o"></i> Consultaci
     </a>
   </div>
