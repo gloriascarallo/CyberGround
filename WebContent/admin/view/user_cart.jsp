@@ -2,9 +2,6 @@
 <!DOCTYPE html>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 
-<%
-     request.getAttribute("products_situatedin_cart");
-%>
 
 <html>
 <head>

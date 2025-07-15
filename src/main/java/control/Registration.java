@@ -258,9 +258,9 @@ if(!errors.equals("")) {
 			
 			
 			try {
-				
+				ds_address.doSave(address);
 				ds_hasaddress.doSave(has_address);
-			ds_address.doSave(address);
+			
 			}
 			catch(SQLException e) {
 				
@@ -287,9 +287,9 @@ if(!errors.equals("")) {
 					method_payment.setCvc(cvcs[i]);
 					
 					try {
-						
-						ds_has_method_payment.doSave(has_method_payment);
 						ds_method_payment.doSave(method_payment);
+						ds_has_method_payment.doSave(has_method_payment);
+						
 						
 					}
 					catch(SQLException e) {

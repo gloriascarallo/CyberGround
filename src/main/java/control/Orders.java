@@ -63,7 +63,7 @@ public class Orders extends HttpServlet {
 			
 			errors+="Ordini non trovati.";
 			request.setAttribute("errors", errors);
-			request.getRequestDispatcher("/registeredUser/view/user.jsp").forward(request, response);
+			response.sendRedirect(request.getContextPath()+"/User");
 			return;
 			
 		}
