@@ -5,11 +5,7 @@
 <%@page import="bean.Product_situatedin_cartBean"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="bean.CartBean" %>
-<%@ taglib prefix="c" uri="jakarta.tags.core" %>
-
-<%
-request.getSession().getAttribute("cart");
-%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <html>
 <head>
@@ -22,12 +18,15 @@ request.getSession().getAttribute("cart");
 </head>
 <body>
 
+
 <%@ include file="/includes/header.jsp" %>
 
 <div id="container">
 
 <form action="${pageContext.request.contextPath}/Payment_page" method="post">
-<c:forEach var="product_incart" items="${cart}">
+
+<c:forEach var="product_incart" items="${sessionScope.cart.products}">
+
 <a href="${pageContext.request.contextPath}/Product">
     <img src="${product_incart.product.imagePath}" alt="Product image" />
     </a>
@@ -46,6 +45,7 @@ request.getSession().getAttribute("cart");
     </div>
 </c:forEach>
 <h3>Totale carrello: €<span id="cart-total">${cart.total}</span></h3>
+
     <input type="submit" value="Payment">
     </form>
     </div>

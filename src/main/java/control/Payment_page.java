@@ -39,8 +39,9 @@ public class Payment_page extends HttpServlet {
 		Boolean isRegisteredUser = (Boolean) request.getSession().getAttribute("isRegisteredUser");
 
         if (isRegisteredUser == null || !isRegisteredUser) {
-        	
+
         	request.getRequestDispatcher("/error/accessDeniedRegisteredUser.jsp").forward(request, response);
+
         	return;
         	
         }
