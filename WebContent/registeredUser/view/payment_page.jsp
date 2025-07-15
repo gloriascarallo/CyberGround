@@ -46,8 +46,10 @@
       </select>
     </div>
 
-    <span>Vuoi aggiungere un nuovo indirizzo? <a href="./add_address.jsp">Clicca qui!</a></span>
-    
+    <span>Vuoi aggiungere un nuovo indirizzo? <a href="${pageContext.request.contextPath}/registeredUser/view/add_address.jsp?redirectAfter=/registeredUser/view/payment_page.jsp">Clicca qui!</a></span>
+    <c:if test="${not empty sessionScope.message}">
+    <div class="success-message">${sessionScope.message}</div>
+    <c:remove var="message" scope="session"/>
     <br><br>
 
     <div>
@@ -58,10 +60,12 @@
         </c:forEach>
       </select>
     </div>
-
-    <span>Vuoi aggiungere un nuovo metodo di pagamento? <a href="./add_payment_method.jsp">Clicca qui!</a></span>
-    
+<span>Vuoi aggiungere un nuovo metodo di pagamento? <a href="${pageContext.request.contextPath}/registeredUser/view/add_payment_method.jsp?redirectAfter=/registeredUser/view/payment_page.jsp">Clicca qui!</a></span>
+    <c:if test="${not empty sessionScope.message}">
+    <div class="success-message">${sessionScope.message}</div>
+    <c:remove var="message" scope="session"/>
     <br><br>
+
 
     <input type="submit" value="Conferma pagamento">
   </form>

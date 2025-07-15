@@ -54,6 +54,7 @@ public class Add_payment_method extends HttpServlet {
 	        return;
 	    }
 	    int id = (Integer) idObj;
+	    String redirectAfter = request.getParameter("redirectAfter");
 		String pan=request.getParameter("PAN");
 		String expirationDate=request.getParameter("Scadenza");
 		String cvc=request.getParameter("CVC");
@@ -153,8 +154,13 @@ public class Add_payment_method extends HttpServlet {
 			return;
 		}
 		
-		request.setAttribute("message", "Metodo di pagamento aggiunto con successo!<br>");
-		dispatcherToAdd_payment_methodPage.forward(request, response);
+		request.getSession().setAttribute("message", "Metodo di pagamento aggiunto con successo!<br>");
+		//dispatcherToAdd_payment_methodPage.forward(request, response);
+		if ("/registeredUser/view/payment_page.jsp".equals(redirectAfter)) {
+		    response.sendRedirect(request.getContextPath() + "/Payment_page");
+		} else if ("/registeredUser/view/user.jsp".equals(redirectAfter)) {
+		    response.sendRedirect(request.getContextPath() + "/registeredUserMethods_Payment");
+		}
 		return;
 	}
 

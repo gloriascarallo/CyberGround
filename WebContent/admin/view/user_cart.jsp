@@ -56,10 +56,10 @@
 <a href="${pageContext.request.contextPath}/Product">
     <img src="${product_incart.product.imagePath}" alt="Product image" />
     </a>
-    <div id="product-${product_incart.id}">
+    <div id="product-${product_incart.product.idProduct}">
     
     Nome: ${product_incart.product.name}<br>
-    Prezzo: <span id="total-${product_incart.id}">${product_incart.totalPrice}</span><br>
+    Prezzo: <span id="total-${product_incart.product.idProduct}">${product_incart.totalPrice}</span><br>
     </div>
     </c:forEach>
 
