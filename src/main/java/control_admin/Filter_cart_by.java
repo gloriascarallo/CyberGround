@@ -6,7 +6,6 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -28,13 +27,7 @@ public class Filter_cart_by extends HttpServlet {
         // TODO Auto-generated constructor stub
     }
     
-    private String escapeJson(String str) {
-        if (str == null) return "";
-        return str.replace("\\", "\\\\")
-                  .replace("\"", "\\\"")
-                  .replace("\n", "\\n")
-                  .replace("\r", "\\r");
-    }
+   
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
@@ -50,17 +43,15 @@ public class Filter_cart_by extends HttpServlet {
 	        errors += "ID carrello non valido.<br>";
 	    }
 
+	    request.setAttribute("idCart", idCart);
 	    String action=request.getParameter("action");
 	    if (action == null || action.trim().equals("")) {
 	        errors += "Nessuna azione selezionata.<br>";
 	    }
 	    
 	    if(!errors.equals("")) {
-		    response.setContentType("application/json");
-		    response.setCharacterEncoding("UTF-8");
-		    PrintWriter out = response.getWriter();
-		    out.print("{\"error\": \"" + escapeJson(errors) + "\"}");
-		    out.flush();
+	    	request.setAttribute("errors", errors);
+	    	request.getRequestDispatcher("/admin/view/user_cart.jsp").forward(request, response);
 		    return;
 		}
 
@@ -87,12 +78,10 @@ public class Filter_cart_by extends HttpServlet {
 			}
 			
 			if(!errors.equals("")) {
-			    response.setContentType("application/json");
-			    response.setCharacterEncoding("UTF-8");
-			    PrintWriter out = response.getWriter();
-			    out.print("{\"error\": \"" + escapeJson(errors) + "\"}");
-			    out.flush();
+			    request.setAttribute("errors", errors);
+			    request.getRequestDispatcher("/admin/view/user_cart.jsp").forward(request, response);
 			    return;
+			    
 			}
 			
 		try {
@@ -146,11 +135,8 @@ public class Filter_cart_by extends HttpServlet {
 			}
 			
 			if(!errors.equals("")) {
-			    response.setContentType("application/json");
-			    response.setCharacterEncoding("UTF-8");
-			    PrintWriter out = response.getWriter();
-			    out.print("{\"error\": \"" + escapeJson(errors) + "\"}");
-			    out.flush();
+				request.setAttribute("errors", errors);
+			    request.getRequestDispatcher("/admin/view/user_cart.jsp").forward(request, response);
 			    return;
 			}
 			
@@ -177,43 +163,16 @@ public class Filter_cart_by extends HttpServlet {
 		if(products.isEmpty()) {
 			
 			errors+="Non ci sono prodotti nel carrello che rispettano tali parametri<br>";
+			
 			request.setAttribute("errors", errors);
 			request.getRequestDispatcher("/admin/view/user_cart.jsp").forward(request, response);
 			return;
 		}
 		
 		
-		
-		//request.setAttribute("products_incart", products);
-		
-		response.setContentType("application/json");
-	    response.setCharacterEncoding("UTF-8");
-
-	    PrintWriter out = response.getWriter();
-	    String json = "{\"products\": [";
-
-	    for (int i = 0; i < products.size(); i++) {
-	        Product_situatedin_cartBean p = products.get(i);
-
-	        String productJson = "{"
-	            + "\"id\": " + p.getIdProduct()+ ","
-	            + "\"name\": \"" + escapeJson(p.getProduct().getName()) + "\","
-	            + "\"price\": " + p.getTotalPrice() + ","
-	            + "\"quantity\": " + p.getQuantity() + ","
-	            + "\"dateAdded\": \"" + p.getDateAdded() + "\""
-	            + "}";
-
-	        json += productJson;
-
-	        if (i < products.size() - 1) {
-	            json += ",";
-	        }
-	    }
-
-	    json += "]}";
-
-	    out.print(json);
-	    out.flush();
+		request.setAttribute("products_situatedin_cart", products);
+	request.getRequestDispatcher("/admin/view/user_cart.jsp").forward(request, response);
+	return;
 	}
 		
 

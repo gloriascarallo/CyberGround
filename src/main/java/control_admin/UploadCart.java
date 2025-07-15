@@ -78,6 +78,7 @@ public class UploadCart extends HttpServlet {
 			return;
 			
 		}
+		request.setAttribute("idCart", idCart);
 		request.setAttribute("products_situatedin_cart", products_situatedin_cart);
 		dispatchToCart.forward(request, response);
 		return;

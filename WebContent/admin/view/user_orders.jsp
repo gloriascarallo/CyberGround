@@ -39,7 +39,7 @@
     <label for="dateY">A data:</label>
     <input type="date" id="dateY" name="dateY" />
     <span id="errorDateY" class="error-message"></span>
-
+<input type="hidden" name="idCart" value="${idCart}">
     <button type="submit">
       <i class="fas fa-filter"></i> Filtra
     </button>
