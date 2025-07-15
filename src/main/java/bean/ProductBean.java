@@ -4,7 +4,7 @@ import java.time.LocalDate;
 
 public class ProductBean {
 
-	private int id;
+	private int idProduct;
 	private String name;
 	private double price;
 	private Double discountPercentage;
@@ -18,13 +18,13 @@ public class ProductBean {
 
 
 
-	public int getId() {
-		return id;
+	public int getIdProduct() {
+		return idProduct;
 	}
 
 
-	public void setId(int id) {
-		this.id = id;
+	public void setIdProduct(int id) {
+		this.idProduct = id;
 	}
 
 
@@ -135,7 +135,7 @@ public class ProductBean {
 	
 
 	public ProductBean() {
-		id=-1;
+		idProduct=-1;
 		name="";
 		price=0;
 		discountPercentage=null;

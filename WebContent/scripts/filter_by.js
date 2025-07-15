@@ -7,7 +7,7 @@ function loadProducts(params) {
   query = query.slice(0, -1); // tolgo l'ultimo &
 
   let xhr = new XMLHttpRequest();
-  xhr.open("GET", "/Filter_by" + query, true);
+  xhr.open("GET", "/CyberGround/Filter_by" + query, true);
   xhr.setRequestHeader("Accept", "application/json");
 
   xhr.onreadystatechange = function() {

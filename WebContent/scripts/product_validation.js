@@ -1,23 +1,23 @@
   // Pattern base per alcuni campi testo (adattati a esigenze)
-  const namePattern = /^.{1,50}$/; // nome prodotto 1-50 caratteri
+  const namePattern = /^.{0,45}$/; // nome prodotto 1-45 caratteri
   const pricePattern = /^(?!$)(\d+)(\.\d{1,2})?$/;  // ≥ 0, con decimali
   const discountPattern = /^(100(\.00?)?|[0-9]?[0-9](\.[0-9]{1,2})?)$/; // 0–100
   const datePattern = /^\d{4}-\d{2}-\d{2}$/; // formato YYYY-MM-DD
   const imagePattern = /^.+\.(jpg|jpeg|png|gif)$/i;
-  const supplierPattern = /^[\w\s]{2,50}$/;  // lettere, numeri, underscore e spazi, da 2 a 50 caratteri
-  const categoryPattern = /^[\w\s]{2,30}$/;  // lettere, numeri, underscore e spazi, da 2 a 30 caratteri
+  const supplierPattern = /^[\w\s]{2,45}$/;  // lettere, numeri, underscore e spazi, da 2 a 45 caratteri
+  const categoryPattern = /^[\w\s]{2,45}$/;  // lettere, numeri, underscore e spazi, da 2 a 45 caratteri
   const descriptionPattern = /^.{0,500}$/; // descrizione max 500 caratteri
   const quantityPattern = /^[0-9]+$/; // solo numeri interi
   const idPattern = /^[0-9]+$/;
   const yearPattern = /^(20[0-9]{2})$/;
 
-  const errorProductNameMessage = "Il nome prodotto deve contenere da 1 a 50 caratteri.";
+  const errorProductNameMessage = "Il nome prodotto deve contenere da 1 a 45 caratteri.";
   const errorPriceMessage = "Il prezzo deve essere un numero positivo.";
   const errorDiscountMessage = "Lo sconto deve essere compreso tra 0 e 100.";
   const errorDateMessage = "La data deve essere valida.";
   const errorDescriptionMessage = "La descrizione non deve superare 500 caratteri.";
-  const errorSupplierMessage = "Il nome del fornitore deve contenere tra 2 e 50 caratteri (solo lettere, numeri e spazi)";
-  const errorCategoryMessage = "La categoria deve contenere tra 2 e 30 caratteri (solo lettere, numeri e spazi)";
+  const errorSupplierMessage = "Il nome del fornitore deve contenere tra 2 e 45 caratteri (solo lettere, numeri e spazi)";
+  const errorCategoryMessage = "La categoria deve contenere tra 2 e 45 caratteri (solo lettere, numeri e spazi)";
   const errorQuantityMessage = "La quantità deve essere un numero intero positivo.";
   const errorIdMessage = "Inserisci un ID numerico valido. (solo numeri interi positivi)";
   const errorYearMessage = "Inserisci un anno compreso tra 2000 e 2100.";
@@ -214,3 +214,5 @@
       event.preventDefault();
     }
   });
+  
+  

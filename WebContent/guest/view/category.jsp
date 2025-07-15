@@ -14,7 +14,7 @@ request.getAttribute("category");
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Category: ${category}</title>
-  <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/styles/Category.css"/>
+  <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/styles/Category.css?v=2"/>
   <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/styles/Layout.css"/>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
@@ -39,8 +39,9 @@ if(errors!=null && !errors.equals("")) {%>
   <div class="products-grid">
   <c:forEach var="product" items="${products}">
     <div class="product-card">
+      
     <a href="${pageContext.request.contextPath}/Product?id=${product.id}&toRedirect=/guest/view/category.jsp">
-  <img src="${pageContext.request.contextPath}${product.imagePath}" alt="${product.name}" class="product-image"/>
+<img src="${product.imagePath}" alt="${product.name}" class="product-image"/>
 </a>
       <div class="product-info">
         <h3>${product.name}</h3>

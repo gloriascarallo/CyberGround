@@ -58,7 +58,7 @@
   <form action="${pageContext.request.contextPath}/Filter_by_admin" method="get" class="filter-group">
     <input type="hidden" name="action" value="name">
     <label for="name">Nome prodotto:</label>
-    <input type="text" name="name" id="name" onchange="validateFormElement(this, namePattern, document.getElementById('errorName'), errorNameMessage)">
+    <input type="text" name="name" id="name" onchange="validateFormElement(this, namePattern, document.getElementById('errorName'), errorProductNameMessage)">
 <span id="errorName"></span><br>
     <button type="submit" onclick="return validateProductsForm(event)"><i class="fas fa-tag"></i> Cerca</button>
   </form>

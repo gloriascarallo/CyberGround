@@ -47,7 +47,7 @@ import bean.Product_in_orderBean;
 				connection = ds.getConnection();
 				preparedStatement = connection.prepareStatement(insertSQL, Statement.RETURN_GENERATED_KEYS);
 				preparedStatement.setInt(1, product_in_order.getIdOrder());
-				preparedStatement.setInt(2, product_in_order.getProduct().getId());
+				preparedStatement.setInt(2, product_in_order.getProduct().getIdProduct());
 				preparedStatement.setInt(3, product_in_order.getQuantity());
 				preparedStatement.setDouble(4, product_in_order.getPrice());
 				

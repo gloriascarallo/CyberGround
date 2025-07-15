@@ -69,7 +69,7 @@ public class ProductDaoDataSource implements IBeanDao<ProductBean> {
            ResultSet rs=preparedStatement.getGeneratedKeys();
 			
 			if(rs.next()) {
-				product.setId(rs.getInt(1));
+				product.setIdProduct(rs.getInt(1));
 				
 			}
 		} finally {
@@ -102,7 +102,7 @@ public class ProductDaoDataSource implements IBeanDao<ProductBean> {
 
 			while (rs.next()) {
 				bean=new ProductBean();
-				bean.setId(rs.getInt("ID"));
+				bean.setIdProduct(rs.getInt("ID"));
 				bean.setName(rs.getString("NAME"));
 				bean.setDescription(rs.getString("DESCRIPTION"));
 				bean.setPrice(rs.getDouble("PRICE"));
@@ -183,7 +183,7 @@ public class ProductDaoDataSource implements IBeanDao<ProductBean> {
 			while (rs.next()) {
 				ProductBean bean = new ProductBean();
 
-				bean.setId(rs.getInt("ID"));
+				bean.setIdProduct(rs.getInt("ID"));
 				bean.setName(rs.getString("NAME"));
 				bean.setDescription(rs.getString("DESCRIPTION"));
 				bean.setPrice(rs.getDouble("PRICE"));
@@ -263,7 +263,7 @@ public class ProductDaoDataSource implements IBeanDao<ProductBean> {
 			while (rs.next()) {
 				ProductBean bean = new ProductBean();
 
-				bean.setId(rs.getInt("ID"));
+				bean.setIdProduct(rs.getInt("ID"));
 				bean.setName(rs.getString("NAME"));
 				bean.setDescription(rs.getString("DESCRIPTION"));
 				bean.setPrice(rs.getDouble("PRICE"));
@@ -314,7 +314,7 @@ public class ProductDaoDataSource implements IBeanDao<ProductBean> {
 			while (rs.next()) {
 				ProductBean bean = new ProductBean();
 
-				bean.setId(rs.getInt("ID"));
+				bean.setIdProduct(rs.getInt("ID"));
 				bean.setName(rs.getString("NAME"));
 				bean.setDescription(rs.getString("DESCRIPTION"));
 				bean.setPrice(rs.getDouble("PRICE"));
@@ -365,7 +365,7 @@ public class ProductDaoDataSource implements IBeanDao<ProductBean> {
 			while (rs.next()) {
 				ProductBean bean = new ProductBean();
 
-				bean.setId(rs.getInt("ID"));
+				bean.setIdProduct(rs.getInt("ID"));
 				bean.setName(rs.getString("NAME"));
 				bean.setDescription(rs.getString("DESCRIPTION"));
 				bean.setPrice(rs.getDouble("PRICE"));
@@ -414,7 +414,7 @@ public class ProductDaoDataSource implements IBeanDao<ProductBean> {
 			while (rs.next()) {
 				ProductBean bean = new ProductBean();
 
-				bean.setId(rs.getInt("ID"));
+				bean.setIdProduct(rs.getInt("ID"));
 				bean.setName(rs.getString("NAME"));
 				bean.setDescription(rs.getString("DESCRIPTION"));
 				bean.setPrice(rs.getDouble("PRICE"));
@@ -463,7 +463,7 @@ public class ProductDaoDataSource implements IBeanDao<ProductBean> {
 			while (rs.next()) {
 				ProductBean bean = new ProductBean();
 
-				bean.setId(rs.getInt("ID"));
+				bean.setIdProduct(rs.getInt("ID"));
 				bean.setName(rs.getString("NAME"));
 				bean.setDescription(rs.getString("DESCRIPTION"));
 				bean.setPrice(rs.getDouble("PRICE"));
@@ -512,7 +512,7 @@ public class ProductDaoDataSource implements IBeanDao<ProductBean> {
 			while (rs.next()) {
 				ProductBean bean = new ProductBean();
 
-				bean.setId(rs.getInt("ID"));
+				bean.setIdProduct(rs.getInt("ID"));
 				bean.setName(rs.getString("NAME"));
 				bean.setDescription(rs.getString("DESCRIPTION"));
 				bean.setPrice(rs.getDouble("PRICE"));
@@ -573,7 +573,7 @@ public class ProductDaoDataSource implements IBeanDao<ProductBean> {
 			preparedStatement.setString(8, product.getCategoryName());
 			preparedStatement.setString(9, product.getImagePath());
 			preparedStatement.setInt(10, product.getQuantityAvailable());
-			preparedStatement.setInt(11, product.getId());
+			preparedStatement.setInt(11, product.getIdProduct());
 
 			preparedStatement.executeUpdate();
          
