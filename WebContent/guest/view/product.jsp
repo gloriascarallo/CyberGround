@@ -32,7 +32,7 @@ request.getAttribute("product");
     <p>Quantità disponibili: ${product.quantityAvailable}</p>
     
     <form action="${pageContext.request.contextPath}/Adding_to_cart" method="post">
-    <input type="hidden" name="productID" value="${product.id}">
+    <input type="hidden" name="productID" value="${product.idProduct}">
   
 
     <button type="submit" class="add-to-cart-btn">

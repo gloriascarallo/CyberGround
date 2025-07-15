@@ -40,7 +40,7 @@ if(errors!=null && !errors.equals("")) {%>
   <c:forEach var="product" items="${products}">
     <div class="product-card">
       
-    <a href="${pageContext.request.contextPath}/Product?id=${product.id}&toRedirect=/guest/view/category.jsp">
+    <a href="${pageContext.request.contextPath}/Product?idProduct=${product.idProduct}&toRedirect=/guest/view/category.jsp">
 <img src="${product.imagePath}" alt="${product.name}" class="product-image"/>
 </a>
       <div class="product-info">

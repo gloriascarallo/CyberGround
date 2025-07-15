@@ -30,18 +30,27 @@
 <a href="${pageContext.request.contextPath}/Product">
     <img src="${product_incart.product.imagePath}" alt="Product image" />
     </a>
-    <div id="product-${product_incart.id}">
+    <div id="product-${product_incart.idProduct}">
     
     Nome: ${product_incart.product.name}<br>
-    Prezzo: <span id="total-${product_incart.id}">${product_incart.totalPrice}</span><br>
+    Prezzo: <span id="total-${product_incart.idProduct}">${product_incart.totalPrice}</span><br>
     
     <div>
-        <button type="button" onclick="updateCartAjax('decrease', ${product_incart.id})">-</button>
-        <span id="quantity-${product_incart.id}">${product_incart.quantity}</span>
-        <button type="button" onclick="updateCartAjax('increase', ${product_incart.id})">+</button>
+    <a href="${pageContext.request.contextPath}/UpdateCart?idProduct=${product_incart.idProduct}&action=decrease">
+  <button type="button">-</button>
+</a>
+
+ <span id="quantity-${product_incart.idProduct}">${product_incart.quantity}</span>
+    <a href="${pageContext.request.contextPath}/UpdateCart?idProduct=${product_incart.idProduct}&action=increase">
+  <button type="button">+</button>
+</a>
+        
+       
     </div>
     
-   <button type="button" onclick="updateCartAjax('remove', ${product_incart.id})">Rimuovi</button>
+   <a href="${pageContext.request.contextPath}/UpdateCart?idProduct=${product_incart.idProduct}&action=remove">
+  <button type="button">Rimuovi</button>
+</a>
     </div>
 </c:forEach>
 <h3>Totale carrello: €<span id="cart-total">${cart.total}</span></h3>
