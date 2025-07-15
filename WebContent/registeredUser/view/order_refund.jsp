@@ -25,13 +25,13 @@ request.getAttribute("order");
 <div id="container">
 
 <form action="${pageContext.request.contextPath}/Product_refund">
-<c:forEach var="user_order" items="${order}">
+<c:forEach var="user_order" items="${order.products_in_order}">
     <label>
-	<input type="radio" name="idProduct_in_order" value="${user_order.product_in_order.id_product_in_order}">
-	<img alt="Immagine ${user_order.product_in_order.product.name}" src="${pageContext.request.contextPath}${user_order.product_in_order.product.imagePath}"/>
-	<p>Nome Prodotto:${user_order.product_in_order.product.name}</p><br>
-	<p>Prezzo Prodotto:${user_order.product_in_order.product.price}</p><br>
-	<p>Prezzo Totale:${user_order.product_in_order.SubTotal}</p>
+	<input type="radio" name="idProduct_in_order" value="${user_order.id_product_in_order}">
+	<img alt="Immagine ${user_order.product.name}" src="${pageContext.request.contextPath}${user_order.product.imagePath}"/>
+	<p>Nome Prodotto:${user_order.product.name}</p><br>
+	<p>Prezzo Prodotto:${user_order.product.price}</p><br>
+	<p>Prezzo Totale:${user_order.subtotal}</p>
 	</label><br>
 </c:forEach>
 <input type="submit" value="Seleziona prodotto">

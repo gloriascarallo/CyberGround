@@ -23,13 +23,13 @@ request.getAttribute("product");
 
 <div id="container">
 <a href="${pageContext.request.contextPath}/Product">
-    <img src="${product.imagePath}" alt="Product image" />
+    <img src="${product.product.imagePath}" alt="Product image" />
     </a>
-    <p>Nome: ${product.name}</p>
-    <p>Descrizione: ${product.description}</p>
-    <p>Prezzo: ${product.price}</p>
-    <p>Fornitore: ${product.supplier}</p>
-    <p>Quantità disponibili: ${product.quantityAvailable}</p>
+    <p>Nome: ${product.product.name}</p>
+    <p>Descrizione: ${product.product.description}</p>
+    <p>Prezzo: ${product.product.price}</p>
+    <p>Fornitore: ${product.product.supplier}</p>
+    <p>Quantità disponibili: ${product.product.quantityAvailable}</p>
     </div>
     
     <br><br>
