@@ -29,7 +29,7 @@
   <% } %>
 
 
-<img src="${user.imagePath}" alt="User image"></img>
+
 <p>Id: ${user.id}</p>
 <p>Username: ${user.username}</p>
 <p>Name: ${user.name} </p>

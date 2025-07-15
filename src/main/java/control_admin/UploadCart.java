@@ -39,18 +39,18 @@ public class UploadCart extends HttpServlet {
 	    if (idParam == null) {
 	        errors = "Carrello non trovato.<br>";
 	        request.setAttribute("errors", errors);
-	        request.getRequestDispatcher("/admin/view/user_profile.jsp").forward(request, response);
+	        request.getRequestDispatcher("/UploadUser").forward(request, response);
 	        return;
 	    }
 
 	    int idCart;
 	    try {
-//	        idCart = Integer.parseInt(idParam);
-	    	idCart = 0;
+        idCart = Integer.parseInt(idParam);
+	    	
 	    } catch (NumberFormatException e) {
 	        errors = "ID carrello non valido.<br>";
 	        request.setAttribute("errors", errors);
-	        request.getRequestDispatcher("/admin/view/user_profile.jsp").forward(request, response);
+	        request.getRequestDispatcher("/UploadUser").forward(request, response);
 	        return;
 	    }
 		

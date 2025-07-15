@@ -35,6 +35,7 @@ ${message}
 	<label for="CVC">CVC:</label>
 	<input type="text" name="CVC" id="CVC" placeholder="### or ####" onchange="validateFormElement(this, CVCPattern, document.getElementById('errorCVC'), errorCVCMessage)" required>
 	<span id="errorCVC"></span> <br>
+	<input type="hidden" name="redirectAfter" value="${param.redirectAfter}">
 	<input type="submit" value="Invia" onclick="return validateAdd_method_paymentForm()">
 	<input type="reset" value="Reset">
 
