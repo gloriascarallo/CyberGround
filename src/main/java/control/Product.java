@@ -36,12 +36,12 @@ public class Product extends HttpServlet {
 		String toRedirect=request.getParameter("toRedirect");
 		
 		if (toRedirect == null || toRedirect.trim().isEmpty()) {
-	        toRedirect = "/500.html";
+	        toRedirect = "/error/500.html";
 	    }
 		
 		List<String> allowedRedirects = Arrays.asList("/guest/view/category.jsp", "/guest/view/index.jsp", "/guest/view/cart.jsp", "/guest/view/discounts.jsp", "/registeredUser/view/orders.jsp");
 		if (!allowedRedirects.contains(toRedirect)) {
-		    toRedirect = "/500.html";
+		    toRedirect = "/error/500.html";
 		}
 		
 		int id;
@@ -62,7 +62,7 @@ public class Product extends HttpServlet {
 		catch(SQLException e) {
 			
 			e.printStackTrace();
-			request.getRequestDispatcher("/500.html").forward(request, response);
+			request.getRequestDispatcher("/error/500.html").forward(request, response);
 			return;
 		}
 		

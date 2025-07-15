@@ -5,7 +5,7 @@ body {
   padding: 0;
   display: flex;
   justify-content: center;
-  align-items: flex-start;
+  align-items: center;
   min-height: 100vh;
 }
 
@@ -47,4 +47,41 @@ ul li {
 ul li i {
   color: #FF8800;
   margin-right: 8px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  #container {
+    padding: 30px 20px;
+  }
+
+  h2 {
+    font-size: 24px;
+  }
+
+  h3 {
+    font-size: 20px;
+  }
+
+  ul li {
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  #container {
+    padding: 20px 15px;
+  }
+
+  h2 {
+    font-size: 20px;
+  }
+
+  h3 {
+    font-size: 18px;
+  }
+
+  ul li {
+    font-size: 14px;
+  }
 }

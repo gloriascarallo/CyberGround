@@ -5,11 +5,15 @@
  
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>News Page</title>
-  <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/News.css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/News.css?v=2">
+  <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/styles/Layout.css"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
+
+<%@ include file="/includes/header.jsp" %>
 
  <div id="container">
   <h2><i class="fas fa-bullhorn"></i> Ultime Novità</h2>
@@ -28,6 +32,6 @@
     <li><i class="fas fa-moon"></i> Modalità scura personalizzabile</li>
   </ul>
 </div>
-
+<%@ include file="/includes/footer.jsp" %>
 </body>
 </html>

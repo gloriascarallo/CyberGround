@@ -4,16 +4,21 @@
 <%@page import="bean.RegisteredUserBean"%>
 
 <%
-RegisteredUserBean user=(RegisteredUserBean)request.getAttribute("user");
+request.getAttribute("user");
 %>
 
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Hello, <%=user.getName() %></title>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/styles/User.css">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Hello, ${user.getName}</title>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/styles/User.css?v=4">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/styles/Layout.css"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
+
+<%@ include file="/includes/header.jsp" %>
 
 <div class="container">
 <img src="${user.imagePath}" alt="User image"></img>
@@ -23,7 +28,19 @@ RegisteredUserBean user=(RegisteredUserBean)request.getAttribute("user");
 <p>Telephone number: ${user.telephone}</p>
 <p>Email: ${user.email}</p>
 <p>Password: ${user.password}</p>
-</div>
 
+<form action="${pageContext.request.contextPath}/Orders" method="get">
+    <button type="submit" class="orders-button">
+        <i class="fas fa-box"></i> Visualizza i tuoi ordini
+    </button>
+</form>
+
+<form action="${pageContext.request.contextPath}/Logout" method="post">
+    <button type="submit" class="logout-button">
+      <i class="fas fa-sign-out-alt"></i> Logout
+    </button>
+  </form>
+</div>
+<%@ include file="/includes/footer.jsp" %>
 </body>
 </html>

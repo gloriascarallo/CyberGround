@@ -94,3 +94,45 @@ input[type="submit"]:hover {
   border: 2px solid #FF8800;
   color: white; 
 }
+
+/* Responsive */
+@media (max-width: 768px) {
+  #container,
+  form {
+    padding: 25px;
+  }
+
+  h2 {
+    font-size: 24px;
+  }
+
+  label {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  label img {
+    width: 80px;
+    margin-bottom: 10px;
+  }
+
+  input[type="submit"] {
+    width: 100%;
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  h2 {
+    font-size: 20px;
+  }
+
+  label {
+    font-size: 14px;
+  }
+
+  input[type="submit"] {
+    font-size: 14px;
+    padding: 10px 20px;
+  }
+}

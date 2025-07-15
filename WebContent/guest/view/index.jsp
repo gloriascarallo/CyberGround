@@ -3,40 +3,41 @@
 <html>
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Index Page</title>
-  <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/Index.css?v=1" />
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/Index.css?v=3" />
+  <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/styles/Layout.css"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
-
-  <!-- HEADER -->
-  <header>
-    <div class="logo">
-      <img src="${pageContext.request.contextPath}/images/logo.png" alt="Logo sito" />
-      <h1>CyberGround</h1>
-    </div>
-
-    <div class="nav-links">
-  <a href="${pageContext.request.contextPath}/guest/view/login.jsp">
-    <i class="fas fa-sign-in-alt"></i> Login
-  </a>
-  <a href="${pageContext.request.contextPath}/guest/view/cart.jsp">
-    <i class="fas fa-shopping-cart"></i> Carrello
-  </a>
-  <a href="${pageContext.request.contextPath}/registeredUser/view/user.jsp">
-    <i class="fas fa-user-circle"></i> Area Utente
-  </a>
-</div>
-  </header>
+<%@ include file="/includes/header.jsp" %>
 
   <!-- CATEGORIE -->
   <div class="category-bar">
-    <button onclick="loadProducts({action:'category', category:'telefonia'})">Telefonia</button>
-    <button onclick="loadProducts({action:'category', category:'computer'})">Computer</button>
-    <button onclick="loadProducts({action:'category', category:'console'})">Console</button>
+    <form action="${pageContext.request.contextPath}/Category" method="post">
+    <input type="hidden" name="category" value="telefonia" />
+    <button type="submit">
+      <i class="fas fa-mobile-alt"></i> Telefonia
+    </button>
+  </form>
+
+  <form action="${pageContext.request.contextPath}/Category" method="post">
+    <input type="hidden" name="category" value="computer" />
+    <button type="submit">
+      <i class="fas fa-laptop"></i> Computer
+    </button>
+  </form>
+
+  <form action="${pageContext.request.contextPath}/Category" method="post">
+    <input type="hidden" name="category" value="console" />
+    <button type="submit">
+      <i class="fas fa-gamepad"></i> Console
+    </button>
+  </form>
   </div>
 
   <main>
+  
 <%
 String errors=(String)request.getAttribute("errors");  
 if(errors!=null && !errors.equals("")) {%>
@@ -78,11 +79,20 @@ if(errors!=null && !errors.equals("")) {%>
     Cerca per nome
 </button>
 
+<br><br>
+
+<!-- Ricerca per sconto -->
+<form action="${pageContext.request.contextPath}/Discounts" method="get">
+  <input type="text" name="discountPercentage" placeholder="Sconto in % (es. 20)">
+  <button type="submit">Cerca prodotti scontati</button>
+</form>
+
 <hr>
 
 <!-- Qui verrà mostrato il risultato -->
 <div id="result"></div>
 </main>
+<%@ include file="/includes/footer.jsp" %>
 </body>
-<script src="${pageContext.request.contextPath}/scripts/index.js"></script>
+<script src="${pageContext.request.contextPath}/scripts/filter_by.js"></script>
 </html>

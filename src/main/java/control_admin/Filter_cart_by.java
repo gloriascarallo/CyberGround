@@ -1,4 +1,4 @@
-package control;
+package control_admin;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -56,11 +56,13 @@ public class Filter_cart_by extends HttpServlet {
 	    }
 	    
 	    if(!errors.equals("")) {
-	    	request.setAttribute("errors", errors);
-			request.getRequestDispatcher("/admin/view/user_cart.jsp").forward(request, response);
-			return;
-	    	
-	    }
+		    response.setContentType("application/json");
+		    response.setCharacterEncoding("UTF-8");
+		    PrintWriter out = response.getWriter();
+		    out.print("{\"error\": \"" + escapeJson(errors) + "\"}");
+		    out.flush();
+		    return;
+		}
 
 		Product_situatedin_cartDaoDataSource ds=new Product_situatedin_cartDaoDataSource();
 		ArrayList<Product_situatedin_cartBean>products=new ArrayList<Product_situatedin_cartBean>();
@@ -84,12 +86,13 @@ public class Filter_cart_by extends HttpServlet {
 			    }
 			}
 			
-          if(!errors.equals("")) {
-				
-				request.setAttribute("errors", errors);
-				request.getRequestDispatcher("/admin/view/user_cart.jsp").forward(request, response);
-				return;
-				
+			if(!errors.equals("")) {
+			    response.setContentType("application/json");
+			    response.setCharacterEncoding("UTF-8");
+			    PrintWriter out = response.getWriter();
+			    out.print("{\"error\": \"" + escapeJson(errors) + "\"}");
+			    out.flush();
+			    return;
 			}
 			
 		try {
@@ -98,7 +101,7 @@ public class Filter_cart_by extends HttpServlet {
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
-			request.getRequestDispatcher("/500.html").forward(request, response);
+			request.getRequestDispatcher("/error/500.html").forward(request, response);
 			return;
 		}
 		break;
@@ -143,11 +146,12 @@ public class Filter_cart_by extends HttpServlet {
 			}
 			
 			if(!errors.equals("")) {
-				
-				request.setAttribute("errors", errors);
-				request.getRequestDispatcher("/admin/view/user_cart.jsp").forward(request, response);
-				return;
-				
+			    response.setContentType("application/json");
+			    response.setCharacterEncoding("UTF-8");
+			    PrintWriter out = response.getWriter();
+			    out.print("{\"error\": \"" + escapeJson(errors) + "\"}");
+			    out.flush();
+			    return;
 			}
 			
 		try {
@@ -157,7 +161,7 @@ public class Filter_cart_by extends HttpServlet {
 		}
 		catch (SQLException e) {
 			e.printStackTrace();
-			request.getRequestDispatcher("/500.html").forward(request, response);
+			request.getRequestDispatcher("/error/500.html").forward(request, response);
 			return;
 		}
 		break;

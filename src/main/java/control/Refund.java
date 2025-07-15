@@ -78,7 +78,7 @@ public class Refund extends HttpServlet {
 		catch(SQLException e) {
 			
 			e.printStackTrace();
-			request.getRequestDispatcher("/500.html").forward(request, response);
+			request.getRequestDispatcher("/error/500.html").forward(request, response);
 			return;
 		}
 		

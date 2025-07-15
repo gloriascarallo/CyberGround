@@ -3,7 +3,7 @@ function filterByPrice() {
   const priceMin = document.getElementById("priceMin").value;
   const priceMax = document.getElementById("priceMax").value;
 
-  const url = `/Filter_cart_by?action=price&idCart=${idCart}&priceMin=${priceMin}&priceMax=${priceMax}`;
+  const url = `/CyberGround/Filter_cart_by?action=price&idCart=${idCart}&priceMin=${priceMin}&priceMax=${priceMax}`;
   sendAjaxRequest(url);
 }
 
@@ -11,7 +11,7 @@ function filterByDate() {
   const idCart = document.querySelector('input[name="idCart"]').value;
   const dateAdded = document.getElementById("dateAdded").value;
 
-  const url = `/Filter_cart_by?action=date&idCart=${idCart}&dateAdded=${dateAdded}`;
+  const url = `/CyberGround/Filter_cart_by?action=date&idCart=${idCart}&dateAdded=${dateAdded}`;
   sendAjaxRequest(url);
 }
 
@@ -24,7 +24,10 @@ function sendAjaxRequest(url) {
     if (xhr.readyState === 4 && xhr.status === 200) {
       const response = JSON.parse(xhr.responseText);
       displayResults(response);
-    }
+    } else {
+	        document.getElementById("results").innerHTML =
+	          "<p style='color:red;'>Errore nella richiesta. Codice: " + xhr.status + "</p>";
+	      }
   };
 
   xhr.send();
@@ -49,7 +52,7 @@ function displayResults(data) {
     html += `<tr>
                <td>${product.name}</td>
                <td>${product.price.toFixed(2)}</td>
-			   <td>${product.quantity}<td>
+			   <td>${product.quantity}</td>
                <td>${product.dateAdded}</td>
 	
              </tr>`;

@@ -1,0 +1,110 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #141C5C;
+  margin: 0;
+  padding: 0;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Container principale */
+.dashboard-container {
+  background-color: #fff;
+  padding: 40px;
+  margin: 50px auto;
+  border-radius: 10px;
+  max-width: 700px;
+  width: 90%;
+  box-shadow: 0 0 12px rgba(0,0,0,0.3);
+  text-align: center;
+  color: #141C5C;
+}
+
+/* Titolo */
+.dashboard-container h2 {
+  font-size: 32px;
+  margin-bottom: 30px;
+  color: #FF8800;
+}
+
+/* Contenitore dei bottoni */
+.dashboard-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+/* Bottoni */
+.dashboard-btn {
+  background-color: #141C5C;
+  color: white;
+  padding: 16px 26px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: background-color 0.3s ease;
+  min-width: 220px;
+  justify-content: center;
+}
+
+.dashboard-btn i {
+  font-size: 20px;
+}
+
+.dashboard-btn:hover {
+  background-color: #FF8800;
+  border: 0 solid #FF8800;
+  color: white; 
+}
+
+.logout-button {
+  background-color: #141C5C;
+  color: #fff;
+  text-decoration: none;
+  padding: 12px 24px;
+  border-radius: 6px;
+  font-size: 16px;
+  border: 2px solid #141C5C;
+  transition: background-color 0.3s ease;
+  cursor: pointer;
+    }
+
+.logout-button i {
+  margin-right: 8px;
+    }
+
+.logout-button:hover {
+  background-color: #FF8800;
+  border: 2px solid #FF8800;
+  color: white;
+    }
+
+/* Responsive Design   */
+
+@media (max-width: 768px) {
+  .dashboard-container {
+    padding: 30px 20px;
+    margin: 30px auto;
+  }
+
+  .dashboard-container h2 {
+    font-size: 26px;
+  }
+
+  .dashboard-buttons {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .dashboard-btn {
+    width: 100%;
+    font-size: 16px;
+    padding: 14px 20px;
+  }
+}

@@ -39,8 +39,9 @@ public class Payment_page extends HttpServlet {
 		Boolean isRegisteredUser = (Boolean) request.getSession().getAttribute("isRegisteredUser");
 
         if (isRegisteredUser == null || !isRegisteredUser) {
-        	
-        	request.getRequestDispatcher("/accessDeniedRegisteredUser.html").forward(request, response);
+
+        	request.getRequestDispatcher("/error/accessDeniedRegisteredUser.jsp").forward(request, response);
+
         	return;
         	
         }
@@ -49,7 +50,7 @@ public class Payment_page extends HttpServlet {
 		if (idObj == null) {
 			errors = "Sessione scaduta o ID utente mancante. Ricarica la pagina e riprova.";
 	        request.setAttribute("errors", errors);
-	        request.getRequestDispatcher("/expiredSession.html").forward(request, response);
+	        request.getRequestDispatcher("/error/expiredSession.jsp").forward(request, response);
 	        return;
 		}
 		int id = (Integer) idObj;
@@ -58,7 +59,7 @@ public class Payment_page extends HttpServlet {
 		if (cart == null) {
 			errors = "Sessione scaduta o carrello mancante. Ricarica la pagina e riprova.";
 	        request.setAttribute("errors", errors);
-	        request.getRequestDispatcher("/expiredSession.html").forward(request, response);
+	        request.getRequestDispatcher("/error/expiredSession.jsp").forward(request, response);
 	        return;
 		}
 		
@@ -116,7 +117,7 @@ public class Payment_page extends HttpServlet {
 		catch(SQLException e) {
 			
 			e.printStackTrace();
-			request.getRequestDispatcher("/500.html").forward(request, response);
+			request.getRequestDispatcher("/error/500.html").forward(request, response);
 			return;
 		}
 		

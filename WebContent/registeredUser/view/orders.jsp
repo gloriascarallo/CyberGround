@@ -4,16 +4,21 @@
 <!DOCTYPE html>
 
 <%
-OrderBean orders=(OrderBean)request.getAttribute("orders");
+request.getAttribute("orders");
 %>
 
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Personal Orders Page</title>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/styles/Orders.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/styles/Orders.css?v=2">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/styles/Layout.css"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
+
+<%@ include file="/includes/header.jsp" %>
 
 <h2>Qui sono mostrati tutti i tuoi ordini</h2>
 
@@ -32,6 +37,6 @@ OrderBean orders=(OrderBean)request.getAttribute("orders");
 	<p>Prezzo Totale: ${user_orders.totalOrder}<p>
 	</div>
 </c:forEach>
-
+<%@ include file="/includes/footer.jsp" %>
 </body>
 </html>

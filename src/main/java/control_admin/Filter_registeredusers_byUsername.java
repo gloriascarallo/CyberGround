@@ -1,4 +1,4 @@
-package control;
+package control_admin;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -49,7 +49,7 @@ public class Filter_registeredusers_byUsername extends HttpServlet {
 		catch(SQLException e) {
 			
 			e.printStackTrace();
-			request.getRequestDispatcher("/500.html").forward(request, response);
+			request.getRequestDispatcher("/error/500.html").forward(request, response);
 			return;
 			
 		}
@@ -62,8 +62,10 @@ public class Filter_registeredusers_byUsername extends HttpServlet {
 			return;
 		}
 		
+		request.setAttribute("usernameString", "Username:");
+		request.setAttribute("idString", "Id:");
 		request.setAttribute("user", user);
-		request.getRequestDispatcher("/admin/view/user_profile.jsp").forward(request, response); 
+		request.getRequestDispatcher("/admin/view/users.jsp").forward(request, response); 
 		return;
 		
 	}

@@ -1,4 +1,4 @@
-package control;
+package control_admin;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -78,7 +78,7 @@ public class Update_product extends HttpServlet {
 		} catch (SQLException e) {
 			
 			e.printStackTrace();
-			request.getRequestDispatcher("/500.html").forward(request, response);
+			request.getRequestDispatcher("/error/500.html").forward(request, response);
 			return;
 		}
 		
@@ -273,7 +273,7 @@ if(modified) {
 	} catch (SQLException e) {
 		
 		e.printStackTrace();
-		request.getRequestDispatcher("/500.html").forward(request, response);
+		request.getRequestDispatcher("/error/500.html").forward(request, response);
 		return;
 		}
 	}

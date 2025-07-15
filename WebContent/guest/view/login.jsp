@@ -1,16 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+<% 
+request.getAttribute("message");
+%>
 <html>
 <head>
-
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Login</title>
-
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/styles/Layout.css"/>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/styles/Login.css?v=2"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
-
+<%@ include file="/includes/header.jsp" %>
 
 <div id="container">
 
@@ -27,6 +31,8 @@
 <%
     }
 %>
+
+${message}
 
 <form name="LoginForm" action="<%= request.getContextPath() %>/Login" method="post">
 
@@ -48,9 +54,10 @@
 </div>
 </form>
 <span> Non sei ancora registrato? Clicca qui per registrarti: <a href="registration.jsp">Registrati!</a></span>
-<span> Desideri continuare come guest? Clicca qui per andare alla home: <a href="./index.jsp">Home!</a></span>
+<span> Desideri continuare come guest? Clicca qui per andare alla home: <a href="index.jsp">Home!</a></span>
 </div>
 
+<%@ include file="/includes/footer.jsp" %>
 </body>
 <script src="<%=request.getContextPath()%>/scripts/validation.js" type="text/javascript"></script>
 </html>

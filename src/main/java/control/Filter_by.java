@@ -67,7 +67,7 @@ public class Filter_by extends HttpServlet {
 			} catch (SQLException e) {
 				
 				e.printStackTrace();
-				request.getRequestDispatcher("/500.html").forward(request, response);
+				request.getRequestDispatcher("/error/500.html").forward(request, response);
 				return;
 			}
 		    break;
@@ -109,7 +109,7 @@ public class Filter_by extends HttpServlet {
 			} catch (SQLException e) {
 				
 				e.printStackTrace();
-				request.getRequestDispatcher("/500.html").forward(request, response);
+				request.getRequestDispatcher("/error/500.html").forward(request, response);
 				return;
 			}
 			break;
@@ -134,7 +134,7 @@ public class Filter_by extends HttpServlet {
 			if(!errors.equals("")) {
 				
 				request.setAttribute("errors", errors);
-				request.getRequestDispatcher("/view/index.jsp").forward(request, response);
+				request.getRequestDispatcher("/guest/view/index.jsp").forward(request, response);
 				return;
 				
 			}
@@ -146,7 +146,7 @@ public class Filter_by extends HttpServlet {
 			} catch (SQLException e) {
 				
 				e.printStackTrace();
-				request.getRequestDispatcher("/500.html").forward(request, response);
+				request.getRequestDispatcher("/error/500.html").forward(request, response);
 				return;
 			}
 			
@@ -169,7 +169,7 @@ public class Filter_by extends HttpServlet {
 			} catch (SQLException e) {
 				
 				e.printStackTrace();
-				request.getRequestDispatcher("/500.html").forward(request, response);
+				request.getRequestDispatcher("/error/500.html").forward(request, response);
 				return;
 			}
 			break;

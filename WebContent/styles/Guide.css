@@ -1,13 +1,10 @@
 /* Base del layout */
 body {
-  font-family: 'Segoe UI', Arial, sans-serif;
+  font-family: Arial, sans-serif;
   background-color: #141C5C;
   color: #333;
   margin: 0;
-  padding: 40px 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  padding: 0;
 }
 
 /* Titolo */
@@ -18,8 +15,15 @@ h2 {
   text-align: center;
 }
 
+div#isolante {
+  color: #333;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 /* Testo paragrafo */
-p {
+div p {
   font-size: 18px;
   line-height: 1.6;
   max-width: 800px;
