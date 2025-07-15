@@ -64,7 +64,7 @@ public class Product_situatedin_cartBean {
 	
 	public int getIdProduct() {
 		
-		return product.getId();
+		return product.getIdProduct();
 		
 	}
 

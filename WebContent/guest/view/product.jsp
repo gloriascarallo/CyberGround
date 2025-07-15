@@ -31,7 +31,7 @@ request.getAttribute("product");
     <p>Fornitore: ${product.supplier}</p>
     <p>Quantità disponibili: ${product.quantityAvailable}</p>
     
-    <form action="${pageContext.request.contextPath}/AddToCart" method="post">
+    <form action="${pageContext.request.contextPath}/Adding_to_cart" method="post">
     <input type="hidden" name="productID" value="${product.id}">
     <button type="submit" class="add-to-cart-btn">
       <i class="fas fa-cart-plus"></i> Aggiungi al carrello

@@ -74,7 +74,7 @@ public class Payment_page extends HttpServlet {
 			if(product_incart.getProduct().getQuantityAvailable()<product_incart.getQuantity()) {
 				
 				errors += "La quantità selezionata per il prodotto \"" + product_incart.getProduct().getName()
-	                    + "\" (ID: " + product_incart.getProduct().getId()
+	                    + "\" (ID: " + product_incart.getProduct().getIdProduct()
 	                    + ") supera la disponibilità (" + product_incart.getProduct().getQuantityAvailable() + ").<br>";
 	        }
 				

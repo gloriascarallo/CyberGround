@@ -27,7 +27,7 @@
   <form action="${pageContext.request.contextPath}/Add_product" method="post" enctype="multipart/form-data" class="product-form">
   
     <label for="name">Nome prodotto:</label>
-<input type="text" id="name" name="name" onchange="validateFormElement(this, namePattern, document.getElementById('errorName'), errorNameMessage)">
+<input type="text" id="name" name="name" onchange="validateFormElement(this, namePattern, document.getElementById('errorName'), errorProductNameMessage)">
 <span id="errorName"></span>
 
 <label for="price">Prezzo (€):</label>

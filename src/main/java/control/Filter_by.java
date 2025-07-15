@@ -195,8 +195,8 @@ public class Filter_by extends HttpServlet {
 	            out.print("{");
 	            out.print("\"name\":\"" + escapeJson(p.getName()) + "\",");
 	            out.print("\"price\":" + p.getPrice() + ",");
-	            out.print("\"dateUpload\":" + p.getDateUpload() + ",");
-	            out.print("\"supplier\":" +  escapeJson(p.getSupplier()) + ",");
+	            out.print("\"dateUpload\":\"" + p.getDateUpload() + "\",");
+	            out.print("\"supplier\":\"" +  escapeJson(p.getSupplier()) + "\",");
 	            out.print("\"imagePath\":\"" + escapeJson(p.getImagePath()) + "\"");
 	            out.print("}");
 	            if (i < products.size() - 1) {

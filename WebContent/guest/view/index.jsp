@@ -15,21 +15,21 @@
   <!-- CATEGORIE -->
   <div class="category-bar">
     <form action="${pageContext.request.contextPath}/Category" method="post">
-    <input type="hidden" name="category" value="telefonia" />
+    <input type="hidden" name="category" value="Telefonia" />
     <button type="submit">
       <i class="fas fa-mobile-alt"></i> Telefonia
     </button>
   </form>
 
   <form action="${pageContext.request.contextPath}/Category" method="post">
-    <input type="hidden" name="category" value="computer" />
+    <input type="hidden" name="category" value="Computer" />
     <button type="submit">
       <i class="fas fa-laptop"></i> Computer
     </button>
   </form>
 
   <form action="${pageContext.request.contextPath}/Category" method="post">
-    <input type="hidden" name="category" value="console" />
+    <input type="hidden" name="category" value="Console" />
     <button type="submit">
       <i class="fas fa-gamepad"></i> Console
     </button>
