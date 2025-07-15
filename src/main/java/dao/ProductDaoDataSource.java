@@ -550,7 +550,8 @@ public class ProductDaoDataSource implements IBeanDao<ProductBean> {
 		PreparedStatement preparedStatement = null;
 
 		String updateSQL = "UPDATE " + ProductDaoDataSource.TABLE_NAME
-				+ " SET NAME = ?, PRICE = ?, DISCOUNTPERCENTAGE = ?, DATEEXPIRATIONDISCOUNT = ?, DESCRIPTION = ?, DATEUPLOAD = ?, SUPPLIER = ?, CATEGORYNAME = ?, IMAGEPATH = ?, QUANTITYAVAILABLE = ? WHERE ID = ?";
+				+ " SET NAME = ?, PRICE = ?, DISCOUNTPERCENTAGE = ?, DATEEXPIRATIONDISCOUNT = ?, DESCRIPTION = ?, SUPPLIER = ?, CATEGORYNAME = ?, IMAGEPATH = ?, QUANTITYAVAILABLE = ? WHERE ID = ?";
+
 
 		try {
 			connection = ds.getConnection();
@@ -568,12 +569,12 @@ public class ProductDaoDataSource implements IBeanDao<ProductBean> {
 			    preparedStatement.setNull(4, Types.DATE);
 			}
 			preparedStatement.setString(5, product.getDescription());
-			preparedStatement.setDate(6, product.getDateUpload());
-			preparedStatement.setString(7, product.getSupplier());
-			preparedStatement.setString(8, product.getCategoryName());
-			preparedStatement.setString(9, product.getImagePath());
-			preparedStatement.setInt(10, product.getQuantityAvailable());
-			preparedStatement.setInt(11, product.getIdProduct());
+			preparedStatement.setString(6, product.getSupplier());
+			preparedStatement.setString(7, product.getCategoryName());
+			preparedStatement.setString(8, product.getImagePath());
+			preparedStatement.setInt(9, product.getQuantityAvailable());
+			preparedStatement.setInt(10, product.getIdProduct());
+
 
 			preparedStatement.executeUpdate();
          

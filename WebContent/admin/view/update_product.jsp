@@ -34,7 +34,7 @@
   <form action="${pageContext.request.contextPath}/Update_product" method="post" enctype="multipart/form-data" class="product-form">
 
     <!-- idProduct hidden -->
-    <input type="hidden" name="idProduct" value="${product.id}">
+    <input type="hidden" name="idProduct" value="${product.idProduct}">
 
     <label for="name">Nome prodotto:</label>
     <input type="text" id="name" name="name" value="${product.name}" onchange="validateFormElement(this, namePattern, document.getElementById('errorName'), errorNameMessage)">
@@ -69,6 +69,8 @@
 <span id="errorQuantity"></span><br>
 
     <label for="productImgFile">Immagine Prodotto (carica per sostituire):</label>
+     <p>Immagine attuale:</p>
+    <img src="${product.imagePath}" alt="${product.name}">
     <input type="file" id="productImgFile" name="productImgFile" accept="image/*" onchange="validateFormElement(this, imagePattern, document.getElementById('errorImage'), errorImageMessage)">
 <span id="errorImage"></span><br>
 

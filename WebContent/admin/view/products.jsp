@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Admin Products Page</title>
-  <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/Products.css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/Products.css?v=2">
   <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/styles/Admin_Layout.css"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
@@ -71,16 +71,16 @@
   <label for="idProduct">Elimina prodotto con ID:</label>
   <input type="number" name="idProduct" id="idProduct" onchange="validateFormElement(this, idPattern, document.getElementById('errorIdDelete'), errorIdMessage)">
   <span id="errorIdDelete"></span><br>
-  <button type="submit" onclick="return validateProductsForm(event)"><i class="fas fa-trash-alt"></i> Elimina</button>
+  <button type="submit" onclick="return validateIdProduct)(event)"><i class="fas fa-trash-alt"></i> Elimina</button>
 </form>
   
   <h2>Modifica Prodotto</h2>
   
-  <form action="${pageContext.request.contextPath}/LoadProductForUpdate" method="post" class="filter-group">
+  <form action="${pageContext.request.contextPath}/LoadProductForUpdate" method="get" class="filter-group">
    <label for="idProduct">Modifica prodotto con ID:</label>
    <input type="number" name="idProduct" id="idProduct" onchange="validateFormElement(this, idPattern, document.getElementById('errorIdUpdate'), errorIdMessage)">
   <span id="errorIdUpdate"></span><br>
-   <button type="submit" class="action-btn" onclick="return validateProductsForm(event)">
+   <button type="submit" class="action-btn" onclick="return validateIdProduct(event)">
     <i class="fas fa-edit"></i> Modifica Prodotto
   </button>
   </form>
@@ -92,9 +92,39 @@
     <i class="fas fa-plus-circle"></i> Aggiungi Prodotto
   </a>
   </div>
+  
+  <!-- Lista prodotti -->
+  <div class="products-grid">
+  <c:forEach var="product" items="${products}">
+    <div class="product-card">
+    <a href="${pageContext.request.contextPath}/Product?id=${product.idProduct}">
+  <img src="${product.imagePath}" alt="${product.name}" class="product-image"/>
+</a>
+      <div class="product-info">
+        <h3>${product.name}</h3>
+        <p>${product.description}</p>
+       <c:choose>
+  <c:when test="${product.discountPercentage != null && product.discountPercentage > 0}">
+    <p>
+      <strong>Prezzo:</strong>
+      <span class="prezzo_pieno">€ ${product.price}</span>
+      <span class="prezzo_scontato">
+        € ${product.price - (product.price * product.discountPercentage / 100)}
+      </span>
+    </p>
+  </c:when>
+  <c:otherwise>
+    <p><strong>Prezzo:</strong> € ${product.price}</p>
+  </c:otherwise>
+</c:choose>
+      </div>
+    </div>
+  </c:forEach>
+ </div>
 
 </main>
 <%@ include file="/includes/admin_footer.jsp" %>
 </body>
 <script src="<%=request.getContextPath()%>/scripts/product_validation.js" type="text/javascript"></script>
+<script src="<%=request.getContextPath()%>/scripts/id_validation.js" type="text/javascript"></script>
 </html>

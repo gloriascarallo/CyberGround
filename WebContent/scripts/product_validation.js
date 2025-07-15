@@ -4,7 +4,7 @@
   const discountPattern = /^(100(\.00?)?|[0-9]?[0-9](\.[0-9]{1,2})?)$/; // 0–100
   const datePattern = /^\d{4}-\d{2}-\d{2}$/; // formato YYYY-MM-DD
   const imagePattern = /^.+\.(jpg|jpeg|png|gif)$/i;
-  const supplierPattern = /^[\w\s]{2,45}$/;  // lettere, numeri, underscore e spazi, da 2 a 45 caratteri
+  const supplierPattern = /^[\w\s]{0,45}$/;  // lettere, numeri, underscore e spazi, da 2 a 45 caratteri
   const categoryPattern = /^[\w\s]{2,45}$/;  // lettere, numeri, underscore e spazi, da 2 a 45 caratteri
   const descriptionPattern = /^.{0,500}$/; // descrizione max 500 caratteri
   const quantityPattern = /^[0-9]+$/; // solo numeri interi

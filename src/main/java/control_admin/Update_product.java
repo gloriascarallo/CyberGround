@@ -1,6 +1,7 @@
 package control_admin;
 
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -25,6 +26,11 @@ import bean.ProductBean;
  * Servlet implementation class Update_product
  */
 @WebServlet("/Update_product")
+@MultipartConfig(
+	    fileSizeThreshold = 1024 * 1024,    // 1MB
+	    maxFileSize = 1024 * 1024 * 5,      // 5MB
+	    maxRequestSize = 1024 * 1024 * 10   // 10MB
+	)
 public class Update_product extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final String UPLOAD_DIRECTORY = "images";
@@ -50,7 +56,6 @@ public class Update_product extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
 		response.sendRedirect(request.getContextPath() + "/admin/view/products.jsp");
 		return;
 	
