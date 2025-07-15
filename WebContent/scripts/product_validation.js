@@ -52,14 +52,14 @@
 	  const nameInput = document.getElementById("name");
 	  const nameSpan = document.getElementById("errorName");
 	  if (nameInput) {
-	    valid &= validateFormElement(nameInput, namePattern, nameSpan, errorNameMessage);
+	    valid &= validateFormElement(nameInput, namePattern, nameSpan, errorProductNameMessage);
 	  }
 
 	  const priceMinInput = document.getElementById("min");
 	  if (priceMinInput && priceMinInput.value !== "") {
 	    const span = displayError(priceMinInput);
 	    if (!pricePattern.test(priceMinInput.value)) {
-	      span.textContent = errorPriceMinMessage;
+	      span.textContent = errorPriceMessage;
 	      span.style.color = "red";
 	      valid = false;
 	    } else {
@@ -71,7 +71,7 @@
 	  if (priceMaxInput && priceMaxInput.value !== "") {
 	    const span = displayError(priceMaxInput);
 	    if (!pricePattern.test(priceMaxInput.value)) {
-	      span.textContent = errorPriceMaxMessage;
+	      span.textContent = errorPriceMessage;
 	      span.style.color = "red";
 	      valid = false;
 	    } else {
