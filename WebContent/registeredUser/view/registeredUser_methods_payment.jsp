@@ -25,7 +25,7 @@ request.getAttribute("user_methods_payment");
 <div id="container">
 <c:forEach var="user_methods" items="${user_methods_payment}">
 	<label>
-	${user_methods.pan} - ${user_methods.expirationDate} - ${user_methods.cvc}
+	PAN: ${user_methods.pan} - Data di Scadenza: ${user_methods.expirationDate} - CVC: ${user_methods.cvc}
 	</label><br>
 </c:forEach>
 </div>
