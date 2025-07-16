@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", function () {
       return;
     }
 
-    fetch(`${window.contextPath || ''}/CyberGround/Filter_by?action=name&name=${encodeURIComponent(query)}`)
+    fetch(`${window.contextPath || ''}/CyberGround/Search_bar?action=name&name=${encodeURIComponent(query)}`)
       .then((res) => res.json())
       .then((data) => {
         suggestionsBox.innerHTML = "";

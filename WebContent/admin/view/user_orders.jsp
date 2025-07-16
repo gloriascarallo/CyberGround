@@ -12,7 +12,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Admin User Orders Page</title>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/styles/User_orders.css" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/styles/User_orders.css?v=2" />
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/styles/Admin_Layout.css"/>
  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
@@ -20,7 +20,7 @@
 
 <%@ include file="/includes/admin_header.jsp" %>
 
-  <h2>Filtra Ordini per Intervallo di Date</h2>
+  <h2>Filtra Ordini per Intervallo di Date di Acquisto</h2>
   
   <div class="orders-container">
   
