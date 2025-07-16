@@ -102,14 +102,7 @@ public class Adding_to_cart extends HttpServlet {
 					
 				}
 				
-			try {
-				ds_product.decreaseQuantityAvailable(idProduct, 1);
-			} catch (SQLException e) {
-				
-				e.printStackTrace();
-				request.getRequestDispatcher("/error/500.html").forward(request, response);
-	        	return;
-			}
+			
 	     
 		
 		Product_situatedin_cartBean product_situatedin_cart=new Product_situatedin_cartBean();
