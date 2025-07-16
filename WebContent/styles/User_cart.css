@@ -67,6 +67,14 @@ input[type="date"] {
   margin-top: 10px;
 }
 
+img {
+  width: 70%;
+  height: auto;
+  border-radius: 6px;
+  display: block;
+  margin-bottom: 15px;
+}
+
 .filter-btn:hover {
   background-color: #FF8800;
   border: 0 solid #FF8800;

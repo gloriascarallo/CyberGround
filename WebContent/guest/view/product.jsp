@@ -18,13 +18,11 @@
 
 <h2>Pagina Prodotto</h2>
 <div id="container">
-<a href="${pageContext.request.contextPath}/Product">
     <img src="${product.imagePath}" alt="Product image" />
-    </a>
     <p>Nome: ${product.name}</p>
     <p>Descrizione: ${product.description}</p>
     <c:choose>
-  <c:when test="${product.discountPercentage != null && product.discountPercentage > 0}">
+ <c:when test="${product.discountPercentage != null && product.discountPercentage > 0 && (product.dateExpirationDiscount == null || product.dateExpirationDiscount.time>nowTimestamp)}">
     <p>
       <strong>Prezzo:</strong>
       <span class="prezzo_pieno">€ ${product.price}</span>

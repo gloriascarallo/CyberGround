@@ -63,6 +63,7 @@ public class Category extends HttpServlet {
 
 		request.setAttribute("category", category);
 		request.setAttribute("products", products);  
+		request.setAttribute("nowTimestamp", System.currentTimeMillis());
 		request.getRequestDispatcher("/guest/view/category.jsp").forward(request, response);  
 		return;
 	}

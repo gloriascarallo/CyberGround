@@ -159,7 +159,7 @@ public class Add_payment_method extends HttpServlet {
 		if ("/registeredUser/view/payment_page.jsp".equals(redirectAfter)) {
 		    response.sendRedirect(request.getContextPath() + "/Payment_page");
 		} else if ("/registeredUser/view/user.jsp".equals(redirectAfter)) {
-		    response.sendRedirect(request.getContextPath() + "/registeredUserMethods_Payment");
+		    response.sendRedirect(request.getContextPath() + "/RegisteredUserMethodsPayment");
 		}
 		return;
 	}

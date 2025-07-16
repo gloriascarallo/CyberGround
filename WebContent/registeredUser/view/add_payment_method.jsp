@@ -44,5 +44,5 @@ ${message}
 </form>
 <%@ include file="/includes/footer.jsp" %>
 </body>
-<script src="<%=request.getContextPath()%>/scripts/validation.js" type="text/javascript"></script>
+<script src="<%=request.getContextPath()%>/scripts/validation.js?v=2" type="text/javascript"></script>
 </html>

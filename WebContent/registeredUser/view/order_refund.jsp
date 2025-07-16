@@ -24,9 +24,9 @@
     <label class="radio-block">
 	<input type="radio" name="idProduct_in_order" value="${user_order.id_product_in_order}">
 	<img alt="Immagine ${user_order.product.name}" src="${user_order.product.imagePath}"/>
-	<p>Nome Prodotto:${user_order.product.name}</p><br>
-	<p>Prezzo Prodotto:${user_order.price}</p><br>
-	<p>Prezzo Totale:${user_order.subtotal}</p>
+	<p>Nome Prodotto: ${user_order.product.name}</p><br>
+	<p>Prezzo Prodotto: €${user_order.price}</p><br>
+	<p>Prezzo Totale: €${user_order.subtotal}</p>
 	</label><br>
 </c:forEach>
 <input type="submit" value="Seleziona prodotto">

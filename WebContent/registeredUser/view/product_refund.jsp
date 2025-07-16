@@ -1,10 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
-<%
-request.getAttribute("product");
-%>
-        
+     <%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
+     <%
+    request.setAttribute("nowTimestamp", System.currentTimeMillis());
+	%>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,7 +26,20 @@ request.getAttribute("product");
     </a>
     <p>Nome: ${product.product.name}</p>
     <p>Descrizione: ${product.product.description}</p>
-    <p>Prezzo: ${product.product.price}</p>
+     <c:choose>
+  <c:when test="${product.product.discountPercentage != null && product.product.discountPercentage > 0 && (product.product.dateExpirationDiscount == null || product.product.dateExpirationDiscount.time>nowTimestamp)}">
+    <p>
+      <strong>Prezzo:</strong>
+      <span class="prezzo_pieno">€ ${product.product.price}</span>
+      <span class="prezzo_scontato">
+        € <fmt:formatNumber value="${product.product.price - (product.product.price * product.product.discountPercentage / 100)}" type="number" maxFractionDigits="2"/>
+      </span>
+    </p>
+  </c:when>
+  <c:otherwise>
+    <p><strong>Prezzo:</strong> € ${product.price}</p>
+  </c:otherwise>
+</c:choose>
     <p>Fornitore: ${product.product.supplier}</p>
     <p>Quantità disponibili: ${product.product.quantityAvailable}</p>
     </div>

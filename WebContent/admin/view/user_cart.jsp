@@ -8,7 +8,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Filter User Cart Page</title>
-  <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/styles/User_cart.css?v=3" />
+  <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/styles/User_cart.css?v=4" />
   <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/styles/Admin_Layout.css"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
@@ -62,11 +62,8 @@
     <hr />
     
     <c:forEach var="product_incart" items="${products_situatedin_cart}">
-<a href="${pageContext.request.contextPath}/Product">
     <img src="${product_incart.product.imagePath}" alt="Product image" />
-    </a>
-    <div id="product-${product_incart.product.idProduct}">
-    
+    <div id="product-${product_incart.product.idProduct}">    
     Nome: ${product_incart.product.name}<br>
     Prezzo: <span id="total-${product_incart.product.idProduct}">${product_incart.totalPrice}</span><br>
     </div>

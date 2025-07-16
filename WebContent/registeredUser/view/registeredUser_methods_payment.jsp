@@ -28,6 +28,12 @@ request.getAttribute("user_methods_payment");
 	PAN: ${user_methods.pan} - Data di Scadenza: ${user_methods.expirationDate} - CVC: ${user_methods.cvc}
 	</label><br>
 </c:forEach>
+<span>Vuoi aggiungere un nuovo metodo di pagamento? <a href="${pageContext.request.contextPath}/registeredUser/view/add_payment_method.jsp?redirectAfter=/registeredUser/view/user.jsp">Clicca qui!</a></span>
+    <c:if test="${not empty sessionScope.message}">
+    <div class="success-message">${sessionScope.message}</div>
+    <c:remove var="message" scope="session"/>
+
+    </c:if>
 </div>
 <%@ include file="/includes/footer.jsp" %>
 </body>

@@ -87,6 +87,14 @@ label {
   text-align: center;
 }
 
+span.prezzo_pieno {
+	text-decoration: line-through !important;
+}
+
+span.prezzo_scontato {
+	color: red !important;
+}
+
 /* Input */
 input[type="text"] {
   width: 80%;
