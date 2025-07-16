@@ -295,12 +295,7 @@ function validateProduct_refundForm() {
 					}
 				}
 				
-				return(
-					validateFormElement(addressesEl, addressPattern, document.getElementById('errorAddress1'), errorAddressMessage) &&
-					validateFormElement(panEl, PANPattern, document.getElementById('errorPAN1'), errorPANMessage) &&
-					validateFormElement(expirationDateEl, ScadenzaPattern, document.getElementById('errorScadenza1'), errorScadenzaMessage) &&
-					validateFormElement(cvcEl, CVCPattern, document.getElementById('errorCVC1'), errorCVCMessage)
-				);
+				return true;
 	}
 	
 	function validateRefundForm() {
