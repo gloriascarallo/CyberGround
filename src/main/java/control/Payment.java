@@ -108,7 +108,7 @@ public class Payment extends HttpServlet {
 		   
 		    cart.removeProduct(product_incart);
 		    try {
-				ds_cart.doDelete(product_incart.getId_SituatedIn());
+				ds_cart.doDelete(product_incart.getIdSituatedIn());
 			} catch (SQLException e) {
 				
 				e.printStackTrace();

@@ -33,13 +33,13 @@ public class Product_situatedin_cartBean {
 	}
 
 
-	public int getId_SituatedIn() {
+	public int getIdSituatedIn() {
 		return id_SituatedIn;
 	}
 
 
 
-	public void setId_SituatedIn(int id_SituatedIn) {
+	public void setIdSituatedIn(int id_SituatedIn) {
 		this.id_SituatedIn = id_SituatedIn;
 	}
 	

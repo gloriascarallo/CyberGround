@@ -27,28 +27,28 @@
 
 <c:forEach var="product_incart" items="${sessionScope.cart.products}">
 
-<a href="${pageContext.request.contextPath}/Product?idProduct=${product_incart.product.idProduct}">
+<a href="${pageContext.request.contextPath}/Product?id=${product_incart.idSituatedIn}">
     <img src="${product_incart.product.imagePath}" alt="Product image" />
     </a>
-    <div id="product-${product_incart.idProduct}">
+    <div id="product-${product_incart.idSituatedIn}">
     
     Nome: ${product_incart.product.name}<br>
-    Prezzo: <span id="total-${product_incart.idProduct}">${product_incart.totalPrice}</span><br>
+    Prezzo: <span id="total-${product_incart.idSituatedIn}">${product_incart.totalPrice}</span><br>
     
     <div>
-    <a href="${pageContext.request.contextPath}/UpdateCart?idProduct=${product_incart.idProduct}&action=decrease">
+    <a href="${pageContext.request.contextPath}/UpdateCart?id=${product_incart.idSituatedIn}&action=decrease">
   <button type="button">-</button>
 </a>
 
- <span id="quantity-${product_incart.idProduct}">${product_incart.quantity}</span>
-    <a href="${pageContext.request.contextPath}/UpdateCart?idProduct=${product_incart.idProduct}&action=increase">
+ <span id="quantity-${product_incart.idSituatedIn}">${product_incart.quantity}</span>
+    <a href="${pageContext.request.contextPath}/UpdateCart?id=${product_incart.idSituatedIn}&action=increase">
   <button type="button">+</button>
 </a>
         
        
     </div>
     
-   <a href="${pageContext.request.contextPath}/UpdateCart?idProduct=${product_incart.idProduct}&action=remove">
+   <a href="${pageContext.request.contextPath}/UpdateCart?id=${product_incart.idSituatedIn}&action=remove">
   <button type="button">Rimuovi</button>
 </a>
     </div>
