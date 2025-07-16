@@ -57,6 +57,7 @@ public class Login extends HttpServlet {
 		String username=request.getParameter("username");
 		String password=request.getParameter("password");
 		String hasPassword=Security.toHash(password);
+		//System.out.println(hasPassword);
 		String errors="";
 		RequestDispatcher dispatcherToLoginPage=request.getRequestDispatcher("/guest/view/login.jsp");
 		
@@ -97,7 +98,7 @@ if(!errors.equals("")) {
 		if(admin!=null && admin.getPassword().equals(hasPassword)) {
 			 Cookie guestCookie = new Cookie("guestId", "");
 			    guestCookie.setMaxAge(0);
-			    guestCookie.setPath("/");
+			    guestCookie.setPath(request.getContextPath());
 			    response.addCookie(guestCookie);
 	    request.getSession().invalidate();
         HttpSession newSession = request.getSession(true);
@@ -121,7 +122,7 @@ if(!errors.equals("")) {
 		if(user!=null && user.getPassword().equals(hasPassword)) {
 			 Cookie guestCookie = new Cookie("guestId", "");
 			    guestCookie.setMaxAge(0);
-			    guestCookie.setPath("/");
+			    guestCookie.setPath(request.getContextPath());
 			    response.addCookie(guestCookie);
 	
 			 // Salva carrello della vecchia sessione PRIMA di invalidare

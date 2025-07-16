@@ -66,17 +66,8 @@ final String SECRET_KEY = "qwerTY-SECRET-KEY-2025";
 			int guestId=-1;
 			CartBean cart=new CartBean();
 
-			if (cookies != null) {
-//				
-//				for (Cookie cookie : cookies) {
-//				    if (!cookie.getName().equals("JSESSIONID") && !cookie.getName().equals("guestId")) {
-//				        Cookie deleteCookie = new Cookie(cookie.getName(), "");
-//				        deleteCookie.setMaxAge(0);
-//				        deleteCookie.setPath(request.getContextPath());
-//				        response.addCookie(deleteCookie);
-//				    }
-//				}
-				
+
+				if(cookies!=null) {
 			    for (Cookie c : cookies) {
 			        if ("guestId".equals(c.getName())) {
 			            guestIdStr = c.getValue(); // es. "42|abc123hash"                         System.out.println(guestIdStr);
@@ -87,7 +78,7 @@ final String SECRET_KEY = "qwerTY-SECRET-KEY-2025";
 		                    	int parsedGuestId = Integer.parseInt(parts[0]);
 		                        String expectedHash = Security.hmacSHA256(String.valueOf(parsedGuestId), SECRET_KEY);
 		                        if (expectedHash.trim().equals(parts[1].trim())) {
-		                        //System.out.println("ci arrivo qui");
+		                        
 		                        	guestId=parsedGuestId;
 		                        	    cart.setIdCart(guestId);
 		                        	    Product_situatedin_cartDaoDataSource ds_cart=new Product_situatedin_cartDaoDataSource();
@@ -109,7 +100,7 @@ final String SECRET_KEY = "qwerTY-SECRET-KEY-2025";
 			        }
 			    }
 			  }
-			}
+				}
 			
 		if(guestId==-1) {
 	
