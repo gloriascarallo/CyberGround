@@ -305,7 +305,7 @@ if(!errors.equals("")) {
 		// Cancella il cookie guestId
 		Cookie guestCookie = new Cookie("guestId", "");
 		guestCookie.setMaxAge(0);
-		guestCookie.setPath(request.getContextPath());
+		guestCookie.setPath("/"); 
 		response.addCookie(guestCookie);
 
 		request.setAttribute("message", "Registrazione avvenuta con successo!<br>");

@@ -98,7 +98,7 @@ if(!errors.equals("")) {
 		if(admin!=null && admin.getPassword().equals(hasPassword)) {
 			 Cookie guestCookie = new Cookie("guestId", "");
 			    guestCookie.setMaxAge(0);
-			    guestCookie.setPath(request.getContextPath());
+			    guestCookie.setPath("/"); 
 			    response.addCookie(guestCookie);
 	    request.getSession().invalidate();
         HttpSession newSession = request.getSession(true);
@@ -122,7 +122,7 @@ if(!errors.equals("")) {
 		if(user!=null && user.getPassword().equals(hasPassword)) {
 			 Cookie guestCookie = new Cookie("guestId", "");
 			    guestCookie.setMaxAge(0);
-			    guestCookie.setPath(request.getContextPath());
+			    guestCookie.setPath("/"); 
 			    response.addCookie(guestCookie);
 	
 			 // Salva carrello della vecchia sessione PRIMA di invalidare

@@ -137,7 +137,7 @@ final String SECRET_KEY = "qwerTY-SECRET-KEY-2025";
 		System.out.println("Creato id: " + value);
 		Cookie guestCookie = new Cookie("guestId", value);
 	    guestCookie.setMaxAge(60 * 60 * 24 * 30); 
-	    guestCookie.setPath(request.getContextPath()); 
+	    guestCookie.setPath("/"); 
 	    guestCookie.setHttpOnly(true);
 	    response.addCookie(guestCookie);
 	    cart.setIdCart(guestId);
