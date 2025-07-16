@@ -83,7 +83,7 @@ public class Payment extends HttpServlet {
 			Product_in_orderBean product_in_order=new Product_in_orderBean();
 			product_in_order.setIdOrder(order.getIdOrder());
 			product_in_order.setProduct(product_incart.getProduct());
-			product_in_order.setPrice(product_incart.getProduct().getPrice());
+			product_in_order.setPrice(product_incart.getProduct().getDiscountedPrice());
 			product_in_order.setQuantity(product_incart.getQuantity());
 			
 			try {

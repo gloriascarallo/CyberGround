@@ -93,7 +93,8 @@ public class Product_situatedin_cartBean {
 
 	public double getTotalPrice() {
 		
-		return product.getPrice()*quantity;
+	    return product.getDiscountedPrice() * quantity;
+		
 		
 	}
 
