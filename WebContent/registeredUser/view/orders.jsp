@@ -30,7 +30,7 @@ request.getAttribute("orders");
         <img src="${product_in_order.product.imagePath}" alt="Product image"/>
       </a>
       <p>Nome Prodotto: ${product_in_order.product.name}</p>
-      <p>Prezzo Prodotto: ${product_in_order.price}</p>
+      <p id="prezzo">Prezzo Prodotto: €${product_in_order.price}</p>
       <p>Quantità Prodotto: ${product_in_order.quantity}</p>
     </c:forEach>
     
@@ -39,7 +39,7 @@ request.getAttribute("orders");
     <p>Data Acquisto: ${user_orders.datePurchase}</p>
     <p>Data Spedizione: ${user_orders.dateShipping}</p>
     <p>Data Consegna: ${user_orders.dateDelivery}</p>
-    <p>Prezzo Totale: ${user_orders.totalOrder}</p>
+    <p>Prezzo Totale: €${user_orders.totalOrder}</p>
     </div>
   </div>
 </c:forEach>

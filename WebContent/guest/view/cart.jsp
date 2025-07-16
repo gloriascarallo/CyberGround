@@ -1,6 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
+    <%
+    request.setAttribute("nowTimestamp", System.currentTimeMillis());
+	%>
+    
 <!DOCTYPE html>
 <%@page import="bean.Product_situatedin_cartBean"%>
 <%@page import="java.util.ArrayList"%>
@@ -36,8 +40,7 @@
       
     <strong>Nome:</strong> ${product_incart.product.name}<br>
     <c:choose>
-  <c:when test="${product_incart.product.discountPercentage != null && product_incart.product.discountPercentage > 0}">
-    <p>
+ <c:when test="${product_incart.product.discountPercentage != null && product_incart.product.discountPercentage > 0 && (product_incart.product.dateExpirationDiscount == null || product_incart.product.dateExpirationDiscount.time>nowTimestamp)}">    <p>
       <strong>Prezzo:</strong>
       <span class="prezzo_pieno">€ ${product_incart.product.price}</span>
       <span class="prezzo_scontato">

@@ -78,6 +78,14 @@ h2 {
   margin-bottom: 8px;
 }
 
+span.prezzo_pieno {
+	text-decoration: line-through;
+}
+
+span.prezzo_scontato {
+	color: red;
+}
+
 /* Responsive media query */
 @media (max-width: 768px) {
   main {

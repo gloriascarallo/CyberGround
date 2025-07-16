@@ -77,6 +77,7 @@ public class Product extends HttpServlet {
 		
 		
 		request.setAttribute("product", product);
+		request.setAttribute("nowTimestamp", System.currentTimeMillis());
 		request.getRequestDispatcher("/guest/view/product.jsp").forward(request, response);
 		return;
 	}

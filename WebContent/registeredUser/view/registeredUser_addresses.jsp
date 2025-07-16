@@ -28,6 +28,11 @@ request.getAttribute("user_addresses");
 	${user_address.nameAddress}
 	</label><br>
 </c:forEach>
+ <span>Vuoi aggiungere un nuovo indirizzo? <a href="${pageContext.request.contextPath}/registeredUser/view/add_address.jsp?redirectAfter=/registeredUser/view/user.jsp">Clicca qui!</a></span>
+    <c:if test="${not empty sessionScope.message}">
+    <div class="success-message">${sessionScope.message}</div>
+    <c:remove var="message" scope="session"/>
+    </c:if>
 </div>
 <%@ include file="/includes/footer.jsp" %>
 </body>
