@@ -35,7 +35,7 @@ public class AccessControlFilter extends HttpFilter implements Filter {
 
 	    System.out.println("Filtro path: " + path + ", dispatcher: " + dispatcherType);
 
-	    // Blocca SOLO se è richiesta DIRETTA (REQUEST), non FORWARD o INCLUDE
+	    
 	    if (dispatcherType == DispatcherType.REQUEST) {
 	        if (path.contains("/registeredUser/") && (isRegisteredUser == null || !isRegisteredUser)) {
 	            httpResponse.sendRedirect(httpRequest.getContextPath() + "/error/accessDeniedRegisteredUser.jsp");
@@ -45,6 +45,7 @@ public class AccessControlFilter extends HttpFilter implements Filter {
 	            return;
 	        }
 	    }
+	    
 
 	    // Altrimenti lascia passare (anche FORWARD, INCLUDE, ERROR, ecc.)
 	    chain.doFilter(request, response);

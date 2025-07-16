@@ -15,7 +15,7 @@ const errorTelephoneMessage="Un numero di telefono valido deve avere formato ###
 const errorEmailMessage="Un'email valida deve avere formato username@domain.ext";
 const errorAddressMessage="Un indirizzo valido deve essere formato da sequenze di lettere o numeri separati da spazi"
 const errorPANMessage="Un metodo di pagamento valido deve avere formato ####-####-####-####";
-const errorScadenzaMessage="Una data di scadenza valida deve avere formato ##/## e una data di scandeza superiore all'attuale";
+const errorScadenzaMessage="Una data di scadenza valida deve avere formato ##/## e una data di scadenza superiore all'attuale";
 const errorCVCMessage="Un CVC valido deve avere formato ### o ####";
 const errorIDMessage = "L'ID ordine deve contenere solo numeri";
 
