@@ -6,7 +6,6 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import dao.ProductDaoDataSource;
@@ -27,9 +26,6 @@ public class Filter_by extends HttpServlet {
        
     }
 
-    private String escapeJson(String value) {
-        return value == null ? "" : value.replace("\"", "\\\"");
-    }
     
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
@@ -52,7 +48,7 @@ public class Filter_by extends HttpServlet {
 		
 		case "supplier": 
 			
-			String supplier=request.getParameter("supplier");
+			String supplier=request.getParameter("supplierInput");
 			if(supplier==null || supplier.equals("")) {
 				
 				errors+="Aggiungi nome fornitore<br>";
@@ -154,25 +150,12 @@ public class Filter_by extends HttpServlet {
 			
 		default: 
 			
-			String name=request.getParameter("name");
-			if(name==null || name.equals("")) {
-				
-				errors+="Aggiungi nome prodotto<br>";
-				request.setAttribute("errors", errors);
-				request.getRequestDispatcher("/guest/view/index.jsp").forward(request, response);
-				return;
-				
-			}
-			try {
-				products=ds.doRetrievebyName(name);
-				
-			} catch (SQLException e) {
-				
-				e.printStackTrace();
-				request.getRequestDispatcher("/error/500.html").forward(request, response);
-				return;
-			}
-			break;
+			errors+="Input errato o prodotti non trovati<br>";
+			request.setAttribute("errors", errors);
+			request.getRequestDispatcher("/guest/view/index.jsp").forward(request, response);
+			return;
+			
+			
 		}
 			if(products.isEmpty()) {
 				
@@ -182,31 +165,11 @@ public class Filter_by extends HttpServlet {
 				return;
 				
 			}
-			/*request.setAttribute("products", products);
-			request.getRequestDispatcher("/view/category.jsp").forward(request, response);
+			request.setAttribute("products", products);
+			request.getRequestDispatcher("/guest/view/index.jsp").forward(request, response);
 			return;
-			*/
-			response.setContentType("application/json");
-	        PrintWriter out = response.getWriter();
-	        out.print("{\"products\":[");
-
-	        for (int i = 0; i < products.size(); i++) {
-	            ProductBean p = products.get(i);
-	            out.print("{");
-	            out.print("\"name\":\"" + escapeJson(p.getName()) + "\",");
-	            out.print("\"idProduct\":" + p.getIdProduct() + ",");
-	            out.print("\"price\":" + p.getPrice() + ",");
-	            out.print("\"dateUpload\":\"" + p.getDateUpload() + "\",");
-	            out.print("\"supplier\":\"" +  escapeJson(p.getSupplier()) + "\",");
-	            out.print("\"imagePath\":\"" + escapeJson(p.getImagePath()) + "\"");
-	            out.print("}");
-	            if (i < products.size() - 1) {
-	                out.print(",");
-	            }
-	        }
-
-	        out.print("]}");
-	        out.flush();
+			
+			
 	    }
 
 	

@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -48,21 +49,30 @@
   <section class="filters">
     <h2>Filtra prodotti</h2>
 
-    <input type="text" id="supplierInput" placeholder="Fornitore">
-    <button onclick="loadProducts({action:'supplier', supplier: document.getElementById('supplierInput').value})">
+<form action="${pageContext.request.contextPath}/Filter_by" method="get">
+<input type="hidden" name="action" value="supplier">
+    <input type="text" name="supplierInput" id="supplierInput" placeholder="Fornitore">
+    <button type="submit">
         Cerca per fornitore
     </button>
+    </form>
 
-    <input type="text" id="minPrice" placeholder="Prezzo minimo">
-    <input type="text" id="maxPrice" placeholder="Prezzo massimo">
-    <button onclick="loadProducts({action:'price', priceMin: document.getElementById('minPrice').value, priceMax: document.getElementById('priceMax').value})">
+<form action="${pageContext.request.contextPath}/Filter_by" method="get">
+<input type="hidden" name="action" value="price">
+    <input type="text" name="priceMin" id="priceMin" placeholder="Prezzo minimo">
+    <input type="text" name="priceMax" id="priceMax" placeholder="Prezzo massimo">
+    <button type="submit">
         Cerca per prezzo
     </button>
+    </form>
 
-    <input type="text" id="yearUpload" placeholder="Anno di pubblicazione">
-    <button onclick="loadProducts({action:'yearUpload', yearUpload: document.getElementById('yearUpload').value})">
+<form action="${pageContext.request.contextPath}/Filter_by" method="get">
+<input type="hidden" name="action" value="yearUpload">
+    <input type="text" name="yearUpload" id="yearUpload" placeholder="Anno di pubblicazione">
+    <button type="submit">
         Cerca per anno
     </button>
+</form>
 
     <div style="position: relative;">
       <input type="text" id="nameInput" placeholder="Nome prodotto" autocomplete="off">
@@ -76,8 +86,25 @@
 
   <!-- Colonna destra: Risultati -->
   <section class="results">
-    <div id="result"></div>
-  </section>
+  <div id="result">
+    <c:choose>
+      <c:when test="${not empty products}">
+        <c:forEach var="product" items="${products}">
+          <div class="product-card">
+            <h3>${product.name}</h3>
+            <p>Prezzo: € ${product.price}</p>
+            <p>Descrizione: ${product.description}</p>
+            <p>Fornitore: ${product.supplier}</p>
+            <p>Data di pubblicazione: ${product.dateUpload}</p>
+          </div>
+        </c:forEach>
+      </c:when>
+      <c:otherwise>
+        <p>Nessun prodotto da mostrare.</p>
+      </c:otherwise>
+    </c:choose>
+  </div>
+</section>
 
 </div>
 
