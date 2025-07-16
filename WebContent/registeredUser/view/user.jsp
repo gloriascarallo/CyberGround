@@ -9,7 +9,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Hello, ${user.name}</title>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/styles/User.css?v=5">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/styles/User.css?v=6">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/styles/Layout.css"/>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
@@ -31,13 +31,19 @@
     </button>
 </form>
 
-<a class="dati" href="${pageContext.request.contextPath}/registeredUser/view/registeredUser_addresses.jsp">
+<form action="${pageContext.request.contextPath}/RegisteredUserAddresses" method="get">
+<button type="submit" class="dati">
   <i class="fas fa-map-marker-alt"></i> Visualizza indirizzi
-</a>
+</button>
+</form>
 
-<a class="dati" href="${pageContext.request.contextPath}/registeredUser/view/registeredUser_methods_payment.jsp">
+<br>
+
+<form action="${pageContext.request.contextPath}/RegisteredUserMethodsPayment" method="get">
+<button type="submit" class="dati">
   <i class="fas fa-credit-card"></i> Visualizza metodi di pagamento
-</a>
+</button>
+</form>
 
 <br><br>
 

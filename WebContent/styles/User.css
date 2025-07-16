@@ -16,6 +16,7 @@ body {
   color: #141C5C;
   padding: 40px 50px;
   margin-top: 50px;
+  margin-bottom: 50px;
   border-radius: 12px;
   box-shadow: 0 4px 20px rgba(0,0,0,0.2);
   text-align: center;
@@ -90,7 +91,7 @@ body {
   color: white;
     }
     
-a.dati {
+button.dati {
   background-color: #141C5C;
   color: #fff;
   text-decoration: none;
@@ -102,13 +103,13 @@ a.dati {
   cursor: pointer;
 }
 
-a.dati:hover {
+button.dati:hover {
   background-color: #FF8800;
   border: 2px solid #FF8800;
   color: white;
 }
 
-a.dati i {
+button.dati i {
 	 margin-right: 8px;
 }
 
