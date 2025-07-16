@@ -36,7 +36,6 @@
 <p>Last Name: ${user.lastName}</p>
 <p>Telephone number: ${user.telephone}</p>
 <p>Email: ${user.email}</p>
-<p>Password: ${user.password}</p>
 
 <div class="action-buttons">
 

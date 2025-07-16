@@ -53,6 +53,7 @@
 
 </main>
 <%@ include file="/includes/admin_footer.jsp" %>
-</body>
 <script src="${pageContext.request.contextPath}/scripts/admin_users_validation.js" type="text/javascript"></script>
+</body>
+
 </html>

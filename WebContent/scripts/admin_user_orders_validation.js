@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Reset stile ed errori
     [errorX, errorY].forEach(span => {
       span.textContent = "";
-      span.style.color = "red"; // 🔴 Rende il testo rosso
+      span.style.color = "red"; 
     });
 
     if (!dateX.value) {
