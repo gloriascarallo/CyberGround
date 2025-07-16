@@ -87,10 +87,6 @@ h2 {
   background-color: #f9f9f9;
 }
 
-.orders-table tr:hover {
-  background-color: #f1f1f1;
-}
-
 /* Responsive */
 @media (max-width: 768px) {
   .filter-form {
