@@ -43,13 +43,12 @@ public class Filter_orders_byDates extends HttpServlet {
 		    request.getRequestDispatcher("/admin/view/user_profile.jsp").forward(request, response);
 		    return;
 		}
-		int id;
+		int id=-1;
 		try {
-		    id = Integer.parseInt(request.getParameter("id"));
+		    id = Integer.parseInt(request.getParameter("idCart"));
 		} catch (NumberFormatException e) {
 		    request.setAttribute("errors", "ID non valido.");
-		    request.getRequestDispatcher("/admin/view/user_profile.jsp").forward(request, response);
-		    return;
+		    
 		}
 		
 		OrderDaoDataSource ds=new OrderDaoDataSource();
@@ -69,8 +68,7 @@ public class Filter_orders_byDates extends HttpServlet {
 			
 			errors+="Ordini non trovati<br>";
 			request.setAttribute("errors", errors);
-			request.getRequestDispatcher("/admin/view/user_profile.jsp").forward(request, response); // da vedere
-			return;
+		
 		}
 		
 		Product_in_orderDaoDataSource ds_products=new Product_in_orderDaoDataSource();
@@ -91,15 +89,14 @@ public class Filter_orders_byDates extends HttpServlet {
 				
 				errors+="Errore nel caricamento ordini.<br>";
 				request.setAttribute("errors", errors);
-				request.getRequestDispatcher("/admin/view/user_profile.jsp").forward(request, response);
-				return;
+			
 				
 			}
 			order.setProducts_in_order(products);
 			
 		}
 		
-			
+			request.setAttribute("idCart", id);
 		request.setAttribute("orders", orders);
 		request.getRequestDispatcher("/admin/view/user_orders.jsp").forward(request, response);
 		return;

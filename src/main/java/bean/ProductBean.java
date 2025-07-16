@@ -39,12 +39,29 @@ public class ProductBean {
 
 
 	public double getPrice() {
+		
 		    return price;
 	}
 
 
 	public void setPrice(double price) {
 		this.price = price;
+	}
+	
+	public double getDiscountedPrice() {
+		
+		double prezzo = this.price;
+
+	    if (this.discountPercentage != null && this.dateExpirationDiscount != null) {
+	        LocalDate today = LocalDate.now();
+	        if (!this.dateExpirationDiscount.toLocalDate().isBefore(today)) {
+	            double sconto = this.discountPercentage.doubleValue();
+	            prezzo = prezzo - (prezzo * sconto / 100.0);
+	        }
+	    }
+
+	    return prezzo;
+		
 	}
 
 	public Double getDiscountPercentage() {

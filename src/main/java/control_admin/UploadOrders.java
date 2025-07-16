@@ -39,18 +39,18 @@ public class UploadOrders extends HttpServlet {
 	    if (idCartStr == null || idCartStr.trim().isEmpty()) {
 	        errors = "Carrello non trovato.<br>";
 	        request.setAttribute("errors", errors);
-	        request.getRequestDispatcher("/admin/view/user_profile.jsp").forward(request, response);
+	        request.getRequestDispatcher("/").forward(request, response);
 	        return;
 	    }
 
 	    int idCart;
 	    try {
-//	        idCart = Integer.parseInt(idCartStr);
-	    	idCart = 0;
+            idCart = Integer.parseInt(idCartStr);
+	    	
 	    } catch (NumberFormatException e) {
 	        errors = "ID carrello non valido.<br>";
 	        request.setAttribute("errors", errors);
-	        request.getRequestDispatcher("/admin/view/user_profile.jsp").forward(request, response);
+	        request.getRequestDispatcher("/UploadUser").forward(request, response);
 	        return;
 	    }
 	    
@@ -73,7 +73,7 @@ public class UploadOrders extends HttpServlet {
 			
 			errors+="Ordini non trovati.<br>";
 			request.setAttribute("errors", errors);
-			request.getRequestDispatcher("/admin/view/user_profile.jsp").forward(request, response);
+			request.getRequestDispatcher("/UploadUser").forward(request, response);
 			return;
 			
 		}
@@ -90,7 +90,7 @@ public class UploadOrders extends HttpServlet {
 					
 					errors+="Prodotti nell'ordine non trovati.<br>";
 					request.setAttribute("errors", errors);
-					request.getRequestDispatcher("/admin/view/user_profile.jsp").forward(request, response);
+					request.getRequestDispatcher("/UploadUser").forward(request, response);
 					return;
 					
 				}
@@ -107,6 +107,7 @@ public class UploadOrders extends HttpServlet {
 			
 		}
 		
+		request.setAttribute("idCart", idCart);
 		request.setAttribute("orders", orders);
 		request.getRequestDispatcher("/admin/view/user_orders.jsp").forward(request, response);
 		return;

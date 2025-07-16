@@ -31,8 +31,9 @@
 <a href="${pageContext.request.contextPath}/Product?idProduct=${product_incart.product.idProduct}">
     <img src="${product_incart.product.imagePath}" alt="Product image" />
     </a>
-    <div id="product-${product_incart.id_SituatedIn}">
-    
+
+    <div id="product-${product_incart.idSituatedIn}">
+      
     <strong>Nome:</strong> ${product_incart.product.name}<br>
     <c:choose>
   <c:when test="${product_incart.product.discountPercentage != null && product_incart.product.discountPercentage > 0}">
@@ -48,21 +49,22 @@
     <p><strong>Prezzo:</strong> € ${product_incart.product.price}</p>
   </c:otherwise>
 </c:choose>
-    
+   
     <div>
-    <a href="${pageContext.request.contextPath}/UpdateCart?idProduct=${product_incart.id_SituatedIn}&action=decrease">
+    <a href="${pageContext.request.contextPath}/UpdateCart?id=${product_incart.idSituatedIn}&action=decrease">
   <button type="button">-</button>
 </a>
 
- <span id="quantity-${product_incart.id_SituatedIn}">${product_incart.quantity}</span>
-    <a href="${pageContext.request.contextPath}/UpdateCart?idProduct=${product_incart.id_SituatedIn}&action=increase">
+ <span id="quantity-${product_incart.idSituatedIn}">${product_incart.quantity}</span>
+    <a href="${pageContext.request.contextPath}/UpdateCart?id=${product_incart.idSituatedIn}&action=increase">
   <button type="button">+</button>
 </a>
         
        
     </div>
     
-   <a href="${pageContext.request.contextPath}/UpdateCart?idProduct=${product_incart.id_SituatedIn}&action=remove">
+
+   <a href="${pageContext.request.contextPath}/UpdateCart?id=${product_incart.idSituatedIn}&action=remove">
   <button type="button">Rimuovi</button>
 </a>
     </div>

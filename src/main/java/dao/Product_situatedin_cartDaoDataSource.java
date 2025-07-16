@@ -56,7 +56,7 @@ import bean.Product_situatedin_cartBean;
 				ResultSet rs=preparedStatement.getGeneratedKeys();
 				
 				if(rs.next()) {
-					product_situatedin_cart.setId_SituatedIn(rs.getInt(1));
+					product_situatedin_cart.setIdSituatedIn(rs.getInt(1));
 					
 				}
 
@@ -90,7 +90,7 @@ import bean.Product_situatedin_cartBean;
 				ProductDaoDataSource ds=new ProductDaoDataSource();
 				while (rs.next()) {
 					bean=new Product_situatedin_cartBean();
-					bean.setId_SituatedIn(rs.getInt("ID_SITUATEDIN"));
+					bean.setIdSituatedIn(rs.getInt("ID_SITUATEDIN"));
 					bean.setIdCart(rs.getInt("IDCART"));
 					int idProduct=rs.getInt("IDPRODUCT");
 					bean.setProduct(ds.doRetrieveByKey(idProduct));
@@ -161,7 +161,7 @@ import bean.Product_situatedin_cartBean;
 				while (rs.next()) {
 					Product_situatedin_cartBean bean = new Product_situatedin_cartBean();
 
-					bean.setId_SituatedIn(rs.getInt("ID_SITUATEDIN"));
+					bean.setIdSituatedIn(rs.getInt("ID_SITUATEDIN"));
 					bean.setIdCart(rs.getInt("IDCART"));
 					int idProduct=rs.getInt("IDPRODUCT");
 					bean.setProduct(ds.doRetrieveByKey(idProduct));
@@ -198,7 +198,7 @@ import bean.Product_situatedin_cartBean;
 
 				while (rs.next()) {
 					Product_situatedin_cartBean bean=new Product_situatedin_cartBean();
-					bean.setId_SituatedIn(rs.getInt("ID_SITUATEDIN"));
+					bean.setIdSituatedIn(rs.getInt("ID_SITUATEDIN"));
 					bean.setIdCart(rs.getInt("IDCART"));
 					int idProduct=rs.getInt("IDPRODUCT");
 					ProductDaoDataSource ds=new ProductDaoDataSource();
@@ -238,7 +238,7 @@ import bean.Product_situatedin_cartBean;
 				ProductDaoDataSource ds=new ProductDaoDataSource();
 				while (rs.next()) {
 					Product_situatedin_cartBean bean=new Product_situatedin_cartBean();
-					bean.setId_SituatedIn(rs.getInt("ID_SITUATEDIN"));
+					bean.setIdSituatedIn(rs.getInt("ID_SITUATEDIN"));
 					bean.setIdCart(rs.getInt("IDCART"));
 					int idProduct=rs.getInt("IDPRODUCT");
 					bean.setProduct(ds.doRetrieveByKey(idProduct));
@@ -280,7 +280,7 @@ import bean.Product_situatedin_cartBean;
 		        ProductDaoDataSource ds = new ProductDaoDataSource();
 		        while (rs.next()) {
 		            Product_situatedin_cartBean bean = new Product_situatedin_cartBean();
-		            bean.setId_SituatedIn(rs.getInt("ID_SITUATEDIN"));
+		            bean.setIdSituatedIn(rs.getInt("ID_SITUATEDIN"));
 		            bean.setIdCart(rs.getInt("IDCART"));
 		            int idProduct = rs.getInt("IDPRODUCT");
 		            bean.setProduct(ds.doRetrieveByKey(idProduct));

@@ -33,13 +33,13 @@ public class Product_situatedin_cartBean {
 	}
 
 
-	public int getId_SituatedIn() {
+	public int getIdSituatedIn() {
 		return id_SituatedIn;
 	}
 
 
 
-	public void setId_SituatedIn(int id_SituatedIn) {
+	public void setIdSituatedIn(int id_SituatedIn) {
 		this.id_SituatedIn = id_SituatedIn;
 	}
 	
@@ -93,7 +93,8 @@ public class Product_situatedin_cartBean {
 
 	public double getTotalPrice() {
 		
-		return product.getPrice()*quantity;
+	    return product.getDiscountedPrice() * quantity;
+		
 		
 	}
 

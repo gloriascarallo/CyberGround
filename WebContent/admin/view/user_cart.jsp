@@ -18,34 +18,43 @@
 
   <div class="cart-container">
     <h2>Console di Filtraggio Carrello Utente</h2>
-    
+ <c:if test="${not empty errors}">
+  <div class="error">${errors}</div>
+</c:if>
     <div id="results"></div>
 
-    <form id="filterForm">
+    <form id="filterFormPrice" action="${pageContext.request.contextPath}/Filter_cart_by">
       <input type="hidden" name="idCart" value="${idCart}" /> 
+      <input type="hidden" name="action" value="price">
 
       <div class="filter-group">
         <label for="priceMin">Prezzo Min:</label>
-        <input type="number" name="price" id="priceMin" step="0.01" />
+        <input type="number" name="priceMin" id="priceMin" step="0.01" />
       </div>
 
       <div class="filter-group">
         <label for="priceMax">Prezzo Max:</label>
-        <input type="number" name="price" id="priceMax" step="0.01" />
+        <input type="number" name="priceMax" id="priceMax" step="0.01" />
       </div>
 
-      <button type="button" class="filter-btn" onclick="filterByPrice()">
+      <button type="submit" class="filter-btn">
         <i class="fas fa-euro-sign"></i> Filtra per Prezzo
       </button>
+      </form>
+      
 
       <hr />
 
+<form id="filterFormDate" action="${pageContext.request.contextPath}/Filter_cart_by">
+      <input type="hidden" name="idCart" value="${idCart}" /> 
+      <input type="hidden" name="action" value="date">
+ 
       <div class="filter-group">
         <label for="dateAdded">Data Aggiunta:</label>
-        <input type="date" id="dateAdded" />
+        <input type="date" id="dateAdded" name="dateAdded">
       </div>
 
-      <button type="button" class="filter-btn" onclick="filterByDate()">
+      <button type="submit" class="filter-btn">
         <i class="fas fa-calendar-day"></i> Filtra per Data
       </button>
     </form>
@@ -66,5 +75,5 @@
   </div>
 <%@ include file="/includes/admin_footer.jsp" %>
 </body>
-<script src="${pageContext.request.contextPath}/scripts/filter_cart_by.js"></script>
+
 </html>

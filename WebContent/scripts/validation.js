@@ -5,7 +5,7 @@ const telephonePattern=/^[0-9]{10}$/;
 const emailPattern=/^\S+@\S+\.\S+$/;
 const addressPattern = /^\w+(\s\w+)*$/;
 const PANPattern=/^[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{4}$/;
-const ScadenzaPattern=/^(0[1-9]|1[0-2])\/\d{2}$/;
+const ScadenzaPattern = /^(0[1-9]|1[0-2])\/([0-9]{2})$/;
 const CVCPattern=/^[0-9]{3,4}$/;
 const IDPattern = /^\d+$/;
 const errorNameMessage="Devi inserire almeno una lettera e non devi superare 20 lettere";
@@ -15,9 +15,31 @@ const errorTelephoneMessage="Un numero di telefono valido deve avere formato ###
 const errorEmailMessage="Un'email valida deve avere formato username@domain.ext";
 const errorAddressMessage="Un indirizzo valido deve essere formato da sequenze di lettere o numeri separati da spazi"
 const errorPANMessage="Un metodo di pagamento valido deve avere formato ####-####-####-####";
-const errorScadenzaMessage="Una data di scadenza valida deve avere formato ##/##";
+const errorScadenzaMessage="Una data di scadenza valida deve avere formato ##/## e una data di scandeza superiore all'attuale";
 const errorCVCMessage="Un CVC valido deve avere formato ### o ####";
 const errorIDMessage = "L'ID ordine deve contenere solo numeri";
+
+function validateScadenza(value) {
+    const match = value.match(ScadenzaPattern);
+    if (!match) return false;
+
+    const month = parseInt(match[1], 10);
+    const year = parseInt(match[2], 10);
+
+    const now = new Date();
+    const currentYear = now.getFullYear() % 100; // due cifre anno corrente, es. 2025 -> 25
+    const currentMonth = now.getMonth() + 1; // 1-12
+
+    // Se l'anno è minore dell'anno corrente -> scaduto
+    if (year < currentYear) return false;
+
+    // Se anno uguale ma mese minore -> scaduto
+    if (year === currentYear && month < currentMonth) return false;
+
+    // Ok altrimenti
+    return true;
+}
+
 
 
 function validateFormElement(formElement, pattern, span, error) {
@@ -139,7 +161,18 @@ function addMethodPayment() {
 	
 	
 inputPAN.addEventListener("change", function() {validateFormElement(inputPAN, PANPattern, spanPAN, errorPANMessage);});
-inputScadenza.addEventListener("change", function() {validateFormElement(inputScadenza, ScadenzaPattern, spanScadenza, errorScadenzaMessage);});
+inputScadenza.addEventListener("change", function() {
+    const validPattern = validateFormElement(inputScadenza, ScadenzaPattern, spanScadenza, errorScadenzaMessage);
+    if (validPattern) {
+        if (!validateScadenza(inputScadenza.value)) {
+            spanScadenza.style.color = "red";
+            spanScadenza.innerHTML = errorScadenzaMessage;
+        } else {
+            spanScadenza.style.color = "black";
+            spanScadenza.innerHTML = "";
+        }
+    }
+});
 inputCVC.addEventListener("change", function() {validateFormElement(inputCVC, CVCPattern, spanCVC, errorCVCMessage);});
 countMethodPayment++;
 container.appendChild(div);
@@ -198,8 +231,9 @@ function validateRegistrationForm() {
 			const input = expirationDateEl[i];
 			const suffix = input.id.replace("methodPaymentScadenza", "");
 			const span = document.getElementById("errorScadenza" + suffix);
-			if (!validateFormElement(input, ScadenzaPattern, span, errorScadenzaMessage)) {
-				return false;
+			if (!validateFormElement(input, ScadenzaPattern, span, errorScadenzaMessage) || (!validateScadenza(input.value))) {
+				
+			return false;
 			}
 		}
 	
@@ -220,10 +254,6 @@ function validateRegistrationForm() {
 		validateFormElement(lastNameEl, namePattern, document.getElementById('errorLastName'), errorNameMessage) &&
 		validateFormElement(telephoneEl, telephonePattern, document.getElementById('errorTelephone'), errorTelephoneMessage) &&
 		validateFormElement(emailEl, emailPattern, document.getElementById('errorEmail'), errorEmailMessage) &&
-		validateFormElement(addressesEl, addressPattern, document.getElementById('errorAddress1'), errorAddressMessage) &&
-		validateFormElement(panEl, PANPattern, document.getElementById('errorPAN1'), errorPANMessage) &&
-		validateFormElement(expirationDateEl, ScadenzaPattern, document.getElementById('errorScadenza1'), errorScadenzaMessage) &&
-		validateFormElement(cvcEl, CVCPattern, document.getElementById('errorCVC1'), errorCVCMessage) &&
 		validateFormElement(passwordEl, passwordPattern, document.getElementById('errorPassword'), errorPasswordMessage)
 	);
 }
@@ -280,7 +310,7 @@ function validateProduct_refundForm() {
 					const input = expirationDateEl[i];
 					const suffix = input.id.replace("Scadenza", "");
 					const span = document.getElementById("errorScadenza" + suffix);
-					if (!validateFormElement(input, ScadenzaPattern, span, errorScadenzaMessage)) {
+					if (!validateFormElement(input, ScadenzaPattern, span, errorScadenzaMessage) || !validateScadenza(input.value)) {
 						return false;
 					}
 				}
@@ -295,12 +325,7 @@ function validateProduct_refundForm() {
 					}
 				}
 				
-				return(
-					validateFormElement(addressesEl, addressPattern, document.getElementById('errorAddress1'), errorAddressMessage) &&
-					validateFormElement(panEl, PANPattern, document.getElementById('errorPAN1'), errorPANMessage) &&
-					validateFormElement(expirationDateEl, ScadenzaPattern, document.getElementById('errorScadenza1'), errorScadenzaMessage) &&
-					validateFormElement(cvcEl, CVCPattern, document.getElementById('errorCVC1'), errorCVCMessage)
-				);
+				return true;
 	}
 	
 	function validateRefundForm() {

@@ -102,14 +102,7 @@ public class Adding_to_cart extends HttpServlet {
 					
 				}
 				
-			try {
-				ds_product.decreaseQuantityAvailable(idProduct, 1);
-			} catch (SQLException e) {
-				
-				e.printStackTrace();
-				request.getRequestDispatcher("/error/500.html").forward(request, response);
-	        	return;
-			}
+			
 	     
 		
 		Product_situatedin_cartBean product_situatedin_cart=new Product_situatedin_cartBean();
@@ -117,23 +110,23 @@ public class Adding_to_cart extends HttpServlet {
 		product_situatedin_cart.setIdCart(idCart);
 		product_situatedin_cart.setQuantity(1);
 		product_situatedin_cart.setDateAdded(Date.valueOf(LocalDate.now()));
+		product_situatedin_cart.setProduct(product);
+		cart.addProduct(product_situatedin_cart);
 		
+		Boolean isRegistered = (Boolean) request.getSession().getAttribute("isRegisteredUser");
+	    boolean saveToDb = isRegistered != null && isRegistered;
+
+	    if (saveToDb) {
+	        Product_situatedin_cartDaoDataSource ds_cart = new Product_situatedin_cartDaoDataSource();
+	        try {
+	            ds_cart.doSave(product_situatedin_cart);
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	            request.getRequestDispatcher("/error/500.html").forward(request, response);
+	            return;
+	        }
+	    }
 		
-		Product_situatedin_cartDaoDataSource ds_cart=new Product_situatedin_cartDaoDataSource();
-		
-		
-		try {
-			product_situatedin_cart.setProduct(product);
-			cart.addProduct(product_situatedin_cart);
-			ds_cart.doSave(product_situatedin_cart); 
-		}
-        
-		catch(SQLException e) {
-			
-			e.printStackTrace();
-			request.getRequestDispatcher("/error/500.html").forward(request, response);
-        	return;
-		}
 		
 		response.sendRedirect(request.getContextPath()+"/guest/view/after_adding_to_cart.jsp");
 		return;

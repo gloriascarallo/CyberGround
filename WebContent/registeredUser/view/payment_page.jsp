@@ -79,7 +79,9 @@
     <c:if test="${not empty sessionScope.message}">
     <div class="success-message">${sessionScope.message}</div>
     <c:remove var="message" scope="session"/>
-  </c:if> 
+
+    </c:if>
+
     <br><br>
 
 

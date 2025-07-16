@@ -37,6 +37,15 @@ public class CartBean {
 		return null;
 	}
 	
+	public Product_situatedin_cartBean getProductBySituatedInId(int idSituatedIn) {
+	    for (Product_situatedin_cartBean product : products) {
+	        if (product.getIdSituatedIn() == idSituatedIn) {
+	            return product;
+	        }
+	    }
+	    return null;
+	}
+	
 	public void addProduct(Product_situatedin_cartBean product) {
 		
 		for(Product_situatedin_cartBean product_incart: products) {

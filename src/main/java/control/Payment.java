@@ -18,6 +18,7 @@ import bean.Product_in_orderBean;
 import bean.OrderBean;
 import dao.OrderDaoDataSource;
 import dao.Product_in_orderDaoDataSource;
+import dao.ProductDaoDataSource;
 /**
  * Servlet implementation class Payment
  */
@@ -78,16 +79,17 @@ public class Payment extends HttpServlet {
 		ArrayList<Product_in_orderBean> products_in_order=new ArrayList<Product_in_orderBean>();
 		Product_situatedin_cartDaoDataSource ds_cart=new Product_situatedin_cartDaoDataSource();
 		Product_in_orderDaoDataSource ds=new Product_in_orderDaoDataSource();
+		ProductDaoDataSource ds_product=new ProductDaoDataSource();
 		
 		for(Product_situatedin_cartBean product_incart: cart.getProducts()) {
 			Product_in_orderBean product_in_order=new Product_in_orderBean();
 			product_in_order.setIdOrder(order.getIdOrder());
 			product_in_order.setProduct(product_incart.getProduct());
-			product_in_order.setPrice(product_incart.getProduct().getPrice());
+			product_in_order.setPrice(product_incart.getProduct().getDiscountedPrice());
 			product_in_order.setQuantity(product_incart.getQuantity());
 			
 			try {
-				
+				ds_product.decreaseQuantityAvailable(product_incart.getProduct().getIdProduct(), product_incart.getQuantity());
 				ds.doSave(product_in_order);
 				
 			}
@@ -108,7 +110,7 @@ public class Payment extends HttpServlet {
 		   
 		    cart.removeProduct(product_incart);
 		    try {
-				ds_cart.doDelete(product_incart.getId_SituatedIn());
+				ds_cart.doDelete(product_incart.getIdSituatedIn());
 			} catch (SQLException e) {
 				
 				e.printStackTrace();

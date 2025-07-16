@@ -1,5 +1,5 @@
 // Pattern per validazione
-const usernamePattern = /^\w{0,45}$/; // Alfanumerici + underscore, 1-45 caratteri
+const usernamePattern = /^\w{1,45}$/; // Alfanumerici + underscore, 1-45 caratteri
 const IDPattern = /^\d+$/; // Solo numeri interi
 
 // Messaggi d'errore
