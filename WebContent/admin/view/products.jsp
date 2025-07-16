@@ -5,6 +5,8 @@
 %>
 
 <!DOCTYPE html>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+
 <html>
 <head>
   <meta charset="UTF-8">
@@ -114,7 +116,7 @@
       <strong>Prezzo:</strong>
       <span class="prezzo_pieno">€ ${product.price}</span>
       <span class="prezzo_scontato">
-        € ${product.price - (product.price * product.discountPercentage / 100)}
+        € <fmt:formatNumber value="${product.price - (product.price * product.discountPercentage / 100)}" type="number" maxFractionDigits="2"/>
       </span>
     </p>
   </c:when>

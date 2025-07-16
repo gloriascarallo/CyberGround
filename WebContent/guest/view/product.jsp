@@ -1,18 +1,14 @@
 <%@page import="bean.ProductBean"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
 <!DOCTYPE html>
-
-<%
-request.getAttribute("product");
-%>
-
 <html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Product Page</title>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/styles/Product.css?v=2">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/styles/Product.css?v=3">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/styles/Layout.css"/>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
@@ -27,7 +23,20 @@ request.getAttribute("product");
     </a>
     <p>Nome: ${product.name}</p>
     <p>Descrizione: ${product.description}</p>
-    <p>Prezzo: ${product.price}</p>
+    <c:choose>
+  <c:when test="${product.discountPercentage != null && product.discountPercentage > 0}">
+    <p>
+      <strong>Prezzo:</strong>
+      <span class="prezzo_pieno">€ ${product.price}</span>
+      <span class="prezzo_scontato">
+        € <fmt:formatNumber value="${product.price - (product.price * product.discountPercentage / 100)}" type="number" maxFractionDigits="2"/>
+      </span>
+    </p>
+  </c:when>
+  <c:otherwise>
+    <p><strong>Prezzo:</strong> € ${product.price}</p>
+  </c:otherwise>
+</c:choose>
     <p>Fornitore: ${product.supplier}</p>
     <p>Quantità disponibili: ${product.quantityAvailable}</p>
     

@@ -53,6 +53,15 @@ h2 {
   color: #333;
 }
 
+span.prezzo_pieno {
+	text-decoration: line-through;
+	color: black ;
+}
+
+span.prezzo_scontato {
+	color: red ;
+}
+
 /* Container form indirizzo/metodo */
 .form-container {
   background-color: #fff;

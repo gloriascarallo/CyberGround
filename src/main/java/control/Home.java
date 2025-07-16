@@ -67,6 +67,16 @@ final String SECRET_KEY = "qwerTY-SECRET-KEY-2025";
 			CartBean cart=new CartBean();
 
 			if (cookies != null) {
+//				
+//				for (Cookie cookie : cookies) {
+//				    if (!cookie.getName().equals("JSESSIONID") && !cookie.getName().equals("guestId")) {
+//				        Cookie deleteCookie = new Cookie(cookie.getName(), "");
+//				        deleteCookie.setMaxAge(0);
+//				        deleteCookie.setPath(request.getContextPath());
+//				        response.addCookie(deleteCookie);
+//				    }
+//				}
+				
 			    for (Cookie c : cookies) {
 			        if ("guestId".equals(c.getName())) {
 			            guestIdStr = c.getValue(); // es. "42|abc123hash"                         System.out.println(guestIdStr);

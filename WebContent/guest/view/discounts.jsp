@@ -14,7 +14,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Discounts Page</title>
- <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/styles/Discounts.css?v=3"/>
+ <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/styles/Discounts.css?v=4"/>
   <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/styles/Layout.css"/>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>

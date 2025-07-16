@@ -194,6 +194,7 @@ public class Filter_by extends HttpServlet {
 	            ProductBean p = products.get(i);
 	            out.print("{");
 	            out.print("\"name\":\"" + escapeJson(p.getName()) + "\",");
+	            out.print("\"idProduct\":" + p.getIdProduct() + ",");
 	            out.print("\"price\":" + p.getPrice() + ",");
 	            out.print("\"dateUpload\":\"" + p.getDateUpload() + "\",");
 	            out.print("\"supplier\":\"" +  escapeJson(p.getSupplier()) + "\",");

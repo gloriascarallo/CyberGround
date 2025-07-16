@@ -6,6 +6,7 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="bean.CartBean" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
+ <%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
 
 <html>
 <head>
@@ -30,11 +31,25 @@
 <a href="${pageContext.request.contextPath}/Product?idProduct=${product_incart.product.idProduct}">
     <img src="${product_incart.product.imagePath}" alt="Product image" />
     </a>
+
     <div id="product-${product_incart.idSituatedIn}">
-    
-    Nome: ${product_incart.product.name}<br>
-    Prezzo: <span id="total-${product_incart.idSituatedIn}">${product_incart.totalPrice}</span><br>
-    
+      
+    <strong>Nome:</strong> ${product_incart.product.name}<br>
+    <c:choose>
+  <c:when test="${product_incart.product.discountPercentage != null && product_incart.product.discountPercentage > 0}">
+    <p>
+      <strong>Prezzo:</strong>
+      <span class="prezzo_pieno">€ ${product_incart.product.price}</span>
+      <span class="prezzo_scontato">
+        € <fmt:formatNumber value="${product_incart.product.price - (product_incart.product.price * product_incart.product.discountPercentage / 100)}" type="number" maxFractionDigits="2"/>
+      </span>
+    </p>
+  </c:when>
+  <c:otherwise>
+    <p><strong>Prezzo:</strong> € ${product_incart.product.price}</p>
+  </c:otherwise>
+</c:choose>
+   
     <div>
     <a href="${pageContext.request.contextPath}/UpdateCart?id=${product_incart.idSituatedIn}&action=decrease">
   <button type="button">-</button>
@@ -48,6 +63,7 @@
        
     </div>
     
+
    <a href="${pageContext.request.contextPath}/UpdateCart?id=${product_incart.idSituatedIn}&action=remove">
   <button type="button">Rimuovi</button>
 </a>
