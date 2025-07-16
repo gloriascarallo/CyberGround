@@ -47,6 +47,10 @@ h2 {
   margin-bottom: 10px;
 }
 
+#info-order p {
+	color: black;
+}
+
 /* Responsive */
 @media (max-width: 600px) {
   #order-box {

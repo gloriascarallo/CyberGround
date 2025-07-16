@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Index Page</title>
-  <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/Index.css?v=3" />
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/Index.css?v=4" />
   <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/styles/Layout.css"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
@@ -36,63 +36,54 @@
   </form>
   </div>
 
-  <main>
-  
-<%
-String errors=(String)request.getAttribute("errors");  
-if(errors!=null && !errors.equals("")) {%>
-	
-	<div class="error"><%=errors%></div> <% 
-}
-%>
+  <% String errors = (String)request.getAttribute("errors");
+     if (errors != null && !errors.isEmpty()) { %>
+    <div class="error"><%= errors %></div>
+  <% } %>
 
-<h2>Filtra prodotti</h2>
+<!-- Layout separato a due colonne -->
+<div class="page-layout">
 
-<!-- Ricerca per fornitore -->
-<input type="text" id="supplierInput" placeholder="Fornitore">
-<button onclick="loadProducts({action:'supplier', supplier: document.getElementById('supplierInput').value})">
-    Cerca per fornitore
-</button>
+  <!-- Colonna sinistra: Filtri -->
+  <section class="filters">
+    <h2>Filtra prodotti</h2>
 
-<br><br>
+    <input type="text" id="supplierInput" placeholder="Fornitore">
+    <button onclick="loadProducts({action:'supplier', supplier: document.getElementById('supplierInput').value})">
+        Cerca per fornitore
+    </button>
 
-<!-- Ricerca per prezzo -->
-<input type="text" id="minPrice" placeholder="Prezzo minimo">
-<input type="text" id="maxPrice" placeholder="Prezzo massimo">
-<button onclick="loadProducts({action:'price', priceMin: document.getElementById('minPrice').value, priceMax: document.getElementById('maxPrice').value})">
-    Cerca per prezzo
-</button>
+    <input type="text" id="minPrice" placeholder="Prezzo minimo">
+    <input type="text" id="maxPrice" placeholder="Prezzo massimo">
+    <button onclick="loadProducts({action:'price', priceMin: document.getElementById('minPrice').value, priceMax: document.getElementById('priceMax').value})">
+        Cerca per prezzo
+    </button>
 
-<br><br>
+    <input type="text" id="yearUpload" placeholder="Anno di pubblicazione">
+    <button onclick="loadProducts({action:'yearUpload', yearUpload: document.getElementById('yearUpload').value})">
+        Cerca per anno
+    </button>
 
-<!-- Ricerca per anno -->
-<input type="text" id="yearUpload" placeholder="Anno di pubblicazione">
-<button onclick="loadProducts({action:'yearUpload', yearUpload: document.getElementById('yearUpload').value})">
-    Cerca per anno
-</button>
+    <div style="position: relative;">
+      <input type="text" id="nameInput" placeholder="Nome prodotto" autocomplete="off">
+    </div>
 
-<br><br>
+    <form action="${pageContext.request.contextPath}/Discounts" method="get">
+      <input type="text" name="discountPercentage" placeholder="Sconto in % (es. 20)">
+      <button type="submit">Cerca prodotti scontati</button>
+    </form>
+  </section>
 
-<!-- Ricerca per nome -->
-<input type="text" id="nameInput" placeholder="Nome prodotto">
-<button onclick="loadProducts({action:'name', name: document.getElementById('nameInput').value})">
-    Cerca per nome
-</button>
+  <!-- Colonna destra: Risultati -->
+  <section class="results">
+    <div id="result"></div>
+  </section>
 
-<br><br>
+</div>
 
-<!-- Ricerca per sconto -->
-<form action="${pageContext.request.contextPath}/Discounts" method="get">
-  <input type="text" name="discountPercentage" placeholder="Sconto in % (es. 20)">
-  <button type="submit">Cerca prodotti scontati</button>
-</form>
 
-<hr>
-
-<!-- Qui verrà mostrato il risultato -->
-<div id="result"></div>
-</main>
 <%@ include file="/includes/footer.jsp" %>
 </body>
 <script src="${pageContext.request.contextPath}/scripts/filter_by.js"></script>
+<script src="${pageContext.request.contextPath}/scripts/search_bar.js"></script>
 </html>

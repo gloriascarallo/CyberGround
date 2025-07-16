@@ -5,12 +5,13 @@
 <!DOCTYPE html>
 <%@page import="bean.CartBean" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
 <html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Payment Page</title>
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/styles/Payment_page.css?v=3"/>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/styles/Payment_page.css?v=4"/>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/styles/Layout.css"/>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
@@ -27,7 +28,20 @@
       </a>
       <div class="product-details">
         <p><strong>Nome:</strong> ${product_incart.product.name}</p>
-        <p><strong>Prezzo:</strong> €${product_incart.totalPrice}</p>
+         <c:choose>
+  <c:when test="${product_incart.product.discountPercentage != null && product_incart.product.discountPercentage > 0}">
+    <p>
+      <strong>Prezzo:</strong>
+      <span class="prezzo_pieno">€ ${product_incart.product.price}</span>
+      <span class="prezzo_scontato">
+        € <fmt:formatNumber value="${product_incart.product.price - (product_incart.product.price * product_incart.product.discountPercentage / 100)}" type="number" maxFractionDigits="2"/>
+      </span>
+    </p>
+  </c:when>
+  <c:otherwise>
+    <p><strong>Prezzo:</strong> € ${product_incart.product.price}</p>
+  </c:otherwise>
+</c:choose>
         <p><strong>Quantità:</strong> ${product_incart.quantity}</p>
       </div>
     </div>
@@ -50,6 +64,7 @@
     <c:if test="${not empty sessionScope.message}">
     <div class="success-message">${sessionScope.message}</div>
     <c:remove var="message" scope="session"/>
+    </c:if>
     <br><br>
 
     <div>
@@ -64,6 +79,7 @@
     <c:if test="${not empty sessionScope.message}">
     <div class="success-message">${sessionScope.message}</div>
     <c:remove var="message" scope="session"/>
+  </c:if> 
     <br><br>
 
 

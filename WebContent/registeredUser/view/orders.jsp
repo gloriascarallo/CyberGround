@@ -12,7 +12,7 @@ request.getAttribute("orders");
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Personal Orders Page</title>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/styles/Orders.css?v=2">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/styles/Orders.css?v=3">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/styles/Layout.css"/>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
@@ -33,11 +33,14 @@ request.getAttribute("orders");
       <p>Prezzo Prodotto: ${product_in_order.price}</p>
       <p>Quantità Prodotto: ${product_in_order.quantity}</p>
     </c:forEach>
+    
+    <div id="info-order">
 
     <p>Data Acquisto: ${user_orders.datePurchase}</p>
     <p>Data Spedizione: ${user_orders.dateShipping}</p>
     <p>Data Consegna: ${user_orders.dateDelivery}</p>
     <p>Prezzo Totale: ${user_orders.totalOrder}</p>
+    </div>
   </div>
 </c:forEach>
 

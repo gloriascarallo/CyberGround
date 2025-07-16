@@ -14,7 +14,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Discounts Page</title>
- <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/styles/Discounts.css?v=3"/>
+ <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/styles/Discounts.css?v=4"/>
   <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/styles/Layout.css"/>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
@@ -53,7 +53,7 @@ if(errors!=null && !errors.equals("")) {%>
 <div class="products-grid">
     <c:forEach var="product" items="${productsDiscounted}">
       <div class="product-card">
-        <a href="${pageContext.request.contextPath}/Product?id=${product.idProduct}">
+        <a href="${pageContext.request.contextPath}/Product?idProduct=${product.idProduct}">
           <img src="${product.imagePath}" alt="Immagine ${product.name}" />
         </a>
         <h3>${product.name}</h3>

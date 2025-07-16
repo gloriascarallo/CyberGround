@@ -74,6 +74,26 @@ label img {
   object-fit: cover;
 }
 
+.radio-block {
+  display: block;
+  padding: 1em;
+  border: 1px solid #ccc;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.radio-block img {
+  max-width: 100px;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.radio-block p {
+  margin: 0;
+  color: #141C5C;
+}
+
+
 /* Pulsante di submit */
 input[type="submit"] {
   display: block;

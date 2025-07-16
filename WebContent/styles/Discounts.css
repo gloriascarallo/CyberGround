@@ -125,7 +125,7 @@ input[type="range"] {
 }
 
 .discounted-price {
-  color: #FF8800;
+  color: red;
   font-weight: bold;
   font-size: 18px;
 }
