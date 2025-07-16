@@ -27,7 +27,7 @@
 
 <c:forEach var="product_incart" items="${sessionScope.cart.products}">
 
-<a href="${pageContext.request.contextPath}/Product?id=${product_incart.idSituatedIn}">
+<a href="${pageContext.request.contextPath}/Product?idProduct=${product_incart.product.idProduct}">
     <img src="${product_incart.product.imagePath}" alt="Product image" />
     </a>
     <div id="product-${product_incart.idSituatedIn}">

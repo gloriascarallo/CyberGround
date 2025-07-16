@@ -53,7 +53,7 @@ if(errors!=null && !errors.equals("")) {%>
 <div class="products-grid">
     <c:forEach var="product" items="${productsDiscounted}">
       <div class="product-card">
-        <a href="${pageContext.request.contextPath}/Product?id=${product.idProduct}">
+        <a href="${pageContext.request.contextPath}/Product?idProduct=${product.idProduct}">
           <img src="${product.imagePath}" alt="Immagine ${product.name}" />
         </a>
         <h3>${product.name}</h3>

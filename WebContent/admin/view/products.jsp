@@ -102,7 +102,7 @@
   <div class="products-grid">
   <c:forEach var="product" items="${products}">
     <div class="product-card">
-    <a href="${pageContext.request.contextPath}/Product?id=${product.idProduct}">
+    <a href="${pageContext.request.contextPath}/Product?idProduct=${product.idProduct}">
   <img src="${product.imagePath}" alt="${product.name}" class="product-image"/>
 </a>
       <div class="product-info">
