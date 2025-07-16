@@ -301,7 +301,17 @@ public class ProductDaoDataSource implements IBeanDao<ProductBean> {
 
 		ArrayList<ProductBean> products = new ArrayList<ProductBean>();
 
-		String selectSQL = "SELECT * FROM " + ProductDaoDataSource.TABLE_NAME + " WHERE PRICE BETWEEN ? AND ?";
+		String selectSQL = 
+			    "SELECT * FROM ( " +
+			    "  SELECT *, " +
+			    "    CASE " +
+			    "      WHEN DISCOUNTPERCENTAGE IS NOT NULL AND (DATEEXPIRATIONDISCOUNT IS NULL OR DATEEXPIRATIONDISCOUNT > CURRENT_DATE) " +
+			    "      THEN PRICE * (1 - DISCOUNTPERCENTAGE / 100) " +
+			    "      ELSE PRICE " +
+			    "    END AS FINALPRICE " +
+			    "  FROM " + ProductDaoDataSource.TABLE_NAME +
+			    ") AS PRODUCT_WITH_PRICE " +
+			    "WHERE FINALPRICE BETWEEN ? AND ?";
         
 
 		try {

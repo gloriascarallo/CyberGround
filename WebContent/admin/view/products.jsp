@@ -1,4 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
+<%
+    request.setAttribute("nowTimestamp", System.currentTimeMillis());
+%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -104,7 +109,7 @@
         <h3>${product.name}</h3>
         <p>${product.description}</p>
        <c:choose>
-  <c:when test="${product.discountPercentage != null && product.discountPercentage > 0}">
+  <c:when test="${product.discountPercentage != null && product.discountPercentage > 0 && (product.dateExpirationDiscount == null || product.dateExpirationDiscount.time>nowTimestamp)}">
     <p>
       <strong>Prezzo:</strong>
       <span class="prezzo_pieno">€ ${product.price}</span>
