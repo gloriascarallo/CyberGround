@@ -1,6 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
+ <%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
+    <%
+    request.setAttribute("nowTimestamp", System.currentTimeMillis());
+	%>
 
 
 <html>
@@ -8,7 +12,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Filter User Cart Page</title>
-  <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/styles/User_cart.css?v=4" />
+  <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/styles/User_cart.css?v=5" />
   <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/styles/Admin_Layout.css"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
@@ -65,7 +69,19 @@
     <img src="${product_incart.product.imagePath}" alt="Product image" />
     <div id="product-${product_incart.product.idProduct}">    
     Nome: ${product_incart.product.name}<br>
-    Prezzo: <span id="total-${product_incart.product.idProduct}">${product_incart.totalPrice}</span><br>
+   <c:choose>
+ <c:when test="${product_incart.product.discountPercentage != null && product_incart.product.discountPercentage > 0 && (product_incart.product.dateExpirationDiscount == null || product_incart.product.dateExpirationDiscount.time>nowTimestamp)}">    <p>
+      <strong>Prezzo:</strong>
+      <span class="prezzo_pieno">€ ${product_incart.product.price}</span>
+      <span class="prezzo_scontato">
+        € <fmt:formatNumber value="${product_incart.product.price - (product_incart.product.price * product_incart.product.discountPercentage / 100)}" type="number" maxFractionDigits="2"/>
+      </span>
+    </p>
+  </c:when>
+  <c:otherwise>
+    <p><strong>Prezzo:</strong> € ${product_incart.product.price}</p>
+  </c:otherwise>
+</c:choose>
     </div>
     </c:forEach>
 
