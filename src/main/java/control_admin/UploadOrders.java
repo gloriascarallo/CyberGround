@@ -39,7 +39,7 @@ public class UploadOrders extends HttpServlet {
 		
 		String idCartStr = request.getParameter("idCart");
 	    if (idCartStr == null || idCartStr.trim().isEmpty()) {
-	        errors = "Carrello non trovato.<br>";
+	        errors = "Ordini non trovati.<br>";
 	        request.setAttribute("errors", errors);
 	        request.getRequestDispatcher("/").forward(request, response);
 	        return;
@@ -50,7 +50,7 @@ public class UploadOrders extends HttpServlet {
             idCart = Integer.parseInt(idCartStr);
 	    	
 	    } catch (NumberFormatException e) {
-	        errors = "ID carrello non valido.<br>";
+	        errors = "Ordini non trovati.<br>";
 	        request.setAttribute("errors", errors);
 	        request.getRequestDispatcher("/UploadUser").forward(request, response);
 	        return;

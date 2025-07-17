@@ -50,7 +50,7 @@ public class UploadCart extends HttpServlet {
         idCart = Integer.parseInt(idParam);
 	    	
 	    } catch (NumberFormatException e) {
-	        errors = "ID carrello non valido.<br>";
+	        errors = "Carrello non trovato.<br>";
 	        request.setAttribute("errors", errors);
 	        request.getRequestDispatcher("/UploadUser").forward(request, response);
 	        return;
