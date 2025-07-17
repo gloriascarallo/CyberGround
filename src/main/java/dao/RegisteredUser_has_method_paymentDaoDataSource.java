@@ -215,18 +215,17 @@ import model.RegisteredUser_has_method_paymentBean;
 			return registeredusers_have_methods_payment;
 		}
 		
-		public boolean existsByUserAndPanAndExpirationDateAndCvc(int userId, String pan, String expirationDate, String cvc) throws SQLException {
+		public boolean existsByUserAndPan(int userId, String pan) throws SQLException {
 			Connection connection = null;
 			PreparedStatement preparedStatement = null;
 			ResultSet rs=null;
-		        String selectSQL = "SELECT 1 FROM " + RegisteredUser_has_method_paymentDaoDataSource.TABLE_NAME +" WHERE IDREGISTEREDUSER = ? AND PANMETHODPAYMENT = ? AND EXPIRATIONDATEMETHODPAYMENT = ? AND CVCMETHODPAYMENT = ?";
+		        String selectSQL = "SELECT 1 FROM " + RegisteredUser_has_method_paymentDaoDataSource.TABLE_NAME +" WHERE IDREGISTEREDUSER = ? AND PANMETHODPAYMENT = ?";
 		        try {
 					connection = ds.getConnection();
 					preparedStatement = connection.prepareStatement(selectSQL);
 					 preparedStatement.setInt(1, userId);
 			            preparedStatement.setString(2, pan);
-			            preparedStatement.setString(3, expirationDate);
-			            preparedStatement.setString(4, cvc);
+			      
 					rs = preparedStatement.executeQuery();
 					return rs.next(); 
 		        }

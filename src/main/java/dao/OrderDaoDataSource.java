@@ -276,6 +276,36 @@ import java.util.Collection;
 			return orders;
 		}
 
+		public synchronized OrderBean doRetrieveByIdOrderAndIdCart(int idOrder, int idCart) throws SQLException {
+			Connection connection = null;
+		    PreparedStatement preparedStatement = null;
+		    OrderBean order = null;  
+
+		    String selectSQL = "SELECT * FROM " + OrderDaoDataSource.TABLE_NAME + " WHERE IDORDER = ? AND IDCART = ?";
+
+		    try {
+		        connection = ds.getConnection();
+		        preparedStatement = connection.prepareStatement(selectSQL);
+		        preparedStatement.setInt(1, idOrder);
+		        preparedStatement.setInt(2, idCart);
+		        ResultSet rs = preparedStatement.executeQuery();
+
+		        if (rs.next()) {
+		            order = new OrderBean();
+		            order.setIdOrder(rs.getInt("IDORDER"));
+		            order.setDatePurchase(rs.getDate("DATEPURCHASE"));
+		            order.setDateDelivery(rs.getDate("DATEDELIVERY"));
+		            order.setDateShipping(rs.getDate("DATESHIPPING"));
+		            order.setIdCart(rs.getInt("IDCART"));
+		        }
+
+		    } finally {
+		        if (preparedStatement != null) preparedStatement.close();
+		        if (connection != null) connection.close();
+		    }
+
+		    return order;  
+		}
 		
 
 }

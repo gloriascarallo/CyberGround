@@ -128,7 +128,7 @@ public class Add_payment_method extends HttpServlet {
 
 		RegisteredUser_has_method_paymentDaoDataSource ds_has_method_payment = new RegisteredUser_has_method_paymentDaoDataSource();
 		try {
-		    if (ds_has_method_payment.existsByUserAndPanAndExpirationDateAndCvc(id, pan, expirationDate, cvc)) {
+		    if (ds_has_method_payment.existsByUserAndPan(id, pan)) {
 		        errors += "Questo metodo di pagamento è già associato al tuo profilo.<br>";
 		        request.setAttribute("errors", errors);
 		        dispatcherToAdd_payment_methodPage.forward(request, response);

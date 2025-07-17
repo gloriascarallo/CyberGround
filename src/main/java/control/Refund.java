@@ -36,12 +36,12 @@ public class Refund extends HttpServlet {
 		
 		String errors="";
 		String idStr = request.getParameter("id");
-	    int id;
+	    int idOrder;
 	    try {
 	        if (idStr == null || idStr.trim().isEmpty()) {
 	            throw new NumberFormatException("ID ordine mancante");
 	        }
-	        id = Integer.parseInt(idStr.trim());
+	        idOrder = Integer.parseInt(idStr.trim());
 	    } catch (NumberFormatException e) {
 	        errors += "ID ordine non valido.<br>";
 	        request.setAttribute("errors", errors);
@@ -49,12 +49,22 @@ public class Refund extends HttpServlet {
 	        return;
 	    }
 	    
+	    Object idObj=request.getSession().getAttribute("id");
+		if (idObj == null) {
+			errors = "Sessione scaduta o ID utente mancante. Ricarica la pagina e riprova.";
+	        request.setAttribute("errors", errors);
+	        request.getRequestDispatcher("/expiredSession.html").forward(request, response);
+	        return;
+	    }
+	    int id = (Integer) idObj;
+	   
+	    
 		OrderDaoDataSource ds_order=new OrderDaoDataSource();
 		OrderBean order=null;
 		
 		try {
 			
-			order=ds_order.doRetrieveByKey(id);
+			order=ds_order.doRetrieveByIdOrderAndIdCart(idOrder, id);
 			
 			if(order==null) {
 				
@@ -66,8 +76,12 @@ public class Refund extends HttpServlet {
 			}
 			
 				Product_in_orderDaoDataSource ds_products=new Product_in_orderDaoDataSource();
-				ArrayList<Product_in_orderBean> products=ds_products.doRetrieveByIdOrder(order.getIdOrder());
-				order.setProducts_in_order(products);			
+				ArrayList<Product_in_orderBean> products = ds_products.doRetrieveByIdOrder(order.getIdOrder());
+				if (products == null) {
+				    products = new ArrayList<>();
+				}
+				order.setProducts_in_order(products);
+							
 				request.setAttribute("order", order);
 				request.getRequestDispatcher("/registeredUser/view/order_refund.jsp").forward(request, response);
 				return;
