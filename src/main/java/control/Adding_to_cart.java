@@ -5,14 +5,15 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import model.CartBean;
+import model.ProductBean;
+import model.Product_situatedin_cartBean;
 import dao.ProductDaoDataSource;
 import java.io.IOException;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import bean.CartBean;
-import bean.ProductBean;
-import bean.Product_situatedin_cartBean;
+
 import dao.Product_situatedin_cartDaoDataSource;
 /**
  * Servlet implementation class Adding_to_cart
@@ -95,8 +96,8 @@ public class Adding_to_cart extends HttpServlet {
 					
 					errors+="La quantità disponibile di tale prodotto è minore rispetto alla quantità selezionata.<br>";
 					System.out.println(errors);
-					request.setAttribute("errors", errors);
-					request.getRequestDispatcher("/Product").forward(request, response);
+					request.getSession().setAttribute("errorsQuantity", errors);
+					response.sendRedirect(request.getContextPath() + "/Product?idProduct=" + idProduct + "&toRedirect=/guest/view/product.jsp");
 					return;
 					
 					
