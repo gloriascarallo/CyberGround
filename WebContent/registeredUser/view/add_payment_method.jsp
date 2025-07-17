@@ -9,7 +9,7 @@ request.getAttribute("message");
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Add Payment Method Page</title>
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/styles/Add_payment_method.css?v=2"/>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/styles/Add_payment_method.css?v=3"/>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/styles/Layout.css"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
@@ -24,7 +24,12 @@ ${message}
 <fieldset>
 <legend>Compilare i campi</legend>
 <div>
-
+<%
+    String errors = (String) request.getAttribute("errors");
+    if (errors != null && !errors.trim().isEmpty()) {
+  %>
+    <div class="error"><%= errors %></div>
+  <% } %>
 <label>Inserisci nuovo metodo di pagamento</label> <br>
 	<label for="PAN">PAN:</label>
 	<input type="text" name="PAN" id="PAN" placeholder="####-####-####-####" onchange="validateFormElement(this, PANPattern, document.getElementById('errorPAN'), errorPANMessage)" required> 

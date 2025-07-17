@@ -9,7 +9,7 @@ request.getAttribute("message");
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Add Address Page</title>
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/styles/Add_address.css?v=4"/>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/styles/Add_address.css?v=5"/>
  <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/styles/Layout.css"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
@@ -24,7 +24,13 @@ ${message}
 <fieldset>
 <legend>Compilare il campo</legend>
 <div>
-
+<%
+    String errors = (String) request.getAttribute("errors");
+    if (errors != null && !errors.trim().isEmpty()) {
+  %>
+    <div class="error"><%= errors %></div>
+  <% } %>
+  
 <label for="address">Inserisci nuovo indirizzo:</label> <br>
 	<input type="text" name="address" id="address" onchange="validateFormElement(this, addressPattern, document.getElementById('errorAddress'), errorAddressMessage)" > 
 	<span id="errorAddress"></span> <br>
