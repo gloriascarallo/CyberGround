@@ -45,7 +45,7 @@ public class ProductBean {
 
 
 	public void setPrice(double price) {
-		this.price = price;
+		this.price = Math.floor(price*100.0)/100.0;
 	}
 	
 	public double getDiscountedPrice() {
@@ -60,7 +60,7 @@ public class ProductBean {
 	        }
 	    }
 
-	    return Math.round(prezzo * 100.0) / 100.0;
+	    return Math.floor(prezzo * 100.0) / 100.0;
 		
 	}
 

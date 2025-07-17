@@ -70,10 +70,10 @@ public class CartBean {
 		
 		double total=0;
 		for(Product_situatedin_cartBean product_incart: products) {
-			total+=product_incart.getTotalPrice();
+			total+=Math.floor(product_incart.getTotalPrice()*100.0)/100.0;
 			
 		}
-		return total;
+		return Math.floor(total*100.0)/100.0;
 		}
 	}
 	
