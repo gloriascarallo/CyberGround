@@ -6,8 +6,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.LinkedList;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -184,7 +182,7 @@ import model.RegisteredUserBean;
 		}
 
 	
-	public synchronized ArrayList<RegisteredUserBean> doRetrieveByUsername(String o_username) throws SQLException {
+	public synchronized ArrayList<RegisteredUserBean> doRetrieveUsersByUsername(String o_username) throws SQLException {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 	   String username=(String)o_username;
@@ -225,6 +223,47 @@ import model.RegisteredUserBean;
 		return users;
 	}
 
+	public synchronized RegisteredUserBean doRetrieveByUsername(String username) throws SQLException {
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+	   
+
+		RegisteredUserBean bean = null;
+
+		String selectSQL = "SELECT * FROM " + RegisteredUserDaoDataSource.TABLE_NAME + " WHERE USERNAME = ?";
+
+		try {
+			connection = ds.getConnection();
+			preparedStatement = connection.prepareStatement(selectSQL);
+			preparedStatement.setString(1, username);
+
+			ResultSet rs = preparedStatement.executeQuery();
+
+			while (rs.next()) {
+				bean=new RegisteredUserBean();
+				bean.setId(rs.getInt("IDUSER"));
+				bean.setUsername(rs.getString("USERNAME"));
+				bean.setPassword(rs.getString("PASSWORD"));
+				bean.setName(rs.getString("NAME"));
+				bean.setLastName(rs.getString("LASTNAME"));
+				bean.setEmail(rs.getString("EMAIL"));
+				bean.setTelephone(rs.getString("TELEPHONENUMBER"));
+				
+		
+			}
+
+		} finally {
+			try {
+				if (preparedStatement != null)
+					preparedStatement.close();
+			} finally {
+				if (connection != null)
+					connection.close();
+			}
+		}
+		return bean;
+	}
+	
 	}
 
 
