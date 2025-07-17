@@ -250,58 +250,93 @@ if(!errors.equals("")) {
 		AddressDaoDataSource ds_address=new AddressDaoDataSource();
 		RegisteredUser_has_addressBean has_address=null;
 		AddressBean address=null;
-		
+	
 		for(String addressName: addresses) {
-			has_address=new RegisteredUser_has_addressBean();
-			has_address.setNameAddress(addressName);
-			has_address.setIdRegisteredUser(id);
-			address=new AddressBean();
-			address.setName(addressName);
-			
-			
+			AddressBean existingAddress;
 			try {
-				ds_address.doSave(address);
-				ds_hasaddress.doSave(has_address);
-			
-			}
-			catch(SQLException e) {
+				existingAddress = ds_address.doRetrieveByKey(addressName);
+			} catch (SQLException e) {
 				
 				e.printStackTrace();
 				request.getRequestDispatcher("/error/500.html").forward(request, response);
-				return;
+	            return;
 			}
+
+		    if (existingAddress == null) {
+		        // Indirizzo non esiste, allora lo salvo
+		        address = new AddressBean();
+		        address.setName(addressName);
+		        try {
+		            ds_address.doSave(address);
+		            
+		            
+		        } catch(SQLException e) {
+		            e.printStackTrace();
+		            request.getRequestDispatcher("/error/500.html").forward(request, response);
+		            return;
+		        }
+		    }
+
+		    // Crea la relazione utente-indirizzo
+		    has_address = new RegisteredUser_has_addressBean();
+		    has_address.setNameAddress(addressName);
+		    has_address.setIdRegisteredUser(id);
+
+		    try {
+		        ds_hasaddress.doSave(has_address);
+		    } catch(SQLException e) {
+		        e.printStackTrace();
+		        request.getRequestDispatcher("/error/500.html").forward(request, response);
+		        return;
+		    }
+			
 		}
 		
-		RegisteredUser_has_method_paymentDaoDataSource ds_has_method_payment=new RegisteredUser_has_method_paymentDaoDataSource();
-		Method_paymentDaoDataSource ds_method_payment=new Method_paymentDaoDataSource();
-		RegisteredUser_has_method_paymentBean has_method_payment=null;
-		Method_paymentBean method_payment=null;
-		
-		for(int i=0; i<pans.length; i++) {
-			has_method_payment=new RegisteredUser_has_method_paymentBean();
-					has_method_payment.setIdRegisteredUser(id);
-					has_method_payment.setPan(pans[i]);
-					has_method_payment.setExpirationDate(expirationDates[i]);
-					has_method_payment.setCvc(cvcs[i]);
-					method_payment=new Method_paymentBean();
-					method_payment.setPan(pans[i]);
-					method_payment.setExpirationDate(expirationDates[i]);
-					method_payment.setCvc(cvcs[i]);
-					
-					try {
-						ds_method_payment.doSave(method_payment);
-						ds_has_method_payment.doSave(has_method_payment);
-						
-						
-					}
-					catch(SQLException e) {
-						
-						e.printStackTrace();
-						request.getRequestDispatcher("/error/500.html").forward(request, response);
-						return;
-					}
-				}
-				
+		RegisteredUser_has_method_paymentDaoDataSource ds_has_method_payment = new RegisteredUser_has_method_paymentDaoDataSource();
+		Method_paymentDaoDataSource ds_method_payment = new Method_paymentDaoDataSource();
+		RegisteredUser_has_method_paymentBean has_method_payment = null;
+		Method_paymentBean method_payment = null;
+
+		for (int i = 0; i < pans.length; i++) {
+		    Method_paymentBean existingMethodPayment;
+		    try {
+		        existingMethodPayment = ds_method_payment.doRetrieveByKey(pans[i]);
+		    } catch (SQLException e) {
+		        e.printStackTrace();
+		        request.getRequestDispatcher("/error/500.html").forward(request, response);
+		        return;
+		    }
+
+		    if (existingMethodPayment == null) {
+		        // Se il metodo di pagamento non esiste, lo salvo
+		        method_payment = new Method_paymentBean();
+		        method_payment.setPan(pans[i]);
+		        method_payment.setExpirationDate(expirationDates[i]);
+		        method_payment.setCvc(cvcs[i]);
+		        try {
+		            ds_method_payment.doSave(method_payment);
+		        } catch (SQLException e) {
+		            e.printStackTrace();
+		            request.getRequestDispatcher("/error/500.html").forward(request, response);
+		            return;
+		        }
+		    }
+
+		    // Crea la relazione utente - metodo di pagamento
+		    has_method_payment = new RegisteredUser_has_method_paymentBean();
+		    has_method_payment.setIdRegisteredUser(id);
+		    has_method_payment.setPan(pans[i]);
+		    has_method_payment.setExpirationDate(expirationDates[i]);
+		    has_method_payment.setCvc(cvcs[i]);
+
+		    try {
+		        ds_has_method_payment.doSave(has_method_payment);
+		    } catch (SQLException e) {
+		        e.printStackTrace();
+		        request.getRequestDispatcher("/error/500.html").forward(request, response);
+		        return;
+		    }
+		}
 			
 		// Cancella il cookie guestId
 		Cookie guestCookie = new Cookie("guestId", "");
@@ -315,4 +350,4 @@ if(!errors.equals("")) {
 		
 	}
 
-}
+	}
