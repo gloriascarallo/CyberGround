@@ -53,6 +53,15 @@ span.prezzo_scontato {
 	color: red;
 }
 
+.error {
+  color: red;
+  padding: 12px;
+  margin-top: 20px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 5px;
+}
+
 /* Link immagine */
 a {
   text-decoration: none;

@@ -44,6 +44,15 @@ legend {
   color: rgb(255, 100, 64);;
 }
 
+.error {
+  color: red;
+  padding: 12px;
+  margin-top: 20px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 5px;
+}
+
 /* Div contenitore interno */
 form div {
   display: flex;
