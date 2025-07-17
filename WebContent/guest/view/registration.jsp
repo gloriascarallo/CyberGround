@@ -24,7 +24,7 @@ if(!errors.equals("")) {%> <div id="error"><%=errors %></div>
 <div id="container">
 <h1>Registrati</h1>
 
-<form name="registrationForm" id="registrationForm" action="<%=request.getContextPath()%>/Registration" method="post">
+<form name="registrationForm" id="registrationForm" action="<%=request.getContextPath()%>/Registration" method="post" onsubmit="return validateRegistrationForm()">
 
 <div>
 <label for="name">Inserisci nome: </label>
@@ -81,7 +81,7 @@ if(!errors.equals("")) {%> <div id="error"><%=errors %></div>
 </div>
 
 <div id="form-buttons">
-<input type="submit" value="Registrati" onclick="return validateRegistrationForm()">
+<input type="submit" value="Registrati">
 <input type="reset" value="Reset">
 </div>
 
