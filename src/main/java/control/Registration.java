@@ -2,7 +2,6 @@ package control;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -337,13 +336,7 @@ if(!errors.equals("")) {
 		        return;
 		    }
 		}
-			
-		// Cancella il cookie guestId
-		Cookie guestCookie = new Cookie("guestId", "");
-		guestCookie.setMaxAge(0);
-		guestCookie.setPath("/"); 
-		response.addCookie(guestCookie);
-
+	
 		request.setAttribute("message", "Registrazione avvenuta con successo!<br>");
 		request.getRequestDispatcher("/guest/view/login.jsp").forward(request, response);
 		return;

@@ -2,22 +2,16 @@ package control;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import model.CartBean;
-import model.Product_situatedin_cartBean;
-
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-
-import dao.Product_situatedin_cartDaoDataSource;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -42,7 +36,7 @@ public class Home extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-final String SECRET_KEY = "qwerTY-SECRET-KEY-2025";
+
 		
 		DataSource ds = null;
 
@@ -60,50 +54,9 @@ final String SECRET_KEY = "qwerTY-SECRET-KEY-2025";
 			    throw new ServletException("Datasource non trovato.");
 			}
 			
-			Cookie[] cookies = request.getCookies();
-			
-			String guestIdStr = null;
 			int guestId=-1;
 			CartBean cart=new CartBean();
 
-
-				if(cookies!=null) {
-			    for (Cookie c : cookies) {
-			        if ("guestId".equals(c.getName())) {
-			            guestIdStr = c.getValue(); // es. "42|abc123hash"                         System.out.println(guestIdStr);
-		                String[] parts = guestIdStr.split("\\|");
-
-		                if (parts.length == 2) {
-		                    try {
-		                    	int parsedGuestId = Integer.parseInt(parts[0]);
-		                        String expectedHash = Security.hmacSHA256(String.valueOf(parsedGuestId), SECRET_KEY);
-		                        if (expectedHash.trim().equals(parts[1].trim())) {
-		                        
-		                        	guestId=parsedGuestId;
-		                        	    cart.setIdCart(guestId);
-		                        	    Product_situatedin_cartDaoDataSource ds_cart=new Product_situatedin_cartDaoDataSource();
-		                        	    ArrayList<Product_situatedin_cartBean> products=new ArrayList<>();
-		                        	    products=ds_cart.doRetrieveByIdCart(guestId);
-		                        	    cart.setProducts(products);
-		                            break; 
-		                        } else {
-		                            System.out.println("Hash mismatch - possibile manipolazione!");
-		                        }
-		                    } catch (NumberFormatException e) {
-		                        System.out.println("guestId non è un intero valido.");
-		                    } catch (SQLException e) {
-								
-								e.printStackTrace();
-								request.getRequestDispatcher("/error/500.html").forward(request, response);
-							}
-			          
-			        }
-			    }
-			  }
-				}
-			
-		if(guestId==-1) {
-	
 			try (Connection con = ds.getConnection()) {
 		        PreparedStatement ps = con.prepareStatement(
 		            "INSERT INTO USER () VALUES ()", 
@@ -133,16 +86,9 @@ final String SECRET_KEY = "qwerTY-SECRET-KEY-2025";
 		            return;
 		        }
 		        
-		String value = guestId + "|" + Security.hmacSHA256(String.valueOf(guestId), SECRET_KEY);
-		System.out.println("Creato id: " + value);
-		Cookie guestCookie = new Cookie("guestId", value);
-	    guestCookie.setMaxAge(60 * 60 * 24 * 30); 
-	    guestCookie.setPath("/"); 
-	    guestCookie.setHttpOnly(true);
-	    response.addCookie(guestCookie);
+		
 	    cart.setIdCart(guestId);
 	    
-		}
 		
 		request.getSession().setAttribute("cart", cart);
 		request.getSession().setAttribute("id", guestId);
