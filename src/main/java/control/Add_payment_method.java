@@ -6,12 +6,12 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import model.Method_paymentBean;
+import model.RegisteredUser_has_method_paymentBean;
+import dao.RegisteredUser_has_method_paymentDaoDataSource;
 import java.io.IOException;
 import java.sql.SQLException;
 import dao.Method_paymentDaoDataSource;
-import bean.Method_paymentBean;
-import bean.RegisteredUser_has_method_paymentBean;
-import dao.RegisteredUser_has_method_paymentDaoDataSource;
 
 /**
  * Servlet implementation class Add_payment_method
@@ -104,55 +104,44 @@ public class Add_payment_method extends HttpServlet {
 			
 		}
 		
-		Method_paymentDaoDataSource ds_method_payment=new Method_paymentDaoDataSource();
-		
+		Method_paymentDaoDataSource ds_method_payment = new Method_paymentDaoDataSource();
 		try {
-			
-			Method_paymentBean method_payment=ds_method_payment.doRetrieveByKey(pan);
-			
-			 if (method_payment == null) {
-			        Method_paymentBean newMethod_payment = new Method_paymentBean();
-			        newMethod_payment.setPan(pan);
-			        newMethod_payment.setExpirationDate(expirationDate);
-			        newMethod_payment.setCvc(cvc);
-			        ds_method_payment.doSave(newMethod_payment);
-			    }
-			}
-			catch(SQLException e) {
-				
-				e.printStackTrace();
-				request.getRequestDispatcher("/error/500.html").forward(request, response);
-				return;
-			}
-			
-			
+		    Method_paymentBean method_payment = ds_method_payment.doRetrieveByKey(pan);
+		    if (method_payment == null) {
+		        Method_paymentBean newMethod_payment = new Method_paymentBean();
+		        newMethod_payment.setPan(pan);
+		        newMethod_payment.setExpirationDate(expirationDate);
+		        newMethod_payment.setCvc(cvc);
+		        ds_method_payment.doSave(newMethod_payment);
+		    }
+		} catch (SQLException e) {
+		    e.printStackTrace();
+		    request.getRequestDispatcher("/error/500.html").forward(request, response);
+		    return;
+		}
 		
-		RegisteredUser_has_method_paymentBean registereduser_has_method_payment=new RegisteredUser_has_method_paymentBean();
-		RegisteredUser_has_method_paymentDaoDataSource ds_has_method_payment=new RegisteredUser_has_method_paymentDaoDataSource();
-		
-		
-		registereduser_has_method_payment.setIdRegisteredUser(id);
+		RegisteredUser_has_method_paymentBean registereduser_has_method_payment = new RegisteredUser_has_method_paymentBean();
 		registereduser_has_method_payment.setPan(pan);
+		registereduser_has_method_payment.setIdRegisteredUser(id);
 		registereduser_has_method_payment.setExpirationDate(expirationDate);
 		registereduser_has_method_payment.setCvc(cvc);
-		
+
+		RegisteredUser_has_method_paymentDaoDataSource ds_has_method_payment = new RegisteredUser_has_method_paymentDaoDataSource();
 		try {
-				if(ds_has_method_payment.existsByUserAndPanAndExpirationDateAndCvc(id, pan, expirationDate, cvc)) {
-				
-				errors += "Questo metodo di pagamento è già associato al tuo profilo.<br>";
-			    request.setAttribute("errors", errors);
-			    dispatcherToAdd_payment_methodPage.forward(request, response);
-			    return;
-			}
-			ds_has_method_payment.doSave(registereduser_has_method_payment);
-			
+		    if (ds_has_method_payment.existsByUserAndPanAndExpirationDateAndCvc(id, pan, expirationDate, cvc)) {
+		        errors += "Questo metodo di pagamento è già associato al tuo profilo.<br>";
+		        request.setAttribute("errors", errors);
+		        dispatcherToAdd_payment_methodPage.forward(request, response);
+		        return;
+		    }
+		    ds_has_method_payment.doSave(registereduser_has_method_payment);
+		} catch (SQLException e) {
+		    e.printStackTrace();
+		    request.getRequestDispatcher("/error/500.html").forward(request, response);
+		    return;
 		}
-		catch(SQLException e) {
-			
-			e.printStackTrace();
-			request.getRequestDispatcher("/error/500.html").forward(request, response);
-			return;
-		}
+	
+	
 		
 		request.getSession().setAttribute("message", "Metodo di pagamento aggiunto con successo!<br>");
 		
