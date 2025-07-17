@@ -26,17 +26,17 @@
 
   <h2>Filtra Utente per Username</h2>
   
-    <!-- Messaggi di errore -->
+    
  <%
     String errors = (String) request.getAttribute("errors");
     if (errors != null && !errors.trim().isEmpty()) {
   %>
     <div class="error"><%= errors %></div>
   <% } %>
-  
-  <p>${usernameString} ${user.username} <br>
-  ${idString} ${user.id}</p>
-
+  <c:forEach var="user" items="${users}">
+  <p>Username: ${user.username} <br>
+ Id user: ${user.id}</p>
+</c:forEach>
   <form action="${pageContext.request.contextPath}/Filter_registeredusers_byUsername" method="get" class="filter-form">
     <label for="username">Username:</label>
     <input type="text" id="username" name="username">

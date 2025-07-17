@@ -18,11 +18,11 @@
   <h2>Area di Amministrazione</h2>
 
   <div class="dashboard-buttons">
-    <a href="${pageContext.request.contextPath}/admin/view/products.jsp" class="dashboard-btn">
+    <a href="${pageContext.request.contextPath}/UploadProducts_admin" class="dashboard-btn">
       <i class="fas fa-box-open"></i> Gestione Prodotti
     </a>
 
-    <a href="${pageContext.request.contextPath}/admin/view/users.jsp" class="dashboard-btn">
+    <a href="${pageContext.request.contextPath}/UploadUsers" class="dashboard-btn">
       <i class="fas fa-users-cog"></i> Gestione Utenti
     </a>
     
