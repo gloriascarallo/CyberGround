@@ -43,7 +43,7 @@ public class Search_bar extends HttpServlet {
 			
 			errors+="Operazione non riuscita.<br>";
 			request.setAttribute("errors", errors);
-			request.getRequestDispatcher("/guest/view/index.jsp").forward(request, response);
+			request.getRequestDispatcher("/UploadProducts").forward(request, response);
 			return;
 		}
 		ArrayList<ProductBean> products=new ArrayList<ProductBean>();
@@ -58,7 +58,7 @@ public class Search_bar extends HttpServlet {
 				
 				errors+="Aggiungi nome prodotto<br>";
 				request.setAttribute("errors", errors);
-				request.getRequestDispatcher("/guest/view/index.jsp").forward(request, response);
+				request.getRequestDispatcher("/UploadProducts").forward(request, response);
 				return;
 				
 			}
@@ -77,7 +77,7 @@ public class Search_bar extends HttpServlet {
 				
 				errors+="Input errato o prodotti non trovati<br>";
 				request.setAttribute("errors", errors);
-				request.getRequestDispatcher("/guest/view/index.jsp").forward(request, response);
+				request.getRequestDispatcher("/UploadProducts").forward(request, response);
 				return;
 				
 			}

@@ -40,7 +40,7 @@ public class Category extends HttpServlet {
 		if (category == null || category.trim().equals("")) {  
 		    errors = "Categoria non trovata.<br>";  
 		    request.setAttribute("errors", errors);  
-		    request.getRequestDispatcher("/guest/view/index.jsp").forward(request, response);  
+		    request.getRequestDispatcher("/UploadProducts").forward(request, response);  
 		    return;  
 		}  
 

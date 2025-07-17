@@ -54,7 +54,7 @@ ${message}
 </div>
 </form>
 <span> Non sei ancora registrato? Clicca qui per registrarti: <a href="${pageContext.request.contextPath}/guest/view/registration.jsp">Registrati!</a></span>
-<span> Desideri continuare come guest? Clicca qui per andare alla home: <a href="${pageContext.request.contextPath}/guest/view/index.jsp">Home!</a></span>
+<span> Desideri continuare come guest? Clicca qui per andare alla home: <a href="${pageContext.request.contextPath}/UploadProducts">Home!</a></span>
 </div>
 
 <%@ include file="/includes/footer.jsp" %>

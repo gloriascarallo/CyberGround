@@ -57,7 +57,7 @@ public class Login extends HttpServlet {
 		String username=request.getParameter("username");
 		String password=request.getParameter("password");
 		String hasPassword=Security.toHash(password);
-		//System.out.println(hasPassword);
+		System.out.println(hasPassword);
 		String errors="";
 		RequestDispatcher dispatcherToLoginPage=request.getRequestDispatcher("/guest/view/login.jsp");
 		
@@ -162,7 +162,7 @@ if(!errors.equals("")) {
 		        newSession.setAttribute("cart", cart);
 
 		        System.out.println("Carrello utente loggato ID: " + cart.getIdCart());
-		        response.sendRedirect(request.getContextPath() + "/guest/view/index.jsp");
+		        response.sendRedirect(request.getContextPath() + "/UploadProducts");
 		        return;
 		    }
 		} catch (SQLException e) {

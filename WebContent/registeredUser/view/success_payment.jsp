@@ -17,7 +17,7 @@
   <div class="container">
     <h1><i class="fas fa-check-circle"></i> Pagamento completato!</h1>
     <p>Il tuo pagamento è avvenuto con successo.</p>
-    <a href="/CyberGround/guest/view/index.jsp" class="button">
+    <a href="/CyberGround/UploadProducts" class="button">
   <i class="fas fa-home"></i> Torna alla Home
 </a>
 
