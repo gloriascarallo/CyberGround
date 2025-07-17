@@ -20,24 +20,25 @@ const errorCVCMessage="Un CVC valido deve avere formato ### o ####";
 const errorIDMessage = "L'ID ordine deve contenere solo numeri";
 
 function validateScadenza(value) {
-    const match = value.match(ScadenzaPattern);
-    if (!match) return false;
+	const match = value.match(ScadenzaPattern);
+	    if (!match) return false;
 
-    const month = parseInt(match[1], 10);
-    const year = parseInt(match[2], 10);
+	    const month = parseInt(match[1], 10);
+	    const year = parseInt(match[2], 10);
 
-    const now = new Date();
-    const currentYear = now.getFullYear() % 100; // due cifre anno corrente, es. 2025 -> 25
-    const currentMonth = now.getMonth() + 1; // 1-12
+	    // Mese deve essere tra 1 e 12
+	    if (month < 1 || month > 12) return false;
 
-    // Se l'anno è minore dell'anno corrente -> scaduto
-    if (year < currentYear) return false;
+	    const now = new Date();
+	    const currentYear = now.getFullYear() % 100; // Ultime due cifre dell’anno
+	    const currentMonth = now.getMonth() + 1;     // JavaScript: 0 = gennaio, quindi +1
 
-    // Se anno uguale ma mese minore -> scaduto
-    if (year === currentYear && month < currentMonth) return false;
+	    // Scadenza nel passato?
+	    if (year < currentYear || (year === currentYear && month < currentMonth)) {
+	        return false;
+	    }
 
-    // Ok altrimenti
-    return true;
+	    return true;
 }
 
 
@@ -271,10 +272,22 @@ function validateRegistrationForm() {
 		const panEl=document.getElementsByName("PAN")[0];
 		const ScadenzaEl=document.getElementsByName("Scadenza")[0];
 		const cvcEl=document.getElementsByName("CVC")[0];
+		const spanScadenza = document.getElementById("errorScadenza");
+
+		    const validPattern = validateFormElement(ScadenzaEl, ScadenzaPattern, spanScadenza, errorScadenzaMessage);
+
+		    if (validPattern && !validateScadenza(ScadenzaEl.value)) {
+		        spanScadenza.style.color = "red";
+		        spanScadenza.innerHTML = errorScadenzaMessage;
+		        return false;
+		    }
+
+		    return (
+		        validateFormElement(panEl, PANPattern, document.getElementById("errorPAN"), errorPANMessage) &&
+		        validPattern &&
+		        validateFormElement(cvcEl, CVCPattern, document.getElementById("errorCVC"), errorCVCMessage)
+		    );
 		
-		return(validateFormElement(panEl, PANPattern, document.getElementById("errorPAN"), errorPANMessage) 
-		&& validateFormElement(ScadenzaEl, ScadenzaPattern, document.getElementById("errorScadenza"), errorScadenzaMessage)
-		&& validateFormElement(cvcEl, CVCPattern, document.getElementById("errorCVC"), errorCVCMessage));
 		
 		
 	}
