@@ -211,4 +211,29 @@ span.prezzo_scontato {
     width: 100%;
     margin-bottom: 10px;
   }
+  
+  .page-layout {
+    flex-direction: column;
+    padding: 20px;
+    gap: 20px;
+  }
+
+  .filters {
+    width: 100%;
+  }
+
+  .results {
+    width: 100%;
+  }
+
+  .header-right {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .footer-links {
+    flex-direction: column;
+    gap: 10px;
+  }
 }

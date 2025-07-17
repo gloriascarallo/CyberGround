@@ -16,6 +16,7 @@
 
 <h2>Pagina di Rimborso</h2>
 
+<div id="wrap">
 <form action="<%=request.getContextPath() %>/Refund" method="get">
 
  <div>
@@ -39,6 +40,7 @@
 
 </div>
 </form>
+</div>
 <%@ include file="/includes/footer.jsp" %>
 </body>
 <script src="<%=request.getContextPath()%>/scripts/validation.js" type="text/javascript"></script>

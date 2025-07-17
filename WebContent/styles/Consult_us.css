@@ -54,5 +54,6 @@ h2 {
 @media (max-width: 600px) {
   #container {
     padding: 25px 20px;
+    margin-bottom: 20px;
   }
 }
