@@ -12,7 +12,7 @@ request.getAttribute("user_methods_payment");
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Personal Methods Page</title>
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/styles/RegisteredUser_methods_payment.css?v=2">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/styles/RegisteredUser_methods_payment.css?v=3">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/styles/Layout.css"/>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>

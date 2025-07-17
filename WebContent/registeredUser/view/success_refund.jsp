@@ -15,7 +15,7 @@
   <div class="container">
     <h1><i class="fas fa-money-check-alt"></i> Rimborso completato!</h1>
     <p>Il tuo rimborso ha avuto successo.</p>
-    <a href="${pageContext.request.contextPath}/guest/view/index.jsp" class="button"><i class="fas fa-home"></i> Torna alla Home</a>
+    <a href="${pageContext.request.contextPath}/registeredUser/view/refund.jsp" class="button"><i class="fas fa-home"></i> Torna alla pagina di Rimborso</a>
   </div>
 <%@ include file="/includes/footer.jsp" %>
 </body>

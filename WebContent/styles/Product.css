@@ -23,7 +23,8 @@ body {
 
 /* Immagine prodotto */
 #container img {
-  width: 300px;
+  max-width: 150px;
+  width: auto;
   height: auto;
   object-fit: contain;
   border-radius: 8px;
@@ -94,6 +95,7 @@ a {
 @media (max-width: 600px) {
   #container {
     padding: 20px;
+    margin-bottom: 20px;
   }
 
   #container img {
