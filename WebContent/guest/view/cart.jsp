@@ -27,6 +27,13 @@
 <%@ include file="/includes/header.jsp" %>
 
 <div id="container">
+<%
+String errors=(String)request.getAttribute("errors");  
+if(errors!=null && !errors.equals("")) {%>
+	
+	<div class="error"><%=errors%></div> <% 
+}
+%>
 
 <form action="${pageContext.request.contextPath}/Payment_page" method="post">
 
@@ -37,7 +44,7 @@
     </a>
 
     <div id="product-${product_incart.idSituatedIn}">
-      
+   
     <strong>Nome:</strong> ${product_incart.product.name}<br>
     <c:choose>
  <c:when test="${product_incart.product.discountPercentage != null && product_incart.product.discountPercentage > 0 && (product_incart.product.dateExpirationDiscount == null || product_incart.product.dateExpirationDiscount.time>nowTimestamp)}">    <p>
