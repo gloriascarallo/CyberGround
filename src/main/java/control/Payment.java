@@ -120,7 +120,7 @@ public class Payment extends HttpServlet {
 		}
 		
 		
-		order.setProducts_in_order(products_in_order); // non penso sia necessario
+		order.setProducts_in_order(products_in_order); 
 		
 	
 		response.sendRedirect(request.getContextPath()+"/registeredUser/view/success_payment.jsp");

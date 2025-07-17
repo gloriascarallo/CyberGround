@@ -80,10 +80,7 @@ public class Search_bar extends HttpServlet {
 				return;
 				
 			}
-			/*request.setAttribute("products", products);
-			request.getRequestDispatcher("/view/category.jsp").forward(request, response);
-			return;
-			*/
+			
 			response.setContentType("application/json");
 	        PrintWriter out = response.getWriter();
 	        out.print("{\"products\":[");

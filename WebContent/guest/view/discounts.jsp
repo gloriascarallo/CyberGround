@@ -24,7 +24,7 @@
 
 <main class="page-layout">
   
-   <!-- Messaggio di errore -->
+   
  <%
 String errors=(String)request.getAttribute("errors");  
 if(errors!=null && !errors.equals("")) {%>

@@ -20,7 +20,7 @@
 
  <div>
  
- <!-- Se ci sono errori -->
+
   <%
     String errors = (String) request.getAttribute("errors");
     if (errors != null && !errors.trim().isEmpty()) {

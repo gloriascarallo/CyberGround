@@ -120,12 +120,14 @@ if(!errors.equals("")) {
 	try {
 		user=ds_user.doRetrieveByUsername(username);
 		if(user!=null && user.getPassword().equals(hasPassword)) {
+			
+			// Cancella il cookie guestId
 			 Cookie guestCookie = new Cookie("guestId", "");
 			    guestCookie.setMaxAge(0);
 			    guestCookie.setPath("/"); 
 			    response.addCookie(guestCookie);
 	
-			 // Salva carrello della vecchia sessione PRIMA di invalidare
+			 // Salva carrello della vecchia sessione prima di invalidare
 		        CartBean oldCart = (CartBean) request.getSession().getAttribute("cart");
 
 		        // Invalida la vecchia sessione e creane una nuova
@@ -142,7 +144,7 @@ if(!errors.equals("")) {
 		        ArrayList<Product_situatedin_cartBean> dbProducts = ds_cart.doRetrieveByIdCart(user.getId());
 
 		        if (dbProducts == null || dbProducts.isEmpty()) {
-		            // DB vuoto → usa carrello della vecchia sessione se disponibile
+		            // se il DB è vuoto, usa carrello della vecchia sessione se disponibile
 		            if (oldCart != null && oldCart.getProducts() != null && !oldCart.getProducts().isEmpty()) {
 		                for (Product_situatedin_cartBean product : oldCart.getProducts()) {
 		                    product.setIdCart(user.getId());

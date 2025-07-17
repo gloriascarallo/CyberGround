@@ -9,7 +9,7 @@ const categoryPattern = /^[\w\s]{2,45}$/;  // lettere, numeri, underscore e spaz
 const descriptionPattern = /^.{0,500}$/; // descrizione max 500 caratteri
 const quantityPattern = /^[0-9]+$/; // solo numeri interi positivi
 const idPattern = /^[0-9]+$/;
-const yearPattern = /^20\d{2}$/;
+const yearPattern = /^20\d{2}$/; 
 
 // Messaggi di errore
 const errorProductNameMessage = "Il nome prodotto deve contenere da 1 a 45 caratteri.";

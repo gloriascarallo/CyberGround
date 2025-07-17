@@ -20,7 +20,7 @@
 <%@ include file="/includes/admin_header.jsp" %>
 
 <div class="container">
-  <!-- Messaggi di errore -->
+ 
  <%
     String errors = (String) request.getAttribute("errors");
     if (errors != null && !errors.trim().isEmpty()) {

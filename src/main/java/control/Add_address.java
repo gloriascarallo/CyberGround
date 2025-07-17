@@ -107,7 +107,7 @@ public class Add_address extends HttpServlet {
 		}
 		
 		request.getSession().setAttribute("message", "Indirizzo aggiunto con successo!<br>");
-		//dispatcherToAdd_address.forward(request, response);
+		
 		if ("/registeredUser/view/payment_page.jsp".equals(redirectAfter)) {
 		    response.sendRedirect(request.getContextPath() + "/Payment_page");
 		} else if ("/registeredUser/view/user.jsp".equals(redirectAfter)) {

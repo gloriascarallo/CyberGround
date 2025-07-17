@@ -155,7 +155,7 @@ public class Add_payment_method extends HttpServlet {
 		}
 		
 		request.getSession().setAttribute("message", "Metodo di pagamento aggiunto con successo!<br>");
-		//dispatcherToAdd_payment_methodPage.forward(request, response);
+		
 		if ("/registeredUser/view/payment_page.jsp".equals(redirectAfter)) {
 		    response.sendRedirect(request.getContextPath() + "/Payment_page");
 		} else if ("/registeredUser/view/user.jsp".equals(redirectAfter)) {

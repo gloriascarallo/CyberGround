@@ -23,7 +23,7 @@
 
   <h2>Modifica Prodotto</h2>
 
-   <!-- Se ci sono errori -->
+   
   <%
     String errors = (String) request.getAttribute("errors");
     if (errors != null && !errors.trim().isEmpty()) {
@@ -33,7 +33,7 @@
 
   <form action="${pageContext.request.contextPath}/Update_product" method="post" enctype="multipart/form-data" class="product-form">
 
-    <!-- idProduct hidden -->
+   
     <input type="hidden" name="idProduct" value="${product.idProduct}">
 
     <label for="name">Nome prodotto:</label>
