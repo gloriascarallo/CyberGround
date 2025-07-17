@@ -79,7 +79,6 @@
     </div>
     <%@ include file="/includes/footer.jsp" %>
 </body>
-<script src="${pageContext.request.contextPath}/scripts/update_cart.js"></script>
 </html>
 
 
