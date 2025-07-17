@@ -17,7 +17,7 @@
   <div id="container">
     <h2><i class="fas fa-hourglass-end"></i> Sessione Scaduta</h2>
     <p>La tua sessione è scaduta per inattività  o timeout di sicurezza oppure il carrello era vuoto.</p>
-    <a href="/CyberGround/guest/view/login.jsp" class="back-button">
+    <a href="/CyberGround/Home" class="back-button">
       <i class="fas fa-sign-in-alt"></i> Torna alla pagina di login
     </a>
   </div>

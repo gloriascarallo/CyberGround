@@ -52,7 +52,7 @@ public class User extends HttpServlet {
 			if (user == null) {
 				errors+="Utente non trovato.<br>";
 				request.setAttribute("errors", errors);
-	            request.getRequestDispatcher("/guest/view/index.jsp").forward(request, response);
+	            request.getRequestDispatcher("/UploadProducts").forward(request, response);
 	            return;
 			
 			}

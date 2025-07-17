@@ -28,7 +28,7 @@ if(!errors.equals("")) {%> <div id="error"><%=errors %></div>
 
 <div>
 <label for="name">Inserisci nome: </label>
-<input type="text" name="name" id="name" oninput="validateFormElement(this, namePattern, document.getElementById('errorName'), errorNameMessage)" placeholder="Inserisci il tuo nome"><span id="errorName"></span>
+<input type="text" name="name" id="name" onchange="validateFormElement(this, namePattern, document.getElementById('errorName'), errorNameMessage)" placeholder="Inserisci il tuo nome"><span id="errorName"></span>
 </div>
 
 <div>
@@ -89,5 +89,5 @@ if(!errors.equals("")) {%> <div id="error"><%=errors %></div>
 </div>
 <%@ include file="/includes/footer.jsp" %>
 </body>
-<script src="<%=request.getContextPath() %>/scripts/validation.js?v=3" type="text/javascript"></script>
+<script src="<%=request.getContextPath() %>/scripts/validation.js?v=4" type="text/javascript"></script>
 </html>
