@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
 import javax.naming.Context;
@@ -140,11 +141,11 @@ import model.RegisteredUserBean;
 		}
 
 		@Override
-		public synchronized Collection<RegisteredUserBean> doRetrieveAll(String order) throws SQLException {
+		public synchronized ArrayList<RegisteredUserBean> doRetrieveAll(String order) throws SQLException {
 			Connection connection = null;
 			PreparedStatement preparedStatement = null;
 
-			Collection<RegisteredUserBean> users = new LinkedList<RegisteredUserBean>();
+			ArrayList<RegisteredUserBean> users = new ArrayList<RegisteredUserBean>();
 
 			String selectSQL = "SELECT * FROM " + RegisteredUserDaoDataSource.TABLE_NAME;
 
@@ -183,19 +184,19 @@ import model.RegisteredUserBean;
 		}
 
 	
-	public synchronized RegisteredUserBean doRetrieveByUsername(String o_username) throws SQLException {
+	public synchronized ArrayList<RegisteredUserBean> doRetrieveByUsername(String o_username) throws SQLException {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 	   String username=(String)o_username;
 
-		RegisteredUserBean bean = null;
-
-		String selectSQL = "SELECT * FROM " + RegisteredUserDaoDataSource.TABLE_NAME + " WHERE USERNAME = ?";
+		ArrayList<RegisteredUserBean> users = new ArrayList<>();
+		RegisteredUserBean bean=null;
+		String selectSQL = "SELECT * FROM " + RegisteredUserDaoDataSource.TABLE_NAME + " WHERE USERNAME LIKE ?";
 
 		try {
 			connection = ds.getConnection();
 			preparedStatement = connection.prepareStatement(selectSQL);
-			preparedStatement.setString(1, username);
+			preparedStatement.setString(1, "%"+ username +"%");
 
 			ResultSet rs = preparedStatement.executeQuery();
 
@@ -208,7 +209,7 @@ import model.RegisteredUserBean;
 				bean.setLastName(rs.getString("LASTNAME"));
 				bean.setEmail(rs.getString("EMAIL"));
 				bean.setTelephone(rs.getString("TELEPHONENUMBER"));
-				
+				users.add(bean);
 		
 			}
 
@@ -221,7 +222,7 @@ import model.RegisteredUserBean;
 					connection.close();
 			}
 		}
-		return bean;
+		return users;
 	}
 
 	}

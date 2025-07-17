@@ -103,8 +103,8 @@ public class Update_product extends HttpServlet {
 		
 		
 		try {
-            // Get the file part from the request
-            Part filePart = request.getPart("productImgFile"); // Make sure your HTML input has name="productImgFile"
+            
+            Part filePart = request.getPart("productImgFile"); 
             if (filePart != null && filePart.getSize() > 0) {
                 // Carico nuova immagine
 

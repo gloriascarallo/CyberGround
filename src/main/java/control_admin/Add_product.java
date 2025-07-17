@@ -42,7 +42,7 @@ public class Add_product extends HttpServlet {
         // TODO Auto-generated constructor stub
     }
     
- // Utility method to extract file name from HTTP Part
+ 
     private String getFileName(Part part) {
         String contentDisp = part.getHeader("content-disposition");
         for (String token : contentDisp.split(";")) {
@@ -84,13 +84,12 @@ public class Add_product extends HttpServlet {
 		String errors = "";
 
 		        try {
-		            // Get the file part from the request
-		            Part filePart = request.getPart("productImgFile"); // Make sure your HTML input has name="productImgFile"
+		           
+		            Part filePart = request.getPart("productImgFile");
 
-		            // Extract file name from the part
+		            
 		            String fileName = getFileName(filePart);
 
-		            // Basic validation for the uploaded file
 		            if (fileName == null || fileName.isEmpty()) {
 		                errors += "Nessun file immagine selezionato.<br>";
 		            } else if (filePart.getSize() == 0) {
@@ -98,16 +97,16 @@ public class Add_product extends HttpServlet {
 		            } else if (!filePart.getContentType().startsWith("image/")) {
 		                errors += "Il file caricato non è un'immagine valida.<br>";
 		            } else {
-		                // Construct the absolute path to the upload directory
+		              
 		                String uploadPath = getServletContext().getRealPath("") + File.separator + UPLOAD_DIRECTORY;
 		                File uploadDir = new File(uploadPath);
 
-		                // Create the upload directory if it doesn't exist
+		              
 		                if (!uploadDir.exists()) {
 		                    uploadDir.mkdirs();
 		                }
 
-		                // Generate a unique file name to prevent conflicts
+		              
 		                String fileExtension = "";
 		                int dotIndex = fileName.lastIndexOf('.');
 		                if (dotIndex > 0) {
@@ -116,17 +115,14 @@ public class Add_product extends HttpServlet {
 		                String uniqueFileName = UUID.randomUUID().toString() + fileExtension;
 		                Path filePath = Paths.get(uploadPath, uniqueFileName);
 
-		                // Save the file to the server
+		            
 		                try (InputStream input = filePart.getInputStream()) {
 		                    Files.copy(input, filePath, java.nio.file.StandardCopyOption.REPLACE_EXISTING);
 		                }
 
-		                // Construct the URL path to access the image from the web
-		                // This path is relative to the web application's context path
 		                
-		               // String message=""; // se mi serve?
 		                imageUrl = request.getContextPath() + "/" + UPLOAD_DIRECTORY + "/" + uniqueFileName;
-		                //message = "Immagine caricata con successo! Percorso: " + imageUrl;
+		             
 		            }
 
 		        } catch (ServletException | IOException e) {

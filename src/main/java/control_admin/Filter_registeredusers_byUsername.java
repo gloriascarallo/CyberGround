@@ -9,6 +9,7 @@ import model.RegisteredUserBean;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import dao.RegisteredUserDaoDataSource;
 /**
@@ -42,10 +43,10 @@ public class Filter_registeredusers_byUsername extends HttpServlet {
 			
 		}
 		RegisteredUserDaoDataSource ds=new RegisteredUserDaoDataSource();
-		RegisteredUserBean user=null;
+		ArrayList<RegisteredUserBean> users=null;
 		try {
 			
-			user=ds.doRetrieveByUsername(username);
+			users=ds.doRetrieveByUsername(username);
 			
 		}
 		catch(SQLException e) {
@@ -56,17 +57,16 @@ public class Filter_registeredusers_byUsername extends HttpServlet {
 			
 		}
 		
-		if(user==null) {
+		if(users==null || users.isEmpty()) {
 			
-			errors+="Utente non trovato.<br>";
+			errors+="Utenti non trovati.<br>";
 			request.setAttribute("errors", errors);
 			request.getRequestDispatcher("/admin/view/users.jsp").forward(request, response);
 			return;
 		}
 		
-		request.setAttribute("usernameString", "Username:");
-		request.setAttribute("idString", "Id:");
-		request.setAttribute("user", user);
+		
+		request.setAttribute("users", users);
 		request.getRequestDispatcher("/admin/view/users.jsp").forward(request, response); 
 		return;
 		
