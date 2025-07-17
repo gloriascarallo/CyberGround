@@ -1,9 +1,9 @@
-<%@page import="bean.RegisteredUser_has_method_paymentBean"%>
-<%@page import="bean.RegisteredUser_has_addressBean"%>
+<%@page import="model.RegisteredUser_has_method_paymentBean"%>
+<%@page import="model.RegisteredUser_has_addressBean"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<%@page import="bean.CartBean" %>
+<%@page import="model.CartBean" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
 <html>

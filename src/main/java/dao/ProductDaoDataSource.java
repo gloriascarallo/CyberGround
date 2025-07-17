@@ -14,7 +14,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-import bean.ProductBean;
+import model.ProductBean;
 
 public class ProductDaoDataSource implements IBeanDao<ProductBean> {
 

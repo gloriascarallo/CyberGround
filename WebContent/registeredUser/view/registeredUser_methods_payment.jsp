@@ -1,4 +1,4 @@
-<%@page import="bean.RegisteredUser_has_method_paymentBean"%>
+<%@page import="model.RegisteredUser_has_method_paymentBean"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>

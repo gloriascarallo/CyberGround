@@ -14,7 +14,8 @@ import java.util.ArrayList;
 	import javax.naming.InitialContext;
 	import javax.naming.NamingException;
 	import javax.sql.DataSource;
-import bean.Product_situatedin_cartBean;
+
+import model.Product_situatedin_cartBean;
 
 	public class Product_situatedin_cartDaoDataSource implements IBeanDao<Product_situatedin_cartBean> {
 

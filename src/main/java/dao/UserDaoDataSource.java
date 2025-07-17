@@ -12,7 +12,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-import bean.UserBean;
+import model.UserBean;
 
 public class UserDaoDataSource implements IBeanDao<UserBean> {
 

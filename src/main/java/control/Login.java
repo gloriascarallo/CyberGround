@@ -8,16 +8,16 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import model.AdminBean;
+import model.CartBean;
+import model.Product_situatedin_cartBean;
+import model.RegisteredUserBean;
 
 import java.io.IOException;
 import java.sql.SQLException;
 import dao.AdminDaoDataSource;
 import dao.RegisteredUserDaoDataSource;
 import dao.Product_situatedin_cartDaoDataSource;
-import bean.AdminBean;
-import bean.CartBean;
-import bean.Product_situatedin_cartBean;
-import bean.RegisteredUserBean;
 
 /**
  * Servlet implementation class Login

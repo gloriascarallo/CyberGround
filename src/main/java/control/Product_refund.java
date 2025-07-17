@@ -5,10 +5,11 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import model.Product_in_orderBean;
+
 import java.io.IOException;
 import java.sql.SQLException;
 
-import bean.Product_in_orderBean;
 import dao.Product_in_orderDaoDataSource;
 /**
  * Servlet implementation class Product_refund

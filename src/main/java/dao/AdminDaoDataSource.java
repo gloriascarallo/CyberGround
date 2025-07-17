@@ -12,7 +12,8 @@ package dao;
 	import javax.naming.InitialContext;
 	import javax.naming.NamingException;
 	import javax.sql.DataSource;
-import bean.AdminBean;
+
+import model.AdminBean;
 
 
 	public class AdminDaoDataSource implements IBeanDao<AdminBean> {

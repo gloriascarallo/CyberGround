@@ -12,7 +12,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-import bean.CartBean;
+import model.CartBean;
 
 	public class CartDaoDataSource implements IBeanDao<CartBean> {
 

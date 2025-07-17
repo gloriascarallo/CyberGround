@@ -7,12 +7,12 @@ package dao;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collection;
-	import java.util.LinkedList;
 	import javax.naming.Context;
 	import javax.naming.InitialContext;
 	import javax.naming.NamingException;
 	import javax.sql.DataSource;
-import bean.RegisteredUser_has_method_paymentBean;
+
+import model.RegisteredUser_has_method_paymentBean;
 
 	public class RegisteredUser_has_method_paymentDaoDataSource implements IBeanDao<RegisteredUser_has_method_paymentBean> {
 
@@ -178,7 +178,7 @@ import bean.RegisteredUser_has_method_paymentBean;
 			Connection connection = null;
 			PreparedStatement preparedStatement = null;
 
-			Collection<RegisteredUser_has_method_paymentBean> registeredusers_have_methods_payment = new LinkedList<RegisteredUser_has_method_paymentBean>();
+			Collection<RegisteredUser_has_method_paymentBean> registeredusers_have_methods_payment=new ArrayList<>();
 
 			String selectSQL = "SELECT * FROM " + RegisteredUser_has_method_paymentDaoDataSource.TABLE_NAME;
 

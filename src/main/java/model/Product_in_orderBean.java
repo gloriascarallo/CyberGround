@@ -1,4 +1,4 @@
-package bean;
+package model;
 
 public class Product_in_orderBean {
 

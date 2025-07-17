@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Part;
+import model.ProductBean;
 
 import java.io.File;
 import java.io.IOException;
@@ -20,7 +21,6 @@ import java.util.Objects;
 import java.util.UUID;
 
 import dao.ProductDaoDataSource;
-import bean.ProductBean;
 
 /**
  * Servlet implementation class Update_product

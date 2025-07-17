@@ -6,9 +6,9 @@
 	%>
     
 <!DOCTYPE html>
-<%@page import="bean.Product_situatedin_cartBean"%>
+<%@page import="model.Product_situatedin_cartBean"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="bean.CartBean" %>
+<%@page import="model.CartBean" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
  <%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
 

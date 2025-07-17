@@ -5,13 +5,14 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import model.ProductBean;
+
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
 
 import dao.ProductDaoDataSource;
-import bean.ProductBean;
 /**
  * Servlet implementation class Product
  */
@@ -33,8 +34,17 @@ public class Product extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		String errors="";
-		String toRedirect=request.getParameter("toRedirect");
 		
+		String errorsQuantity=(String) request.getSession().getAttribute("errorsQuantity");
+		
+		
+		if(errorsQuantity!=null && !errorsQuantity.trim().equals("")) {
+			
+			errors+=errorsQuantity;
+			request.getSession().removeAttribute("errorsQuantity");
+		}
+		
+		String toRedirect=request.getParameter("toRedirect");
 		if (toRedirect == null || toRedirect.trim().isEmpty()) {
 	        toRedirect = "/error/500.html";
 	    }
@@ -75,7 +85,7 @@ public class Product extends HttpServlet {
 			
 		}
 		
-		
+		request.setAttribute("errors", errors);
 		request.setAttribute("product", product);
 		request.setAttribute("nowTimestamp", System.currentTimeMillis());
 		request.getRequestDispatcher("/guest/view/product.jsp").forward(request, response);

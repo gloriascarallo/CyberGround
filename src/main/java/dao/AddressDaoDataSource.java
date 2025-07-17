@@ -11,7 +11,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-import bean.AddressBean;
+import model.AddressBean;
 
 
 	public class AddressDaoDataSource implements IBeanDao<AddressBean> {

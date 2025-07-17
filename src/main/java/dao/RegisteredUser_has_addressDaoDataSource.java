@@ -13,7 +13,7 @@ import java.util.Collection;
 	import javax.naming.NamingException;
 	import javax.sql.DataSource;
 
-import bean.RegisteredUser_has_addressBean;
+import model.RegisteredUser_has_addressBean;
 
 	public class RegisteredUser_has_addressDaoDataSource implements IBeanDao<RegisteredUser_has_addressBean> {
 

@@ -5,10 +5,12 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import model.RegisteredUser_has_addressBean;
+
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import bean.RegisteredUser_has_addressBean;
+
 import dao.RegisteredUser_has_addressDaoDataSource;
 
 /**

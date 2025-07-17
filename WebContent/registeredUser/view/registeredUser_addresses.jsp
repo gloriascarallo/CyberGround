@@ -1,4 +1,4 @@
-<%@page import="bean.RegisteredUser_has_addressBean"%>
+<%@page import="model.RegisteredUser_has_addressBean"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>

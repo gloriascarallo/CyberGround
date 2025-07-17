@@ -6,10 +6,12 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import model.Product_situatedin_cartBean;
+
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import bean.Product_situatedin_cartBean;
+
 import dao.Product_situatedin_cartDaoDataSource;
 
 /**

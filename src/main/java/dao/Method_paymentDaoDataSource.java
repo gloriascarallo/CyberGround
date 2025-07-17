@@ -12,7 +12,7 @@ package dao;
 	import javax.naming.NamingException;
 	import javax.sql.DataSource;
 
-import bean.Method_paymentBean;
+import model.Method_paymentBean;
 
 
 		public class Method_paymentDaoDataSource implements IBeanDao<Method_paymentBean> {

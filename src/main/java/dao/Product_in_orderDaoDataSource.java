@@ -14,7 +14,8 @@ import java.util.Collection;
 	import javax.naming.InitialContext;
 	import javax.naming.NamingException;
 	import javax.sql.DataSource;
-import bean.Product_in_orderBean;
+
+import model.Product_in_orderBean;
 
 	public class Product_in_orderDaoDataSource implements IBeanDao<Product_in_orderBean> {
 

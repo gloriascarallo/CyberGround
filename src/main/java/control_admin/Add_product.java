@@ -7,6 +7,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Part;
+import model.ProductBean;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -18,7 +20,6 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.UUID;
 import dao.ProductDaoDataSource;
-import bean.ProductBean;
 
 /**
  * Servlet implementation class Add_product

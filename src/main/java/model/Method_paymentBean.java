@@ -1,4 +1,4 @@
-package bean;
+package model;
 
 public class Method_paymentBean {
 

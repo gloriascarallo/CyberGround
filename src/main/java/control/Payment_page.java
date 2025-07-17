@@ -5,14 +5,15 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import model.CartBean;
+import model.Product_situatedin_cartBean;
+import model.RegisteredUser_has_addressBean;
+import model.RegisteredUser_has_method_paymentBean;
+
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import bean.CartBean;
-import bean.Product_situatedin_cartBean;
-import bean.RegisteredUser_has_addressBean;
-import bean.RegisteredUser_has_method_paymentBean;
 import dao.RegisteredUser_has_addressDaoDataSource;
 import dao.RegisteredUser_has_method_paymentDaoDataSource;
 /**

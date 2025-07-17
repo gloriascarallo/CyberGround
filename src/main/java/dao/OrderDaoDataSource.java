@@ -8,7 +8,7 @@ import javax.naming.Context;
 	import javax.naming.NamingException;
 	import javax.sql.DataSource;
 
-import bean.OrderBean;
+import model.OrderBean;
 
 import java.sql.Connection;
 import java.sql.Date;
