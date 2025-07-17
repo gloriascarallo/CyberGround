@@ -18,6 +18,7 @@ const errorPANMessage="Un metodo di pagamento valido deve avere formato ####-###
 const errorScadenzaMessage="Una data di scadenza valida deve avere formato ##/## e una data di scadenza superiore all'attuale";
 const errorCVCMessage="Un CVC valido deve avere formato ### o ####";
 const errorIDMessage = "L'ID ordine deve contenere solo numeri";
+const errorScadenzaPassataMessage = "La data di scadenza non può essere nel passato";
 
 function validateScadenza(value) {
 	const match = value.match(ScadenzaPattern);
@@ -274,6 +275,30 @@ function validateRegistrationForm() {
 		valid
 	);
 }
+
+window.addEventListener("DOMContentLoaded", () => {
+  const scadenzaInput = document.getElementById("methodPaymentScadenza1");
+  const scadenzaSpan = document.getElementById("errorScadenza1");
+
+  if (scadenzaInput && scadenzaSpan) {
+    scadenzaInput.addEventListener("change", function () {
+      // Valida pattern
+      const isValid = validateFormElement(scadenzaInput, ScadenzaPattern, scadenzaSpan, errorScadenzaMessage);
+
+      // Se pattern valido, controlla se data è nel passato
+      if (isValid) {
+        if (!validateScadenza(scadenzaInput.value)) {
+          scadenzaSpan.style.color = "red";
+          scadenzaSpan.innerText = errorScadenzaPassataMessage;
+        } else {
+          scadenzaSpan.style.color = "black";
+          scadenzaSpan.innerText = "";
+        }
+      }
+    });
+  }
+});
+
 	
 	function validateAdd_addressForm() {
 		
@@ -308,54 +333,45 @@ function validateRegistrationForm() {
 		
 	}
 	
-function validateProduct_refundForm() {
-	    const addressesEl = document.getElementsByName("ritiro");
-		const panEl = document.getElementsByName("PAN");
-		const expirationDateEl = document.getElementsByName("Scadenza");
-		const cvcEl = document.getElementsByName("CVC");
-		
-				for (let i = 0; i < addressesEl.length; i++) {
-						const input = addressesEl[i];
-						const suffix = input.id.replace("ritiro", "");  
-						const span = document.getElementById("errorAddress" + suffix);
-						if (!validateFormElement(input, addressPattern, span, errorAddressMessage)) {
-							return false;
-						}
-					}
-				
-			
+	function validateProduct_refundForm() {
+	    let valid = true;
 
-				for (let i = 0; i < panEl.length; i++) {
-					const input = panEl[i];
-					const suffix = input.id.replace("PAN", "");
-					const span = document.getElementById("errorPAN" + suffix);
-					if (!validateFormElement(input, PANPattern, span, errorPANMessage)) {
-						return false;
-					}
-				}
-			
+	    const addressEl = document.getElementById("ritiro");
+	    const spanAddress = document.getElementById("errorAddress");
+	    if (!validateFormElement(addressEl, addressPattern, spanAddress, errorAddressMessage)) {
+	        valid = false;
+	    }
 
-				for (let i = 0; i < expirationDateEl.length; i++) {
-					const input = expirationDateEl[i];
-					const suffix = input.id.replace("Scadenza", "");
-					const span = document.getElementById("errorScadenza" + suffix);
-					if (!validateFormElement(input, ScadenzaPattern, span, errorScadenzaMessage) || !validateScadenza(input.value)) {
-						return false;
-					}
-				}
-			
+	    const panEl = document.getElementById("PAN");
+	    const spanPan = document.getElementById("errorPAN");
+	    if (!validateFormElement(panEl, PANPattern, spanPan, errorPANMessage)) {
+	        valid = false;
+	    }
 
-				for (let i = 0; i < cvcEl.length; i++) {
-					const input = cvcEl[i];
-					const suffix = input.id.replace("CVC", "");
-					const span = document.getElementById("errorCVC" + suffix);
-					if (!validateFormElement(input, CVCPattern, span, errorCVCMessage)) {
-						return false;
-					}
-				}
-				
-				return true;
+	    const scadenzaEl = document.getElementById("methodPaymentScadenza1");
+	    const spanScadenza = document.getElementById("errorScadenza1");
+	    const validPattern = validateFormElement(scadenzaEl, ScadenzaPattern, spanScadenza, errorScadenzaMessage);
+	    if (validPattern) {
+	        if (!validateScadenza(scadenzaEl.value)) {
+	            spanScadenza.style.color = "red";
+	            spanScadenza.innerHTML = errorScadenzaPassataMessage;
+	            valid = false;
+	        } else {
+	            spanScadenza.innerHTML = "";
+	        }
+	    } else {
+	        valid = false;
+	    }
+
+	    const cvcEl = document.getElementById("CVC");
+	    const spanCvc = document.getElementById("errorCVC");
+	    if (!validateFormElement(cvcEl, CVCPattern, spanCvc, errorCVCMessage)) {
+	        valid = false;
+	    }
+
+	    return valid;
 	}
+
 	
 	function validateRefundForm() {
 		  const idInput = document.getElementById('id');

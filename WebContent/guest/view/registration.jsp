@@ -89,5 +89,5 @@ if(!errors.equals("")) {%> <div id="error"><%=errors %></div>
 </div>
 <%@ include file="/includes/footer.jsp" %>
 </body>
-<script src="<%=request.getContextPath() %>/scripts/validation.js?v=4" type="text/javascript"></script>
+<script src="<%=request.getContextPath() %>/scripts/validation.js?v=5" type="text/javascript"></script>
 </html>

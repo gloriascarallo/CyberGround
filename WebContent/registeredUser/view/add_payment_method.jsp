@@ -34,9 +34,9 @@ ${message}
 	<label for="PAN">PAN:</label>
 	<input type="text" name="PAN" id="PAN" placeholder="####-####-####-####" onchange="validateFormElement(this, PANPattern, document.getElementById('errorPAN'), errorPANMessage)" required> 
 	<span id="errorPAN"></span> <br>
-	<label for="Scadenza">Data di Scadenza:</label>
-	<input type="text" name="Scadenza" id="Scadenza" placeholder="##/##" onchange="validateFormElement(this, ScadenzaPattern, document.getElementById('errorScadenza'), errorScadenzaMessage)" required>
-	<span id="errorScadenza"></span>
+	<label for="methodPaymentScadenza1">Data di Scadenza:</label>
+	<input type="text" name="Scadenza" id="methodPaymentScadenza1" placeholder="##/##" onchange="validateFormElement(this, ScadenzaPattern, document.getElementById('errorScadenza1'), errorScadenzaMessage)" required>
+	<span id="errorScadenza1"></span>
 	<label for="CVC">CVC:</label>
 	<input type="text" name="CVC" id="CVC" placeholder="### or ####" onchange="validateFormElement(this, CVCPattern, document.getElementById('errorCVC'), errorCVCMessage)" required>
 	<span id="errorCVC"></span> <br>
@@ -49,5 +49,5 @@ ${message}
 </form>
 <%@ include file="/includes/footer.jsp" %>
 </body>
-<script src="<%=request.getContextPath()%>/scripts/validation.js?v=3" type="text/javascript"></script>
+<script src="<%=request.getContextPath()%>/scripts/validation.js?v=5" type="text/javascript"></script>
 </html>
