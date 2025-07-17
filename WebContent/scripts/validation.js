@@ -194,6 +194,8 @@ function validateLoginForm(){
 }
 	
 function validateRegistrationForm() {
+	let valid = true;
+	
 	const usernameEl = document.getElementsByName("username")[0];
 	const nameEl = document.getElementsByName("name")[0];
 	const lastNameEl = document.getElementsByName("lastName")[0];
@@ -212,7 +214,7 @@ function validateRegistrationForm() {
 				const suffix = input.id.replace("address", "");  
 				const span = document.getElementById("errorAddress" + suffix);
 				if (!validateFormElement(input, addressPattern, span, errorAddressMessage)) {
-					return false;
+					valid = false;
 				}
 			}
 		
@@ -223,7 +225,7 @@ function validateRegistrationForm() {
 			const suffix = input.id.replace("methodPaymentPAN", "");
 			const span = document.getElementById("errorPAN" + suffix);
 			if (!validateFormElement(input, PANPattern, span, errorPANMessage)) {
-				return false;
+				valid = false;
 			}
 		}
 	
@@ -234,7 +236,7 @@ function validateRegistrationForm() {
 			const span = document.getElementById("errorScadenza" + suffix);
 			if (!validateFormElement(input, ScadenzaPattern, span, errorScadenzaMessage) || (!validateScadenza(input.value))) {
 				
-			return false;
+			valid = false;
 			}
 		}
 	
@@ -244,18 +246,32 @@ function validateRegistrationForm() {
 			const suffix = input.id.replace("methodPaymentCVC", "");
 			const span = document.getElementById("errorCVC" + suffix);
 			if (!validateFormElement(input, CVCPattern, span, errorCVCMessage)) {
-				return false;
+				valid = false;
 			}
 		}
+		
+		if (!validateFormElement(nameEl, namePattern, document.getElementById('errorName'), errorNameMessage)) {
+		    valid = false;
+		  }
+		  if (!validateFormElement(usernameEl, usernamePattern, document.getElementById('errorUsername'), errorUsernameMessage)) {
+		    valid = false;
+		  }
+		  if (!validateFormElement(lastNameEl, namePattern, document.getElementById('errorLastName'), errorNameMessage)) {
+		    valid = false;
+		  }
+		  if (!validateFormElement(telephoneEl, telephonePattern, document.getElementById('errorTelephone'), errorTelephoneMessage)) {
+		    valid = false;
+		  }
+		  if (!validateFormElement(emailEl, emailPattern, document.getElementById('errorEmail'), errorEmailMessage)) {
+		    valid = false;
+		  }
+		  if (!validateFormElement(passwordEl, passwordPattern, document.getElementById('errorPassword'), errorPasswordMessage)) {
+		    valid = false;
+		  }
 	
 
 	return (
-		validateFormElement(nameEl, namePattern, document.getElementById('errorName'), errorNameMessage) &&
-		validateFormElement(usernameEl, usernamePattern, document.getElementById('errorUsername'), errorUsernameMessage) &&
-		validateFormElement(lastNameEl, namePattern, document.getElementById('errorLastName'), errorNameMessage) &&
-		validateFormElement(telephoneEl, telephonePattern, document.getElementById('errorTelephone'), errorTelephoneMessage) &&
-		validateFormElement(emailEl, emailPattern, document.getElementById('errorEmail'), errorEmailMessage) &&
-		validateFormElement(passwordEl, passwordPattern, document.getElementById('errorPassword'), errorPasswordMessage)
+		valid
 	);
 }
 	
