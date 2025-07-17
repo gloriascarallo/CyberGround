@@ -67,8 +67,17 @@ input[type="date"] {
   margin-top: 10px;
 }
 
+span.prezzo_pieno {
+	text-decoration: line-through;
+	color: black !important;
+}
+
+span.prezzo_scontato {
+	color: red !important;
+}
+
 img {
-  width: 70%;
+  width: 30%;
   height: auto;
   border-radius: 6px;
   display: block;

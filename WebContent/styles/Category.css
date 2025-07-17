@@ -40,12 +40,17 @@ h2 {
 /* Card prodotto */
 .product-card {
   width: 250px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   border: 1px solid #ccc;
   border-radius: 10px;
   padding: 1rem;
   text-align: center;
   box-shadow: 0 2px 5px rgba(0,0,0,0.1);
   background-color: #fff;
+  transition: transform 0.3s ease;
 }
 
 .product-card:hover {
@@ -54,15 +59,20 @@ h2 {
 
 /* Immagine prodotto */
 .product-card img {
-  width: auto;
-  height: auto;
+  height: 180px; /* altezza fissa */
+  width: 100%;
   object-fit: contain;
-  cursor: pointer;
+  margin-bottom: 10px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
 }
 
 /* Informazioni prodotto */
 .product-info {
-  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  flex-grow: 1;
 }
 
 .product-info h3 {
@@ -75,7 +85,7 @@ h2 {
   font-size: 16px;
   color: #333;
   margin-bottom: 8px;
-}
+} 
 
 span.prezzo_pieno {
 	text-decoration: line-through;
