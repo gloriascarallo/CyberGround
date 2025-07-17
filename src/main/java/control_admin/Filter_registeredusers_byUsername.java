@@ -46,7 +46,7 @@ public class Filter_registeredusers_byUsername extends HttpServlet {
 		ArrayList<RegisteredUserBean> users=null;
 		try {
 			
-			users=ds.doRetrieveByUsername(username);
+			users=ds.doRetrieveUsersByUsername(username);
 			
 		}
 		catch(SQLException e) {
